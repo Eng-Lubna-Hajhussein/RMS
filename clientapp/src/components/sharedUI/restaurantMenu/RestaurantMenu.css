@@ -1,0 +1,120 @@
+.menu .nav-link.active {
+  background-color: #f3274c;
+  width: 100%;
+  height: fit-content;
+  /* color: #fff; */
+  /* padding: 30px; */
+  border-radius: 11px;
+  border: 0;
+  position: relative;
+  /* border: 5px solid #f3274c; */
+}
+
+.menu .nav-link.active .title {
+  color: #fff;
+}
+
+.menu .nav-link .tab-icon {
+  width: 70px;
+  fill: #f3274c;
+  display: block;
+  margin: auto;
+  margin-bottom: 15px;
+  height: auto;
+  margin-bottom: 5px;
+  vertical-align: middle;
+}
+
+.menu .nav-link .icon-container svg {
+  width: 70px;
+  fill: #f3274c;
+  display: block;
+  margin: auto;
+  margin-bottom: 15px;
+  height: auto;
+  margin-bottom: 5px;
+  vertical-align: middle;
+}
+
+.menu .nav-link {
+  text-transform: capitalize;
+  background-color: #fff;
+  /* padding: 30px; */
+  color: black;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width: 100%;
+  height: fit-content;
+  border-radius: 11px;
+  border: 5px solid #e4e4e4;
+  /* font-size: 22px; */
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu .nav-link:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+.menu .nav-link.active:hover .icon-container svg {
+  fill: #fff;
+  display: block;
+  transition: color 0.15s ease-in-out;
+  animation: rotate 2s infinite;
+}
+
+.menu .nav-link:hover .icon-container svg {
+  display: block;
+  transition: color 0.15s ease-in-out;
+  animation: rotate 2s infinite;
+}
+
+.menu .nav-link.active .icon-container svg {
+  fill: #fff;
+}
+
+.menu .nav-link.active:hover .tab-icon {
+  fill: #fff;
+  display: block;
+  transition: color 0.15s ease-in-out;
+  animation: rotate 2s infinite;
+}
+
+.nav-link:hover .tab-icon {
+  display: block;
+  transition: color 0.15s ease-in-out;
+  animation: rotate 2s infinite;
+}
+
+.menu .nav-link.active .tab-icon {
+  fill: #fff;
+}
+
+.menu .nav-link.active:before {
+  background-color: #f3274c;
+  position: absolute;
+  content: "";
+  width: 94%;
+  height: 40px;
+  left: 3.5px;
+  bottom: -19px;
+  clip-path: polygon(49% 50%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.menu .tab-icon {
+  filter: invert(24%) sepia(64%) saturate(2430%) hue-rotate(327deg) brightness(106%) contrast(107%);
+}
+
+.menu .nav-link .active{
+  filter: invert(100%) sepia(24%) saturate(6485%) hue-rotate(223deg)
+    brightness(134%) contrast(115%);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
