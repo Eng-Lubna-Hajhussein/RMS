@@ -1,4 +1,4 @@
-import "./Carousel.css";
+import "./HeroCarousel.css";
 import img1 from "assets/image/hero-1.jpg";
 import img2 from "assets/image/hero-2.jpg";
 import img3 from "assets/image/hero-3.jpg";
@@ -152,7 +152,7 @@ const style = {
   },
 };
 
-export const Carousel = () => {
+export const HeroCarousel = () => {
   const [slide, setSlide] = useState(0);
 
   const nextSlide = () => {
@@ -165,10 +165,12 @@ export const Carousel = () => {
 
   return (
     <Grid container className="carousel">
-      <Box
+       <Box
         sx={{
           height: "50px",
           padding: "11px",
+          paddingLeft:"16px",
+          paddingRight:"16px",
           width: "50px",
           textAlign: "center",
           background: "#ffd40d",
@@ -344,4 +346,4 @@ export const Carousel = () => {
     </Grid>
   );
 };
-export default Carousel;
+export default HeroCarousel;

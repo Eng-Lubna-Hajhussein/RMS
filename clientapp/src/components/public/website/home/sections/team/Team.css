@@ -4,6 +4,7 @@
 
 .chef-content{
     cursor: pointer;
+    z-index: 234;
 }
 
 .chef-social:hover{

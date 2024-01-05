@@ -1,9 +1,9 @@
-import Carousel from "components/sharedUI/carousel/Carousel";
+import HeroCarousel from "components/sharedUI/heroCarousel/HeroCarousel";
 import React from "react";
 
 function Hero(){
     return <React.Fragment>
-            <Carousel />
+            <HeroCarousel />
     </React.Fragment>
 }
 

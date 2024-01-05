@@ -1,5 +1,76 @@
 import { Box, Grid, Rating, Typography } from "@mui/material";
 import quoteIcon from "assets/image/quote.png";
+import img1 from 'assets/image/bratlee-hamint-1.jpg';
+import img2 from 'assets/image/bratlee-hamint-2.jpg';
+import img3 from 'assets/image/bratlee-hamint-3.jpg';
+
+
+const style = {
+  container: {
+    height: "114vh",
+    marginTop:"50px !important",
+    xs: {
+      height: "fit-content",
+    },
+  },
+  containerItem: {
+    height: "100%",
+    xs: {
+    },
+  },
+  fullHeight: {
+    height: "100%",
+  },
+  title: {
+    color: "#f3274c !important",
+    fontSize: "18px !important",
+    textTransform: "uppercase",
+    letterSpacing: "2px",
+    fontWeight: "800 !important",
+    width: "100%",
+    xs: {
+    },
+  },
+  subtitle: {
+    color: "#000 !important",
+    fontSize: "40px !important",
+    textTransform: "uppercase",
+    letterSpacing: "2px",
+    fontWeight: "800 !important",
+    width: "100%",
+    fontFamily: "sans-serif",
+    xs: {
+      fontSize: "20px !important",
+      letterSpacing: "0px",
+    },
+  },
+  img1: {
+    position: "absolute",
+    top: "0",
+    left: "300px",
+    borderRadius: "30px",
+    xs: {
+    },
+  },
+  img2: {
+    position: "absolute",
+    top: "160px",
+    left: "80px",
+    zIndex: "-1",
+    borderRadius: "30px",
+    xs: {
+    },
+  },
+  img3: {
+    position: "absolute",
+    top: "280px",
+    left: "80px",
+    left: "330px",
+    borderRadius: "30px",
+    xs: {
+    },
+  },
+};
 
 function Testimonial() {
   return (
@@ -10,7 +81,11 @@ function Testimonial() {
         paddingRight: "100px",
         marginTop: "100px",
         marginBottom: "100px",
+        height:'fit-content',
+        minHeight:"fit-content",
       }}
+      alignContent={'flex-start'}
+      alignItems={'flex-start'}
     >
       <Grid item container xs="6">
         <Grid item xs="12">
@@ -107,6 +182,30 @@ function Testimonial() {
               </Grid>
             </Grid>
           </Box>
+        </Grid>
+      </Grid>
+      <Grid item container xs='6'   alignContent={'center'}
+      alignItems={'center'} sx={{position:"relative",height:"fit-content",height:"600px"}}>
+        <Grid item xs='12'>
+
+      <img
+              src={img1}
+              width={"200px"}
+              height={"200px"}
+              style={style.img1}
+            />
+        </Grid>
+        <Grid item xs='12'>
+
+            <img src={img2} width={"280px"} style={style.img2} height={"300px"} />
+        </Grid>
+        <Grid item xs='12'>
+            <img
+              src={img3}
+              width={"280px"}
+              height={"300px"}
+              style={style.img3}
+            />
         </Grid>
       </Grid>
     </Grid>
