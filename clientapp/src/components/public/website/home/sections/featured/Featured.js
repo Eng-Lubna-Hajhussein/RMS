@@ -149,7 +149,7 @@ const style = {
   },
 };
 
-export default function Featured() {
+export default function Featured({lang,dir,lstFeatured}) {
   const featuredDishesList = [
     {
       name: "Parisian Hamburger",
@@ -190,8 +190,8 @@ export default function Featured() {
       alignSelf={"flex-end"}>
           <Grid item xs="12">
         <Grid container justify={"center"} spacing={4} py-10>
-          {featuredDishesList.map(
-            ({ name, rating, img, price, onSale, salePrice }) => (
+          {lstFeatured.map(
+            (item) => (
               <Grid item lg="4" xs={"12"} p-0 m-0>
                 <Paper elevation={0} outline={0} sx={style.cardPaper}>
                   <Grid
@@ -209,7 +209,7 @@ export default function Featured() {
                       alignSelf={"center"}
                       sx={style.cardContent}
                     >
-                      {onSale && (
+                      {item?.blnOnSale && (
                         // <div style={style.positionAbsolute}>
                           <Box sx={style.saleBox}>
                             <Grid
@@ -230,8 +230,9 @@ export default function Featured() {
                         <Grid item xs="12" container justifyContent={"center"}>
                             <Grid item="6px" sx={style.imgHighlight}>
                               <img
-                                src={img}
+                                src={item?.jsnProductInfo?.strImgPath}
                                 height={"250px"}
+                                width={'250px'}
                                 style={style.itemImg}
                               />
                             </Grid>
@@ -241,14 +242,14 @@ export default function Featured() {
                             <Grid item xs="12">
                               <Rating
                                 color={"#ffd40d"}
-                                value={rating}
+                                value={item?.intRating}
                                 sx={style.itemRating}
                                 readOnly={true}
                               />
                             </Grid>
                             <Grid item xs="12">
                               <Typography sx={style.itemName}>
-                                {name}
+                                {item?.jsnName[lang]}
                               </Typography>
                             </Grid>
                             <Grid item xs="12">
@@ -265,17 +266,17 @@ export default function Featured() {
                                     <Grid item>
 
                                   <Typography sx={style.price}>
-                                    {price}
+                                    {item?.blnOnSale?(item?.jsnProductInfo?.strSalePrice):(item?.jsnProductInfo?.strPrice)}
                                   </Typography>
                                     </Grid>
                                     <Grid item >
-                                    {onSale && (
+                                    {item?.blnOnSale && (
                                     <Typography
                                       component={'caption'}
                                       px-1
                                       sx={style.salePrice}
                                     >
-                                      ${salePrice}
+                                      ${item?.jsnProductInfo?.strPrice}
                                     </Typography>
                                   )}
                                 

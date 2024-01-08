@@ -8,6 +8,7 @@ import categoryBgImgTwo from "assets/image/discover-2.png";
 import categoryBgImgThree from "assets/image/discover-3.png";
 import categoryBgImgFour from "assets/image/discover-8.png";
 import categoryBgImgFive from "assets/image/discover-7.png";
+import { EmailOutlined, PhoneOutlined } from "@mui/icons-material";
 
 
 export const tabsOptions = [
@@ -40,3 +41,8 @@ export const tabsOptions = [
       img: categoryBgImgFive,
     },
   };
+
+  export const icons = {
+    EmailOutlined:<EmailOutlined fontSize="small"  />,
+    PhoneOutlined:<PhoneOutlined fontSize="small"  />
+  } 

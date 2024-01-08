@@ -96,7 +96,8 @@ const style = {
     background: "#f3fbfb",
     width: "100%",
     borderRadius: "20px !important",
-    paddingLeft: "180px !important",
+    // paddingLeft: "180px !important",
+    paddingRight: "180px !important",
     paddingTop: "50px",
     paddingBottom: "50px",
     xs: {
@@ -136,7 +137,8 @@ const style = {
     position: "absolute",
     top: "5%",
     bottom: "5%",
-    left: "50px",
+    // left: "-50px",
+    // right:"50px",
     height: "100%",
   },
   menuImgCat: {
@@ -188,6 +190,8 @@ export default function RestaurantMenu({
   blnOnSaveAction,
   onSaveAction,
   readOnly,
+  lang,
+  dir
 }) {
   const tabsAssets = appVariables.objTabsAssets;
   const initialObjTabs = useMemo(() => {
@@ -308,7 +312,7 @@ export default function RestaurantMenu({
               >
                 <Grid item lg="12" xs="0" className="icon-container">
                   <img
-                    src={tabsAssets[tab.bigID].icon}
+                    src={tab?.jsnProductInfo?.strIconPath}
                     height={"50px"}
                     className={
                       `${tab.bigID}` === `${objTabs.activeTab.bigID}`
@@ -326,7 +330,7 @@ export default function RestaurantMenu({
                 </Grid>
                 <Grid item xs={"12"} justify={"center"}>
                   <Typography sx={style.tabName} className="title">
-                    {tab.strName}
+                    {tab.jsnName[lang]}
                   </Typography>
                 </Grid>
               </Grid>
@@ -353,12 +357,12 @@ export default function RestaurantMenu({
             sx={{
               position: "absolute",
               height: "100%",
-              left: "10px",
+              right: "10px",
               top: "60px",
             }}
           >
             <img
-              src={tabsAssets[objTabs.activeTab.bigID].img}
+              src={objTabs.activeTab.jsnProductInfo.strImgPath}
               width={"100%"}
               height={"80%"}
               style={style.menuImgCat}
@@ -374,7 +378,7 @@ export default function RestaurantMenu({
               >
                 <Grid item lg={"0"} xs={"12"}>
                   <img
-                    src={tabsAssets[objTabs.activeTab.bigID].img}
+                    src={objTabs.activeTab.jsnProductInfo.strImgPath}
                     width={"100%"}
                     height={"90%"}
                     style={style.menuImgCat}
@@ -384,7 +388,7 @@ export default function RestaurantMenu({
                   <Grid container justify={"start"}>
                     <Grid item xs={blnOnSaveCategory ? "10" : "12"} py-4>
                       <Typography sx={style.menuTitle}>
-                        {objTabs.activeTab.strName}
+                        {objTabs.activeTab.jsnName[lang]}
                       </Typography>
                     </Grid>
                     {objTabs?.tabsContent[objTabs.activeTab.bigID].map(
@@ -402,9 +406,12 @@ export default function RestaurantMenu({
                                 "1px dotted #555",
                             }}
                           >
-                            <Grid item xs={blnOnSaveAction ? "6" : "8"} p-0 m-0>
+                            <Grid item xs='1'>
+                              <img src={item.jsnProductInfo.strImgPath} height={'30px'} width={'30'} />
+                            </Grid>
+                            <Grid item xs={blnOnSaveAction ? "5" : "7"} p-0 m-0>
                               <Typography sx={style.dishName}>
-                                {item.strName}
+                                {item.jsnName[lang]}
                               </Typography>
                             </Grid>
                             <Grid
@@ -421,7 +428,7 @@ export default function RestaurantMenu({
                             </Grid>
                             <Grid item xs={"9"} p-0 m-0>
                               <Typography sx={style.dishDescription}>
-                                {item.jsnProductInfo.strDescription}
+                                {item.jsnProductInfo.jsnDescription[lang]}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -435,28 +442,6 @@ export default function RestaurantMenu({
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <AddTab
-        addTabOpen={addTabOpen}
-        objTabs={objTabs}
-        setAddTabOpen={setAddTabOpen}
-        funAddTab={funAddTab}
-      /> */}
-      {/* <AddContentItem
-        addItemOpen={addItemOpen}
-        setAddItemOpen={setAddItemOpen}
-      /> */}
-      {/* <EditItem
-        editItemOpen={editItemOpen}
-        item={objTabs?.categoryOnAction}
-        setEditItemOpen={setEditItemOpen}
-        funEditItem={funEditItem}
-      /> */}
-      {/* <AddItem
-        addItemOpen={addItemOpen}
-        setAddItemOpen={setAddItemOpen}
-        funAddItem={funAddItem}
-      /> */}
     </React.Fragment>
   );
 }

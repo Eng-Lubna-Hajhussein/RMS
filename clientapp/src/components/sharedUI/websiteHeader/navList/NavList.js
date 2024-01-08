@@ -3,11 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Typography } from '@mui/material';
 
@@ -56,7 +52,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function NavList({nav,navList}) {
+export default function NavList({nav,navList,lang}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -80,6 +76,7 @@ export default function NavList({nav,navList}) {
         sx={{cursor:"pointer",fontWeight:"800",fontSize:"16px",textTransform:"capitalize",color:"#000"}}
       >
         {nav}
+        &nbsp;
       </Button>
       {navList?.length&&<StyledMenu
         id="demo-customized-menu"
@@ -96,7 +93,7 @@ export default function NavList({nav,navList}) {
           <React.Fragment>
           <MenuItem onClick={handleClose} disableRipple>
           <Typography color={'#000'} sx={{cursor:"pointer",fontWeight:"600",fontSize:"15px",textTransform:"capitalize"}}>
-          {nav}
+          {nav[lang]}
           </Typography>
         </MenuItem>
         {index!==(navList.length-1)&&<Divider />}

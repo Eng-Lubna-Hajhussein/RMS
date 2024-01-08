@@ -1,67 +1,10 @@
 import "./HeroCarousel.css";
-import img1 from "assets/image/hero-1.jpg";
-import img2 from "assets/image/hero-2.jpg";
-import img3 from "assets/image/hero-3.jpg";
-import img4 from "assets/image/hero-4.jpg";
 import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
 import React, { useState } from "react";
 import { Grid, Typography, Button, Box, Icon, Rating } from "@mui/material";
 import mealImg from "assets/image/pizze-img.png";
+import { dictionary } from "appHelper/appDictionary";
 
-const data = [
-  {
-    src: img1,
-    alt: "Image 1 for carousel",
-    title: "The Perfect Space to Enjoy Fantastic Food",
-    subtitle:
-      "Festive dining at Farthings where we are strong believers in using the very best produce",
-    weeklySpecial: {
-      price: "90.85",
-      name: "sicilian pizza",
-      rating: "5",
-      img: mealImg,
-    },
-  },
-  {
-    src: img2,
-    alt: "Image 2 for carousel",
-    title: "The Perfect Space to Enjoy Fantastic Food",
-    subtitle:
-      "Festive dining at Farthings where we are strong believers in using the very best produce",
-    weeklySpecial: {
-      price: "90.85",
-      name: "sicilian pizza",
-      rating: "5",
-      img: mealImg,
-    },
-  },
-  {
-    src: img3,
-    alt: "Image 3 for carousel",
-    title: "The Perfect Space to Enjoy Fantastic Food",
-    subtitle:
-      "Festive dining at Farthings where we are strong believers in using the very best produce",
-    weeklySpecial: {
-      price: "90.85",
-      name: "sicilian pizza",
-      rating: "5",
-      img: mealImg,
-    },
-  },
-  {
-    src: img4,
-    alt: "Image 4 for carousel",
-    title: "The Perfect Space to Enjoy Fantastic Food",
-    subtitle:
-      "Festive dining at Farthings where we are strong believers in using the very best produce",
-    weeklySpecial: {
-      price: "90.85",
-      name: "sicilian pizza",
-      rating: "5",
-      img: mealImg,
-    },
-  },
-];
 
 const style = {
   container: {
@@ -152,46 +95,37 @@ const style = {
   },
 };
 
-export const HeroCarousel = () => {
+export const HeroCarousel = ({jsnHeroSection,lang,dir}) => {
   const [slide, setSlide] = useState(0);
 
   const nextSlide = () => {
-    setSlide(slide === data.length - 1 ? 0 : slide + 1);
+    setSlide(slide === jsnHeroSection.lstSlidesImgs.length - 1 ? 0 : slide + 1);
   };
 
   const prevSlide = () => {
-    setSlide(slide === 0 ? data.length - 1 : slide - 1);
+    setSlide(slide === 0 ? jsnHeroSection.lstSlidesImgs.length - 1 : slide - 1);
   };
 
   return (
     <Grid container className="carousel">
-       <Box
-        sx={{
-          height: "50px",
-          padding: "11px",
-          paddingLeft:"16px",
-          paddingRight:"16px",
-          width: "50px",
-          textAlign: "center",
-          background: "#ffd40d",
-          margin: "auto",
-          borderRadius: "100%",
-        }}
-        onClick={prevSlide}
-        className="arrow arrow-left"
-      >
-        <Icon>
-          <ArrowBackIos sx={{ color: "#000" }} />
-        </Icon>
-      </Box>
-      {data.map((item, idx) => {
+      {jsnHeroSection.lstSlidesImgs.map((img, idx) => {
         return (
-          <div
+          <Grid
             className={slide === idx ? "slide" : "slide slide-hidden"}
-            style={{
-              background: `url(${item.src})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
+            sx={{
+              ':before':{
+                background: `url(${img})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                transform:'scaleX(-1)',
+                height:"600px",
+                content: '""',
+                position:"absolute",
+                left:"0",
+                right:'0',
+                bottom:'0',
+                zIndex:"-1000"
+              }
             }}
           >
             <Grid
@@ -208,14 +142,14 @@ export const HeroCarousel = () => {
                 sx={{ paddingTop: "20px", paddingBottom: "20px" }}
                 justify={"start"}
               >
-                <Typography sx={style.title}>{item.title}</Typography>
+                <Typography sx={style.title}>{jsnHeroSection.jsnTitle[lang]}</Typography>
               </Grid>
               <Grid
                 item
                 xs="12"
                 sx={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                <Typography sx={style.subtitle}>{item.subtitle}</Typography>
+                <Typography sx={style.subtitle}>{jsnHeroSection.jsnSubtitle[lang]}</Typography>
               </Grid>
               <Grid
                 item
@@ -235,7 +169,7 @@ export const HeroCarousel = () => {
                         className="animated-btn-001"
                         sx={{ fontWeight: "800" }}
                       >
-                        see our menus
+                        {dictionary.buttons.seeOurMenuBtn[lang]}
                       </Typography>
                     </Button>
                   </Grid>
@@ -258,16 +192,16 @@ export const HeroCarousel = () => {
                         </i>
                         <Typography
                           mx={2}
-                          sx={{ fontWeight: "800 !important" }}
+                          sx={{ fontWeight: "800 !important",cursor:"pointer",textTransform:"capitalize" }}
                         >
-                          Watch Video
+                          {dictionary.buttons.watchVideo[lang]}
                         </Typography>
                       </a>
                     </div>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item lg={"4"}>
+              {/* <Grid item lg={"4"}>
                 <Grid container justify={"end"}>
                   <Grid item lg="12" xs={"12"} alignSelf={"flex-start"}>
                     <Box
@@ -307,31 +241,13 @@ export const HeroCarousel = () => {
                     </Box>
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
-          </div>
+          </Grid>
         );
       })}
-      <Box
-        sx={{
-          height: "50px",
-          padding: "11px",
-          width: "50px",
-          textAlign: "center",
-          background: "#ffd40d",
-          margin: "auto",
-          borderRadius: "100%",
-        }}
-        onClick={nextSlide}
-        className="arrow arrow-right"
-      >
-        <Icon>
-          <ArrowForwardIos sx={{ color: "#000" }} />
-        </Icon>
-      </Box>
-
       <span className="indicators">
-        {data.map((_, idx) => {
+        {jsnHeroSection.lstSlidesImgs.map((_, idx) => {
           return (
             <button
               key={idx}

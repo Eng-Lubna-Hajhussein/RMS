@@ -1,9 +1,10 @@
 import HeroCarousel from "components/sharedUI/heroCarousel/HeroCarousel";
 import React from "react";
 
-function Hero(){
+
+function Hero({lang,dir,jsnHeroSection}){
     return <React.Fragment>
-            <HeroCarousel />
+            <HeroCarousel lang={lang} dir={dir} jsnHeroSection={jsnHeroSection} />
     </React.Fragment>
 }
 

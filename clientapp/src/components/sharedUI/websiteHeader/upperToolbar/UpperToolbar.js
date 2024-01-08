@@ -8,8 +8,15 @@ import {
   Link,
 } from "@mui/material";
 import {
+  EmailOutlined,
   HowToRegOutlined,
+  Language,
+  PhoneOutlined,
+  ShoppingBagOutlined,
 } from "@mui/icons-material";
+import {icons} from 'appHelper/appVariables';
+import {dictionary} from 'appHelper/appDictionary';
+import { Badge } from "react-bootstrap";
 
 const styles = {
   upperToolbar: {
@@ -17,8 +24,8 @@ const styles = {
     boxShadow: "none",
     "&": {
       minHeight: "50px",
-      paddingLeft: "80px",
-      paddingRight: "80px",
+      paddingLeft: "50px",
+      paddingRight: "50px",
     },
     display: {
       xs: "none",
@@ -36,6 +43,7 @@ const styles = {
   font: {
     fontSize: "14px",
     fontWeight: "800",
+    textTransform:"capitalize"
   },
   socialLink: {
     color: "#000",
@@ -61,30 +69,38 @@ const styles = {
   },
 };
 
-function UpperToolbar({listSystemContact,listSystemSocial}){
+
+
+function UpperToolbar({lstContact,lstSocial,lang}){
     return (
-        <Toolbar sx={styles.upperToolbar}>
-        <Grid container direction={"row"} alignItems={"center"}>
-          {listSystemContact.map(({ ContactIcon, name, value }) => (
-            <Grid container item xs="3" key={name} spacing={"3"}>
+        <Toolbar sx={styles.upperToolbar} >
+        <Grid container direction={"row"}  alignItems={"center"}>
+          {lstContact.map(({ jsnName, strValue,strIcon },index) => (
+            <Grid container item xs="3" key={index} spacing={"3"}>
               <Grid item>
                 <Box sx={styles.contactIconBox}>
-                  <Icon>{<ContactIcon fontSize="small" />}</Icon>
+                  <Icon>{icons[strIcon]}</Icon>
                 </Box>
               </Grid>
-
-              <Grid item alignSelf={"center"}>
+              <Grid item container xs='8' alignSelf={"center"}>
+                <Grid item>
                 <Typography component={"p"} sx={styles.font} color={"#000"}>
-                  {name}: {value}
+                {jsnName[lang]} :&nbsp;
                 </Typography>
+                </Grid>
+                <Grid item>
+                <Typography dir="ltr" component={"p"} sx={styles.font} color={"#000"}>
+                &nbsp;{strValue}
+                </Typography>
+                </Grid>
               </Grid>
             </Grid>
           ))}
           <Grid container item xs="3" justifyContent={"center"} spacing={"3"}>
-            {listSystemSocial.map(({ name, path }) => (
-              <Grid item xs="4">
-                <Link href="#" sx={styles.socialLink}>
-                  {name}
+            {lstSocial.map(({ jsnName, strPath }) => (
+              <Grid item xs="3">
+                <Link href={strPath} target="_blank" sx={styles.socialLink}>
+                  {jsnName[lang]}
                 </Link>
               </Grid>
             ))}
@@ -105,7 +121,7 @@ function UpperToolbar({listSystemContact,listSystemSocial}){
             </Grid>
             <Grid item alignSelf={"center"}>
               <Typography component={"p"} sx={styles.font} color={"#000"}>
-                Login / Register
+                {dictionary.buttons.regBtn[lang]}
               </Typography>
             </Grid>
           </Grid>

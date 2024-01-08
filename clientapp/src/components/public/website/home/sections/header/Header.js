@@ -22,110 +22,39 @@ import {
 import logoIcon from "assets/image/logo.png";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 
-const styles = {
-  appBar: {
-    boxShadow: "none",
-  },
-  upperToolbar: {
-    backgroundColor: "#ffd40d",
-    boxShadow: "none",
-    "&": {
-      minHeight: "50px",
-      paddingLeft: "80px",
-      paddingRight: "80px",
-    },
-    display: {
-      xs: "none",
-      lg: "flex",
-    },
-  },
-  contactIconBox: {
-    height: "34px",
-    padding: "2px",
-    width: "34px",
-    textAlign: "center",
-    background: "#f3274c",
-    borderRadius: "50%",
-  },
-  font: {
-    fontSize: "14px",
-    fontWeight: "800",
-  },
-  socialLink: {
-    color: "#000",
-    fontSize: "14px",
-    textDecoration: "underline #000",
-    fontWeight: "600",
-  },
-  socialIconBox: {
-    height: "34px",
-    padding: "2px",
-    width: "34px",
-    textAlign: "center",
-    background: "#f3274c",
-    borderRadius: "50%",
-  },
-  regIconBox: {
-    height: "34px",
-    padding: "2px",
-    width: "34px",
-    textAlign: "center",
-    borderRadius: "50%",
-    border: "2px solid #000",
-  },
-  lowerToolBar: {
-    background: "#fff",
-    "&": {
-      minHeight: "100px",
-      paddingLeft: { lg: "80px", xs: "20px" },
-      paddingRight: { lg: "80px", xs: "10px" },
-    },
-  },
-};
+function Header({lang,dir,lstContact,lstSocial}) {
 
-function Header() {
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const listSystemContact = [
+  const lstWebsiteNav= [
+    { nav: {eng:"home",arb:"الرئيسية"} },
+    { nav: {eng:"menus",arb:"المنيو"} },
     {
-      ContactIcon: PhoneAndroidOutlined,
-      name: "phone",
-      value: "+1 (850) 344 0 66",
-    },
-    { ContactIcon: EmailOutlined, name: "email", value: "info@domain.com" },
-  ];
-  const listSystemSocial = [
-    { name: "facebook", path: "" },
-    { name: "instagram", path: "" },
-    { name: "youtube", path: "" },
-  ];
-  const navList = [
-    { nav: "home" },
-    { nav: "menus" },
-    {
-      nav: "shop",
+      nav: {eng:"shop",arb:"تسوق"},
       navList: [
-        { nav: "our product" },
-        { nav: "product details" },
-        { nav: "shop cart" },
-        { nav: "cart checkout" },
+        { nav: {eng:"shop cart",arb:"كرت التسوق"} },
+        { nav: {eng:"cart checkout",arb:"الحساب"} },
       ],
     },
-    { nav: "news", navList: [{ nav: "our blog" }, { nav: "blog details" }] },
+    { nav: {eng:"news",arb:"الاخبار"}, navList: [{ nav: {eng:"our blog",arb:"مدونتنا"} }, { nav: {eng:"blog details",arb:"تفاصيل المدونة"} }] },
     {
-      nav: "pages",
+      nav: {eng:"pages",arb:"الصفحات"},
       navList: [
-        { nav: "about" },
-        { nav: "our services" },
-        { nav: "chef details" },
-        { nav: "login" },
+        { nav: {eng:"about",arb:"عنا"} },
+        { nav: {eng:"our services",arb:"خدماتنا"} },
+        { nav: {eng:"login",arb:"تسجيل الدخول"} },
       ],
     },
-    { nav: "contact" },
+    { nav: {eng:"contact",arb:"تواصل معنا"} },
   ];
 
   return (
     <React.Fragment>
-      <WebsiteHeader />
+      <WebsiteHeader
+        lang={lang}
+        dir={dir}
+        lstContact={lstContact}
+        lstSocial={lstSocial}
+        navList={lstWebsiteNav}
+      />
     </React.Fragment>
   );
 }

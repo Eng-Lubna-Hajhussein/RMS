@@ -1,8 +1,8 @@
 import { Avatar, Grid, Typography } from "@mui/material";
-import React from "react";
 import ownerAvatar from 'assets/image/owner-avatar.jpg';
+import React from "react";
 
-function Owner() {
+function Owner({lang,dir,jsnOwnerSection}) {
   return (
     <React.Fragment>
       <Grid
@@ -19,13 +19,13 @@ function Owner() {
             <Typography
               sx={{
                 color: "#f3274c",
-                fontSize: "18px",
+                fontSize: "25px",
                 textTransform: "uppercase",
-                letterSpacing: "2px",
+                letterSpacing: dir==='ltr'&&"2px",
                 fontWeight: "800",
               }}
             >
-              ABOUT THE FOOD RESTAURANT
+              {jsnOwnerSection.jsnTitle[lang]}
             </Typography>
           </Grid>
           <Grid item xs="12">
@@ -38,17 +38,14 @@ function Owner() {
                 fontWeight: "700",
               }}
             >
-              New Ground with Dishes to be Enjoyed
+               {jsnOwnerSection.jsnSubtitle[lang]}
             </Typography>
           </Grid>
         </Grid>
         <Grid item container xs="6">
           <Grid item xs="12">
             <Typography sx={{fontSize:"18px",color:"#555"}}>
-              Nisl quam nestibulum ac quam nec odio eleme aucan ligula. Orci
-              varius nat oque pena tibus et urient monte nascete ridiculus mus
-              nellentesq um ac qu am nec odio rbine. Nisl quam nestibu aucan
-              ligula.
+              {jsnOwnerSection.jsnOwnerComment[lang]}
             </Typography>
           </Grid>
           <Grid item container xs='12'>
@@ -61,15 +58,16 @@ function Owner() {
                 sx={{
                     fontSize:"24px",
                     fontWeight:"700",
-                    color:"#000"
+                    color:"#000",
+                    textTransform:"capitalize"
                 }}
                 >
-                Willimes James
+                 {jsnOwnerSection.jsnOwnerName[lang]}
                 </Typography>
                 </Grid>
                 <Grid item xs="12">
-                <Typography sx={{fontSize:"16px",color:"#555"}}>
-                Director and Chief Operations Officer
+                <Typography sx={{fontSize:"16px",color:"#555",textTransform:"capitalize"}}>
+                {jsnOwnerSection.jsnOwnerSpecialization[lang]}
                 </Typography>
                 </Grid>
             </Grid>

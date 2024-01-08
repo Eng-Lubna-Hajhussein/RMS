@@ -85,52 +85,16 @@ const styles = {
   },
 };
 
-function WebsiteHeader() {
+function WebsiteHeader({lstContact,lstSocial,navList,lang}) {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const listSystemContact = [
-    {
-      ContactIcon: PhoneAndroidOutlined,
-      name: "phone",
-      value: "+1 (850) 344 0 66",
-    },
-    { ContactIcon: EmailOutlined, name: "email", value: "info@domain.com" },
-  ];
-  const listSystemSocial = [
-    { name: "facebook", path: "" },
-    { name: "instagram", path: "" },
-    { name: "youtube", path: "" },
-  ];
-  const navList = [
-    { nav: "home" },
-    { nav: "menus" },
-    {
-      nav: "shop",
-      navList: [
-        { nav: "our product" },
-        { nav: "product details" },
-        { nav: "shop cart" },
-        { nav: "cart checkout" },
-      ],
-    },
-    { nav: "news", navList: [{ nav: "our blog" }, { nav: "blog details" }] },
-    {
-      nav: "pages",
-      navList: [
-        { nav: "about" },
-        { nav: "our services" },
-        { nav: "chef details" },
-        { nav: "login" },
-      ],
-    },
-    { nav: "contact" },
-  ];
+
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="static" sx={styles.appBar}>
-        <UpperToolbar listSystemSocial={listSystemSocial} listSystemContact={listSystemContact}  />
-        <LowerToolbar navList={navList} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+      <AppBar  position="static" sx={styles.appBar}>
+        <UpperToolbar lstSocial={lstSocial} lstContact={lstContact} lang={lang}  />
+        <LowerToolbar navList={navList} lang={lang} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </AppBar>
       <DrawerNav openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
     </React.Fragment>

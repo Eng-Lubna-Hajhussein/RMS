@@ -1,5 +1,6 @@
 import React from "react";
 import Router from "Router";
+document.documentElement.dir = 'rtl'
 
 function App() {
   return (
