@@ -3,18 +3,21 @@ import featuredDishCardImgOne from "assets/image/featured-dishes-2.png";
 import featuredDishCardImgTwo from "assets/image/featured-dishes-3.png";
 import featuredDishCardImgThree from "assets/image/featured-dishes-1.png";
 import shoppingIcon from "assets/image/shopping.svg";
+import FeaturedCarousel from "components/sharedUI/featuredCarousel/FeaturedCarousel";
+import FeaturedCard from "components/sharedUI/featuredCard/FeaturedCard";
+import Carousel from "components/sharedUI/carousel/Carousel";
+import { useMemo } from "react";
 
 const style = {
   container: {
     backgroundColor: "#f3fbfb !important",
-    height:"fit-content",
-    padding:"50px",
-    paddingLeft:"100px",
-    paddingRight:"100px",
-    // paddingTop:"200px !important",
-    xs: {
+      height: "fit-content",
+      marginTop:"50px",
+      marginBottom:"50px",
+      // paddingLeft: {lg:"60px !important",xs:'15px'},
+      // paddingRight: {lg:"60px !important",xs:'15px'},
+      paddingY:"50px"
     },
-  },
   fullHeight: {
     height: "100%",
   },
@@ -150,33 +153,18 @@ const style = {
 };
 
 export default function Featured({lang,dir,lstFeatured}) {
-  const featuredDishesList = [
-    {
-      name: "Parisian Hamburger",
-      rating: 5,
-      img: featuredDishCardImgTwo,
-      price: "10.85",
-      onSale: false,
-      salePrice: null,
-    },
-    {
-      name: "Brown Sandwich",
-      rating: 5,
-      img: featuredDishCardImgThree,
-      price: "10.85",
-      onSale: false,
-      salePrice: null,
-    },
-    {
-      name: "Banana Leaves",
-      rating: 5,
-      img: featuredDishCardImgOne,
-      price: "14.50",
-      onSale: true,
-      salePrice: "10.85",
-    },
-  ];
-  
+  const slides = useMemo(() => {
+    return lstFeatured.map((item) => ({
+      slideContent: (
+        <FeaturedCard
+          lang={lang}
+          dir={dir}
+          item={item}
+        />
+      ),
+      sxStyle: {height: { lg: "fit-content", xs: "fit-content" }},
+    }));
+  }, [lstFeatured]);
   return (
     <Grid
       container
@@ -189,117 +177,7 @@ export default function Featured({lang,dir,lstFeatured}) {
         <Grid container   alignItems={"flex-end"}
       alignSelf={"flex-end"}>
           <Grid item xs="12">
-        <Grid container justify={"center"} spacing={4} py-10>
-          {lstFeatured.map(
-            (item) => (
-              <Grid item lg="4" xs={"12"} p-0 m-0>
-                <Paper elevation={0} outline={0} sx={style.cardPaper}>
-                  <Grid
-                    container
-                    sx={style.fullHeight}
-                    alignItems={"center"}
-                    alignSelf={"center"}
-                  >
-                    <Grid
-                      item
-                      xs="12"
-                      container
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                      alignSelf={"center"}
-                      sx={style.cardContent}
-                    >
-                      {item?.blnOnSale && (
-                        // <div style={style.positionAbsolute}>
-                          <Box sx={style.saleBox}>
-                            <Grid
-                              container
-                              sx={{ height: "100%" }}
-                              alignItems={"center"}
-                            >
-                              <Grid item xs="12" justify={"center"}>
-                                <Typography sx={style.saleTitle}>
-                                  Sale
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </Box>
-                        // </div>
-                      )}
-                      <Grid container>
-                        <Grid item xs="12" container justifyContent={"center"}>
-                            <Grid item="6px" sx={style.imgHighlight}>
-                              <img
-                                src={item?.jsnProductInfo?.strImgPath}
-                                height={"250px"}
-                                width={'250px'}
-                                style={style.itemImg}
-                              />
-                            </Grid>
-                        </Grid>
-                        <Grid item xs="12">
-                          <Grid  container px={5} >
-                            <Grid item xs="12">
-                              <Rating
-                                color={"#ffd40d"}
-                                value={item?.intRating}
-                                sx={style.itemRating}
-                                readOnly={true}
-                              />
-                            </Grid>
-                            <Grid item xs="12">
-                              <Typography sx={style.itemName}>
-                                {item?.jsnName[lang]}
-                              </Typography>
-                            </Grid>
-                            <Grid item xs="12">
-                              <Grid container alignContent={'center'} alignItems={'center'} sx={{height:"fit-content"}}>
-                                <Grid item xs="9" container>
-       
-                                    <Grid item>
-
-                                  <Typography sx={style.dollarSign}>
-                                    $
-                                  </Typography>
-                                    </Grid>
-                                    
-                                    <Grid item>
-
-                                  <Typography sx={style.price}>
-                                    {item?.blnOnSale?(item?.jsnProductInfo?.strSalePrice):(item?.jsnProductInfo?.strPrice)}
-                                  </Typography>
-                                    </Grid>
-                                    <Grid item >
-                                    {item?.blnOnSale && (
-                                    <Typography
-                                      component={'caption'}
-                                      px-1
-                                      sx={style.salePrice}
-                                    >
-                                      ${item?.jsnProductInfo?.strPrice}
-                                    </Typography>
-                                  )}
-                                
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs="3">
-                                  <img
-                                    src={shoppingIcon}
-                                    style={style.shoppingIcon}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            )
-          )}
-        </Grid>
+          <Carousel slides={slides} activeSlides={3} justify={'center'} activeColor={'#f3274c'} inactiveColor={'#b5b5b5'} lang={lang} dir={dir}  />
           </Grid>
         </Grid>
       </Grid>

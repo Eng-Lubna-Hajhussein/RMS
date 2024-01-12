@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Alert,
+  Box,
   Button,
   Grid,
   Icon,
@@ -10,13 +11,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Add, MoreVert } from "@mui/icons-material";
-// import AddTab from "./AddTab";
-// import AddContentItem from "./AddItem";
 import * as appFunctions from "../../../appHelper/appFunctions";
 import * as appVariables from "../../../appHelper/appVariables";
 import "./RestaurantMenu.css";
-// import EditItem from "./EditItem";
-// import AddItem from "./AddItem";
 import shoppingIcon from "assets/image/shopping.svg";
 
 const style = {
@@ -27,15 +24,12 @@ const style = {
     cursor: "pointer",
   },
   menuTitle: {
-    fontSize: "40px !important",
+    fontSize: {lg:"40px !important",xs:"20px"},
     textTransform: "capitalize",
     color: "#000",
     fontFamily: "sans-serif",
     fontWeight: "800 !important",
     lineHeight: "1.2 !important",
-    xs: {
-      fontSize: "30px !important",
-    },
   },
   container: {
     height: "100vh",
@@ -97,7 +91,7 @@ const style = {
     width: "100%",
     borderRadius: "20px !important",
     // paddingLeft: "180px !important",
-    paddingRight: "180px !important",
+    // paddingRight: "180px !important",
     paddingTop: "50px",
     paddingBottom: "50px",
     xs: {
@@ -145,27 +139,24 @@ const style = {
     zIndex: "111",
   },
   dishName: {
-    fontSize: "16px !important",
+    fontSize: {lg:"16px !important",xs:'9px'},
     fontWeight: "800 !important",
     color: "#000",
     fontFamily: "sans-serif",
-    xs: {
-      fontSize: "13px !important",
-    },
   },
   dishDescription: {
-    fontSize: "18px !important",
+    fontSize: {lg:"18px !important",xs:"9px"},
     fontWeight: "400 !important",
     color: "#555",
     fontFamily: "Epilogue",
-    lineHeight: "30px !important",
+    lineHeight: {lg:"30px !important",xs:"20px"},
     xs: {
       fontSize: "12px !important",
       lineHeight: "20px !important",
     },
   },
   dishPrice: {
-    fontSize: "22px !important",
+    fontSize: {lg:"22px !important",xs:"10px"},
     fontWeight: "800 !important",
     color: "#f3274c",
     fontFamily: "sans-serif",
@@ -191,9 +182,8 @@ export default function RestaurantMenu({
   onSaveAction,
   readOnly,
   lang,
-  dir
+  dir,
 }) {
-  const tabsAssets = appVariables.objTabsAssets;
   const initialObjTabs = useMemo(() => {
     const objTabs = categories
       .sort((a, b) => a.bigParentID - b.bigParentID)
@@ -290,27 +280,41 @@ export default function RestaurantMenu({
       <Grid
         container
         sx={{
-          marginTop: "100px",
-          marginBottom: "100px",
-          paddingLeft: "100px",
-          paddingRight: "100px",
+          marginTop: "50px",
+          marginBottom: "50px",
+          // paddingLeft: {lg:"100px !important",xs:'15px'},
+          // paddingRight: {lg:"100px !important",xs:'15px'},
         }}
         className="menu"
         justifyContent={"center"}
       >
-        <Grid item container xs="12" spacing={2} justifyContent={"center"}>
+        <Grid item container xs="12"  justifyContent={"center"}>
           {objTabs.tabs.map((tab, index) => (
-            <Grid item lg="2" xs={"4"} py={3}>
+            <Grid item container lg="2" xs={"4"} py={3}>
               <Grid
                 container
+                item 
+                xs='12'
                 justifyItems={"center"}
                 className={
                   `${tab.bigID}` === `${objTabs.activeTab.bigID}`
                     ? "nav-link active"
                     : "nav-link nav"
                 }
+                onClick={() => {
+                  setObjTabs({
+                    ...objTabs,
+                    activeTab: tab,
+                    categoryOnAction: null,
+                  });
+                }}
               >
-                <Grid item lg="12" xs="0" className="icon-container">
+                <Grid
+                  item
+                  lg="12"
+                  sx={{ display: { lg: "flex", xs: "none" } }}
+                  className="icon-container"
+                >
                   <img
                     src={tab?.jsnProductInfo?.strIconPath}
                     height={"50px"}
@@ -319,13 +323,7 @@ export default function RestaurantMenu({
                         ? "tab-icon active"
                         : "tab-icon"
                     }
-                    onClick={() => {
-                      setObjTabs({
-                        ...objTabs,
-                        activeTab: tab,
-                        categoryOnAction: null,
-                      });
-                    }}
+
                   />
                 </Grid>
                 <Grid item xs={"12"} justify={"center"}>
@@ -341,13 +339,14 @@ export default function RestaurantMenu({
         <Grid
           item
           container
-          xs="10"
+          lg="10"
+          xs="12"
           alignItems={"center"}
           alignContent={"center"}
-          sx={{ position: "relative", height: "600px" }}
+          sx={{ position: "relative", minHeight: "600px" }}
           justifyContent={"end"}
           pt={5}
-          py={10}
+          // py={10}
         >
           <Grid
             item
@@ -357,8 +356,10 @@ export default function RestaurantMenu({
             sx={{
               position: "absolute",
               height: "100%",
-              right: "10px",
+              right: dir === "rtl" && "10px",
+              left: dir === "ltr" && "10px",
               top: "60px",
+              display: { lg: "flex", xs: "none" },
             }}
           >
             <img
@@ -369,24 +370,42 @@ export default function RestaurantMenu({
             />
           </Grid>
           <Grid item lg="9" xs={"12"} justifySelf={"end"}>
-            <Paper elevation={0} outline={0} sx={style.menuPaper}>
+            <Paper
+              elevation={0}
+              outline={0}
+              sx={{
+                ...style.menuPaper,
+                
+              }}
+            >
               <Grid
                 container
+                item 
+                xs='12'
                 alignItems={"center"}
                 alignSelf={"center"}
-                sx={{ height: "100%" }}
+                sx={{ height: "100%",paddingLeft: {lg:dir === "ltr" && "180px",xs:"25px"},
+                paddingRight: {lg:dir === "rtl" && "180px",xs:"25px"}, }}
               >
-                <Grid item lg={"0"} xs={"12"}>
+                <Grid
+                  item
+                  lg={"0"}
+                  xs={"12"}
+                  container
+                  justifyContent={'center'}
+                  sx={{ display: { lg: "none", xs: "flex" } }}
+                  pb={3}
+                >
                   <img
                     src={objTabs.activeTab.jsnProductInfo.strImgPath}
-                    width={"100%"}
-                    height={"90%"}
+                    width={"200px"}
+                    height={"200px"}
                     style={style.menuImgCat}
                   />
                 </Grid>
                 <Grid item lg="11" xs={"12"} px-0>
                   <Grid container justify={"start"}>
-                    <Grid item xs={blnOnSaveCategory ? "10" : "12"} py-4>
+                    <Grid item xs={blnOnSaveCategory ? "10" : "12"}>
                       <Typography sx={style.menuTitle}>
                         {objTabs.activeTab.jsnName[lang]}
                       </Typography>
@@ -397,7 +416,7 @@ export default function RestaurantMenu({
                           <Grid
                             container
                             justify={"start"}
-                            alignItems={"flex-start"}
+                            alignItems={"center"}
                             alignSelf={"flex-start"}
                             py={2}
                             sx={{
@@ -406,10 +425,23 @@ export default function RestaurantMenu({
                                 "1px dotted #555",
                             }}
                           >
-                            <Grid item xs='1'>
-                              <img src={item.jsnProductInfo.strImgPath} height={'30px'} width={'30'} />
+                            <Grid
+                              item
+                              xs="1"
+                              container
+                              alignContent={"center"}
+                              sx={{ height: "fit-content" }}
+                            >
+                              <Box
+                              component={'img'}
+                                src={item.jsnProductInfo.strImgPath}
+                                // height={"40px"}
+                                // width={"40px"}
+                                sx={{height:{lg:"40px",xs:"20px"},width:{lg:"40px",xs:"100%"}}}
+                              />
                             </Grid>
-                            <Grid item xs={blnOnSaveAction ? "5" : "7"} p-0 m-0>
+                            
+                            <Grid item xs={blnOnSaveAction ? "5" : "7"} px={1}>
                               <Typography sx={style.dishName}>
                                 {item.jsnName[lang]}
                               </Typography>

@@ -1,7 +1,10 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import mostOrderedCardOneImg from "assets/image/bbq.jpg";
 import mostOrderedCardTwoImg from "assets/image/cocktail.jpg";
+import Carousel from "components/sharedUI/carousel/Carousel";
+import MostOrderedCard from "components/sharedUI/mostOrderedCard/MostOrderedCard";
 import MostOrderedCarousel from "components/sharedUI/mostOrderedCarousel/MostOrderedCarousel";
+import { useMemo } from "react";
 
 const style = {
     container: {
@@ -154,33 +157,19 @@ const style = {
     },
   };
 
-export default function MostOrdered(){
-    const mostOrderedList = [
-        {
-          title: "Steaks & BBQ",
-          subtitle: "canonical classics to obscure tiki drinks",
-          img: mostOrderedCardOneImg,
-          price: "120",
-        },
-        {
-          title: "Cocktails",
-          subtitle: "canonical classics to obscure tiki drinks",
-          img: mostOrderedCardTwoImg,
-          price: "120",
-        },
-        {
-          title: "Steaks & BBQ",
-          subtitle: "canonical classics to obscure tiki drinks",
-          img: mostOrderedCardOneImg,
-          price: "120",
-        },
-        {
-          title: "Cocktails",
-          subtitle: "canonical classics to obscure tiki drinks",
-          img: mostOrderedCardTwoImg,
-          price: "120",
-        },
-      ];
+export default function MostOrdered({lstMostOrdered,lang,dir}){
+  const slides = useMemo(() => {
+    return lstMostOrdered.map((item) => ({
+      slideContent: (
+        <MostOrderedCard
+          lang={lang}
+          dir={dir}
+          item={item}
+        />
+      ),
+      sxStyle: {height: { lg: "fit-content", xs: "fit-content" }},
+    }));
+  }, [lstMostOrdered]);
     return (
         <Grid
         container
@@ -188,64 +177,18 @@ export default function MostOrdered(){
         py-3
         
         sx={{
-          position: "relative",
           height: "fit-content",
-          marginTop:"100px",
-          marginBottom:"100px",
+          marginTop:"50px",
+          marginBottom:"50px",
+          // paddingLeft: {lg:"60px !important",xs:'15px'},
+          // paddingRight: {lg:"60px !important",xs:'15px'},
         }}
       >
-        <Grid item lg={'10'}>
-            <Grid container spacing={4}>
-            {/* {mostOrderedList.map(({ title, subtitle, price, img }) => (
-          <Grid item lg="6" xs={"12"}>
-            <Paper
-              elevation={0}
-              outline={0}
-              sx={{
-                background: `url(${img})`,
-                ...style.cardMostOrderedPaper,
-              }}
-            >
-              <Grid container sx={{ padding: "10px !important" }}>
-                <Grid item lg="12">
-                  <Typography sx={style.cardMostOrderedTitle}>
-                    {title}
-                  </Typography>
-                </Grid>
-                <Grid item lg={"8"}>
-                  <Typography sx={style.cardMostOrderedSubtitle}>
-                    {subtitle}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Paper>
-            <Grid
-              item
-              lg="12"
-             sx={{marginTop:"-100px",marginLeft:"30px"}}
-            >
-              <Box  sx={style.cardMostOrderedCrossBox}>
-                    <Grid container justify={"center"} sx={{height:"100%"}} alignItems={"center"} alignSelf={"center"}>
-                        <Grid item xs={'12'}>
-                            <Grid container justify={"center"}>
-
-                    <Grid item lg="12" py-0 my-0>
-                    <Typography sx={style.cardMostOrderedPrice}>
-                      ${price}
-                    </Typography>
-                  </Grid>
-                  <Grid item lg={"12"} py-0 my-0>
-                    <Typography sx={style.perPerson}>per person</Typography>
-                  </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-              </Box>
-            </Grid>
-          </Grid>
-        ))} */}
-        <MostOrderedCarousel list={mostOrderedList} />
-            </Grid>
+        <Grid item container lg={'12'} xs={'12'}>
+            {/* <Grid container spacing={4}> */}
+            <Carousel slides={slides} activeSlides={2} justify={'center'} activeColor={'#f3274c'} inactiveColor={'#b5b5b5'} lang={lang} dir={dir}  />
+        {/* <MostOrderedCarousel list={lstMostOrdered} lang={lang} dir={dir}  /> */}
+            {/* </Grid> */}
         </Grid>
      
       </Grid>

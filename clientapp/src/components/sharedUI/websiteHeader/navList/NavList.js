@@ -1,56 +1,15 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Typography } from '@mui/material';
+import StyledMenu from './StyledMenu';
 
-const StyledMenu = styled((props) => (
-  <Menu
-    elevation={0}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
-))(({ theme }) => ({
-  '& .MuiPaper-root': {
-    marginTop: theme.spacing(1),
-    minWidth: 180,
-    borderTop:"10px #f3274c solid",
-    transform: 'translatex(50px)',
-    borderRadius:"25px",
-    background:"#ffd40d",
-    padding:"10px",
-    color:
-      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-    boxShadow:
-      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
-    '& .MuiMenu-list': {
-      padding: '4px 0',
-    },
-    '& .MuiMenuItem-root': {
-      '& .MuiSvgIcon-root': {
-        fontSize: 18,
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
-      },
-      '&:active': {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity,
-        ),
-      },
-    },
-  },
-}));
+const style = {
+  nav:{cursor:"pointer",fontWeight:"800",fontSize:"16px",textTransform:"capitalize",color:"#000"},
+  subNav:{cursor:"pointer",fontWeight:"600",fontSize:"15px",textTransform:"capitalize"}
+}
 
 export default function NavList({nav,navList,lang}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -73,7 +32,7 @@ export default function NavList({nav,navList,lang}) {
         disableElevation
         onClick={handleClick}
         endIcon={navList?.length&&<KeyboardArrowDownIcon />}
-        sx={{cursor:"pointer",fontWeight:"800",fontSize:"16px",textTransform:"capitalize",color:"#000"}}
+        sx={style.nav}
       >
         {nav}
         &nbsp;
@@ -82,9 +41,7 @@ export default function NavList({nav,navList,lang}) {
         id="demo-customized-menu"
         MenuListProps={{
           'aria-labelledby': 'demo-customized-button',
-          
         }}
-
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -92,7 +49,7 @@ export default function NavList({nav,navList,lang}) {
         {navList.map(({nav},index)=>(
           <React.Fragment>
           <MenuItem onClick={handleClose} disableRipple>
-          <Typography color={'#000'} sx={{cursor:"pointer",fontWeight:"600",fontSize:"15px",textTransform:"capitalize"}}>
+          <Typography color={'#000'} sx={style.subNav}>
           {nav[lang]}
           </Typography>
         </MenuItem>

@@ -1,48 +1,28 @@
-import categoryIconOne from "assets/image/desert.svg";
-import categoryIconTwo from "assets/image/steak.svg";
-import categoryIconThree from "assets/image/coffee.svg";
-import categoryIconFour from "assets/image/pizza.svg";
-import categoryIconFive from "assets/image/burger.svg";
-import categoryBgImgOne from "assets/image/discover-1.png";
-import categoryBgImgTwo from "assets/image/discover-2.png";
-import categoryBgImgThree from "assets/image/discover-3.png";
-import categoryBgImgFour from "assets/image/discover-8.png";
-import categoryBgImgFive from "assets/image/discover-7.png";
 import { EmailOutlined, PhoneOutlined } from "@mui/icons-material";
 
-
-export const tabsOptions = [
-    { key: 3891922142, value: "dessert" },
-    { key: 3156578173, value: "steak" },
-    { key: 9723164333, value: "coffee" },
-    { key: 7087331728, value: "pizza" },
-    { key: 8129351047, value: "burger" },
-  ];
-  
-  export const objTabsAssets = {
-    3891922142: {
-      icon: categoryIconOne,
-      img: categoryBgImgOne,
-    },
-    3156578173: {
-      icon: categoryIconTwo,
-      img: categoryBgImgTwo,
-    },
-    9723164333: {
-      icon: categoryIconThree,
-      img: categoryBgImgThree,
-    },
-    7087331728: {
-      icon: categoryIconFour,
-      img: categoryBgImgFour,
-    },
-    8129351047: {
-      icon: categoryIconFive,
-      img: categoryBgImgFive,
-    },
-  };
-
   export const icons = {
-    EmailOutlined:<EmailOutlined fontSize="small"  />,
-    PhoneOutlined:<PhoneOutlined fontSize="small"  />
+    strEmail:<EmailOutlined fontSize="small"  />,
+    strPhone:<PhoneOutlined fontSize="small"  />
   } 
+
+  export const lstWebsiteNav= [
+    { bigNavID:1342146478,nav: {eng:"home",arb:"الرئيسية"} },
+    {  bigNavID:2344146478,nav: {eng:"menus",arb:"المنيو"} },
+    {
+      bigNavID:8944146478,nav: {eng:"shop",arb:"تسوق"},
+      navList: [
+        { bigNavID:8944146400, nav: {eng:"shop cart",arb:"كرت التسوق"} },
+        {  bigNavID:6944146478,nav: {eng:"cart checkout",arb:"الحساب"} },
+      ],
+    },
+    {  bigNavID:7943146478,nav: {eng:"news",arb:"الاخبار"}, navList: [{ nav: {eng:"our blog",arb:"مدونتنا"} }, { nav: {eng:"blog details",arb:"تفاصيل المدونة"} }] },
+    {
+      bigNavID:948246478,nav: {eng:"pages",arb:"الصفحات"},
+      navList: [
+        {  bigNavID:341246078,nav: {eng:"about",arb:"عنا"} },
+        {  bigNavID:968341478,nav: {eng:"our services",arb:"خدماتنا"} },
+        {  bigNavID:255546478,nav: {eng:"login",arb:"تسجيل الدخول"} },
+      ],
+    },
+    {  bigNavID:941116478,nav: {eng:"contact",arb:"تواصل معنا"} },
+  ];

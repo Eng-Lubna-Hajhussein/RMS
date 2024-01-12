@@ -3,6 +3,7 @@ import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import mostOrderedCardOneImg from "assets/image/bbq.jpg";
 import mostOrderedCardTwoImg from "assets/image/cocktail.jpg";
 import './MostOrderedCarousel.css';
+import MostOrderedCard from "../mostOrderedCard/MostOrderedCard";
 
 const style = {
   container: {
@@ -154,133 +155,23 @@ const style = {
     // width: "100%",
   },
 };
-export const MostOrderedCarousel = ({ list }) => {
+export const MostOrderedCarousel = ({ list ,lang, dir}) => {
   const [slide, setSlide] = useState(0);
-  const length = Math.floor(list.length/2);
-  console.log({length})
-
-  const nextSlide = () => {
-    setSlide(slide === length - 1 ? 0 : slide + 1);
-  };
-
-  const prevSlide = () => {
-    setSlide(slide === 0 ? length - 1 : slide - 1);
-  };
+  const length = Math.ceil(list.length/2);
 
   return (
     <Grid container className="most-ordered-carousel" justifyItems={'center'} justifyContent={'center'}>
-      <Grid item xs="12">
-
+      <Grid item container xs="12">
       {list.map((item, idx) => {
         return (
           <div className={slide === idx ? "slide" : "slide slide-hidden"}>
-            <Grid container spacing={4}>
-              <Grid item lg="6" xs={"12"}>
-                <Paper
-                  elevation={0}
-                  outline={0}
-                  sx={{
-                    background: `url(${item.img})`,
-                    ...style.cardMostOrderedPaper,
-                  }}
-                >
-                  <Grid container sx={{ padding: "10px !important" }}>
-                    <Grid item lg="12">
-                      <Typography sx={style.cardMostOrderedTitle}>
-                        {item.title}
-                      </Typography>
-                    </Grid>
-                    <Grid item lg={"8"}>
-                      <Typography sx={style.cardMostOrderedSubtitle}>
-                        {item.subtitle}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-                <Grid
-                  item
-                  lg="12"
-                  sx={{ marginTop: "-100px", marginLeft: "30px" }}
-                >
-                  <Box sx={style.cardMostOrderedCrossBox}>
-                    <Grid
-                      container
-                      justify={"center"}
-                      sx={{ height: "100%" }}
-                      alignItems={"center"}
-                      alignSelf={"center"}
-                    >
-                      <Grid item xs={"12"}>
-                        <Grid container justify={"center"}>
-                          <Grid item lg="12" py-0 my-0>
-                            <Typography sx={style.cardMostOrderedPrice}>
-                              ${item.price}
-                            </Typography>
-                          </Grid>
-                          <Grid item lg={"12"} py-0 my-0>
-                            <Typography sx={style.perPerson}>
-                              per person
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
+            <Grid container item xs='12'>
+              <Grid item container xs={"12"} lg="6" >
+                <MostOrderedCard item={item} lang={lang} dir={dir} />
               </Grid>
               {list[idx + 1] && (
-                <Grid item lg="6" xs={"12"}>
-                  <Paper
-                    elevation={0}
-                    outline={0}
-                    sx={{
-                      background: `url(${item.img})`,
-                      ...style.cardMostOrderedPaper,
-                    }}
-                  >
-                    <Grid container sx={{ padding: "10px !important" }}>
-                      <Grid item lg="12">
-                        <Typography sx={style.cardMostOrderedTitle}>
-                          {list[idx + 1].title}
-                        </Typography>
-                      </Grid>
-                      <Grid item lg={"8"}>
-                        <Typography sx={style.cardMostOrderedSubtitle}>
-                          {list[idx + 1].subtitle}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                  <Grid
-                    item
-                    lg="12"
-                    sx={{ marginTop: "-100px", marginLeft: "30px" }}
-                  >
-                    <Box sx={style.cardMostOrderedCrossBox}>
-                      <Grid
-                        container
-                        justify={"center"}
-                        sx={{ height: "100%" }}
-                        alignItems={"center"}
-                        alignSelf={"center"}
-                      >
-                        <Grid item xs={"12"}>
-                          <Grid container justify={"center"}>
-                            <Grid item lg="12" py-0 my-0>
-                              <Typography sx={style.cardMostOrderedPrice}>
-                                ${list[idx + 1].price}
-                              </Typography>
-                            </Grid>
-                            <Grid item lg={"12"} py-0 my-0>
-                              <Typography sx={style.perPerson}>
-                                per person
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Grid>
+                <Grid item lg="6" sx={{display:{lg:"flex",xs:"none"}}}>
+                   <MostOrderedCard item={list[idx + 1]} lang={lang} dir={dir} />
                 </Grid>
               )}
             </Grid>
@@ -288,7 +179,7 @@ export const MostOrderedCarousel = ({ list }) => {
         );
       })}
       </Grid>
-<Grid item xs='12' justifyContent={'center'} container pt={3}>
+{length>1&&<Grid item xs='12' display={{lg:"flex",xs:"none"}} justifyContent={'center'} container pt={3}>
         {Array(length).fill(1).map((_, idx) => {
           return (
             <button
@@ -300,7 +191,20 @@ export const MostOrderedCarousel = ({ list }) => {
             ></button>
           );
         })}
-</Grid>
+</Grid>}
+{list.length>1&&<Grid item xs='12' display={{lg:"none",xs:"flex"}} justifyContent={'center'} container pt={3}>
+        {list.map((_, idx) => {
+          return (
+            <button
+              key={idx}
+              className={
+                slide === idx ? "most-ordered-indicator" : "most-ordered-indicator most-ordered-indicator-inactive"
+              }
+              onClick={() => setSlide(idx)}
+            ></button>
+          );
+        })}
+</Grid>}
     </Grid>
   );
 };

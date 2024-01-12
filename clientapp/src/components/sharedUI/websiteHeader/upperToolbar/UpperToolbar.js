@@ -1,22 +1,9 @@
-import React, { useState } from "react";
-import {
-  Toolbar,
-  Grid,
-  Icon,
-  Box,
-  Typography,
-  Link,
-} from "@mui/material";
-import {
-  EmailOutlined,
-  HowToRegOutlined,
-  Language,
-  PhoneOutlined,
-  ShoppingBagOutlined,
-} from "@mui/icons-material";
-import {icons} from 'appHelper/appVariables';
-import {dictionary} from 'appHelper/appDictionary';
-import { Badge } from "react-bootstrap";
+import React from "react";
+import { Toolbar, Grid, Icon, Box, Typography } from "@mui/material";
+import { HowToRegOutlined } from "@mui/icons-material";
+import { dictionary } from "appHelper/appDictionary";
+import SystemContact from "./SystemContact";
+import SystemSocial from "./SystemSocial";
 
 const styles = {
   upperToolbar: {
@@ -32,32 +19,10 @@ const styles = {
       lg: "flex",
     },
   },
-  contactIconBox: {
-    height: "34px",
-    padding: "2px",
-    width: "34px",
-    textAlign: "center",
-    background: "#f3274c",
-    borderRadius: "50%",
-  },
-  font: {
+  regTypography: {
     fontSize: "14px",
     fontWeight: "800",
-    textTransform:"capitalize"
-  },
-  socialLink: {
-    color: "#000",
-    fontSize: "14px",
-    textDecoration: "underline #000",
-    fontWeight: "600",
-  },
-  socialIconBox: {
-    height: "34px",
-    padding: "2px",
-    width: "34px",
-    textAlign: "center",
-    background: "#f3274c",
-    borderRadius: "50%",
+    textTransform: "capitalize",
   },
   regIconBox: {
     height: "34px",
@@ -69,65 +34,69 @@ const styles = {
   },
 };
 
-
-
-function UpperToolbar({lstContact,lstSocial,lang}){
-    return (
-        <Toolbar sx={styles.upperToolbar} >
-        <Grid container direction={"row"}  alignItems={"center"}>
-          {lstContact.map(({ jsnName, strValue,strIcon },index) => (
-            <Grid container item xs="3" key={index} spacing={"3"}>
-              <Grid item>
-                <Box sx={styles.contactIconBox}>
-                  <Icon>{icons[strIcon]}</Icon>
-                </Box>
-              </Grid>
-              <Grid item container xs='8' alignSelf={"center"}>
-                <Grid item>
-                <Typography component={"p"} sx={styles.font} color={"#000"}>
-                {jsnName[lang]} :&nbsp;
-                </Typography>
-                </Grid>
-                <Grid item>
-                <Typography dir="ltr" component={"p"} sx={styles.font} color={"#000"}>
-                &nbsp;{strValue}
-                </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-          ))}
-          <Grid container item xs="3" justifyContent={"center"} spacing={"3"}>
-            {lstSocial.map(({ jsnName, strPath }) => (
-              <Grid item xs="3">
-                <Link href={strPath} target="_blank" sx={styles.socialLink}>
-                  {jsnName[lang]}
-                </Link>
-              </Grid>
-            ))}
+function UpperToolbar({ jsnSystemContact, lang }) {
+  return (
+    <Toolbar sx={styles.upperToolbar}>
+      <Grid container direction={"row"} alignItems={"center"}>
+        <Grid container item xs="3" spacing={"3"}>
+          <SystemContact
+            contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
+            lang={lang}
+          />
+        </Grid>
+        <Grid container item xs="3" spacing={"3"}>
+          <SystemContact
+            contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
+            lang={lang}
+          />
+        </Grid>
+        <Grid container item xs="3" justifyContent={"center"} spacing={"3"}>
+          <Grid item xs="3">
+            <SystemSocial
+              social={{
+                type: "strFacebook",
+                path: jsnSystemContact.strFacebook,
+              }}
+              lang={lang}
+            />
           </Grid>
-          <Grid
-            container
-            item
-            xs="3"
-            spacing={"3"}
-            justifyContent={"flex-end"}
-          >
-            <Grid item>
-              <Box sx={styles.regIconBox}>
-                <Icon>
-                  <HowToRegOutlined sx={{ color: "#000000" }} />
-                </Icon>
-              </Box>
-            </Grid>
-            <Grid item alignSelf={"center"}>
-              <Typography component={"p"} sx={styles.font} color={"#000"}>
-                {dictionary.buttons.regBtn[lang]}
-              </Typography>
-            </Grid>
+          <Grid item xs="3">
+            <SystemSocial
+              social={{
+                type: "strInstagram",
+                path: jsnSystemContact.strInstagram,
+              }}
+              lang={lang}
+            />
+          </Grid>
+          <Grid item xs="3">
+            <SystemSocial
+              social={{ type: "strYoutube", path: jsnSystemContact.strYoutube }}
+              lang={lang}
+            />
           </Grid>
         </Grid>
-      </Toolbar>
-    )
+        <Grid container item xs="3" spacing={"3"} justifyContent={"flex-end"}>
+          <Grid item>
+            <Box sx={styles.regIconBox}>
+              <Icon>
+                <HowToRegOutlined sx={{ color: "#000000" }} />
+              </Icon>
+            </Box>
+          </Grid>
+          <Grid item alignSelf={"center"}>
+            <Typography
+              component={"p"}
+              sx={styles.regTypography}
+              color={"#000000"}
+            >
+              {dictionary.buttons.regBtn[lang]}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Toolbar>
+  );
 }
 
 export default UpperToolbar;

@@ -1,57 +1,37 @@
-import "./HeroCarousel.css";
-import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
+// import "./HeroCarousel.css";
 import React, { useState } from "react";
-import { Grid, Typography, Button, Box, Icon, Rating } from "@mui/material";
-import mealImg from "assets/image/pizze-img.png";
+import { Grid, Typography, Button } from "@mui/material";
 import { dictionary } from "appHelper/appDictionary";
-
 
 const style = {
   container: {
-    height: "100%",
-    paddingLeft: "100px !important",
-    paddingRight: "100px !important",
-    xs: {
-      flexDirection: "column",
-      paddingLeft: "5px !important",
-      paddingRight: "5px !important",
-    },
+    height: {lg:"600px",xs:"700px"},
+    paddingLeft: {lg:"60px !important",xs:'15px'},
+    paddingRight: {lg:"60px !important",xs:'15px'},
   },
   title: {
     color: "#fff",
     textTransform: "capitalize",
-    fontSize: "50px !important",
+    fontSize: {lg:"50px !important",xs:"30px"},
     lineHeight: "1.2",
+    width:{lg:"60%"},
     fontWeight: "700 !important",
     fontFamily: "Fredoka !important",
-    width: "500px !important",
-    display: "block",
-    xs: {
-      width: "100% !important",
-      fontSize: "30px !important",
-    },
   },
   subtitle: {
     color: "#fff !important",
     textTransform: "capitalize",
-    fontSize: "20.5px !important",
+    fontSize: {lg:"20.5px !important",xs:"15px"},
     lineHeight: "34px",
+    width:{lg:"60%"},
     fontWeight: "500 !important",
     fontFamily: "sans-serif !important",
-    width: "500px !important",
-    display: "block",
-    xs: {
-      width: "100% !important",
-      fontSize: "15px !important",
-      lineHeight: "20px",
-    },
   },
   box: {
     border: "3px solid #ffd40d !important",
     padding: "20px 30px !important",
     borderRadius: "30px !important",
     backgroundColor: "#000000d4 !important",
-    //   height: "130px !important",
     width: "100% !important",
     position: "relative",
   },
@@ -95,113 +75,118 @@ const style = {
   },
 };
 
-export const HeroCarousel = ({jsnHeroSection,lang,dir}) => {
+export const HeroCarousel = ({ jsnHeroSection, lang, dir }) => {
   const [slide, setSlide] = useState(0);
 
-  const nextSlide = () => {
-    setSlide(slide === jsnHeroSection.lstSlidesImgs.length - 1 ? 0 : slide + 1);
-  };
-
-  const prevSlide = () => {
-    setSlide(slide === 0 ? jsnHeroSection.lstSlidesImgs.length - 1 : slide - 1);
-  };
-
   return (
-    <Grid container className="carousel">
+    <Grid container  mx={0}
+        sx={{...style.container,position:"relative"}} className="carousel">
       {jsnHeroSection.lstSlidesImgs.map((img, idx) => {
         return (
-          <Grid
-            className={slide === idx ? "slide" : "slide slide-hidden"}
-            sx={{
-              ':before':{
-                background: `url(${img})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                transform:'scaleX(-1)',
-                height:"600px",
-                content: '""',
-                position:"absolute",
-                left:"0",
-                right:'0',
-                bottom:'0',
-                zIndex:"-1000"
-              }
-            }}
-          >
+          <div className={slide === idx ? "slide" : "slide slide-hidden"}>
             <Grid
-              container
-              alignContent={"center"}
-              alignItems={"center"}
-              alignSelf={"center"}
-              justify={"center"}
-              sx={style.container}
+            container
+              sx={{
+                height: {lg:"600px",xs:"700px"},
+                ":before": {
+                  background: `url(${img})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  transform:dir==='rtl'&& "scaleX(-1)",
+                  height: {lg:"600px",xs:"700px"},
+                  width:"100%",
+                  content: '""',
+                  position: "absolute",
+                  left: "0",
+                  right: "0",
+                  bottom: "0",
+                  zIndex: "-1",
+                },
+              }}
             >
               <Grid
-                item
-                xs="12"
-                sx={{ paddingTop: "20px", paddingBottom: "20px" }}
-                justify={"start"}
-              >
-                <Typography sx={style.title}>{jsnHeroSection.jsnTitle[lang]}</Typography>
-              </Grid>
-              <Grid
-                item
-                xs="12"
-                sx={{ paddingTop: "20px", paddingBottom: "20px" }}
-              >
-                <Typography sx={style.subtitle}>{jsnHeroSection.jsnSubtitle[lang]}</Typography>
-              </Grid>
-              <Grid
-                item
-                lg="8"
-                sx={{ paddingTop: "20px", paddingBottom: "20px" }}
-                xs={"12"}
+                container
+                alignContent={"center"}
+                alignItems={"center"}
+                alignSelf={"center"}
+                justify={"center"}
+                sx={style.container}
+                item xs='12'
               >
                 <Grid
-                  container
-                  spacing={2}
+                  item
+                  xs="12"
+                  sx={{ paddingTop: "20px", paddingBottom: "20px" }}
                   justify={"start"}
-                  alignItems={"flex-start"}
                 >
-                  <Grid item lg={"4"} xs={"12"} px-0>
-                    <Button mode="link" px-0 mx-0>
-                      <Typography
-                        className="animated-btn-001"
-                        sx={{ fontWeight: "800" }}
-                      >
-                        {dictionary.buttons.seeOurMenuBtn[lang]}
-                      </Typography>
-                    </Button>
-                  </Grid>
-                  <Grid item lg={"4"} pt-5 xs={"12"}>
-                    <div className="video">
-                      <a href="https://www.youtube.com/watch?v=1La4QzGeaaQ">
-                        <i>
-                          <svg
-                            width="15"
-                            height="22"
-                            viewBox="0 0 11 17"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M11 8.5L0.5 0.272758L0.5 16.7272L11 8.5Z"
-                              fill="#fff"
-                            ></path>
-                          </svg>
-                        </i>
+                  <Typography sx={style.title}>
+                    {jsnHeroSection.jsnTitle[lang]}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs="12"
+                  sx={{ paddingTop: "20px", paddingBottom: "20px" }}
+                >
+                  <Typography sx={style.subtitle}>
+                    {jsnHeroSection.jsnSubtitle[lang]}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  lg="8"
+                  sx={{ paddingTop: "20px", paddingBottom: "20px" }}
+                  xs={"12"}
+                >
+                  <Grid
+                    container
+                    spacing={2}
+                    justify={"start"}
+                    alignItems={"flex-start"}
+                  >
+                    <Grid item lg={"4"} xs={"12"} px-0>
+                      <Button mode="link" px-0 mx-0>
                         <Typography
-                          mx={2}
-                          sx={{ fontWeight: "800 !important",cursor:"pointer",textTransform:"capitalize" }}
+                          className="animated-btn-001"
+                          sx={{ fontWeight: "800" }}
                         >
-                          {dictionary.buttons.watchVideo[lang]}
+                          {dictionary.buttons.seeOurMenuBtn[lang]}
                         </Typography>
-                      </a>
-                    </div>
+                      </Button>
+                    </Grid>
+                    <Grid item lg={"4"} pt-5 xs={"12"}>
+                      <div className="video">
+                        <a href="https://www.youtube.com/watch?v=1La4QzGeaaQ">
+                          <i>
+                            <svg
+                              width="15"
+                              height="22"
+                              viewBox="0 0 11 17"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 8.5L0.5 0.272758L0.5 16.7272L11 8.5Z"
+                                fill="#fff"
+                              ></path>
+                            </svg>
+                          </i>
+                          <Typography
+                            mx={2}
+                            sx={{
+                              fontWeight: "800 !important",
+                              cursor: "pointer",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            {dictionary.buttons.watchVideo[lang]}
+                          </Typography>
+                        </a>
+                      </div>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              {/* <Grid item lg={"4"}>
+                {/* <Grid item lg={"4"}>
                 <Grid container justify={"end"}>
                   <Grid item lg="12" xs={"12"} alignSelf={"flex-start"}>
                     <Box
@@ -242,11 +227,19 @@ export const HeroCarousel = ({jsnHeroSection,lang,dir}) => {
                   </Grid>
                 </Grid>
               </Grid> */}
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
         );
       })}
-      <span className="indicators">
+      <Grid item
+        container
+        xs="12"
+        justifyContent={"start"}
+        sx={{marginTop:"-50px",    paddingLeft: {lg:"60px !important",xs:'15px'},
+        paddingRight: {lg:"60px !important",xs:'15px'},}}
+        className="indicators"
+        >
         {jsnHeroSection.lstSlidesImgs.map((_, idx) => {
           return (
             <button
@@ -258,7 +251,7 @@ export const HeroCarousel = ({jsnHeroSection,lang,dir}) => {
             ></button>
           );
         })}
-      </span>
+      </Grid>
     </Grid>
   );
 };

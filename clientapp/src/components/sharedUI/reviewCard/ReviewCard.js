@@ -1,26 +1,9 @@
-import "./ReviewCarousel.css";
-import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
-import React, { useState } from "react";
-import { Grid, Typography, Button, Box, Icon, Rating } from "@mui/material";
-import mealImg from "assets/image/pizze-img.png";
-import { dictionary } from "appHelper/appDictionary";
+import { Box, Grid, Rating, Typography } from "@mui/material";
 import quoteIcon from "assets/image/quote.png";
 
-export const ReviewCarousel = ({ lstSystemReviews, lang, dir }) => {
-  const [slide, setSlide] = useState(0);
-  return (
-    <Grid container item xs='12' className="review-carousel">
-      {lstSystemReviews.map((review, idx) => {
-        return (
-          <div
-            className={slide === idx ? "slide" : "slide slide-hidden"}
-          >
-            <Grid item container xs='12'
-            sx={{
-              minHeight:"fit-content",
-            }}
-            >
-            <Box
+function ReviewCard({review,lang,dir}){
+    return (
+        <Box
               sx={{
                 paddingY: { lg: "40px", xs: "40px" },
                 paddingX: { lg: "40px", xs: "20px" },
@@ -115,33 +98,7 @@ export const ReviewCarousel = ({ lstSystemReviews, lang, dir }) => {
                 </Grid>
               </Grid>
             </Box>
-            </Grid>
-          </div>
-        );
-      })}
-      <Grid
-        item
-        container
-        xs="12"
-        px={2}
-        justifyContent={"start"}
-        className="review-carousel-indicators"
-      >
-        {lstSystemReviews.map((_, idx) => {
-          return (
-            <button
-              key={idx}
-              className={
-                slide === idx
-                  ? "review-carousel-indicator"
-                  : "review-carousel-indicator review-carousel-indicator-inactive"
-              }
-              onClick={() => setSlide(idx)}
-            ></button>
-          );
-        })}
-      </Grid>
-    </Grid>
-  );
-};
-export default ReviewCarousel;
+    )
+}
+
+export default ReviewCard;

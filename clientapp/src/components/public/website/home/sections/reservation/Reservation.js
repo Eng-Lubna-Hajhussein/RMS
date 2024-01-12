@@ -30,21 +30,24 @@ function Reservation() {
       <Grid
         container
         justifyContent={'center'}
+        sx={{
+          // paddingX:{lg:"60px",xs:"15px"}
+        marginY:"50px"}}
       >
-        <Grid item container xs='10' spacing={3} alignContent={'center'} alignItems={'center'} sx={{
-          paddingLeft: "100px",
-          paddingRight: "100px",
-          marginTop: "100px",
-          marginBottom: "100px",
+        <Grid item container lg='10' xs='12' 
+         alignContent={'center'} 
+         alignItems={'center'} sx={{
+          
           background: `url(${bgImg})`,
-          height: "350px",
+          height: {lg:"350px",xs:"fit-content"},
           borderRadius:"20px",
-          padding:"40px"
+          paddingY:"40px",
+          paddingX:{lg:"40px",xs:"20px"}
         }}>
-        <Grid item container xs="3">
+        <Grid item container lg="3" xs='12' sx={{marginBottom:{lg:"0",xs:"25px"}}}>
           <Grid item xs="12">
             <Typography sx={{
-              fontSize:"46px",
+              fontSize:{lg:"46px",xs:"20px",width:"fit-content"},
               color:"#fff",
               textTransform:"uppercase",
               borderBottom:"3px solid #ffd40d",
@@ -53,31 +56,31 @@ function Reservation() {
           </Grid>
           <Grid item xs="12">
             <Typography sx={{
-              fontSize:'20px',
+              fontSize:{lg:'20px'},
               color:"#fff",
               textTransform:"capitalize",
-              paddingTop:"16px"
+              marginTop:{lg:"16px",xs:"5px"},
             }}>Discover our New Menu !</Typography>
           </Grid>
         </Grid>
         <Grid item xs='1' />
-        <Grid item container xs="8" justifyContent={'center'} spacing={3}>
-              <Grid item xs="6" >
+        <Grid item container lg="8" xs='12' justifyContent={'center'}>
+              <Grid item lg="6"  xs='12'>
               <TextField label="Complete Name" color="warning" fullWidth sx={{"&":{background:"#fff",borderRadius:"5px"}}} variant="outlined" />
               </Grid>
-              <Grid item xs="6" >
+              <Grid item lg="6"  xs='12'>
               <TextField label="Email Address" color="warning" fullWidth sx={{"&":{background:"#fff",borderRadius:"5px"}}} variant="outlined" />
               </Grid>
-              <Grid item xs="6" >
+              <Grid item lg="6"  xs='12'>
               <TextField type="number" label="Number Of Guest" color="warning" fullWidth sx={{"&":{background:"#fff",borderRadius:"5px"}}} variant="outlined" />
               </Grid>
-              <Grid item xs="3" >
+              <Grid item lg="3"  xs='6'>
               <TextField type="date" color="warning" fullWidth sx={{"&":{background:"#fff",borderRadius:"5px"}}} variant="outlined" />
               </Grid>
-              <Grid item xs="3" >
+              <Grid item lg="3"  xs='6'>
               <TextField type="time" color="warning" fullWidth sx={{"&":{background:"#fff",borderRadius:"5px"}}} variant="outlined" />
               </Grid>
-              <Grid item xs="12" container justifyContent={'flex-end'}>
+              <Grid item lg="12" xs='12' container justifyContent={'flex-end'}>
               <Button>
                 <Typography
                   className="animated-btn-002"

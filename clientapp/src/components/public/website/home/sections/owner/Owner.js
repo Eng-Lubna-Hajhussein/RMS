@@ -8,18 +8,17 @@ function Owner({lang,dir,jsnOwnerSection}) {
       <Grid
         container
         sx={{
-          paddingLeft: "80px",
-          paddingRight: "80px",
           marginTop: "50px",
           marginBottom: "50px",
         }}
+        // spacing={2}
       >
-        <Grid item container xs="6">
+        <Grid item container lg="6" xs='12'>
           <Grid item xs="12">
             <Typography
               sx={{
                 color: "#f3274c",
-                fontSize: "25px",
+                fontSize: {lg:"25px",xs:"12px"},
                 textTransform: "uppercase",
                 letterSpacing: dir==='ltr'&&"2px",
                 fontWeight: "800",
@@ -33,7 +32,7 @@ function Owner({lang,dir,jsnOwnerSection}) {
               component={"h2"}
               sx={{
                 color: "#000",
-                fontSize: "50px",
+                fontSize: {lg:"50px",xs:"20px"},
                 textTransform: "capitalize",
                 fontWeight: "700",
               }}
@@ -42,21 +41,21 @@ function Owner({lang,dir,jsnOwnerSection}) {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item container xs="6">
+        <Grid item container lg="6" xs="12">
           <Grid item xs="12">
-            <Typography sx={{fontSize:"18px",color:"#555"}}>
+            <Typography sx={{fontSize:{lg:"18px",xs:"10px"},color:"#555"}}>
               {jsnOwnerSection.jsnOwnerComment[lang]}
             </Typography>
           </Grid>
           <Grid item container xs='12'>
             <Grid item xs="2">
-            <Avatar alt="Remy Sharp" sx={{height:"80px",width:"80px"}} src={ownerAvatar} />
+            <Avatar alt="Remy Sharp" sx={{height:{lg:"80px",xs:"50px"},width:{lg:"80px",xs:"50px"}}} src={ownerAvatar} />
             </Grid>
             <Grid item container xs="10" sx={{height:"fit-content"}} alignSelf={'center'}>
                 <Grid item xs="12">
                 <Typography
                 sx={{
-                    fontSize:"24px",
+                    fontSize:{lg:"24px",xs:"12px"},
                     fontWeight:"700",
                     color:"#000",
                     textTransform:"capitalize"
@@ -66,7 +65,7 @@ function Owner({lang,dir,jsnOwnerSection}) {
                 </Typography>
                 </Grid>
                 <Grid item xs="12">
-                <Typography sx={{fontSize:"16px",color:"#555",textTransform:"capitalize"}}>
+                <Typography sx={{fontSize:{lg:"16px",xs:"8px"},color:"#555",textTransform:"capitalize"}}>
                 {jsnOwnerSection.jsnOwnerSpecialization[lang]}
                 </Typography>
                 </Grid>
