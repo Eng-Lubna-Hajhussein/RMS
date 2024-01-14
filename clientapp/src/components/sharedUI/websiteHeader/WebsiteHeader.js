@@ -25,7 +25,11 @@ function WebsiteHeader({ jsnSystemContact, navList, lang }) {
           setOpenDrawer={setOpenDrawer}
         />
       </AppBar>
-      <DrawerNav openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} lang={lang} />
+      <DrawerNav
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}
+        lang={lang}
+      />
     </React.Fragment>
   );
 }

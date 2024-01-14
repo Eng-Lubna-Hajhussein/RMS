@@ -2,12 +2,9 @@
   background-color: #f3274c;
   width: 100%;
   height: fit-content;
-  /* color: #fff; */
-  /* padding: 30px; */
   border-radius: 11px;
   border: 0;
   position: relative;
-  /* border: 5px solid #f3274c; */
 }
 
 .menu .nav-link.active .title {
@@ -39,7 +36,6 @@
 .menu .nav-link {
   text-transform: capitalize;
   background-color: #fff;
-  /* padding: 30px; */
   color: black;
   padding-top: 30px;
   padding-bottom: 30px;
@@ -47,7 +43,6 @@
   height: fit-content;
   border-radius: 11px;
   border: 5px solid #e4e4e4;
-  /* font-size: 22px; */
   text-align: center;
   cursor: pointer;
 }

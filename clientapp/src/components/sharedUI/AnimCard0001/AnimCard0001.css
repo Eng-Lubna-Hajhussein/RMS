@@ -1,0 +1,25 @@
+.anim-card-0001 {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.anim-card-0001 .back-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #f3274ce8;
+  padding: 40px;
+  text-align: center;
+  height: 100%;
+  padding-top: 33%;
+  border-radius: 30px;
+  transition: 0.3s ease-in-out;
+  transform: rotateY(90deg) scale(0.3);
+}
+
+.anim-card-0001:hover > .back-card {
+  transition: 0.3s ease-in-out;
+  transform: rotateY(0deg);
+}

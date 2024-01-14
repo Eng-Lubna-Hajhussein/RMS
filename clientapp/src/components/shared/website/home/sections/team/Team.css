@@ -1,0 +1,16 @@
+.chef-content:hover{
+    border:7px solid #ffd40d !important
+}
+
+.chef-content{
+    cursor: pointer;
+    z-index: 234;
+}
+
+.chef-social:hover{
+    background-color:#ffd40d !important
+}
+
+.chef-name:hover{
+    color: #f3274c !important;
+}

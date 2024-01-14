@@ -3,23 +3,21 @@ import {
   Toolbar,
   Grid,
   Box,
-  Typography,
   Badge,
-  Button,
   IconButton,
 } from "@mui/material";
 import { ShoppingBagOutlined, Menu, Language } from "@mui/icons-material";
 import logoIcon from "assets/image/logo.png";
 import NavList from "../navList/NavList";
 import { dictionary } from "appHelper/appDictionary";
+import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import { App_Primary_Color } from "appHelper/appColor";
 
 const styles = {
   lowerToolBar: {
     background: "#fff",
     "&": {
       minHeight: "100px",
-      // paddingLeft: { lg: "50px", xs: "15px" },
-      // paddingRight: { lg: "50px", xs: "5px" },
     },
   },
   langBadge: {
@@ -49,15 +47,15 @@ const styles = {
     color: "#000000",
   },
   reverseBtnContainer: { display: { lg: "flex", xs: "none" } },
-  reverseBtnTypography: { fontWeight: "800",width:"100%" },
+  reverseBtnTypography: { fontWeight: "800", width: "100%" },
   menuIcon: { color: "#000" },
 };
 
 function LowerToolbar({ navList, setOpenDrawer, lang }) {
   return (
     <Toolbar sx={styles.lowerToolBar}>
-      <Grid container alignItems={"center"}> 
-        <Grid item lg="1" xs='2'>
+      <Grid container alignItems={"center"}>
+        <Grid item lg="1" xs="2">
           <Badge badgeContent={"en"} sx={styles.langBadge}>
             <Language fontSize="large" sx={styles.languageIcon} />
           </Badge>
@@ -72,28 +70,29 @@ function LowerToolbar({ navList, setOpenDrawer, lang }) {
             </Grid>
           ))}
         </Grid>
-        <Grid item container lg='3'  xs="4"
+        <Grid
+          item
+          container
+          lg="3"
+          xs="4"
           alignItems={"center"}
           justifySelf={"flex-end"}
           justifyContent={"flex-end"}
           justifyItems={"flex-end"}
         >
-          <Grid item lg='2'>
+          <Grid item lg="2">
             <Badge badgeContent={0} sx={styles.shoppingBadge}>
               <ShoppingBagOutlined fontSize="large" sx={styles.shoppingIcon} />
             </Badge>
           </Grid>
-          <Grid item lg='8' sx={styles.reverseBtnContainer}>
-            <Button fullWidth >
-              <Typography
-                className="animated-btn-001"
-                sx={styles.reverseBtnTypography}
-              >
-                {dictionary.buttons.reverseTableBtn[lang]}
-              </Typography>
-            </Button>
+          <Grid item lg="8" sx={styles.reverseBtnContainer}>
+            <AnimButton0001
+              label={dictionary.buttons.reverseTableBtn[lang]}
+              fullWidth={true}
+              color={App_Primary_Color}
+            />
           </Grid>
-          <Grid item xs='2' container sx={styles.menuIconContainer}>
+          <Grid item xs="2" container sx={styles.menuIconContainer}>
             <IconButton
               size="large"
               edge="start"

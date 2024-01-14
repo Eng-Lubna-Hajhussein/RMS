@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "Router";
 import 'index.css'
-document.documentElement.dir = 'rtl'
+document.documentElement.dir = 'ltr'
 
 function App() {
   return (

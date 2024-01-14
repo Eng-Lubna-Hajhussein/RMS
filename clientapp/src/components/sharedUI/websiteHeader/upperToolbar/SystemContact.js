@@ -4,20 +4,20 @@ import React from "react";
 import { Box, Grid, Icon, Typography } from "@mui/material";
 
 const styles = {
-    contactIconBox: {
-      height: "34px",
-      padding: "2px",
-      width: "34px",
-      textAlign: "center",
-      background: "#f3274c",
-      borderRadius: "50%",
-    },
-    contactTypography: {
-      fontSize: "14px",
-      fontWeight: "800",
-      textTransform:"capitalize"
-    },
-  };
+  contactIconBox: {
+    height: "34px",
+    padding: "2px",
+    width: "34px",
+    textAlign: "center",
+    background: "#f3274c",
+    borderRadius: "50%",
+  },
+  contactTypography: {
+    fontSize: "14px",
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+};
 
 function SystemContact({ lang, contact }) {
   return (
@@ -29,12 +29,21 @@ function SystemContact({ lang, contact }) {
       </Grid>
       <Grid item container xs="8" alignSelf={"center"}>
         <Grid item>
-          <Typography component={"p"} sx={styles.contactTypography} color={"#000"}>
+          <Typography
+            component={"p"}
+            sx={styles.contactTypography}
+            color={"#000"}
+          >
             {dictionary.contact[contact.type][lang]} :&nbsp;
           </Typography>
         </Grid>
         <Grid item>
-          <Typography dir="ltr" component={"p"} sx={styles.contactTypography} color={"#000"}>
+          <Typography
+            dir="ltr"
+            component={"p"}
+            sx={styles.contactTypography}
+            color={"#000"}
+          >
             &nbsp;{contact.value}
           </Typography>
         </Grid>

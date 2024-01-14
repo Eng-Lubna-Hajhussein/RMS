@@ -1,20 +1,8 @@
+import React from "react";
 import { Box, Grid, Icon, Paper, Typography } from "@mui/material";
-import chef1Img from "assets/image/chef-1.png";
-import chef2Img from "assets/image/chef-2.png";
-import chef3Img from "assets/image/chef-3.png";
-import chefSine from "assets/image/sign.png";
-// import "./Team.css";
-import React, { useState } from "react";
-import {
-  Facebook,
-  FacebookOutlined,
-  FacebookSharp,
-  Instagram,
-  Twitter,
-} from "@mui/icons-material";
-// import ChefDetails from "../chefDetails/ChefDetails";
+import { FacebookSharp, Instagram, Twitter } from "@mui/icons-material";
 
-const style = {
+const styles = {
   chefContent: {
     width: "280px !important",
     height: "280px !important",
@@ -25,13 +13,11 @@ const style = {
     pointer: "cursor",
     marginTop: "-140px",
     zIndex: "222 !important",
-    xs: {},
   },
   specialization: {
     color: "#f3274c",
     fontSize: "18px !important",
     fontWeight: "800 !important",
-    xs: {},
   },
   name: {
     fontSize: "30px !important",
@@ -40,45 +26,32 @@ const style = {
     fontWeight: "900 !important",
     transition: ".3s ease-in-out",
     fontFamily: "san-serif",
-    xs: {},
   },
   social: {
     transition: ".3s ease-in-out",
-    // padding: "15px !important",
     backgroundColor: "#f5f8fd !important",
     borderRadius: "50%",
     height: "50px",
     width: "50px",
     ":hover": { backgroundColor: "#ffd40d !important" },
-    // root: {
-    //   '&:hover': {
-    //     backgroundColor: '#000 !important'
-    //   }}
-    // xs: {},
   },
-  title: {
-    fontSize: "50px !important",
-    color: "#000 !important",
-    fontWeight: "700 !important",
-    lineHeight: "1.2 !important",
-    fontFamily: "sans-serif !important",
-    xs: {
-      fontSize: "30px !important",
-    },
+  imgContainer: {
+    zIndex: "-1",
+    height: "fit-content",
   },
-  line: {
-    width: "100%",
-    background: "#ffd40d",
-    borderRadius: "26px",
-    height: "12px",
-    xs: {},
+  contentContainer: {
+    zIndex: "111",
+    height: "140px",
+  },
+  fullHeight: {
+    height: "100%",
   },
 };
 
-function TeamCard({item,lang}) {
+function TeamCard({ item, lang }) {
   return (
     <>
-      <Grid item xs="12" sx={{ zIndex: "-1", height: "fit-content" }}>
+      <Grid item xs="12" sx={styles.imgContainer}>
         <Box
           component={"img"}
           src={item.strImgPath}
@@ -90,78 +63,85 @@ function TeamCard({item,lang}) {
         item
         xs="12"
         container
-        justifyContent={'center'}
-        sx={{ zIndex: "111", height: "140px" }}
+        justifyContent={"center"}
+        sx={styles.contentContainer}
       >
-        <Box
-          className="chef-content"
-          sx={{
-            ...style.chefContent,
-          }}
-        >
+        <Box className="chef-content" sx={styles.chefContent}>
           <Grid
             container
             item
             xs="12"
             alignItems={"center"}
             justifyContent={"center"}
-            alignContent={'center'}
-            sx={{ height: "100%" }}
+            alignContent={"center"}
+            sx={styles.fullHeight}
           >
             <Grid item xs="12" container justifyContent={"center"}>
-              <Typography sx={style.specialization}>
+              <Typography sx={styles.specialization}>
                 {item.jsnSpecialization[lang]}
               </Typography>
             </Grid>
             <Grid item xs="12" container justifyContent={"center"}>
-              <Typography sx={style.name}>{item.jsnName[lang]}</Typography>
+              <Typography sx={styles.name}>{item.jsnName[lang]}</Typography>
             </Grid>
             <Grid item xs="12" container justifyContent={"center"}>
               <Grid item xs="3" container justifyContent={"center"}>
-                <Box sx={{ ...style.social }}>
+                <Box sx={styles.social}>
                   <Grid
                     container
                     item
                     xs="12"
                     justifyContent={"center"}
                     alignContent={"center"}
-                    sx={{ height: "100%", width: "100%" }}
+                    sx={styles.fullHeight}
                   >
                     <FacebookSharp />
                   </Grid>
                 </Box>
               </Grid>
               <Grid item xs="3" container justifyContent={"center"}>
-                <Box sx={style.social}>
+                <Box sx={styles.social}>
                   <Grid
                     container
                     item
                     xs="12"
                     justifyContent={"center"}
                     alignContent={"center"}
-                    sx={{ height: "100%", width: "100%" }}
+                    sx={styles.fullHeight}
                   >
                     <Twitter />
                   </Grid>
                 </Box>
               </Grid>
               <Grid item xs="3" container justifyContent={"center"}>
-                <Box sx={style.social}>
+                <Box sx={styles.social}>
                   <Grid
                     container
                     item
                     xs="12"
                     justifyContent={"center"}
                     alignContent={"center"}
-                    sx={{ height: "100%", width: "100%" }}
+                    sx={styles.fullHeight}
                   >
                     <Instagram />
                   </Grid>
                 </Box>
               </Grid>
             </Grid>
-            <Grid item xs={"12"} container justifyContent={"center"}>
-              <img src={item.strSignImgPath} />
+            <Grid
+              item
+              xs={"12"}
+              pt={2}
+              container
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Box
+                component={"img"}
+                src={item.strSignImgPath}
+                height={"20px"}
+                width={"50%"}
+              />
             </Grid>
           </Grid>
         </Box>

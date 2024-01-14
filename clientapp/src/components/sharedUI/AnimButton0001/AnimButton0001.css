@@ -1,0 +1,32 @@
+.animated-btn {
+  padding: 18px 20px;
+  position: relative;
+  border-radius: 12px;
+  color: white;
+  z-index: 111;
+  line-height: 30px;
+  text-align: center;
+  display: inline-block;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.animated-btn:before {
+  transition: 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  width: 94%;
+  right: -7px;
+  border-width: 3px;
+  border-style: solid;
+  height: 72px;
+  border-radius: 12px;
+  top: -6px;
+  z-index: -1;
+  box-sizing: border-box;
+}
+
+.animated-btn:hover:before {
+  width: 30%;
+}
+
