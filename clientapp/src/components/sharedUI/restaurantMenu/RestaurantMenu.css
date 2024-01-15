@@ -19,7 +19,6 @@
   margin-bottom: 15px;
   height: auto;
   margin-bottom: 5px;
-  vertical-align: middle;
 }
 
 .menu .nav-link .icon-container svg {
@@ -30,7 +29,6 @@
   margin-bottom: 15px;
   height: auto;
   margin-bottom: 5px;
-  vertical-align: middle;
 }
 
 .menu .nav-link {
@@ -97,10 +95,11 @@
 }
 
 .menu .tab-icon {
-  filter: invert(24%) sepia(64%) saturate(2430%) hue-rotate(327deg) brightness(106%) contrast(107%);
+  filter: invert(24%) sepia(64%) saturate(2430%) hue-rotate(327deg)
+    brightness(106%) contrast(107%);
 }
 
-.menu .nav-link .active{
+.menu .nav-link .active {
   filter: invert(100%) sepia(24%) saturate(6485%) hue-rotate(223deg)
     brightness(134%) contrast(115%);
 }

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Toolbar, Grid, Icon, Box, Typography } from "@mui/material";
 import { HowToRegOutlined } from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
 import { dictionary } from "appHelper/appDictionary";
 import SystemContact from "./SystemContact";
 import SystemSocial from "./SystemSocial";
+import Edit from "./Edit";
 
 const styles = {
   upperToolbar: {
@@ -34,68 +36,91 @@ const styles = {
   },
 };
 
-function UpperToolbar({ jsnSystemContact, lang }) {
+function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleEditOpen = () => setOpenEdit(true);
+  const handleEditClose = () => setOpenEdit(false);
+
   return (
-    <Toolbar sx={styles.upperToolbar}>
-      <Grid container direction={"row"} alignItems={"center"}>
-        <Grid container item xs="3" spacing={"3"}>
-          <SystemContact
-            contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
-            lang={lang}
-          />
-        </Grid>
-        <Grid container item xs="3" spacing={"3"}>
-          <SystemContact
-            contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
-            lang={lang}
-          />
-        </Grid>
-        <Grid container item xs="3" justifyContent={"center"} spacing={"3"}>
-          <Grid item xs="3">
-            <SystemSocial
-              social={{
-                type: "strFacebook",
-                path: jsnSystemContact.strFacebook,
-              }}
+    <React.Fragment>
+      <Toolbar sx={styles.upperToolbar}>
+        <Grid container direction={"row"} alignItems={"center"}>
+          <Grid container item xs="3" spacing={"3"}>
+            <SystemContact
+              contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
               lang={lang}
             />
           </Grid>
-          <Grid item xs="3">
-            <SystemSocial
-              social={{
-                type: "strInstagram",
-                path: jsnSystemContact.strInstagram,
-              }}
+          <Grid container item xs="3" spacing={"3"}>
+            <SystemContact
+              contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
               lang={lang}
             />
           </Grid>
-          <Grid item xs="3">
-            <SystemSocial
-              social={{ type: "strYoutube", path: jsnSystemContact.strYoutube }}
-              lang={lang}
-            />
+          <Grid container item xs="3" justifyContent={"center"} spacing={"3"}>
+            <Grid item xs="3">
+              <SystemSocial
+                social={{
+                  type: "strFacebook",
+                  path: jsnSystemContact.strFacebook,
+                }}
+                lang={lang}
+              />
+            </Grid>
+            <Grid item xs="3">
+              <SystemSocial
+                social={{
+                  type: "strInstagram",
+                  path: jsnSystemContact.strInstagram,
+                }}
+                lang={lang}
+              />
+            </Grid>
+            <Grid item xs="3">
+              <SystemSocial
+                social={{
+                  type: "strYoutube",
+                  path: jsnSystemContact.strYoutube,
+                }}
+                lang={lang}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={editable ? "2" : "3"}
+            spacing={"3"}
+            justifyContent={"flex-end"}
+          >
+            <Grid item>
+              <Box sx={styles.regIconBox}>
+                <Icon>
+                  <HowToRegOutlined sx={{ color: "#000000" }} />
+                </Icon>
+              </Box>
+            </Grid>
+            <Grid item alignSelf={"center"}>
+              <Typography
+                component={"p"}
+                sx={styles.regTypography}
+                color={"#000000"}
+              >
+                {dictionary.buttons.regBtn[lang]}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container item xs="1" justifyContent={"flex-end"}>
+            <EditIcon sx={{color:"#000"}} onClick={handleEditOpen} />
           </Grid>
         </Grid>
-        <Grid container item xs="3" spacing={"3"} justifyContent={"flex-end"}>
-          <Grid item>
-            <Box sx={styles.regIconBox}>
-              <Icon>
-                <HowToRegOutlined sx={{ color: "#000000" }} />
-              </Icon>
-            </Box>
-          </Grid>
-          <Grid item alignSelf={"center"}>
-            <Typography
-              component={"p"}
-              sx={styles.regTypography}
-              color={"#000000"}
-            >
-              {dictionary.buttons.regBtn[lang]}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Toolbar>
+      </Toolbar>
+      <Edit
+        openEdit={openEdit}
+        handleEditOpen={handleEditOpen}
+        handleEditClose={handleEditClose}
+      />
+    </React.Fragment>
   );
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { lstWebsiteNav } from "appHelper/appVariables";
 
-function Header({lang,dir,jsnSystemContact}) {
+function Header({lang,dir,jsnSystemContact,editable,onSaveUpperHeader}) {
   return (
     <React.Fragment>
       <WebsiteHeader
@@ -10,6 +10,8 @@ function Header({lang,dir,jsnSystemContact}) {
         dir={dir}
         jsnSystemContact={jsnSystemContact}
         navList={lstWebsiteNav}
+        editable={editable}
+        onSaveUpperHeader={onSaveUpperHeader}
       />
     </React.Fragment>
   );

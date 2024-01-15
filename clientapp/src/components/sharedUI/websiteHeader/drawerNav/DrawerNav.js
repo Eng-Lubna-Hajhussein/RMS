@@ -114,7 +114,7 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
                       <ListItem button>
                         <ListItemText
                           primary={
-                            <Typography px={2} sx={collapseItemText}>
+                            <Typography px={2} sx={styles.collapseItemText}>
                               {nav[lang]}
                             </Typography>
                           }

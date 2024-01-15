@@ -544,7 +544,7 @@ const categories = [
 const featured = categories.filter((category) => category.blnFeatured);
 const mostOrdered = categories.filter((category) => category.blnMostOrdered);
 
-function Home() {
+function Home({editable,onSaveUpperHeader}) {
   const lang = "eng";
   const dir = "ltr";
   const wsCategory = useMemo(()=>{
@@ -556,6 +556,8 @@ function Home() {
         lang={lang}
         dir={dir}
         jsnSystemContact={jsnSystemInfo.jsnSystemContact}
+        editable={editable}
+        onSaveUpperHeader={onSaveUpperHeader}
       />
       <Hero
         lang={lang}
