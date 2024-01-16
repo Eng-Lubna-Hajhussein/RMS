@@ -17,7 +17,7 @@ const initialAppState = {
     lstSystemTeam: Demo_jsnSystemInfo.lstSystemTeam,
     jsnSystemSections: Demo_jsnSystemInfo.jsnSystemSections,
     bigWSCategoryID: Demo_jsnSystemInfo.bigWSCategoryID,
-    jsnLocation: Demo_jsnSystemInfo.jsnLocation,
+    jsnSystemLocation: Demo_jsnSystemInfo.jsnSystemLocation,
     lstContactUs: Demo_jsnSystemInfo.lstContactUs,
   },
   userInfo: {

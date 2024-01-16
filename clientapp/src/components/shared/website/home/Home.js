@@ -212,6 +212,9 @@ const jsnSystemInfo = {
     }
   },
   bigWSCategoryID: 3013919779,
+  strLogoPath:"",
+  jsnSystemLocation:{},
+  lstContactUs:[]
 };
 
 const categories = [
