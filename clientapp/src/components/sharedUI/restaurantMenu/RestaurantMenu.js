@@ -147,7 +147,7 @@ export default function RestaurantMenu({
       bigID: bigID,
       bigParentID: bigParentID,
       strName: strName,
-      jsnProductInfo: {
+      jsnCategoryInfo: {
         strDescription: strDescription,
         strPrice: strPrice,
       },
@@ -203,7 +203,7 @@ export default function RestaurantMenu({
                   className="icon-container"
                 >
                   <img
-                    src={tab?.jsnProductInfo?.strIconPath}
+                    src={tab?.jsnCategoryInfo?.strIconPath}
                     height={"50px"}
                     className={
                       `${tab.bigID}` === `${objTabs.activeTab.bigID}`
@@ -249,7 +249,7 @@ export default function RestaurantMenu({
           >
             <Box
               component={"img"}
-              src={objTabs.activeTab.jsnProductInfo.strImgPath}
+              src={objTabs.activeTab.jsnCategoryInfo.strImgPath}
               width={"100%"}
               height={"80%"}
               sx={styles.menuImgCat}
@@ -280,7 +280,7 @@ export default function RestaurantMenu({
                 >
                   <Box
                     component={"img"}
-                    src={objTabs.activeTab.jsnProductInfo.strImgPath}
+                    src={objTabs.activeTab.jsnCategoryInfo.strImgPath}
                     width={"200px"}
                     height={"200px"}
                     sx={styles.menuImgCat}
@@ -317,7 +317,7 @@ export default function RestaurantMenu({
                             >
                               <Box
                                 component={"img"}
-                                src={item.jsnProductInfo.strImgPath}
+                                src={item.jsnCategoryInfo.strImgPath}
                                 sx={styles.catImg}
                               />
                             </Grid>
@@ -336,12 +336,12 @@ export default function RestaurantMenu({
                               justifyItems={"flex-end"}
                             >
                               <Typography sx={styles.dishPrice}>
-                                ${item.jsnProductInfo.strPrice}
+                                ${item.jsnCategoryInfo.strPrice}
                               </Typography>
                             </Grid>
                             <Grid item xs={"9"} p-0 m-0>
                               <Typography sx={styles.dishDescription}>
-                                {item.jsnProductInfo.jsnDescription[lang]}
+                                {item.jsnCategoryInfo.jsnDescription[lang]}
                               </Typography>
                             </Grid>
                           </Grid>

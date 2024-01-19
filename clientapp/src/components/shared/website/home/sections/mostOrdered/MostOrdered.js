@@ -31,7 +31,7 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
       slideContent: <MostOrderedCard lang={lang} dir={dir} item={item} />,
       sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
     }));
-  }, [lstMostOrdered]);
+  }, [lstMostOrdered,lang,dir]);
   return (
     <Grid
       container

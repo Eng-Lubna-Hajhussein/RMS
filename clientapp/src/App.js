@@ -2,7 +2,7 @@ import React from "react";
 import Router from "Router";
 import 'index.css'
 import AppContextProvider from "contextapi/context/AppContext";
-document.documentElement.dir = 'ltr'
+// document.documentElement.dir = 'ltr'
 
 function App() {
   return (

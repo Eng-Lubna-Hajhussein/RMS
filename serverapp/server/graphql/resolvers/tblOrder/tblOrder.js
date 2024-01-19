@@ -39,4 +39,17 @@ module.exports = {
       throw err;
     }
   },
+     //DELETE
+     deleteOrder: async (_, {bigOrderID}) => {
+      try {
+        const deletedRows = await tblOrder.destroy({where:{bigOrderID}});
+        if (!deletedRows) {
+          throw new Error("No rows have been effected.");
+        } else {
+          return true;
+        }
+      } catch (err) {
+        throw err;
+      }
+    },
 };

@@ -4,19 +4,23 @@ const {
   handleErrors,
   createToken,
 } = require("./../../../appHelper/appFunctions");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   // QUERY--------------------------------------------------------------------------------
-  findUsers: async (_) => {
+  findUsers: async (_, { bigSystemID }) => {
     try {
-      return await tblUser.findAll();
+      return await tblUser.findAll({ where: { bigSystemID: bigSystemID } });
     } catch (err) {
       throw err;
     }
   },
   login: async (_, user) => {
     try {
-      const loggedUser = await tblUser.findOne({ where: { strEmail:user.strEmail } });
+      const loggedUser = await tblUser.findOne({
+        where: { strEmail: user.strEmail },
+      });
       if (!loggedUser) {
         throw Error("incorrect email");
       }
@@ -29,12 +33,16 @@ module.exports = {
           throw Error("incorrect password");
         }
       }
-      const token = createToken(user.bigUserID);
-      res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(200).json({ user: loggedUser });
+      const token = jwt.sign(
+        { bigUserID: loggedUser.bigUserID },
+        "somesupersecretkey",
+        {
+          expiresIn: "1h",
+        }
+      );
+      return loggedUser;
     } catch (err) {
-      const errors = handleErrors(err);
-      res.status(400).json({ errors });
+      throw err;
     }
   },
   // MUTATION--------------------------------------------------------------------------------
@@ -42,7 +50,7 @@ module.exports = {
   signup: async (_, user) => {
     try {
       const userExists = await tblUser.findOne({
-        where: { strEmail: user.strEmail,bigSystemID:user.bigSystemID },
+        where: { strEmail: user.strEmail, bigSystemID: user.bigSystemID },
       });
       if (userExists) {
         throw Error("user exists in system");
@@ -53,23 +61,29 @@ module.exports = {
         ...user,
         strPassword: hashedPassword,
       });
-      const token = createToken(regUser.bigUserID);
-      res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(201).json({ user: regUser });
+      const token = jwt.sign(
+        { bigUserID: regUser.bigUserID },
+        "somesupersecretkey",
+        {
+          expiresIn: "1h",
+        }
+      );
+      return regUser;
     } catch (err) {
-      console.log(err.message);
-      const errors = handleErrors(err);
-      res.status(400).json({ errors });
+      throw err;
     }
   },
   //UPDATE
-  updateUser: async (_, user) => {
+  updateUser: async (parent, user, context) => {
     try {
-      const updatedUser = await tblUser.update({ ...user }, { where: { bigUserID:user.bigUserID } });
+      const updatedUser = await tblUser.update(
+        { ...user },
+        { where: { bigUserID: user.bigUserID } }
+      );
       if (!updatedUser[0]) {
         throw new Error("No rows have been effected.");
       } else {
-        return await tblUser.findByPk(ID);
+        return await tblUser.findOne({ where: { bigUserID: user.bigUserID } });
       }
     } catch (err) {
       throw err;

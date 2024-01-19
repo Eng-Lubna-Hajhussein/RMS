@@ -12,6 +12,7 @@ import NavList from "../navList/NavList";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { App_Primary_Color } from "appHelper/appColor";
+import useLanguage from "hooks/useLanguage/useLanguage";
 
 const styles = {
   lowerToolBar: {
@@ -37,6 +38,7 @@ const styles = {
   },
   languageIcon: {
     color: "#000000",
+    cursor:"pointer"
   },
   logo: {
     width: "150px",
@@ -52,12 +54,15 @@ const styles = {
 };
 
 function LowerToolbar({ navList, setOpenDrawer, lang }) {
+  const {onLangChange} = useLanguage();
   return (
     <Toolbar sx={styles.lowerToolBar}>
       <Grid container alignItems={"center"}>
         <Grid item lg="1" xs="2">
-          <Badge badgeContent={"en"} sx={styles.langBadge}>
-            <Language fontSize="large" sx={styles.languageIcon} />
+          <Badge badgeContent={lang==='eng'?"ar":'en'} sx={styles.langBadge}>
+            <Language fontSize="large" sx={styles.languageIcon} 
+            onClick={onLangChange}
+            />
           </Badge>
         </Grid>
         <Grid item lg="2" xs="5">

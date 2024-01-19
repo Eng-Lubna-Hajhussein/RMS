@@ -6,6 +6,7 @@ import { dictionary } from "appHelper/appDictionary";
 import SystemContact from "./SystemContact";
 import SystemSocial from "./SystemSocial";
 import Edit from "./Edit";
+import { Link } from "react-router-dom";
 
 const styles = {
   upperToolbar: {
@@ -93,7 +94,8 @@ function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
             spacing={"3"}
             justifyContent={"flex-end"}
           >
-            <Grid item>
+            <Grid item container xs='12'>
+            <Grid item px={1}>
               <Box sx={styles.regIconBox}>
                 <Icon>
                   <HowToRegOutlined sx={{ color: "#000000" }} />
@@ -101,16 +103,30 @@ function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
               </Box>
             </Grid>
             <Grid item alignSelf={"center"}>
+              <Link to={'/login'}>
               <Typography
                 component={"p"}
                 sx={styles.regTypography}
                 color={"#000000"}
               >
-                {dictionary.buttons.regBtn[lang]}
+                login
               </Typography>
+              </Link>
+            </Grid>
+            <Grid item alignSelf={"center"} px={1}>
+              <Link to={'/signup'}>
+              <Typography
+                component={"p"}
+                sx={styles.regTypography}
+                color={"#000000"}
+              >
+                / register
+              </Typography>
+              </Link>
+            </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs="1" justifyContent={"flex-end"}>
+          <Grid container item xs="1" display={editable?'flex':"none"} justifyContent={"flex-end"}>
             <EditIcon sx={{color:"#000"}} onClick={handleEditOpen} />
           </Grid>
         </Grid>

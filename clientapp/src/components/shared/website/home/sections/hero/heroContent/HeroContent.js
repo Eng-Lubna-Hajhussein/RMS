@@ -137,7 +137,7 @@ function HeroContent({ content, lang, dir }) {
                   <Grid item xs="12" justify={"start"}>
                     <Typography sx={styles.boxTitle}>
                       <Typography sx={styles.dollarSign}>$</Typography>
-                      {content.wsCategory.jsnProductInfo.strPrice}
+                      {content.wsCategory.jsnCategoryInfo.strPrice}
                     </Typography>
                   </Grid>
                   <Grid item xs="12">
@@ -162,7 +162,7 @@ function HeroContent({ content, lang, dir }) {
                 >
                   <Box
                     component={"img"}
-                    src={content.wsCategory.jsnProductInfo.strImgPath}
+                    src={content.wsCategory.jsnCategoryInfo.strImgPath}
                     height={"150px"}
                     width={"150px"}
                   />

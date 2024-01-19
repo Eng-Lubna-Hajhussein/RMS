@@ -68,7 +68,7 @@ function MostOrderedCard({ item, lang, dir }) {
               </Grid>
               <Grid item lg={"12"}>
                 <Typography sx={styles.subtitle}>
-                  {item?.jsnProductInfo?.jsnDescription[lang]}
+                  {item?.jsnCategoryInfo?.jsnDescription[lang]}
                 </Typography>
               </Grid>
             </Grid>
@@ -81,7 +81,7 @@ function MostOrderedCard({ item, lang, dir }) {
             >
               <Grid item xs="12">
                 <Box
-                  src={item?.jsnProductInfo?.strImgPath}
+                  src={item?.jsnCategoryInfo?.strImgPath}
                   component={"img"}
                   sx={styles.itemImg}
                 />
@@ -126,7 +126,7 @@ function MostOrderedCard({ item, lang, dir }) {
                         },
                       }}
                     >
-                      ${item.jsnProductInfo.strPrice}
+                      ${item.jsnCategoryInfo.strPrice}
                     </Typography>
                   </Grid>
                   {item.blnOnSale && (
@@ -135,7 +135,7 @@ function MostOrderedCard({ item, lang, dir }) {
                         component={"caption"}
                         sx={{ ...styles.price }}
                       >
-                        ${item.jsnProductInfo.strSalePrice}
+                        ${item.jsnCategoryInfo.strSalePrice}
                       </Typography>
                     </Grid>
                   )}

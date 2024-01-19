@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AppBar, CssBaseline } from "@mui/material";
 import DrawerNav from "./drawerNav/DrawerNav";
 import UpperToolbar from "./upperToolbar/UpperToolbar";
@@ -12,7 +12,6 @@ const styles = {
 
 function WebsiteHeader({ jsnSystemContact, navList, lang, editable,onSaveUpperHeader }) {
   const [openDrawer, setOpenDrawer] = useState(false);
-
   return (
     <React.Fragment>
       <CssBaseline />

@@ -4,6 +4,8 @@ export const Demo_System_ID = 10101010;
 
 export const App_Server_Url = "http://localhost:4000";
 
+export const App_Server_URL_GraphQL = 'http://localhost:4000/graphql';
+
 export const strServerAssetsPath = "http://localhost:4000/assets/";
 
 export const icons = {
@@ -267,7 +269,7 @@ export const Demo_categories = [
     bigID: 3891922142,
     jsnName: { eng: "desert", arb: "الحلوى" },
     bigParentID: 0,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: `${strServerAssetsPath}desert.svg`,
       strImgPath: `${strServerAssetsPath}desert.png`,
     },
@@ -281,7 +283,7 @@ export const Demo_categories = [
     bigID: 3156578173,
     jsnName: { eng: "steak", arb: "الستيك" },
     bigParentID: 0,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: `${strServerAssetsPath}steak.svg`,
       strImgPath: `${strServerAssetsPath}steak.png`,
     },
@@ -295,7 +297,7 @@ export const Demo_categories = [
     bigID: 9723164333,
     jsnName: { eng: "coffee", arb: "القهوة" },
     bigParentID: 0,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: `${strServerAssetsPath}coffee.svg`,
       strImgPath: `${strServerAssetsPath}coffee.png`,
     },
@@ -309,7 +311,7 @@ export const Demo_categories = [
     bigID: 7087331728,
     jsnName: { eng: "pizza", arb: "البيتزا" },
     bigParentID: 0,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: `${strServerAssetsPath}pizza.svg`,
       strImgPath: `${strServerAssetsPath}pizza.png`,
     },
@@ -323,7 +325,7 @@ export const Demo_categories = [
     bigID: 8129351047,
     jsnName: { eng: "burger", arb: "البرغر" },
     bigParentID: 0,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: `${strServerAssetsPath}burger.svg`,
       strImgPath: `${strServerAssetsPath}burger.png`,
     },
@@ -337,7 +339,7 @@ export const Demo_categories = [
     bigID: 3013919779,
     bigParentID: 3891922142,
     jsnName: { eng: "Chease Garlic Bread", arb: "خبز الجبنة بالثوم" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "9.00",
       strImgPath: `${strServerAssetsPath}demo/dish1.png`,
@@ -357,7 +359,7 @@ export const Demo_categories = [
     bigID: 9559275219,
     bigParentID: 3891922142,
     jsnName: { eng: "Rastrami Roll", arb: "راسترامي رول" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "16.00",
       strImgPath: `${strServerAssetsPath}demo/dish2.png`,
@@ -376,7 +378,7 @@ export const Demo_categories = [
     bigID: 8033919014,
     bigParentID: 3891922142,
     jsnName: { eng: "Caprese Salad Kabobs", arb: "كابريزي سلطة كابوبس" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "34.00",
       strImgPath: `${strServerAssetsPath}demo/dish3.png`,
@@ -398,7 +400,7 @@ export const Demo_categories = [
       eng: "Peachy Jalepeno Guacomole",
       arb: "خوخي جاليبينو جواكومولي",
     },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "40.00",
       strImgPath: `${strServerAssetsPath}demo/dish1.png`,
@@ -417,7 +419,7 @@ export const Demo_categories = [
     bigID: 1806513103,
     bigParentID: 3156578173,
     jsnName: { eng: "Chease Garlic Bread", arb: "خبز الجبنة بالثوم" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "9.00",
       strImgPath: `${strServerAssetsPath}demo/dish2.png`,
@@ -436,7 +438,7 @@ export const Demo_categories = [
     bigID: 2710287289,
     bigParentID: 3156578173,
     jsnName: { eng: "Rastrami Roll", arb: "راسترامي رول" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "16.00",
       strImgPath: `${strServerAssetsPath}demo/dish3.png`,
@@ -455,7 +457,7 @@ export const Demo_categories = [
     bigID: 7547915806,
     bigParentID: 3156578173,
     jsnName: { eng: "Caprese Salad Kabobs", arb: "كابريزي سلطة كابوبس" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "34.00",
       strImgPath: `${strServerAssetsPath}demo/dish1.png`,
@@ -477,7 +479,7 @@ export const Demo_categories = [
       eng: "Peachy Jalepeno Guacomole",
       arb: "خوخي جاليبينو جواكومولي",
     },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "40.00",
       strImgPath: `${strServerAssetsPath}demo/dish2.png`,
@@ -496,7 +498,7 @@ export const Demo_categories = [
     bigID: 5119732624,
     jsnName: { eng: "Espresso Macchiato", arb: "اسبريسو ماكياتو" },
     bigParentID: 9723164333,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "9.00",
       strImgPath: `${strServerAssetsPath}demo/dish3.png`,
@@ -515,7 +517,7 @@ export const Demo_categories = [
     bigID: 6976723630,
     jsnName: { eng: "Mocha Whipped Cream", arb: "موكا كريمة مخفوقة" },
     bigParentID: 9723164333,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "16.00",
       strImgPath: `${strServerAssetsPath}demo/dish1.png`,
@@ -534,7 +536,7 @@ export const Demo_categories = [
     bigID: 7629450130,
     jsnName: { eng: "Cold Coffee", arb: "قهوة باردة" },
     bigParentID: 9723164333,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "34.00",
       strImgPath: `${strServerAssetsPath}demo/dish2.png`,
@@ -553,7 +555,7 @@ export const Demo_categories = [
     bigID: 9177008033,
     jsnName: { eng: "Caramel Macchiato", arb: "كراميل ماكياتو" },
     bigParentID: 9723164333,
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "40.00",
       strImgPath: `${strServerAssetsPath}demo/dish3.png`,
@@ -572,7 +574,7 @@ export const Demo_categories = [
     bigID: 9785069374,
     bigParentID: 7087331728,
     jsnName: { eng: "Chease Garlic Bread", arb: "خبز الجبنة بالثوم" },
-    jsnProductInfo: {
+    jsnCategoryInfo: {
       strIconPath: "",
       strPrice: "9.00",
       strImgPath: `${strServerAssetsPath}demo/dish1.png`,
@@ -588,3 +590,21 @@ export const Demo_categories = [
     intRating: 5,
   },
 ];
+
+export const COUNTRIES = [
+  { eng: "jordan", arb: "الاردن" },
+  { eng: "egypt", arb: "مصر" },
+];
+
+export const CITIES = {
+  jordan: [
+    { eng: "amman", arb: "عمان" },
+    { eng: "irbid", arb: "اربد" },
+  ],
+  egypt: [{ eng: "cairo", arb: "القاهرة" }],
+};
+
+export const objRoleID = {
+  Admin: 1511510928,
+  Customer: 7411510928,
+};

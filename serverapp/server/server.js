@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./graphql/schema");
+const isAuth = require("./middleware/authMiddleware");
 
 const path = require("path");
 
@@ -26,9 +27,7 @@ app.use(cors());
 //Routes middleware
 app.use("/file", fileRoutes);
 
-// app.listen(PORT, () => {
-//   console.log(`listening on: http://localhost:${PORT}`);
-// });
+app.use(isAuth);
 
 //middleware to define graphQl schema and resolvers
 app.use(

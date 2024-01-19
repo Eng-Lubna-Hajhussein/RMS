@@ -1,16 +1,10 @@
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID,
-  GraphQLInt,
   GraphQLList,
-  GraphQLBoolean,
   GraphQLNonNull,
 } = require("graphql");
 const {
-  GraphQLJSON,
-  GraphQLDate,
-  GraphQLDateTime,
   GraphQLBigInt,
 } = require("graphql-scalars");
 const {
@@ -18,21 +12,26 @@ const {
   SystemType,
   ReservationType,
   OrderType,
+  CategoryType
 } = require("../Types/types");
 const UserResolvers = require("./../../resolvers/tblUser/tblUser");
 const SystemResolvers = require("./../../resolvers/tblSystem/tblSystem");
 const ReservationResolvers = require("./../../resolvers/tblReservation/tblReservation");
 const OrderResolvers = require("./../../resolvers/tblOrder/tblOrder");
+const CategoryResolvers = require("./../../resolvers/tblCategory/tblCategory");
 
 const RootQuery = new GraphQLObjectType({
   name: "ViewTypeOfQueries",
   fields: {
     findUsers: {
       type: new GraphQLList(new GraphQLNonNull(UserType)),
+      args: {
+        bigSystemID: { type: GraphQLBigInt },
+      },
       resolve: UserResolvers.findUsers,
     },
     login: {
-      type: new GraphQLNonNull(UserType),
+      type: UserType,
       args: {
         strPassword: { type: GraphQLString },
         strEmail: { type: GraphQLString },
@@ -73,6 +72,20 @@ const RootQuery = new GraphQLObjectType({
         bigOrderID: { type: GraphQLBigInt },
       },
       resolve: OrderResolvers.findOrder,
+    },
+    findCategories: {
+      type: new GraphQLList(new GraphQLNonNull(OrderType)),
+      args: {
+        bigSystemID: { type: GraphQLBigInt },
+      },
+      resolve: CategoryResolvers.findCategories,
+    },
+    findCategory: {
+      type: new GraphQLNonNull(OrderType),
+      args: {
+        bigID: { type: GraphQLBigInt },
+      },
+      resolve: CategoryResolvers.findCategory,
     },
   },
 });

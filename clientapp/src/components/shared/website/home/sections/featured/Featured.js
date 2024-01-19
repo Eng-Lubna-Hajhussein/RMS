@@ -33,7 +33,7 @@ export default function Featured({ lang, dir, lstFeatured }) {
       slideContent: <FeaturedCard lang={lang} dir={dir} item={item} />,
       sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
     }));
-  }, [lstFeatured]);
+  }, [lstFeatured,lang,dir]);
   return (
     <Grid
       container

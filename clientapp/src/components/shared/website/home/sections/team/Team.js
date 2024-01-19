@@ -32,7 +32,7 @@ export default function Team({ lang, lstSystemTeam, dir }) {
       slideContent: <TeamCard lang={lang} dir={dir} item={item} />,
       sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
     }));
-  }, [lstSystemTeam]);
+  }, [lstSystemTeam,lang,dir]);
 
   return (
     <Grid

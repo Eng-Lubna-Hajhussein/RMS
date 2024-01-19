@@ -20,7 +20,7 @@ function Hero({ lang, dir, lstHeroSlides, wsCategory }) {
       ),
       sxStyle: { height: { lg: "600px", xs: "700px" } },
     }));
-  }, [lstHeroSlides]);
+  }, [lstHeroSlides,lang,dir]);
 
   return (
     <Carousel

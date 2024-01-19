@@ -18,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
         strLogoPath:{
             type: DataTypes.STRING(250),
         },
-        strSystemName:{
-            type:DataTypes.STRING(250),   
+        jsnSystemName:{
+            type:DataTypes.JSON,   
         },
         strSystemPathURL:{
             type:DataTypes.STRING(250),  
         },
-        strSystemAddress:{
-            type:DataTypes.STRING(250),  
+        jsnSystemAddress:{
+            type:DataTypes.JSON,  
         },
         jsnSystemLocation:{
             type:DataTypes.JSON,  

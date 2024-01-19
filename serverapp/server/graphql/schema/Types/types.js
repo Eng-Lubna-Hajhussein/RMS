@@ -3,7 +3,6 @@ const {
   GraphQLString,
   GraphQLID,
   GraphQLInt,
-  GraphQLList,
   GraphQLBoolean,
 } = require("graphql");
 const {
@@ -11,8 +10,6 @@ const {
   GraphQLDate,
   GraphQLDateTime,
   GraphQLBigInt,
-  GraphQLJSONObject,
-  GraphQLByte
 } = require("graphql-scalars");
 
 const UserType = new GraphQLObjectType({
@@ -25,13 +22,14 @@ const UserType = new GraphQLObjectType({
     strPassword: { type: GraphQLString },
     strEmail: { type: GraphQLString },
     strImgPath: { type: GraphQLString },
-    strFullName: { type: GraphQLString },
+    jsnFullName: { type: GraphQLJSON },
     jsnLocation: { type: GraphQLJSON },
-    strAddress: { type: GraphQLString },
+    jsnAddress: { type: GraphQLJSON },
     blnIsDeleted: { type: GraphQLBoolean },
     blnIsActive: { type: GraphQLBoolean },
     dtmCreatedDate: { type: GraphQLDate },
     dtmUpdatedDate: { type: GraphQLDate },
+    jsnClientPayment: { type: GraphQLJSON },
   }),
 });
 
@@ -42,12 +40,12 @@ const SystemType = new GraphQLObjectType({
     bigSystemID: { type: GraphQLBigInt },
     bigWSCategoryID: { type: GraphQLBigInt },
     strLogoPath: { type: GraphQLString },
-    strSystemName: { type: GraphQLString },
+    jsnSystemName: { type: GraphQLJSON },
     strSystemPathURL: { type: GraphQLString },
-    strSystemAddress: { type: GraphQLString },
+    jsnSystemAddress: { type: GraphQLJSON },
     jsnSystemLocation: { type: GraphQLJSON },
     jsnSystemContact: { type: GraphQLJSON },
-    lstSystemReviews: { type: GraphQLJSON  },
+    lstSystemReviews: { type: GraphQLJSON },
     lstSystemTeam: { type: GraphQLJSON },
     jsnSystemSections: { type: GraphQLJSON },
     lstContactUs: { type: GraphQLJSON },
@@ -65,32 +63,49 @@ const ReservationType = new GraphQLObjectType({
     bigTableID: { type: GraphQLBigInt },
     bigSystemID: { type: GraphQLBigInt },
     bigUserID: { type: GraphQLBigInt },
-    intSeatsNumber:{type:GraphQLInt},
+    intSeatsNumber: { type: GraphQLInt },
     strTablePrice: { type: GraphQLString },
     jsnClientInfo: { type: GraphQLJSON },
     jsnClientPayment: { type: GraphQLJSON },
-    dtmReservationStart:{type:GraphQLDateTime},
-    dtmReservationEnd:{type:GraphQLDateTime},
+    dtmReservationStart: { type: GraphQLDateTime },
+    dtmReservationEnd: { type: GraphQLDateTime },
     blnTableAvailable: { type: GraphQLBoolean },
   }),
 });
 
 const OrderType = new GraphQLObjectType({
-    name: "OrderType",
-    fields: () => ({
-      id: { type: GraphQLID },
-      bigOrderID: { type: GraphQLBigInt },
-      bigSystemID: { type: GraphQLBigInt },
-      bigUserID: { type: GraphQLBigInt },
-      lstProduct:{type:GraphQLJSON},
-      strTotalPrice: { type: GraphQLString },
-      strAddress: { type: GraphQLString },
-      jsnLocation: { type: GraphQLJSON },
-      dtmOrderDate:{type:GraphQLDateTime},
-      jsnClientInfo:{type:GraphQLJSON},
-      jsnClientPayment:{type:GraphQLJSON},
-      blnDelivered: { type: GraphQLBoolean },
-    }),
-  });
+  name: "OrderType",
+  fields: () => ({
+    id: { type: GraphQLID },
+    bigOrderID: { type: GraphQLBigInt },
+    bigSystemID: { type: GraphQLBigInt },
+    bigUserID: { type: GraphQLBigInt },
+    lstProduct: { type: GraphQLJSON },
+    strTotalPrice: { type: GraphQLString },
+    jsnAddress: { type: GraphQLJSON },
+    jsnLocation: { type: GraphQLJSON },
+    dtmOrderDate: { type: GraphQLDateTime },
+    jsnClientInfo: { type: GraphQLJSON },
+    jsnClientPayment: { type: GraphQLJSON },
+    blnDelivered: { type: GraphQLBoolean },
+  }),
+});
 
-module.exports = { UserType, SystemType, ReservationType, OrderType };
+const CategoryType = new GraphQLObjectType({
+  name: "CategoryType",
+  fields: () => ({
+    id: { type: GraphQLID },
+    bigID: { type: GraphQLBigInt },
+    bigSystemID: { type: GraphQLBigInt },
+    jsnName: { type: GraphQLJSON },
+    bigParentID: { type: GraphQLBigInt },
+    jsnCategoryInfo: { type: GraphQLJSON },
+    lstReviews: { type: GraphQLJSON },
+    intRating: { type: GraphQLInt },
+    blnFeatured: { type: GraphQLBoolean },
+    blnMostOrdered: { type: GraphQLBoolean },
+    blnOnSale: { type: GraphQLBoolean },
+  }),
+});
+
+module.exports = { UserType, SystemType, ReservationType, OrderType, CategoryType };

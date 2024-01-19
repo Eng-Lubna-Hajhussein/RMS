@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         strTotalPrice:{
             type:DataTypes.STRING(250),  
         },
-        strAddress:{
-            type:DataTypes.STRING(250),  
+        jsnAddress:{
+            type:DataTypes.JSON,  
         },
         jsnLocation:{
             type:DataTypes.JSON,  

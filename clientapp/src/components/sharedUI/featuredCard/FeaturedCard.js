@@ -110,7 +110,7 @@ function FeaturedCard({ item, lang }) {
           <Grid container>
             <Grid item xs="12" container justifyContent={"center"}>
               <img
-                src={item?.jsnProductInfo?.strImgPath}
+                src={item?.jsnCategoryInfo?.strImgPath}
                 height={"250px"}
                 width={"250px"}
                 style={styles.itemImg}
@@ -146,8 +146,8 @@ function FeaturedCard({ item, lang }) {
                       <Grid item>
                         <Typography sx={styles.price}>
                           {item?.blnOnSale
-                            ? item?.jsnProductInfo?.strSalePrice
-                            : item?.jsnProductInfo?.strPrice}
+                            ? item?.jsnCategoryInfo?.strSalePrice
+                            : item?.jsnCategoryInfo?.strPrice}
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -157,7 +157,7 @@ function FeaturedCard({ item, lang }) {
                             px-1
                             sx={styles.salePrice}
                           >
-                            ${item?.jsnProductInfo?.strPrice}
+                            ${item?.jsnCategoryInfo?.strPrice}
                           </Typography>
                         )}
                       </Grid>

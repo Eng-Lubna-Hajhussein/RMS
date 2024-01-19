@@ -29,14 +29,17 @@ module.exports = (sequelize, DataTypes) => {
         strImgPath:{
             type:DataTypes.STRING(250),  
         },
-        strFullName:{
-            type:DataTypes.STRING(250),  
+        jsnFullName:{
+            type:DataTypes.JSON,  
         },
         jsnLocation:{
             type:DataTypes.JSON
         },
-        strAddress:{
-            type:DataTypes.STRING(250)
+        jsnAddress:{
+            type:DataTypes.JSON,
+        },
+        jsnClientPayment:{
+          type:DataTypes.JSON,
         },
         blnIsDeleted:{
             type:DataTypes.BOOLEAN,

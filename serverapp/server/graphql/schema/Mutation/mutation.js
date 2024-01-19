@@ -1,28 +1,26 @@
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID,
   GraphQLInt,
-  GraphQLList,
   GraphQLBoolean,
 } = require("graphql");
 const {
   GraphQLJSON,
-  GraphQLDate,
   GraphQLDateTime,
   GraphQLBigInt,
-  GraphQLByte
 } = require("graphql-scalars");
 const {
   UserType,
   SystemType,
   ReservationType,
   OrderType,
+  CategoryType,
 } = require("../Types/types");
 const UserResolvers = require("./../../resolvers/tblUser/tblUser");
 const SystemResolvers = require("./../../resolvers/tblSystem/tblSystem");
 const ReservationResolvers = require("./../../resolvers/tblReservation/tblReservation");
 const OrderResolvers = require("./../../resolvers/tblOrder/tblOrder");
+const CategoryResolvers = require("./../../resolvers/tblCategory/tblCategory");
 
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
@@ -36,9 +34,10 @@ const Mutation = new GraphQLObjectType({
         strPassword: { type: GraphQLString },
         strEmail: { type: GraphQLString },
         strImgPath: { type: GraphQLString },
-        strFullName: { type: GraphQLString },
+        jsnFullName: { type: GraphQLJSON },
         jsnLocation: { type: GraphQLJSON },
-        strAddress: { type: GraphQLString },
+        jsnAddress: { type: GraphQLJSON },
+        jsnClientPayment: { type: GraphQLJSON },
       },
       resolve: UserResolvers.signup,
     },
@@ -48,12 +47,14 @@ const Mutation = new GraphQLObjectType({
         bigUserID: { type: GraphQLBigInt },
         bigUserRoleID: { type: GraphQLBigInt },
         bigSystemID: { type: GraphQLBigInt },
+        strPassword: { type: GraphQLString },
         strEmail: { type: GraphQLString },
         strImgPath: { type: GraphQLString },
-        strFullName: { type: GraphQLString },
+        jsnFullName: { type: GraphQLJSON },
         jsnLocation: { type: GraphQLJSON },
-        strAddress: { type: GraphQLString },
+        jsnAddress: { type: GraphQLJSON },
         blnIsDeleted: { type: GraphQLBoolean },
+        jsnClientPayment: { type: GraphQLJSON },
         blnIsActive: { type: GraphQLBoolean },
       },
       resolve: UserResolvers.updateUser,
@@ -64,9 +65,9 @@ const Mutation = new GraphQLObjectType({
         bigSystemID: { type: GraphQLBigInt },
         bigWSCategoryID: { type: GraphQLBigInt },
         strLogoPath: { type: GraphQLString },
-        strSystemName: { type: GraphQLString },
+        jsnSystemName: { type: GraphQLJSON },
         strSystemPathURL: { type: GraphQLString },
-        strSystemAddress: { type: GraphQLString },
+        jsnSystemAddress: { type: GraphQLJSON },
         jsnSystemLocation: { type: GraphQLJSON },
         jsnSystemContact: { type: GraphQLJSON },
         lstSystemReviews: { type: GraphQLJSON },
@@ -82,9 +83,9 @@ const Mutation = new GraphQLObjectType({
         bigSystemID: { type: GraphQLBigInt },
         bigWSCategoryID: { type: GraphQLBigInt },
         strLogoPath: { type: GraphQLString },
-        strSystemName: { type: GraphQLString },
+        jsnSystemName: { type: GraphQLJSON },
         strSystemPathURL: { type: GraphQLString },
-        strSystemAddress: { type: GraphQLString },
+        jsnSystemAddress: { type: GraphQLJSON },
         jsnSystemLocation: { type: GraphQLJSON },
         jsnSystemContact: { type: GraphQLJSON },
         lstSystemReviews: { type: GraphQLJSON },
@@ -128,6 +129,13 @@ const Mutation = new GraphQLObjectType({
       },
       resolve: ReservationResolvers.updateTable,
     },
+    deleteTable: {
+      type: ReservationType,
+      args: {
+        bigTableID: { type: GraphQLBigInt },
+      },
+      resolve: ReservationResolvers.deleteTable,
+    },
     createOrder: {
       type: OrderType,
       args: {
@@ -136,7 +144,7 @@ const Mutation = new GraphQLObjectType({
         bigUserID: { type: GraphQLBigInt },
         lstProduct: { type: GraphQLJSON },
         strTotalPrice: { type: GraphQLString },
-        strAddress: { type: GraphQLString },
+        jsnAddress: { type: GraphQLJSON },
         jsnLocation: { type: GraphQLJSON },
         dtmOrderDate: { type: GraphQLDateTime },
         jsnClientInfo: { type: GraphQLJSON },
@@ -153,7 +161,7 @@ const Mutation = new GraphQLObjectType({
         bigUserID: { type: GraphQLBigInt },
         lstProduct: { type: GraphQLJSON },
         strTotalPrice: { type: GraphQLString },
-        strAddress: { type: GraphQLString },
+        jsnAddress: { type: GraphQLJSON },
         jsnLocation: { type: GraphQLJSON },
         dtmOrderDate: { type: GraphQLDateTime },
         jsnClientInfo: { type: GraphQLJSON },
@@ -161,6 +169,52 @@ const Mutation = new GraphQLObjectType({
         blnDelivered: { type: GraphQLBoolean },
       },
       resolve: OrderResolvers.updateOrder,
+    },
+    deleteOrder: {
+      type: OrderType,
+      args: {
+        bigOrderID: { type: GraphQLBigInt },
+      },
+      resolve: OrderResolvers.deleteOrder,
+    },
+    createCategory: {
+      type: CategoryType,
+      args: {
+        bigID: { type: GraphQLBigInt },
+        bigSystemID: { type: GraphQLBigInt },
+        jsnName: { type: GraphQLJSON },
+        bigParentID: { type: GraphQLBigInt },
+        jsnCategoryInfo: { type: GraphQLJSON },
+        lstReviews: { type: GraphQLJSON },
+        intRating: { type: GraphQLInt },
+        blnFeatured: { type: GraphQLBoolean },
+        blnMostOrdered: { type: GraphQLBoolean },
+        blnOnSale: { type: GraphQLBoolean },
+      },
+      resolve: CategoryResolvers.createCategory,
+    },
+    updateCategory: {
+      type: CategoryType,
+      args: {
+        bigID: { type: GraphQLBigInt },
+        bigSystemID: { type: GraphQLBigInt },
+        jsnName: { type: GraphQLJSON },
+        bigParentID: { type: GraphQLBigInt },
+        jsnCategoryInfo: { type: GraphQLJSON },
+        lstReviews: { type: GraphQLJSON },
+        intRating: { type: GraphQLInt },
+        blnFeatured: { type: GraphQLBoolean },
+        blnMostOrdered: { type: GraphQLBoolean },
+        blnOnSale: { type: GraphQLBoolean },
+      },
+      resolve: CategoryResolvers.updateCategory,
+    },
+    deleteCategory: {
+      type: CategoryType,
+      args: {
+        bigID: { type: GraphQLBigInt },
+      },
+      resolve: CategoryResolvers.deleteCategory,
     },
   },
 });
