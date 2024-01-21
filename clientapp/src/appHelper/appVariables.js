@@ -48,9 +48,9 @@ export const Demo_jsnSystemInfo = {
   jsnSystemContact: {
     strEmail: "info@domain.com",
     strPhone: "+1 (850) 344 0 66",
-    strFacebook: "",
-    strInstagram: "",
-    strYoutube: "",
+    strFacebook: "https://www.facebook.com/",
+    strInstagram: "https://www.instagram.com/",
+    strYoutube: "https://www.youtube.com/",
   },
   lstSystemReviews: [
     {
@@ -154,11 +154,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
+          style:{},
+          strAnimationType:""
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
+          style:{},
+          strAnimationType:""
         },
+        strBgAnimationType:""
       },
       {
         strImgPath: `${strServerAssetsPath}demo/slide2.jpg`,
@@ -166,11 +171,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
+          style:{},
+          strAnimationType:""
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
+          style:{},
+          strAnimationType:""
         },
+        strBgAnimationType:""
       },
       {
         strImgPath: `${strServerAssetsPath}demo/slide3.jpg`,
@@ -178,11 +188,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
+          style:{},
+          strAnimationType:""
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
+          style:{},
+          strAnimationType:""
         },
+        strBgAnimationType:""
       },
       {
         strImgPath: `${strServerAssetsPath}demo/slide4.jpg`,
@@ -190,11 +205,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
+          style:{},
+          strAnimationType:""
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
+          style:{},
+          strAnimationType:""
         },
+        strBgAnimationType:""
       },
     ],
     jsnOwnerSection: {
@@ -262,6 +282,7 @@ export const Demo_jsnSystemInfo = {
   bigWSCategoryID: 3013919779,
   jsnLocation: {},
   lstContactUs: [],
+  strLogoPath:""
 };
 
 export const Demo_categories = [
@@ -608,3 +629,5 @@ export const objRoleID = {
   Admin: 1511510928,
   Customer: 7411510928,
 };
+
+export const Demo_objSystemLocation = {lat:35.856737,long:30.606619}

@@ -1,10 +1,9 @@
 import "./Carousel.css";
 import React, { useState } from "react";
 import { Grid } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
-const styles = {
-
-}
+const styles = {};
 
 export const Carousel = ({
   slides,
@@ -15,6 +14,7 @@ export const Carousel = ({
   inset,
   lang,
   dir,
+  editable,
 }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const indicators = Math.ceil(slides.length / activeSlides);

@@ -127,7 +127,7 @@ function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
             </Grid>
           </Grid>
           <Grid container item xs="1" display={editable?'flex':"none"} justifyContent={"flex-end"}>
-            <EditIcon sx={{color:"#000"}} onClick={handleEditOpen} />
+            <EditIcon sx={{color:"#000",cursor:"pointer"}} onClick={handleEditOpen} />
           </Grid>
         </Grid>
       </Toolbar>
@@ -135,6 +135,8 @@ function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
         openEdit={openEdit}
         handleEditOpen={handleEditOpen}
         handleEditClose={handleEditClose}
+        jsnSystemContact={jsnSystemContact}
+        onSave={onSaveUpperHeader}
       />
     </React.Fragment>
   );

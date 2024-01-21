@@ -11,7 +11,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 
-function Edit({ openEdit, handleEditClose }) {
+function Edit({ openEdit, handleEditClose, jsnSystemContact,onSave }) {
   return (
     <Dialog
       open={openEdit}
@@ -22,8 +22,16 @@ function Edit({ openEdit, handleEditClose }) {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
           const formJson = Object.fromEntries(formData.entries());
-          const email = formJson.email;
-          console.log(email);
+          const {email,phone,facebook,instagram,youtube} = formJson;
+          const updatedContacts = {
+            strEmail:email,
+            strPhone:phone,
+            strFacebook:facebook,
+            strInstagram:instagram,
+            strYoutube:youtube
+          }
+          onSave(updatedContacts)
+          
           handleEditClose();
         },
       }}
@@ -31,7 +39,7 @@ function Edit({ openEdit, handleEditClose }) {
     >
       <DialogTitle sx={{ height: "fit-content" }}>
         <Grid container justifyContent={"end"}>
-          <Close />
+          <Close sx={{cursor:"pointer"}} onClick={handleEditClose} />
         </Grid>
       </DialogTitle>
       <DialogContent sx={{py:"0"}}>
@@ -50,7 +58,7 @@ function Edit({ openEdit, handleEditClose }) {
                 type="email"
                 fullWidth
                 variant="outlined"
-                defaultValue={'lubna@gmail.com'}
+                defaultValue={jsnSystemContact.strEmail}
               />
             </Grid>
             <Grid item xs="6" p={1}>
@@ -60,9 +68,10 @@ function Edit({ openEdit, handleEditClose }) {
                 required
                 name="phone"
                 label="Phone Number"
-                type="number"
+                type="text"
                 fullWidth
                 variant="outlined"
+                defaultValue={jsnSystemContact.strPhone}
               />
             </Grid>
           </Grid>
@@ -80,6 +89,7 @@ function Edit({ openEdit, handleEditClose }) {
                 type="url"
                 fullWidth
                 variant="outlined"
+                defaultValue={jsnSystemContact.strFacebook}
               />
             </Grid>
             <Grid item xs="12" p={1}>
@@ -92,6 +102,7 @@ function Edit({ openEdit, handleEditClose }) {
                 type="url"
                 fullWidth
                 variant="outlined"
+                defaultValue={jsnSystemContact.strInstagram}
               />
             </Grid>
             <Grid item xs="12" p={1}>
@@ -104,6 +115,7 @@ function Edit({ openEdit, handleEditClose }) {
                 type="url"
                 fullWidth
                 variant="outlined"
+                defaultValue={jsnSystemContact.strYoutube}
               />
             </Grid>
           </Grid>

@@ -1,6 +1,6 @@
 export const signupQuery = (objInput) => {
   return `mutation {
-     signup(bigUserID:${objInput.bigUserID},bigUserRoleID:${objInput.bigUserRoleID},strEmail:"${objInput.strEmail}",strPassword:"${objInput.strPassword}",bigSystemID:"${objInput.bigSystemID}",jsnFullName:"""${JSON.stringify(objInput.jsnFullName)}""",jsnClientPayment:"""${JSON.stringify(objInput.jsnClientPayment)}"""){
+     signup(bigUserID:${objInput.bigUserID},bigUserRoleID:${objInput.bigUserRoleID},strEmail:"${objInput.strEmail}",strPassword:"${objInput.strPassword}",bigSystemID:"${objInput.bigSystemID}",jsnFullName:"""${JSON.stringify(objInput.jsnFullName)}""",jsnClientPayment:"""${JSON.stringify(objInput.jsnClientPayment)}""",jsnAddress:"""${JSON.stringify(objInput.jsnAddress)}""",jsnLocation:"""${JSON.stringify(objInput.jsnLocation)}"""){
            bigUserID
            bigUserRoleID
            bigSystemID

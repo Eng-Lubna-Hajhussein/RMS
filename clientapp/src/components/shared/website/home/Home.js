@@ -15,7 +15,7 @@ import Footer from "./sections/footer/Footer";
 import BtnProgressToTop from "components/sharedUI/btnProgressToTop/BtnProgressToTop";
 import Loader001 from "components/sharedUI/loader001/Loader001";
 
-function Home({ systemInfo, categories, editable, onSaveUpperHeader,lang,dir }) {
+function Home({ systemInfo, categories, editable, onSaveUpperHeader,onSaveHero,lang,dir }) {
   const featured = useMemo(() => {
     return categories.filter((category) => category.blnFeatured);
   }, [categories]);
@@ -40,8 +40,10 @@ function Home({ systemInfo, categories, editable, onSaveUpperHeader,lang,dir }) 
       <Hero
         lang={lang}
         dir={dir}
+        editable={editable}
         lstHeroSlides={systemInfo.jsnSystemSections.lstHeroSlides}
         wsCategory={wsCategory}
+        onSaveHero={onSaveHero}
       />
       <Owner
         lang={lang}
@@ -71,7 +73,7 @@ function Home({ systemInfo, categories, editable, onSaveUpperHeader,lang,dir }) 
       />
       <Follow lang={lang} />
       <Footer lang={lang} />
-      <BtnProgressToTop lang={lang} />
+      {/* <BtnProgressToTop lang={lang} /> */}
       <Loader001 status={"loaded"} />
     </React.Fragment>
   );

@@ -1,6 +1,10 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import { AppReducer } from "contextapi/reducer/AppReducer";
-import {Demo_System_ID,Demo_jsnSystemInfo,Demo_categories} from 'appHelper/appVariables';
+import {
+  Demo_System_ID,
+  Demo_jsnSystemInfo,
+  Demo_categories,
+} from "appHelper/appVariables";
 
 export const AppContext = createContext({ appState: {}, appDispatch: {} });
 
@@ -8,7 +12,7 @@ const initialAppState = {
   clientInfo: {
     blnUserLogin: false,
     strLanguage: "eng", // arb,
-    strDir:"ltr", //rtl
+    strDir: "ltr", //rtl
   },
   systemInfo: {
     bigSystemID: Demo_System_ID,
@@ -19,22 +23,25 @@ const initialAppState = {
     bigWSCategoryID: Demo_jsnSystemInfo.bigWSCategoryID,
     jsnSystemLocation: Demo_jsnSystemInfo.jsnSystemLocation,
     lstContactUs: Demo_jsnSystemInfo.lstContactUs,
+    strLogoPath:Demo_jsnSystemInfo.strLogoPath
   },
   userInfo: {
-    bigUserID:"",
+    bigUserID: "",
     strUserImage: "",
-    strFullName: "",
+    jsnFullName: "",
     strEmail: "",
-    strPhone: "",
-    strUsername: "",
   },
-  categories:[...Demo_categories]
+  categories: [...Demo_categories],
 };
 
 const AppContextProvider = (props) => {
-  const [appState, appDispatch] = useReducer(AppReducer, initialAppState);
+  const localStorageAppState = JSON.parse(localStorage.getItem("appState"));
+  const [appState, appDispatch] = useReducer(AppReducer,{
+    ...initialAppState,
+    ...localStorageAppState,
+  });
   useEffect(() => {
-    localStorage.setItem('appState', JSON.stringify(appState));
+    localStorage.setItem("appState", JSON.stringify(appState));
   }, [appState]);
   return (
     <AppContext.Provider value={{ appState, appDispatch }}>

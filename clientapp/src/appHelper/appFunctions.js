@@ -9,5 +9,10 @@ export function generateRandomID(n) {
     max = Math.pow(10, n + add);
     let min = max / 10; // Math.pow(10, n) basically
     let number = Math.floor(Math.random() * (max - min + 1)) + min;
-    return ("" + number).substring(add);
+    const strNum = ("" + number);
+    return strNum.substring(0,strNum.length-add)
   }
+
+export function formateDBStr(str){
+  return str.toLowerCase().trim()
+}

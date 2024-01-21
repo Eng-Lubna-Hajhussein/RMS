@@ -20,7 +20,7 @@ const querify = obj => {
     return `{${props}}`;
   
   }
-export const fetchData = async (requestBody) => {    
+export const fetchData = async (requestBody) => {  
  return await fetch(App_Server_URL_GraphQL, {
     method: "POST",
     body: JSON.stringify(requestBody),
