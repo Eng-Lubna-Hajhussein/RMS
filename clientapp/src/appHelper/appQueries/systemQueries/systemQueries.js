@@ -34,4 +34,23 @@ export const updateSystemQuery = (objInput) => {
           lstContactUs
         }
       }`
+};
+
+export const findSystemQuery = (bigSystemID) => {
+  return `query {
+    findSystem(bigSystemID:${bigSystemID}){
+      bigSystemID
+      bigWSCategoryID
+      strLogoPath
+      jsnSystemName
+      strSystemPathURL
+      jsnSystemAddress
+      jsnSystemLocation
+      jsnSystemContact
+      lstSystemReviews
+      lstSystemTeam
+      jsnSystemSections
+      lstContactUs
+    }
+  }`
 }

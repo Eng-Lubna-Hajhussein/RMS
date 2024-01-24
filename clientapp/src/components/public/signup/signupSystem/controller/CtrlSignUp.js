@@ -41,8 +41,13 @@ export const ctrlSignUp = {
         jsnSystemName: jsnSystemName,
         strSystemPathURL: strSystemPathURL,
         jsnSystemLocation: jsnSystemLocation,
+        jsnSystemContact:appState.systemInfo.jsnSystemContact,
+        lstSystemTeam:appState.systemInfo.lstSystemTeam,
+        jsnSystemSections:appState.systemInfo.jsnSystemSections,
+        strLogoPath:appState.systemInfo.strLogoPath
       };
       const regSystem = await createSystem(objInputSystem);
+      console.log({regSystem})
       const bigUserID = generateRandomID(10);
       const jsnFullName = {
         eng: formData.ownerNameEng,
@@ -81,7 +86,7 @@ export const ctrlSignUp = {
       appState.systemInfo.strSystemPathURL = regSystem.strSystemPathURL;
       appState.systemInfo.jsnSystemAddress = JSON.parse(regSystem.jsnSystemAddress);
       appState.systemInfo.jsnSystemLocation = JSON.parse(regSystem.jsnSystemLocation);
-      appDispatch({ ...appState });
+      appDispatch({...appState});
       navigate(`/${regSystem.strSystemPathURL}`);
     } catch (err) {
       console.log({ err });

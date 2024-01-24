@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { Toolbar, Grid, Icon, Box, Typography } from "@mui/material";
+import {
+  Toolbar,
+  Grid,
+  Icon,
+  Box,
+  Typography,
+  Button,
+  Avatar,
+} from "@mui/material";
 import { HowToRegOutlined } from "@mui/icons-material";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { dictionary } from "appHelper/appDictionary";
 import SystemContact from "./SystemContact";
 import SystemSocial from "./SystemSocial";
 import Edit from "./Edit";
 import { Link } from "react-router-dom";
+import NavList from "components/sharedUI/navList/NavList";
 
 const styles = {
   upperToolbar: {
@@ -37,16 +46,47 @@ const styles = {
   },
 };
 
-function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
+function UpperToolbar({
+  jsnSystemContact,
+  userImg,
+  userName,
+  blnUserLogin,
+  userNavList,
+  lang,
+  editable,
+  onSaveUpperHeader,
+}) {
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
 
   return (
     <React.Fragment>
+      {editable && (
+        <Grid
+          item
+          container
+          justifyContent={"start"}
+          sx={{ background: "#dad8d9" }}
+          xs="12"
+        >
+          <Button variant="text" onClick={handleEditOpen}>
+            <Typography
+              sx={{
+                color: "#000",
+                fontSize: "15px",
+                fontWeight: "600",
+                textTransform: "capitalize",
+              }}
+            >
+              edit Upper Header info
+            </Typography>
+          </Button>
+        </Grid>
+      )}
       <Toolbar sx={styles.upperToolbar}>
         <Grid container direction={"row"} alignItems={"center"}>
-          <Grid container item xs="3" spacing={"3"}>
+          <Grid container item xs="3" spacing={"3"} justifyContent={"start"}>
             <SystemContact
               contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
               lang={lang}
@@ -90,44 +130,64 @@ function UpperToolbar({ jsnSystemContact, lang, editable, onSaveUpperHeader }) {
           <Grid
             container
             item
-            xs={editable ? "2" : "3"}
+            xs={"3"}
             spacing={"3"}
             justifyContent={"flex-end"}
           >
-            <Grid item container xs='12'>
-            <Grid item px={1}>
-              <Box sx={styles.regIconBox}>
-                <Icon>
-                  <HowToRegOutlined sx={{ color: "#000000" }} />
-                </Icon>
-              </Box>
+            <Grid item container xs="12" justifyContent={"flex-end"}>
+              <Grid item px={1}>
+                {!blnUserLogin && (
+                  <Box sx={styles.regIconBox}>
+                    <Icon>
+                      <HowToRegOutlined sx={{ color: "#000000" }} />
+                    </Icon>
+                  </Box>
+                )}
+                {/* {blnUserLogin && (
+                  <Avatar src={userImg} height="50px" width="50px" />
+                )} */}
+              </Grid>
+              {!blnUserLogin && (
+                <Grid item alignSelf={"center"}>
+                  <Link to={"/login"}>
+                    <Typography
+                      component={"p"}
+                      sx={styles.regTypography}
+                      color={"#000000"}
+                    >
+                      login
+                    </Typography>
+                  </Link>
+                </Grid>
+              )}
+              {!blnUserLogin && (
+                <Grid item alignSelf={"center"} px={1}>
+                  <Link to={"/signup"}>
+                    <Typography
+                      component={"p"}
+                      sx={styles.regTypography}
+                      color={"#000000"}
+                    >
+                      / register
+                    </Typography>
+                  </Link>
+                </Grid>
+              )}
+              {blnUserLogin && (
+                <Grid item alignSelf={"center"}>
+                  <NavList nav={
+                    <Grid container sx={{height:"fit-content"}} alignItems={'center'} alignContent={'center'}>
+                      <Grid item px={1} sx={{height:"fit-content"}}>
+                      <Avatar src={userImg} height="50px" width="50px" />
+                      </Grid>
+                      <Grid item>
+                      {userName[lang]}
+                      </Grid>
+                    </Grid>
+                    } navList={userNavList} lang={lang} />
+                </Grid>
+              )}
             </Grid>
-            <Grid item alignSelf={"center"}>
-              <Link to={'/login'}>
-              <Typography
-                component={"p"}
-                sx={styles.regTypography}
-                color={"#000000"}
-              >
-                login
-              </Typography>
-              </Link>
-            </Grid>
-            <Grid item alignSelf={"center"} px={1}>
-              <Link to={'/signup'}>
-              <Typography
-                component={"p"}
-                sx={styles.regTypography}
-                color={"#000000"}
-              >
-                / register
-              </Typography>
-              </Link>
-            </Grid>
-            </Grid>
-          </Grid>
-          <Grid container item xs="1" display={editable?'flex':"none"} justifyContent={"flex-end"}>
-            <EditIcon sx={{color:"#000",cursor:"pointer"}} onClick={handleEditOpen} />
           </Grid>
         </Grid>
       </Toolbar>

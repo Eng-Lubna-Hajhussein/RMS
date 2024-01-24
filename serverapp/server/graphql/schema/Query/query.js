@@ -74,14 +74,14 @@ const RootQuery = new GraphQLObjectType({
       resolve: OrderResolvers.findOrder,
     },
     findCategories: {
-      type: new GraphQLList(new GraphQLNonNull(OrderType)),
+      type: new GraphQLList(new GraphQLNonNull(CategoryType)),
       args: {
         bigSystemID: { type: GraphQLBigInt },
       },
       resolve: CategoryResolvers.findCategories,
     },
     findCategory: {
-      type: new GraphQLNonNull(OrderType),
+      type: new GraphQLNonNull(CategoryType),
       args: {
         bigID: { type: GraphQLBigInt },
       },

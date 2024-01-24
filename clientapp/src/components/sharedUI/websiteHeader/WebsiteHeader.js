@@ -10,19 +10,40 @@ const styles = {
   },
 };
 
-function WebsiteHeader({ jsnSystemContact, navList, lang, editable,onSaveUpperHeader }) {
+function WebsiteHeader({
+  jsnSystemContact,
+  navList,
+  lang,
+  editable,
+  onSaveUpperHeader,
+  adminNavList,
+  userImg,
+  userName,
+  blnUserLogin,
+  userNavList,
+}) {
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar position="static" sx={styles.appBar} p={0} m={0}>
-        <UpperToolbar jsnSystemContact={jsnSystemContact} onSaveUpperHeader={onSaveUpperHeader} lang={lang} editable={editable} />
+        <UpperToolbar
+          jsnSystemContact={jsnSystemContact}
+          onSaveUpperHeader={onSaveUpperHeader}
+          lang={lang}
+          editable={editable}
+          userImg={userImg}
+          userName={userName}
+          blnUserLogin={blnUserLogin}
+          userNavList={userNavList}
+        />
         <LowerToolbar
           navList={navList}
           lang={lang}
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}
           editable={editable}
+          adminNavList={adminNavList}
         />
       </AppBar>
       <DrawerNav

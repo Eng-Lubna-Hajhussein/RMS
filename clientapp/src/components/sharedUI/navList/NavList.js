@@ -58,9 +58,16 @@ export default function NavList({ nav, navList, lang }) {
           open={open}
           onClose={handleClose}
         >
-          {navList.map(({ nav }, index) => (
+          {navList.map(({ nav,onClick }, index) => (
             <React.Fragment>
-              <MenuItem onClick={handleClose} disableRipple>
+              <MenuItem onClick={()=>
+              {
+                if(onClick){
+                  onClick();
+                }
+                handleClose();
+              }
+              } disableRipple>
                 <Typography color={"#000"} sx={styles.subNav}>
                   {nav[lang]}
                 </Typography>

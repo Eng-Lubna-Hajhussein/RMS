@@ -3,6 +3,8 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
+  GraphQLList,
+  GraphQLID,
 } = require("graphql");
 const {
   GraphQLJSON,
@@ -15,6 +17,7 @@ const {
   ReservationType,
   OrderType,
   CategoryType,
+  CategoryInputType,
 } = require("../Types/types");
 const UserResolvers = require("./../../resolvers/tblUser/tblUser");
 const SystemResolvers = require("./../../resolvers/tblSystem/tblSystem");
@@ -193,6 +196,13 @@ const Mutation = new GraphQLObjectType({
       },
       resolve: CategoryResolvers.createCategory,
     },
+    bulkCategories:{
+      type: new GraphQLList(CategoryType),
+      args: {
+        categories:{type:new GraphQLList(CategoryInputType)}
+      },
+      resolve: CategoryResolvers.bulkCategories,
+    },
     updateCategory: {
       type: CategoryType,
       args: {
@@ -210,7 +220,7 @@ const Mutation = new GraphQLObjectType({
       resolve: CategoryResolvers.updateCategory,
     },
     deleteCategory: {
-      type: CategoryType,
+      type: GraphQLBoolean,
       args: {
         bigID: { type: GraphQLBigInt },
       },

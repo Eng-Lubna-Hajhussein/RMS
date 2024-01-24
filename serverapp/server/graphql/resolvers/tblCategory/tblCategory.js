@@ -12,7 +12,7 @@ module.exports = {
   },
   findCategory: async (_,{bigID}) => {
     try {
-      return await tblCategory.findByPk(bigID);
+      return await tblCategory.findOne({where:{bigID:bigID}});
     } catch (err) {
       throw err;
     }
@@ -21,11 +21,19 @@ module.exports = {
   //CREATE
   createCategory: async (_, category) => {
     try {
-      return await tblCategory.create({ category });
+      return await tblCategory.create({ ...category });
     } catch (err) {
       throw err;
     }
   },
+  //CREATE BULK
+   bulkCategories:async(_,{categories})=>{
+    try {
+      return await tblCategory.bulkCreate(JSON.parse(JSON.stringify(categories)), {updateOnDuplicate: ['bigID']});
+    } catch (err) {
+      throw err;
+    }
+   },
   //UPDATE
   updateCategory: async (_, category) => {
     try {

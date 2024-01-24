@@ -1,5 +1,6 @@
 const {
   GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLString,
   GraphQLID,
   GraphQLInt,
@@ -108,4 +109,20 @@ const CategoryType = new GraphQLObjectType({
   }),
 });
 
-module.exports = { UserType, SystemType, ReservationType, OrderType, CategoryType };
+const CategoryInputType = new GraphQLInputObjectType({
+  name: "CategoryInputType",
+  fields: () => ({
+    bigID: { type: GraphQLBigInt },
+    bigSystemID: { type: GraphQLBigInt },
+    jsnName: { type: GraphQLJSON },
+    bigParentID: { type: GraphQLBigInt },
+    jsnCategoryInfo: { type: GraphQLJSON },
+    lstReviews: { type: GraphQLJSON },
+    intRating: { type: GraphQLInt },
+    blnFeatured: { type: GraphQLBoolean },
+    blnMostOrdered: { type: GraphQLBoolean },
+    blnOnSale: { type: GraphQLBoolean },
+  }),
+});
+
+module.exports = { UserType, SystemType, ReservationType, OrderType, CategoryType,CategoryInputType };

@@ -1,7 +1,8 @@
 import "./Carousel.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import AnimationBG from "../AnimationBG/AnimationBG";
 
 const styles = {};
 
@@ -19,6 +20,10 @@ export const Carousel = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const indicators = Math.ceil(slides.length / activeSlides);
 
+  useEffect(()=>{
+    console.log({slides})
+  },[])
+
   return (
     <Grid container mx={0} className="carousel-container">
       <Grid item container xs="12">
@@ -27,6 +32,7 @@ export const Carousel = ({
             <div
               className={activeSlide === index ? "slide" : "slide slide-hidden"}
             >
+              <AnimationBG type={slide?.bgAnimation || "none"}>
               <Grid
                 container
                 item
@@ -98,6 +104,7 @@ export const Carousel = ({
                   </>
                 )}
               </Grid>
+              </AnimationBG>
             </div>
           );
         })}

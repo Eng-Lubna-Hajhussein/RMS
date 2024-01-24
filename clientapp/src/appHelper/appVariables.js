@@ -259,11 +259,6 @@ export const Demo_jsnSystemInfo = {
         eng: "order your food anytime! anywhere!",
         arb: "اطلب طعامك المفضل في اي وقت ومن اي مكان",
       },
-      lstFeatures: [
-        { eng: "higher reach - minimal effort", arb: "اقل جهد ووقت" },
-        { eng: "provide healthy food", arb: "نقدم الطعام الصحي" },
-        { eng: "exclusive offers & discounts", arb: "افضل العروض والتخفيضات" },
-      ],
       strImgPath: `${strServerAssetsPath}demo/about-bg.png`,
       strGooglePlayLink: "",
       strAppStoreLink: "",

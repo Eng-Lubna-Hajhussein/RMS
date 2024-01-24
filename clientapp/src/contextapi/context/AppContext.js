@@ -17,12 +17,12 @@ const initialAppState = {
   systemInfo: {
     bigSystemID: Demo_System_ID,
     jsnSystemContact: Demo_jsnSystemInfo.jsnSystemContact,
-    lstSystemReviews: Demo_jsnSystemInfo.lstSystemReviews,
+    lstSystemReviews: [],
     lstSystemTeam: Demo_jsnSystemInfo.lstSystemTeam,
     jsnSystemSections: Demo_jsnSystemInfo.jsnSystemSections,
-    bigWSCategoryID: Demo_jsnSystemInfo.bigWSCategoryID,
-    jsnSystemLocation: Demo_jsnSystemInfo.jsnSystemLocation,
-    lstContactUs: Demo_jsnSystemInfo.lstContactUs,
+    bigWSCategoryID: null,
+    jsnSystemLocation: {},
+    lstContactUs: [],
     strLogoPath:Demo_jsnSystemInfo.strLogoPath
   },
   userInfo: {
@@ -31,7 +31,7 @@ const initialAppState = {
     jsnFullName: "",
     strEmail: "",
   },
-  categories: [...Demo_categories],
+  categories: [],
 };
 
 const AppContextProvider = (props) => {

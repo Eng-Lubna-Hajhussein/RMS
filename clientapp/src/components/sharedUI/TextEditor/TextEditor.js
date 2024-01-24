@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./TextEditor.css";
 import {
   Dialog,
@@ -7,43 +7,52 @@ import {
   DialogTitle,
   Grid,
   Typography,
-  Button
+  Button,
 } from "@mui/material";
 import AnimButton0001 from "../AnimButton0001/AnimButton0001";
 import { Close } from "@mui/icons-material";
 import { App_Primary_Color } from "appHelper/appColor";
 
-const TextEditor = ({ objText, onSave, open, handleClose, lang, dir }) => {
-  const [active, setActive] = useState({
+const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
+    const [active, setActive] = useState({
     justifyLeft: false,
     justifyCenter: false,
     justifyRight: false,
     justifyFull: false,
     boldBtn: false,
-    fontColor:objText?.style?.color|| objText?.defaultStyle?.color,
-    highlightColor:objText?.style?.background|| objText?.defaultStyle?.background,
+    fontColor:
+      objText[objText?.onStyleKey]?.style?.color ||
+      objText?.defaultStyle?.color,
+    highlightColor:
+      objText[objText?.onStyleKey]?.style?.background ||
+      objText?.defaultStyle?.background,
   });
 
-  useEffect(() => {
-    setActive({
-      justifyLeft: false,
-      justifyCenter: false,
-      justifyRight: false,
-      justifyFull: false,
-      boldBtn: false,
-      fontColor:objText?.style?.color|| objText?.defaultStyle?.color,
-      highlightColor:objText?.style?.background|| objText?.defaultStyle?.background,
-    });
-  }, [objText.defaultStyle,objText.style]);
-  const [style, setStyle] = useState({ ...objText?.style });
+  useEffect(()=>{
+       setActive({
+        justifyLeft: false,
+        justifyCenter: false,
+        justifyRight: false,
+        justifyFull: false,
+        boldBtn: false,
+        fontColor:
+          objText[objText?.onStyleKey]?.style?.color ||
+          objText?.defaultStyle?.color,
+        highlightColor:
+          objText[objText?.onStyleKey]?.style?.background ||
+          objText?.defaultStyle?.background,
+       })
+  },[objText.onStyleKey])
 
   useEffect(() => {
-    setStyle({
-      ...style,
-      fontWeight: active.boldBtn ? "bold" : "100",
-      background: active.highlightColor,
-      color: active?.fontColor,
-    });
+    if (objText.onStyleKey) {
+      onChange({
+        ...objText[objText.onStyleKey]?.style,
+        fontWeight: active.boldBtn ? "bold" : "100",
+        background: active.highlightColor,
+        color: active?.fontColor,
+      });
+    }
   }, [active]);
 
   let fontList = [
@@ -57,12 +66,7 @@ const TextEditor = ({ objText, onSave, open, handleClose, lang, dir }) => {
   ];
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      fullScreen
-      maxWidth="sm"
-    >
+    <Dialog open={open} onClose={handleClose} fullScreen maxWidth="sm">
       <DialogTitle sx={{ height: "fit-content", width: "100%" }}>
         <Grid container justifyContent={"end"}>
           <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
@@ -257,7 +261,8 @@ const TextEditor = ({ objText, onSave, open, handleClose, lang, dir }) => {
               container
               sx={{
                 height: "250px",
-                background: objText?.bgImg && `url(${objText?.bgImg})`,
+                background:
+                  objText?.strImgPath && `url(${objText?.strImgPath})`,
                 backgroundSize: "100% 100%",
                 backgroundColor: "#000",
               }}
@@ -268,25 +273,25 @@ const TextEditor = ({ objText, onSave, open, handleClose, lang, dir }) => {
                 <Typography
                   sx={{
                     ...objText.defaultStyle,
-                    ...style,
-                    // background: "transparent",
+                    ...objText[objText.onStyleKey]?.style,
                   }}
                 >
-                  {objText[lang]}
+                  {objText[objText?.onStyleKey] &&
+                    objText[objText?.onStyleKey][lang]}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item xs='12' justifyContent={'center'} pt={2}>
-<Grid item xs="5">
+            {/* <Grid item xs='12' container justifyContent={'center'} py={2}
+           >
+              <Grid item xs="3">
               <AnimButton0001
                 label={"save styles"}
                 color={App_Primary_Color}
                 fullWidth={true}
-                type="submit"
-                onClick={()=>onSave(style)}
+                onClick={()=>onChange(style)}
               />
-            </Grid>
-            </Grid>
+              </Grid>
+            </Grid> */}
           </div>
         </Grid>
       </DialogContent>

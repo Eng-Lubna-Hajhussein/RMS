@@ -5,7 +5,7 @@ module.exports = {
   // QUERY--------------------------------------------------------------------------------
   findSystem: async (_,{bigSystemID}) => {
     try {
-      return await tblSystem.findByPk(bigSystemID);
+      return await tblSystem.findOne({where:{bigSystemID:bigSystemID}});
     } catch (err) {
       throw err;
     }
@@ -27,7 +27,7 @@ module.exports = {
       if (!updatedSystem[0]) {
         throw new Error("No rows have been effected.");
       } else {
-        return await tblSystem.findByPk(system.bigSystemID);
+        return await tblSystem.findOne({where:{bigSystemID:system.bigSystemID}});
       }
     } catch (err) {
       throw err;

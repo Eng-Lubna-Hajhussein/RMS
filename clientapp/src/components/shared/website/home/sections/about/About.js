@@ -1,14 +1,17 @@
-import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import Button0001 from "components/sharedUI/button0001/Button0001";
 import { dictionary } from "appHelper/appDictionary";
 import googlePlayIcon from "assets/image/google-play.png";
 import appleIcon from "assets/image/apple.png";
+import Edit from "./Edit";
 
 const styles = {
   container: {
     marginY: "100px",
     background: "#f5f8fd",
+  },
+  containerItem:{
     paddingX: { lg: "60px", xs: "15px" },
   },
   leftItemContainer: {
@@ -52,9 +55,21 @@ const styles = {
   },
 };
 
-function About({ lang, dir, jsnAboutSection }) {
+function About({ lang, dir, jsnAboutSection, editable,onSaveAbout }) {
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleEditOpen = () => setOpenEdit(true);
+  const handleEditClose = () => setOpenEdit(false);
   return (
+    <React.Fragment>
     <Grid container sx={styles.container}>
+      {editable&&<Grid item container justifyContent={'start'} sx={{background:"#dad8d9"}} xs='12'>
+        <Button variant="text" onClick={handleEditOpen}>
+          <Typography sx={{color:"#000",fontSize:"15px",fontWeight:"600",textTransform:"capitalize"}}>
+          edit about Section info
+          </Typography>
+          </Button>
+        </Grid>}
+      <Grid item container sx={styles.containerItem} xs='12'>
       <Grid item container lg="6" xs="12" sx={styles.leftItemContainer}>
         <Grid item xs="12">
           <Typography sx={styles.title}>
@@ -65,18 +80,6 @@ function About({ lang, dir, jsnAboutSection }) {
           <Typography sx={styles.subtitle}>
             {jsnAboutSection.jsnSubtitle[lang]}
           </Typography>
-        </Grid>
-        <Grid item xs="12" container py={3}>
-          {jsnAboutSection.lstFeatures.map((feature) => (
-            <Grid item xs="12" container py={1}>
-              <Grid item container xs="1" px={1} alignContent={"center"}>
-                <Box sx={styles.circle} />
-              </Grid>
-              <Grid item xs="10">
-                <Typography sx={styles.feature}>{feature[lang]}</Typography>
-              </Grid>
-            </Grid>
-          ))}
         </Grid>
         <Grid item xs="12" container>
           <Grid item lg="5" xs="6" px={2}>
@@ -102,7 +105,18 @@ function About({ lang, dir, jsnAboutSection }) {
           width={"100%"}
         />
       </Grid>
+      </Grid>
     </Grid>
+    <Edit
+        openEdit={openEdit}
+        handleEditOpen={handleEditOpen}
+        handleEditClose={handleEditClose}
+        jsnAboutSection={jsnAboutSection}
+        onSave={onSaveAbout}
+        lang={lang}
+        dir={dir}
+      />
+    </React.Fragment>
   );
 }
 

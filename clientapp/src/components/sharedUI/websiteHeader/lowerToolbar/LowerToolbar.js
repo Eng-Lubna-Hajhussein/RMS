@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  Toolbar,
-  Grid,
-  Box,
-  Badge,
-  IconButton,
-} from "@mui/material";
+import { Toolbar, Grid, Box, Badge, IconButton } from "@mui/material";
 import { ShoppingBagOutlined, Menu, Language } from "@mui/icons-material";
 import logoIcon from "assets/image/logo.png";
-import NavList from "../navList/NavList";
+import NavList from "../../navList/NavList";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { App_Primary_Color } from "appHelper/appColor";
@@ -19,6 +13,8 @@ const styles = {
     background: "#fff",
     "&": {
       minHeight: "100px",
+      paddingLeft: "50px",
+      paddingRight: "50px",
     },
   },
   langBadge: {
@@ -38,7 +34,7 @@ const styles = {
   },
   languageIcon: {
     color: "#000000",
-    cursor:"pointer"
+    cursor: "pointer",
   },
   logo: {
     width: "150px",
@@ -53,20 +49,30 @@ const styles = {
   menuIcon: { color: "#000" },
 };
 
-function LowerToolbar({ navList, setOpenDrawer, lang }) {
-  const {onLangChange} = useLanguage();
+function LowerToolbar({ navList, setOpenDrawer, lang, editable,adminNavList }) {
+  const { onLangChange } = useLanguage();
   return (
     <Toolbar sx={styles.lowerToolBar}>
       <Grid container alignItems={"center"}>
         <Grid item lg="1" xs="2">
-          <Badge badgeContent={lang==='eng'?"ar":'en'} sx={styles.langBadge}>
-            <Language fontSize="large" sx={styles.languageIcon} 
-            onClick={onLangChange}
+          <Badge
+            badgeContent={lang === "eng" ? "ar" : "en"}
+            sx={styles.langBadge}
+          >
+            <Language
+              fontSize="large"
+              sx={styles.languageIcon}
+              onClick={onLangChange}
             />
           </Badge>
         </Grid>
-        <Grid item lg="2" xs="5">
-          <Box component={"img"} sx={styles.logo} src={logoIcon} />
+        <Grid item container justifyContent={'center'} lg="2" xs="5">
+          {editable&&<NavList
+            nav={<Box component={"img"} sx={styles.logo} src={logoIcon} />}
+            lang={lang}
+            navList={adminNavList}
+          />}
+          {!editable&&<Box component={"img"} sx={styles.logo} src={logoIcon} />}
         </Grid>
         <Grid item container lg="6" sx={styles.navListContainer}>
           {navList.map(({ nav, navList }) => (
@@ -75,10 +81,7 @@ function LowerToolbar({ navList, setOpenDrawer, lang }) {
             </Grid>
           ))}
         </Grid>
-        <Grid
-          item
-          container
-          lg="3"
+        <Grid  item  container  lg="3"
           xs="4"
           alignItems={"center"}
           justifySelf={"flex-end"}

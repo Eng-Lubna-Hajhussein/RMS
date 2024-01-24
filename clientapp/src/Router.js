@@ -7,7 +7,7 @@ import Signup from "components/public/signup/Signup";
 function Router() {
   return (
     <Routes>
-      <Route path="/" element={<RouteLandingPage />} />
+      <Route path="/" element={<RouteLandingPage isDemo={true} />} />
       <Route path="/:systemName/:systemID" element={<RouteLandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />

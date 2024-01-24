@@ -1,6 +1,7 @@
-import { Avatar, Grid, Typography } from "@mui/material";
+import { Avatar, Button, Grid, Typography } from "@mui/material";
 import ownerAvatar from "assets/image/owner-avatar.jpg";
-import React from "react";
+import React, { useState } from "react";
+import Edit from "./Edit";
 
 const styles = {
   container: {
@@ -43,8 +44,19 @@ const styles = {
   },
 };
 
-function Owner({ lang, dir, jsnOwnerSection }) {
+function Owner({ lang, dir, jsnOwnerSection ,onSaveOwner,editable}) {
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleEditOpen = () => setOpenEdit(true);
+  const handleEditClose = () => setOpenEdit(false);
   return (
+    <React.Fragment>
+              {editable&&<Grid item container justifyContent={'start'} sx={{background:"#dad8d9"}} xs='12'>
+        <Button variant="text" onClick={handleEditOpen}>
+          <Typography sx={{color:"#000",fontSize:"15px",fontWeight:"600",textTransform:"capitalize"}}>
+          edit owner section info
+          </Typography>
+          </Button>
+        </Grid>}
     <Grid container sx={styles.container}>
       <Grid
         item
@@ -78,9 +90,9 @@ function Owner({ lang, dir, jsnOwnerSection }) {
             {jsnOwnerSection.jsnOwnerComment[lang]}
           </Typography>
         </Grid>
-        <Grid item container xs="12">
+        <Grid item container xs="12" alignContent={'center'}>
           <Grid item xs="2">
-            <Avatar sx={styles.avatar} src={ownerAvatar} />
+            <Avatar sx={styles.avatar} src={jsnOwnerSection?.strOwnerImgPath} />
           </Grid>
           <Grid
             item
@@ -103,6 +115,16 @@ function Owner({ lang, dir, jsnOwnerSection }) {
         </Grid>
       </Grid>
     </Grid>
+    <Edit
+        openEdit={openEdit}
+        handleEditOpen={handleEditOpen}
+        handleEditClose={handleEditClose}
+        jsnOwnerSection={jsnOwnerSection}
+        onSave={onSaveOwner}
+        lang={lang}
+        dir={dir}
+      />
+    </React.Fragment>
   );
 }
 

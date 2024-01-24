@@ -21,8 +21,9 @@ function Hero({ lang, dir, lstHeroSlides, wsCategory, editable, onSaveHero }) {
           lstHeroSlides={lstHeroSlides}
           editable={editable}
           onSaveHero={onSaveHero}
-        />
-      ),
+          />
+          ),
+          bgAnimation:slide?.strBgAnimationType,
       sxStyle: { height: { lg: "600px", xs: "700px" } },
     }));
   }, [lstHeroSlides, lang, dir]);

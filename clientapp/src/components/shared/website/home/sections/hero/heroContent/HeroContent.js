@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Box, Grid, Rating, Typography } from "@mui/material";
+import { Box, Grid, Rating, Typography,Button } from "@mui/material";
 import { dictionary } from "appHelper/appDictionary";
 import { App_Primary_Color } from "appHelper/appColor";
 import videoIcon from "assets/image/video.svg";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimButton0002 from "components/sharedUI/AnimButton0002/AnimButton0002";
 import Edit from "./Edit";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
+import { MoreVert } from "@mui/icons-material";
 
 const styles = {
   container: {
@@ -76,13 +77,27 @@ const styles = {
   },
 };
 
-function HeroContent({ content, lstHeroSlides, lang,editable, onSaveHero, dir }) {
+function HeroContent({
+  content,
+  lstHeroSlides,
+  lang,
+  editable,
+  onSaveHero,
+  dir,
+}) {
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
 
   return (
     <React.Fragment>
+      {editable&&<Grid item container justifyContent={'start'} sx={{background:"#dad8d9"}} xs='12'>
+        <Button variant="text" onClick={handleEditOpen}>
+          <Typography sx={{color:"#000",fontSize:"15px",fontWeight:"600",textTransform:"capitalize"}}>
+          edit Hero Section info
+          </Typography>
+          </Button>
+        </Grid>}
       <Grid
         container
         alignContent={"center"}
@@ -93,14 +108,14 @@ function HeroContent({ content, lstHeroSlides, lang,editable, onSaveHero, dir })
         item
         xs="12"
       >
-        <Grid container item xs="12" display={editable?'flex':"none"} justifyContent={"flex-end"}>
-            <EditIcon sx={{color:"#fff",cursor:"pointer"}} onClick={handleEditOpen} />
-          </Grid>
+        <Grid container item xs={editable?'11':'12'}>
         <Grid item xs="12" sx={styles.py20} justify={"start"}>
-          <Typography sx={{...styles.title,...content.jsnTitle.style}}>{content.jsnTitle[lang]}</Typography>
+          <Typography sx={{ ...styles.title, ...content.jsnTitle.style }}>
+            {content.jsnTitle[lang]}
+          </Typography>
         </Grid>
         <Grid item xs="12" sx={styles.py20}>
-          <Typography sx={styles.subtitle}>
+          <Typography sx={{...styles.subtitle,...content.jsnSubtitle.style}}>
             {content.jsnSubtitle[lang]}
           </Typography>
         </Grid>
@@ -125,57 +140,60 @@ function HeroContent({ content, lstHeroSlides, lang,editable, onSaveHero, dir })
             </Grid>
           </Grid>
         </Grid>
-        <Grid item lg={"4"}>
-          <Grid container justify={"end"}>
-            <Grid item lg="12" xs={"12"} alignSelf={"flex-start"}>
-              <Box
-                outline="0"
-                elevation="0"
-                hoverElevation="0"
-                color="default"
-                textColor="default"
-                sx={styles.box}
-              >
-                <span style={styles.boxCaption}>Weekly Special</span>
-                <Grid container justify={"center"} p-0 m-0>
-                  <Grid item xs="8" container justify={"start"}>
-                    <Grid item xs="12" justify={"start"}>
-                      <Typography sx={styles.boxTitle}>
-                        <Typography sx={styles.dollarSign}>$</Typography>
-                        {content.wsCategory.jsnCategoryInfo.strPrice}
-                      </Typography>
+        {content?.wsCategory && (
+          <Grid item lg={"4"}>
+            <Grid container justify={"end"}>
+              <Grid item lg="12" xs={"12"} alignSelf={"flex-start"}>
+                <Box
+                  outline="0"
+                  elevation="0"
+                  hoverElevation="0"
+                  color="default"
+                  textColor="default"
+                  sx={styles.box}
+                >
+                  <span style={styles.boxCaption}>Weekly Special</span>
+                  <Grid container justify={"center"} p-0 m-0>
+                    <Grid item xs="8" container justify={"start"}>
+                      <Grid item xs="12" justify={"start"}>
+                        <Typography sx={styles.boxTitle}>
+                          <Typography sx={styles.dollarSign}>$</Typography>
+                          {content.wsCategory.jsnCategoryInfo.strPrice}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs="12">
+                        <Typography sx={styles.boxSubtitle}>
+                          {content.wsCategory.jsnName[lang]}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs="12">
+                        <Rating
+                          name="read-only"
+                          value={content.wsCategory.intRating}
+                          readOnly
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs="12">
-                      <Typography sx={styles.boxSubtitle}>
-                        {content.wsCategory.jsnName[lang]}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs="12">
-                      <Rating
-                        name="read-only"
-                        value={content.wsCategory.intRating}
-                        readOnly
+                    <Grid
+                      item
+                      xs="4"
+                      container
+                      justifyContent={"center"}
+                      alignContent={"center"}
+                    >
+                      <Box
+                        component={"img"}
+                        src={content.wsCategory.jsnCategoryInfo.strImgPath}
+                        height={"150px"}
+                        width={"150px"}
                       />
                     </Grid>
                   </Grid>
-                  <Grid
-                    item
-                    xs="4"
-                    container
-                    justifyContent={"center"}
-                    alignContent={"center"}
-                  >
-                    <Box
-                      component={"img"}
-                      src={content.wsCategory.jsnCategoryInfo.strImgPath}
-                      height={"150px"}
-                      width={"150px"}
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
+                </Box>
+              </Grid>
             </Grid>
           </Grid>
+        )}
         </Grid>
       </Grid>
       <Edit
@@ -184,6 +202,7 @@ function HeroContent({ content, lstHeroSlides, lang,editable, onSaveHero, dir })
         handleEditClose={handleEditClose}
         content={content}
         titleDefaultStyle={styles.title}
+        subtitleDefaultStyle={styles.subtitle}
         lstHeroSlides={lstHeroSlides}
         onSave={onSaveHero}
         lang={lang}
