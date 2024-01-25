@@ -29,15 +29,18 @@ function Home({
   onSaveOwner,
   onSaveAbout,
   onSaveReservation,
+  addMenuCategory,
+  deleteMenuCategory,
+  editMenuCategory,
   lang,
   dir,
 }) {
-  const featured = useMemo(() => {
-    return categories?.filter((category) => category.blnFeatured);
-  }, [categories]);
-  const mostOrdered = useMemo(() => {
-    return categories?.filter((category) => category.blnMostOrdered);
-  }, [categories]);
+  // const featured = useMemo(() => {
+  //   return categories?.filter((category) => category.blnFeatured);
+  // }, [categories]);
+  // const mostOrdered = useMemo(() => {
+  //   return categories?.filter((category) => category.blnMostOrdered);
+  // }, [categories]);
   const wsCategory = useMemo(() => {
     return categories?.find(
       (category) => category.bigID === systemInfo.bigWSCategoryID
@@ -66,6 +69,7 @@ function Home({
         wsCategory={wsCategory}
         onSaveHero={onSaveHero}
       />
+      
       <Owner
         lang={lang}
         dir={dir}
@@ -80,6 +84,12 @@ function Home({
         onSaveReservation={onSaveReservation}
         editable={editable}
       />
+       <Menu lang={lang} dir={dir} categories={systemInfo.systemMenu}
+         addMenuCategory={addMenuCategory}
+         deleteMenuCategory={deleteMenuCategory}
+         editMenuCategory={editMenuCategory}
+         
+       />
       {/* <Menu lang={lang} dir={dir} categories={categories} />
       <MostOrdered lang={lang} dir={dir} lstMostOrdered={mostOrdered} />
       <Featured lang={lang} dir={dir} lstFeatured={featured} /> */}
@@ -91,14 +101,14 @@ function Home({
           systemInfo.jsnSystemSections.jsnTestimonialSection
         }
       /> */}
-      <Team lang={lang} lstSystemTeam={systemInfo.lstSystemTeam} />
+      {/* <Team lang={lang} lstSystemTeam={systemInfo.lstSystemTeam} />
       <About
         lang={lang}
         dir={dir}
         jsnAboutSection={systemInfo.jsnSystemSections.jsnAboutSection}
         onSaveAbout={onSaveAbout}
         editable={editable}
-      />
+      /> */}
       <Follow lang={lang} />
       <Footer lang={lang} />
       {/* <BtnProgressToTop lang={lang} /> */}

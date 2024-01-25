@@ -22,7 +22,9 @@ const styles = {
   },
 };
 
-function Menu({ categories, lang, dir }) {
+function Menu({ categories, lang, dir ,  addMenuCategory,
+  deleteMenuCategory,
+  editMenuCategory}) {
   return (
     <Grid container sx={styles.container}>
       <Grid item lg="12" mb={4} container justifyContent={"center"}>
@@ -31,12 +33,15 @@ function Menu({ categories, lang, dir }) {
         </Grid>
         <Grid item lg="3" xs={"6"} pt-0 sx={styles.line} />
       </Grid>
-      <RestaurantMenu
+      {<RestaurantMenu
         categories={categories}
         blnOnSaveCategory={true}
         lang={lang}
         dir={dir}
-      />
+        funAddCategory={addMenuCategory}
+        funDeleteCategory={deleteMenuCategory}
+        funEditCategory={editMenuCategory}
+      />}
     </Grid>
   );
 }

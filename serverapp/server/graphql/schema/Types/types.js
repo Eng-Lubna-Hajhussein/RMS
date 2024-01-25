@@ -98,14 +98,10 @@ const CategoryType = new GraphQLObjectType({
     id: { type: GraphQLID },
     bigID: { type: GraphQLBigInt },
     bigSystemID: { type: GraphQLBigInt },
+    bigCategoryTypeID:{type: GraphQLBigInt},
     jsnName: { type: GraphQLJSON },
     bigParentID: { type: GraphQLBigInt },
     jsnCategoryInfo: { type: GraphQLJSON },
-    lstReviews: { type: GraphQLJSON },
-    intRating: { type: GraphQLInt },
-    blnFeatured: { type: GraphQLBoolean },
-    blnMostOrdered: { type: GraphQLBoolean },
-    blnOnSale: { type: GraphQLBoolean },
   }),
 });
 
@@ -114,14 +110,10 @@ const CategoryInputType = new GraphQLInputObjectType({
   fields: () => ({
     bigID: { type: GraphQLBigInt },
     bigSystemID: { type: GraphQLBigInt },
+    bigCategoryTypeID:{type: GraphQLBigInt},
     jsnName: { type: GraphQLJSON },
     bigParentID: { type: GraphQLBigInt },
     jsnCategoryInfo: { type: GraphQLJSON },
-    lstReviews: { type: GraphQLJSON },
-    intRating: { type: GraphQLInt },
-    blnFeatured: { type: GraphQLBoolean },
-    blnMostOrdered: { type: GraphQLBoolean },
-    blnOnSale: { type: GraphQLBoolean },
   }),
 });
 

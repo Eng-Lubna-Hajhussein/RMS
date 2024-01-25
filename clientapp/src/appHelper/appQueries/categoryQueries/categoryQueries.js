@@ -57,14 +57,11 @@ export const findCategoriesQuery = (bigSystemID) => {
         findCategories(bigSystemID:${bigSystemID}){
           bigID
           bigSystemID
+          bigCategoryTypeID
+          bigSystemID
           jsnName
           bigParentID
           jsnCategoryInfo
-          lstReviews
-          intRating
-          blnFeatured
-          blnMostOrdered
-          blnOnSale
         }
       }`;
 };

@@ -1,5 +1,5 @@
 import { formateDBStr, generateRandomID } from "appHelper/appFunctions";
-import { CITIES, COUNTRIES, objRoleID } from "appHelper/appVariables";
+import { CITIES, COUNTRIES, Demo_jsnSystemInfo, objRoleID } from "appHelper/appVariables";
 import { createSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
 import { signup } from "appHelper/fetchapi/tblUser/tblUser";
 
@@ -41,10 +41,10 @@ export const ctrlSignUp = {
         jsnSystemName: jsnSystemName,
         strSystemPathURL: strSystemPathURL,
         jsnSystemLocation: jsnSystemLocation,
-        jsnSystemContact:appState.systemInfo.jsnSystemContact,
-        lstSystemTeam:appState.systemInfo.lstSystemTeam,
-        jsnSystemSections:appState.systemInfo.jsnSystemSections,
-        strLogoPath:appState.systemInfo.strLogoPath
+        jsnSystemContact:Demo_jsnSystemInfo.jsnSystemContact,
+        lstSystemTeam:Demo_jsnSystemInfo.lstSystemTeam,
+        jsnSystemSections:Demo_jsnSystemInfo.jsnSystemSections,
+        strLogoPath:Demo_jsnSystemInfo.strLogoPath
       };
       const regSystem = await createSystem(objInputSystem);
       console.log({regSystem})
@@ -87,7 +87,9 @@ export const ctrlSignUp = {
       appState.systemInfo.jsnSystemAddress = JSON.parse(regSystem.jsnSystemAddress);
       appState.systemInfo.jsnSystemLocation = JSON.parse(regSystem.jsnSystemLocation);
       appDispatch({...appState});
-      navigate(`/${regSystem.strSystemPathURL}`);
+      // if(appState?.clientInfo?.blnUserLogin===true){
+      //   navigate(`/${regSystem.strSystemPathURL}`);
+      // }
     } catch (err) {
       console.log({ err });
     }

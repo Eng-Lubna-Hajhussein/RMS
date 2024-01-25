@@ -22,7 +22,12 @@ const styles = {
   },
 };
 
-export default function NavList({ nav, navList, lang }) {
+export default function NavList({
+  nav,
+  navList,
+  lang,
+  endIcon = <KeyboardArrowDownIcon />,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -42,7 +47,7 @@ export default function NavList({ nav, navList, lang }) {
         variant="link"
         disableElevation
         onClick={handleClick}
-        endIcon={navList?.length && <KeyboardArrowDownIcon />}
+        endIcon={navList?.length && endIcon}
         sx={styles.nav}
       >
         {nav}
@@ -58,16 +63,17 @@ export default function NavList({ nav, navList, lang }) {
           open={open}
           onClose={handleClose}
         >
-          {navList.map(({ nav,onClick }, index) => (
+          {navList.map(({ nav, onClick }, index) => (
             <React.Fragment>
-              <MenuItem onClick={()=>
-              {
-                if(onClick){
-                  onClick();
-                }
-                handleClose();
-              }
-              } disableRipple>
+              <MenuItem
+                onClick={() => {
+                  if (onClick) {
+                    onClick();
+                  }
+                  handleClose();
+                }}
+                disableRipple
+              >
                 <Typography color={"#000"} sx={styles.subNav}>
                   {nav[lang]}
                 </Typography>

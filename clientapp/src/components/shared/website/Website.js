@@ -10,6 +10,9 @@ function Website({
   onSaveUpperHeader,
   onSaveHero,
   onSaveOwner,
+  addMenuCategory,
+  deleteMenuCategory,
+  editMenuCategory,
   onSaveReservation,
   onSaveAbout,
   userImg,
@@ -28,6 +31,9 @@ function Website({
       onSaveHero={onSaveHero}
       onSaveOwner={onSaveOwner}
       onSaveAbout={onSaveAbout}
+      addMenuCategory={addMenuCategory}
+      deleteMenuCategory={deleteMenuCategory}
+      editMenuCategory={editMenuCategory}
       lang={lang}
       onSaveReservation={onSaveReservation}
       adminNavList={adminNavList}

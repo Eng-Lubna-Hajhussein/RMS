@@ -3,6 +3,7 @@ import { fetchData } from "../appFetch";
 
 export const createSystem = async(objInput) => {
    const query = createSystemQuery(objInput);
+   console.log({query})
    const requestBody = {
       query: query
     }

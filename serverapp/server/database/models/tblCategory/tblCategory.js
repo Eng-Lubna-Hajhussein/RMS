@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.BIGINT,
           allowNull: false,
         },
+        bigCategoryTypeID:{
+          type: DataTypes.BIGINT,
+          allowNull: false,
+        },
         jsnName: {
           type: DataTypes.JSON,
         },
@@ -24,24 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         jsnCategoryInfo:{
             type:DataTypes.JSON,   
-        },
-        lstReviews:{
-            type:DataTypes.TEXT("medium"),  
-        },
-        intRating:{
-            type:DataTypes.INTEGER,  
-        },
-        blnFeatured:{
-            type:DataTypes.BOOLEAN,
-            defaultValue:false  
-        },
-        blnMostOrdered:{
-            type:DataTypes.BOOLEAN,
-            defaultValue:false  
-        },
-        blnOnSale:{
-            type:DataTypes.BOOLEAN,
-            defaultValue:false  
         },
       },
       {
