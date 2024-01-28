@@ -85,48 +85,66 @@ function RouteLandingPage({ isDemo }) {
     if (systemID) {
       instalData();
     }
-
   }, []);
 
   const onSaveUpperHeader = (contacts) => {
     setSystemInfo({ ...systemInfo, jsnSystemContact: contacts });
   };
-
   const onSaveHero = (heroSectionUpdated) => {
     systemInfo.jsnSystemSections.lstHeroSlides = heroSectionUpdated;
     setSystemInfo({ ...systemInfo });
   };
-
   const onSaveOwner = (ownerSectionUpdated) => {
     systemInfo.jsnSystemSections.jsnOwnerSection = ownerSectionUpdated;
     setSystemInfo({ ...systemInfo });
   };
-
   const onSaveReservation = (resSectionUpdated) => {
     systemInfo.jsnSystemSections.jsnReservation = resSectionUpdated;
     setSystemInfo({ ...systemInfo });
   };
-
   const onSaveAbout = (aboutSectionUpdated) => {
     systemInfo.jsnSystemSections.jsnAboutSection = aboutSectionUpdated;
     setSystemInfo({ ...systemInfo });
   };
-
   const addMenuCategory = (category)=>{
     systemInfo.systemMenu.push(category);
     setSystemInfo({ ...systemInfo });
   }
-
   const deleteMenuCategory = (bigID)=>{
     systemInfo.systemMenu = systemInfo.systemMenu.filter((category)=>category.bigID!==bigID);
     setSystemInfo({ ...systemInfo });
   }
-
   const editMenuCategory = (category)=>{
     const categoryIndex = systemInfo.systemMenu.findIndex(({bigID})=>category.bigID===bigID);
     systemInfo.systemMenu[categoryIndex] = category;
     setSystemInfo({ ...systemInfo });
   }
+  const addWS = (categoryID)=>{
+    systemInfo.bigWSCategoryID = categoryID;
+    setSystemInfo({...systemInfo});
+  }
+
+  const removeWS = ()=>{
+    systemInfo.bigWSCategoryID = null;
+    setSystemInfo({...systemInfo});
+  }
+
+  const addChef = (chef)=>{
+    systemInfo.lstSystemTeam.push(chef);
+    setSystemInfo({ ...systemInfo });
+  }
+
+  const editChef = (chef)=>{
+    const chefIndex = systemInfo.lstSystemTeam.findIndex(({bigID})=>chef.bigID===bigID);
+    systemInfo.lstSystemTeam[chefIndex] = chef;
+    setSystemInfo({ ...systemInfo });
+  }
+
+  const deleteChef = (bigID)=>{
+    systemInfo.lstSystemTeam = systemInfo.lstSystemTeam.filter((chef)=>chef.bigID!==bigID);
+    setSystemInfo({ ...systemInfo });
+  }
+
 
   const adminNavList = [
     { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
@@ -163,6 +181,12 @@ function RouteLandingPage({ isDemo }) {
         addMenuCategory={addMenuCategory}
         deleteMenuCategory={deleteMenuCategory}
         editMenuCategory={editMenuCategory}
+        addChef={addChef}
+        editChef={editChef}
+        deleteChef={deleteChef}
+        addWS={addWS}
+        removeWS={removeWS}
+        ws={systemInfo?.bigWSCategoryID}
         adminNavList={adminNavList}
         lang={appState.clientInfo.strLanguage}
         userImg={appState?.userInfo?.strImgPath}

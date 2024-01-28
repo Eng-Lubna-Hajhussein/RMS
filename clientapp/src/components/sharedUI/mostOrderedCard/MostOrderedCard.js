@@ -75,17 +75,16 @@ function MostOrderedCard({ item, lang, dir }) {
             <Grid
               item
               container
-              sx={{ height: "100%" }}
-              alignItems={"center"}
-              xs={5}
+              sx={styles.fullHeight}
+              alignContent={"center"}
+              xs={'5'}
             >
-              <Grid item xs="12">
                 <Box
                   src={item?.jsnCategoryInfo?.strImgPath}
                   component={"img"}
+                  width={'100%'}
                   sx={styles.itemImg}
                 />
-              </Grid>
             </Grid>
           </Grid>
         </Paper>
@@ -102,7 +101,7 @@ function MostOrderedCard({ item, lang, dir }) {
             sx={{
               ...styles.crossBox,
               backgroundColor: "#ffd40d",
-              border: item.blnOnSale && "5px solid #f3274c",
+              border: item?.jsnCategoryInfo?.blnOnSale && "5px solid #f3274c",
             }}
           >
             <Grid
@@ -118,18 +117,18 @@ function MostOrderedCard({ item, lang, dir }) {
                     <Typography
                       sx={{
                         ...styles.price,
-                        color: item.blnOnSale ? "#555" : "#f3274c",
-                        textDecoration: item.blnOnSale && "line-through",
+                        color: item?.jsnCategoryInfo?.blnOnSale ? "#555" : "#f3274c",
+                        textDecoration: item?.jsnCategoryInfo?.blnOnSale && "line-through",
                         fontSize: {
-                          lg: item.blnOnSale ? "15px" : "25px",
-                          xs: item.blnOnSale ? "12px" : "15px",
+                          lg: item?.jsnCategoryInfo?.blnOnSale ? "15px" : "25px",
+                          xs: item?.jsnCategoryInfo?.blnOnSale ? "12px" : "15px",
                         },
                       }}
                     >
                       ${item.jsnCategoryInfo.strPrice}
                     </Typography>
                   </Grid>
-                  {item.blnOnSale && (
+                  {item?.jsnCategoryInfo?.blnOnSale && (
                     <Grid item lg="12" container justifyContent={"center"}>
                       <Typography
                         component={"caption"}

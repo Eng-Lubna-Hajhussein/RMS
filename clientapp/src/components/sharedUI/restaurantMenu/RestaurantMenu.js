@@ -2,11 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Alert, Box, Grid, Icon, Paper, Typography } from "@mui/material";
 import * as appFunctions from "../../../appHelper/appFunctions";
 import "./RestaurantMenu.css";
-import { objTabsAssets } from "appHelper/appVariables";
+import { objTabsAssets, tabsOptions } from "appHelper/appVariables";
 import { Add, Delete, MoreVert } from "@mui/icons-material";
 import NavList from "../navList/NavList";
 import { App_Second_Color } from "appHelper/appColor";
 import AddTab from "./AddTab";
+import OptionList from "../optionList/OptionList";
+import AddItem from "./AddItem";
+import EditItem from "./EditItem";
 
 const styles = {
   addDish: {
@@ -61,7 +64,7 @@ const styles = {
   },
   catImg: {
     height: { lg: "40px", xs: "20px" },
-    width: { lg: "40px", xs: "100%" },
+    width: { lg: "90%", xs: "100%" },
   },
   menuContainer: {
     position: "relative",
@@ -78,16 +81,20 @@ const styles = {
 };
 
 export default function RestaurantMenu({
-  categories=[],
+  categories = [],
   funAddCategory,
   funEditCategory,
   funDeleteCategory,
+  addWS,
+  removeWS,
+  ws,
   blnOnSaveCategory,
   blnOnSaveAction,
   onSaveAction,
   readOnly,
   lang,
   dir,
+  editable,
 }) {
   const tabsAssets = objTabsAssets;
   const initialObjTabs = useMemo(() => {
@@ -127,17 +134,11 @@ export default function RestaurantMenu({
   const [addItemOpen, setAddItemOpen] = useState(false);
   const [editItemOpen, setEditItemOpen] = useState(false);
 
-  const funAddTab = ({ bigID, jsnName, jsnCategoryInfo }) => {
-    const tab = {
-      bigID: bigID,
-      jsnCategoryInfo: jsnCategoryInfo,
-      jsnName: jsnName,
-      bigParentID: 0,
-    };
+  const funAddTab = (tab) => {
     setObjTabs({
       ...objTabs,
       tabs: [...objTabs.tabs, tab],
-      tabsContent: { ...objTabs.tabsContent, [bigID]: [] },
+      tabsContent: { ...objTabs.tabsContent, [tab.bigID]: [] },
     });
     funAddCategory(tab);
   };
@@ -149,21 +150,16 @@ export default function RestaurantMenu({
     }
     const updatedObjTabs = JSON.parse(JSON.stringify(objTabs));
     updatedObjTabs.categoryOnAction = null;
-    updatedObjTabs.tabs = updatedObjTabs.tabs.filter(({ bigID }) => tab.bigID !== bigID);
+    updatedObjTabs.tabs = updatedObjTabs.tabs.filter(
+      ({ bigID }) => tab.bigID !== bigID
+    );
     delete updatedObjTabs.tabsContent[tab.bigID];
     updatedObjTabs.activeTab = updatedObjTabs.tabs[0];
-    setObjTabs({...updatedObjTabs});
+    setObjTabs({ ...updatedObjTabs });
     funDeleteCategory(tab.bigID);
   };
-  const funAddItem = ({ bigID, jsnName, jsnCategoryInfo }) => {
-    const bigParentID = objTabs.activeTab.bigID;
-    const item = {
-      bigID: bigID,
-      bigParentID: bigParentID,
-      jsnName: jsnName,
-      jsnCategoryInfo: jsnCategoryInfo,
-    };
-    objTabs.tabsContent[bigParentID].push(item);
+  const funAddItem = (item) => {
+    objTabs.tabsContent[item.bigParentID].push(item);
     funAddCategory(item);
   };
   const funEditItem = (item) => {
@@ -172,7 +168,7 @@ export default function RestaurantMenu({
     );
     objTabs.categoryOnAction = null;
     objTabs.tabsContent[item.bigParentID][itemIndex] = item;
-    setObjTabs({ ...objTabs });
+    setObjTabs({ ...objTabs,categoryOnAction:null });
     funEditCategory(item);
   };
   const funDeleteItem = (item) => {
@@ -181,16 +177,16 @@ export default function RestaurantMenu({
     ].filter(({ bigID }) => item.bigID !== bigID);
     setObjTabs({ ...objTabs });
     objTabs.categoryOnAction = null;
-    funDeleteCategory(item);
+    funDeleteCategory(item.bigID);
   };
 
-  useEffect(()=>{
-    console.log("rerender")
-  },[])
+  useEffect(() => {
+    console.log("rerender");
+  }, []);
 
-  useEffect(()=>{
-    console.log({objTabs})
-  },[objTabs])
+  useEffect(() => {
+    console.log({ objTabs });
+  }, [objTabs]);
 
   const objAppActions = {
     Edit: 7244446400,
@@ -198,100 +194,105 @@ export default function RestaurantMenu({
   };
 
   const actionTabNavList = [
-    { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "تعديل" } },
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
+  ];
+
+  const actionItemNavList = [
+    { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
+    { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "تعديل" } },
   ];
 
   return (
     <React.Fragment>
-        <Grid container className="menu" justifyContent={"center"}>
-          <Grid item container xs="12" justifyContent={"center"}>
-            {objTabs?.tabs?.map((tab, index) => (
-              <Grid item container lg="2" xs={"4"} py={3} px={2}>
-                <Grid
-                  container
-                  item
-                  xs="12"
-                  justifyItems={"center"}
-                  className={
-                    `${tab.bigID}` === `${objTabs.activeTab.bigID}`
-                      ? "nav-link active"
-                      : "nav-link nav"
-                  }
-                >
-                  {
-                    <Grid
-                      item
-                      lg="12"
-                      px={2}
-                      sx={{ marginBottom: "-50px" }}
-                      container
-                      justifyContent={"flex-end"}
-                    >
-                      
-                      <NavList
-                        nav={""}
-                        navList={actionTabNavList.map((nav) => ({
-                          ...nav,
-                          onClick: () => {
-                            if (objAppActions["Delete"] === nav.bigNavID) {
-                              funDeleteTab(tab);
-                            }
-                          },
-                        }))}
-                        endIcon={<MoreVert />}
-                        lang={lang}
-                      />
-                    </Grid>
-                  }
+      <Grid container className="menu" justifyContent={"center"}>
+        <Grid item container xs="12" justifyContent={"center"}>
+          {objTabs?.tabs?.map((tab, index) => (
+            <Grid item container lg="2" xs={"4"} py={3} px={2}>
+              <Grid
+                container
+                item
+                xs="12"
+                justifyItems={"center"}
+                className={
+                  `${tab.bigID}` === `${objTabs.activeTab.bigID}`
+                    ? "nav-link active"
+                    : "nav-link nav"
+                }
+              >
+                {
                   <Grid
                     item
                     lg="12"
-                    sx={{ display: { lg: "flex", xs: "none" } }}
-                    className="icon-container"
+                    px={2}
+                    sx={{ marginBottom: "-50px" }}
+                    container
+                    justifyContent={"flex-end"}
                   >
-                    <img
-                      src={tab?.jsnCategoryInfo?.strIconPath}
-                      height={"50px"}
-                      className={
-                        `${tab.bigID}` === `${objTabs.activeTab.bigID}`
-                          ? "tab-icon active"
-                          : "tab-icon"
-                      }
-                      onClick={() => {
-                        setObjTabs({
-                          ...objTabs,
-                          activeTab: tab,
-                          categoryOnAction: null,
-                        });
-                      }}
+                    <OptionList
+                      nav={""}
+                      onClick={()=>{}}
+                      navList={actionTabNavList.map((nav) => ({
+                        ...nav,
+                        onClick: () => {
+                          if (objAppActions["Delete"] === nav.bigNavID) {
+                            funDeleteTab(tab);
+                          }
+                        },
+                      }))}
+                      endIcon={<MoreVert />}
+                      lang={lang}
                     />
                   </Grid>
-                  <Grid item xs={"12"} justify={"center"}>
-                    <Typography sx={styles.tabName} className="title">
-                      {tab.jsnName[lang]}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            ))}
-            {
-              <Grid item container lg={"2"} xs={"4"} py={3} px={2}>
+                }
                 <Grid
-                  container
                   item
-                  xs="12"
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  sx={styles.addTabIcon}
-                  onClick={() => setAddTabOpen(true)}
+                  lg="12"
+                  sx={{ display: { lg: "flex", xs: "none" } }}
+                  className="icon-container"
                 >
-                  <Add sx={{ color: "#e4e4e4" }} />
+                  <img
+                    src={tab?.jsnCategoryInfo?.strIconPath}
+                    height={"50px"}
+                    className={
+                      `${tab.bigID}` === `${objTabs.activeTab.bigID}`
+                        ? "tab-icon active"
+                        : "tab-icon"
+                    }
+                    onClick={() => {
+                      setObjTabs({
+                        ...objTabs,
+                        activeTab: tab,
+                        categoryOnAction: null,
+                      });
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={"12"} justify={"center"}>
+                  <Typography sx={styles.tabName} className="title">
+                    {tab.jsnName[lang]}
+                  </Typography>
                 </Grid>
               </Grid>
-            }
-          </Grid>
-          {!!(objTabs?.activeTab)&&<Grid
+            </Grid>
+          ))}
+          {tabsOptions?.length > objTabs?.tabs?.length && (
+            <Grid item container lg={"2"} xs={"4"} py={3} px={2}>
+              <Grid
+                container
+                item
+                xs="12"
+                alignItems={"center"}
+                justifyContent={"center"}
+                sx={styles.addTabIcon}
+                onClick={() => setAddTabOpen(true)}
+              >
+                <Add sx={{ color: "#e4e4e4" }} />
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+        {!!objTabs?.activeTab && (
+          <Grid
             item
             container
             lg="10"
@@ -377,9 +378,16 @@ export default function RestaurantMenu({
                               textAlign: "center",
                               borderRadius: "50%",
                               background: App_Second_Color,
+                              cursor: "pointer",
                             }}
+                            onClick={() => setAddItemOpen(true)}
                           >
-                            <Grid container sx={{height:"100%"}} justifyContent={'center'} alignContent={'center'}>
+                            <Grid
+                              container
+                              sx={{ height: "100%" }}
+                              justifyContent={"center"}
+                              alignContent={"center"}
+                            >
                               <Add fontSize="medium" />
                             </Grid>
                           </Box>
@@ -387,9 +395,53 @@ export default function RestaurantMenu({
                       )}
                       {objTabs?.tabsContent[objTabs.activeTab.bigID]?.map(
                         (item, index, tabContent) => (
-                          <Grid item xs="12" px-0>
+                          <Grid
+                            item
+                            xs="12"
+                            px-0
+                            container
+                            alignContent={"start"}
+                          >
+                            <Grid
+                              item
+                              xs="1"
+                              container
+                              justify={"start"}
+                              alignItems={"center"}
+                              alignSelf={"flex-start"}
+                              py={2}
+                            >
+                              <OptionList
+                                nav={""}
+                                onClick={()=>{
+                                  setObjTabs({
+                                    ...objTabs,
+                                    categoryOnAction: item,
+                                  });
+                                }}
+                                navList={actionItemNavList.map((nav) => ({
+                                  ...nav,
+                                  onClick: () => {
+                                    if (
+                                      objAppActions["Delete"] === nav.bigNavID
+                                    ) {
+                                      funDeleteItem(item);
+                                    }
+                                    if (
+                                      objAppActions["Edit"] === nav.bigNavID
+                                    ) {
+                                      setEditItemOpen(true);
+                                    }
+                                  },
+                                }))}
+                                endIcon={<MoreVert />}
+                                lang={lang}
+                              />
+                            </Grid>
                             <Grid
                               container
+                              item
+                              xs={editable ? "11" : "12"}
                               justify={"start"}
                               alignItems={"center"}
                               alignSelf={"flex-start"}
@@ -414,11 +466,7 @@ export default function RestaurantMenu({
                                 />
                               </Grid>
 
-                              <Grid
-                                item
-                                xs={blnOnSaveAction ? "5" : "7"}
-                                px={1}
-                              >
+                              <Grid item xs={editable ? "5" : "7"} px={1}>
                                 <Typography sx={styles.dishName}>
                                   {item.jsnName[lang]}
                                 </Typography>
@@ -426,7 +474,7 @@ export default function RestaurantMenu({
                               <Grid
                                 item
                                 container
-                                xs={blnOnSaveAction ? "4" : "4"}
+                                xs={editable ? "4" : "4"}
                                 justifySelf={"flex-end"}
                                 justifyContent={"flex-end"}
                                 justifyItems={"flex-end"}
@@ -449,9 +497,10 @@ export default function RestaurantMenu({
                 </Grid>
               </Paper>
             </Grid>
-          </Grid>}
-        </Grid>
-      {!(objTabs?.tabs?.length) && (
+          </Grid>
+        )}
+      </Grid>
+      {!objTabs?.tabs?.length && (
         <Grid
           item
           container
@@ -506,13 +555,41 @@ export default function RestaurantMenu({
           </Grid>
         </Grid>
       )}
-      <AddTab
-        open={addTabOpen}
-        handleClose={()=>setAddTabOpen(false)}
-        onSave={funAddTab}
-        lang={lang}
-        dir={dir}
-      />
+      {editable && (
+        <AddTab
+          open={addTabOpen}
+          handleClose={() => setAddTabOpen(false)}
+          onSave={funAddTab}
+          tabsIDs={Object.keys(objTabs?.tabsContent)}
+          lang={lang}
+          dir={dir}
+        />
+      )}
+      {editable && (
+        <AddItem
+          open={addItemOpen}
+          handleClose={() => setAddItemOpen(false)}
+          onSave={funAddItem}
+          activeTabID={objTabs?.activeTab?.bigID}
+          addWS={addWS}
+          ws={ws}
+          lang={lang}
+          dir={dir}
+        />
+      )}
+      {editable && (
+        <EditItem
+          open={editItemOpen}
+          handleClose={() => setEditItemOpen(false)}
+          onSave={funEditItem}
+          categoryOnAction={objTabs?.categoryOnAction}
+          addWS={addWS}
+          removeWS={removeWS}
+          ws={ws}
+          lang={lang}
+          dir={dir}
+        />
+      )}
     </React.Fragment>
   );
 }

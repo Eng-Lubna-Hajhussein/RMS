@@ -4,6 +4,9 @@ import Home from "./home/Home";
 function Website({
   isDemo,
   systemInfo,
+  addWS,
+  removeWS,
+  ws,
   categories,
   editable,
   adminNavList,
@@ -13,6 +16,9 @@ function Website({
   addMenuCategory,
   deleteMenuCategory,
   editMenuCategory,
+  addChef,
+  editChef,
+  deleteChef,
   onSaveReservation,
   onSaveAbout,
   userImg,
@@ -34,6 +40,12 @@ function Website({
       addMenuCategory={addMenuCategory}
       deleteMenuCategory={deleteMenuCategory}
       editMenuCategory={editMenuCategory}
+      addChef={addChef}
+      editChef={editChef}
+      deleteChef={deleteChef}
+      addWS={addWS}
+      removeWS={removeWS}
+      ws={ws}
       lang={lang}
       onSaveReservation={onSaveReservation}
       adminNavList={adminNavList}

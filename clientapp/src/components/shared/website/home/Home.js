@@ -21,6 +21,9 @@ function Home({
   userName,
   blnUserLogin,
   userNavList,
+  addWS,
+  ws,
+  removeWS,
   categories,
   editable,
   adminNavList,
@@ -32,17 +35,24 @@ function Home({
   addMenuCategory,
   deleteMenuCategory,
   editMenuCategory,
+  addChef,
+  editChef,
+  deleteChef,
   lang,
   dir,
 }) {
-  // const featured = useMemo(() => {
-  //   return categories?.filter((category) => category.blnFeatured);
-  // }, [categories]);
-  // const mostOrdered = useMemo(() => {
-  //   return categories?.filter((category) => category.blnMostOrdered);
-  // }, [categories]);
+  const featured = useMemo(() => {
+    return systemInfo.systemMenu?.filter(
+      (category) => category?.jsnCategoryInfo?.blnFeatured
+    );
+  }, [systemInfo.systemMenu]);
+  const mostOrdered = useMemo(() => {
+    return systemInfo.systemMenu?.filter(
+      (category) => category?.jsnCategoryInfo?.blnMostOrdered
+    );
+  }, [systemInfo.systemMenu]);
   const wsCategory = useMemo(() => {
-    return categories?.find(
+    return systemInfo.systemMenu?.find(
       (category) => category.bigID === systemInfo.bigWSCategoryID
     );
   }, [systemInfo.bigWSCategoryID]);
@@ -69,7 +79,7 @@ function Home({
         wsCategory={wsCategory}
         onSaveHero={onSaveHero}
       />
-      
+
       <Owner
         lang={lang}
         dir={dir}
@@ -84,15 +94,31 @@ function Home({
         onSaveReservation={onSaveReservation}
         editable={editable}
       />
-       <Menu lang={lang} dir={dir} categories={systemInfo.systemMenu}
-         addMenuCategory={addMenuCategory}
-         deleteMenuCategory={deleteMenuCategory}
-         editMenuCategory={editMenuCategory}
-         
-       />
-      {/* <Menu lang={lang} dir={dir} categories={categories} />
+      <Menu
+        lang={lang}
+        dir={dir}
+        categories={systemInfo.systemMenu}
+        addMenuCategory={addMenuCategory}
+        deleteMenuCategory={deleteMenuCategory}
+        editMenuCategory={editMenuCategory}
+        ws={ws}
+        addWS={addWS}
+        removeWS={removeWS}
+        editable={editable}
+      />
       <MostOrdered lang={lang} dir={dir} lstMostOrdered={mostOrdered} />
-      <Featured lang={lang} dir={dir} lstFeatured={featured} /> */}
+      <Featured lang={lang} dir={dir} lstFeatured={featured} />
+      <Team
+        lang={lang}
+        lstSystemTeam={systemInfo.lstSystemTeam}
+        editable={editable}
+        addChef={addChef}
+        editChef={editChef}
+        deleteChef={deleteChef}
+      />
+      {/* 
+      
+       */}
       {/* <Testimonial
         lang={lang}
         dir={dir}
@@ -102,13 +128,14 @@ function Home({
         }
       /> */}
       {/* <Team lang={lang} lstSystemTeam={systemInfo.lstSystemTeam} />
+       */}
       <About
         lang={lang}
         dir={dir}
         jsnAboutSection={systemInfo.jsnSystemSections.jsnAboutSection}
         onSaveAbout={onSaveAbout}
         editable={editable}
-      /> */}
+      />
       <Follow lang={lang} />
       <Footer lang={lang} />
       {/* <BtnProgressToTop lang={lang} /> */}

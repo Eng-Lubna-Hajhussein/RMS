@@ -1,6 +1,12 @@
 import React from "react";
 import { Box, Grid, Icon, Paper, Typography } from "@mui/material";
-import { FacebookSharp, Instagram, Twitter } from "@mui/icons-material";
+import {
+  FacebookSharp,
+  Instagram,
+  MoreVert,
+  Twitter,
+} from "@mui/icons-material";
+import OptionList from "../optionList/OptionList";
 
 const styles = {
   chefContent: {
@@ -48,9 +54,47 @@ const styles = {
   },
 };
 
-function TeamCard({ item, lang }) {
+function TeamCard({ item, lang,onDelete,onEdit }) {
+  const objAppActions = {
+    Edit: 7244446400,
+    Delete: 8324222478,
+  };
+
+  const actionNavList = [
+    { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
+    { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "تعديل" } },
+  ];
+  
   return (
     <>
+      {
+        <Grid
+          item
+          lg="12"
+          px={2}
+          sx={{ marginBottom: "-100px" }}
+          container
+          justifyContent={"flex-end"}
+        >
+          <OptionList
+            nav={""}
+            onClick={() => {}}
+            navList={actionNavList.map((nav) => ({
+              ...nav,
+              onClick: () => {
+                if (objAppActions["Delete"] === nav.bigNavID) {
+                  onDelete(item.bigID);
+                }
+                if (objAppActions["Edit"] === nav.bigNavID) {
+                  onEdit();
+                }
+              },
+            }))}
+            endIcon={<MoreVert />}
+            lang={lang}
+          />
+        </Grid>
+      }
       <Grid item xs="12" sx={styles.imgContainer}>
         <Box
           component={"img"}
@@ -128,7 +172,7 @@ function TeamCard({ item, lang }) {
                 </Box>
               </Grid>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               xs={"12"}
               pt={2}
@@ -142,7 +186,7 @@ function TeamCard({ item, lang }) {
                 height={"20px"}
                 width={"50%"}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Grid>

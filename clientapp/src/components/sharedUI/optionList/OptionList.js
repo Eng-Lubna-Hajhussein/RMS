@@ -3,8 +3,9 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Icon, IconButton, Typography } from "@mui/material";
 import StyledMenu from "./StyledMenu";
+import { MoreVert } from "@mui/icons-material";
 
 const styles = {
   nav: {
@@ -22,10 +23,11 @@ const styles = {
   },
 };
 
-export default function NavList({
+export default function OptionList({
   nav,
   navList,
   lang,
+  onClick,
   endIcon = <KeyboardArrowDownIcon />,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -39,20 +41,22 @@ export default function NavList({
 
   return (
     <div>
-      <Button
+      <IconButton
         id="demo-customized-button"
         aria-controls={open ? "demo-customized-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        variant="link"
         disableElevation
-        onClick={handleClick}
+        onClick={(event)=>{
+          handleClick(event);
+          if(onClick){
+            onClick();
+          }
+        }}
         endIcon={navList?.length && endIcon}
-        sx={styles.nav}
       >
-        {nav}
-        &nbsp;
-      </Button>
+        <MoreVert />
+      </IconButton>
       {navList?.length && (
         <StyledMenu
           id="demo-customized-menu"

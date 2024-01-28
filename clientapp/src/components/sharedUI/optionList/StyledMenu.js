@@ -13,8 +13,7 @@ const StyledMenu = styled((props) => (
       horizontal: "center",
     }}
     {...props}
-    // disableScrollLock={true}
-    />
+  />
 ))(({ theme }) => ({
   "& .MuiPaper-root": {
     marginTop: theme.spacing(1),
@@ -23,7 +22,7 @@ const StyledMenu = styled((props) => (
     transform: "translatex(50px)",
     borderRadius: "25px",
     background: "#ffd40d",
-    padding: "10px",    
+    padding: "10px",
     color:
       theme.palette.mode === "light"
         ? "rgb(55, 65, 81)"

@@ -101,54 +101,31 @@ export const Demo_jsnSystemInfo = {
   ],
   lstSystemTeam: [
     {
+      bigID:3754450561,
       jsnName: { eng: "Thomas Walim", arb: "ثوماس ويليام" },
       jsnSpecialization: { eng: "Dessert specialist", arb: "اختصاصي حلويات" },
       strFacebookLink: "https://www.facebook.com/",
       strInstagramLink: "https://www.instagram.com/",
       strTwitterLink: "https://www.twitter.com/",
       strImgPath: `${strServerAssetsPath}demo/chef-1.png`,
-      strSignImgPath: `${strServerAssetsPath}demo/sign.png`,
-      jsnDescription: {},
     },
     {
+      bigID:5767585311,
       jsnName: { eng: "James Jhonson", arb: "جيمس جوهانسون" },
       jsnSpecialization: { eng: "Chef Master", arb: "ماستر شيف" },
       strFacebookLink: "https://www.facebook.com/",
       strInstagramLink: "https://www.instagram.com/",
       strTwitterLink: "https://www.twitter.com/",
       strImgPath: `${strServerAssetsPath}demo/chef-2.png`,
-      strSignImgPath: `${strServerAssetsPath}demo/sign.png`,
-      jsnDescription: {},
     },
     {
+      bigID:9609737351,
       jsnName: { eng: "Room Minal", arb: "روم مينال" },
       jsnSpecialization: { eng: "coffee specialist", arb: "اختصاصي قهوة" },
       strFacebookLink: "https://www.facebook.com/",
       strInstagramLink: "https://www.instagram.com/",
       strTwitterLink: "https://www.twitter.com/",
       strImgPath: `${strServerAssetsPath}demo/chef-3.png`,
-      strSignImgPath: `${strServerAssetsPath}demo/sign.png`,
-      jsnDescription: {},
-    },
-    {
-      jsnName: { eng: "Thomas Walim", arb: "ثوماس ويليام" },
-      jsnSpecialization: { eng: "Dessert specialist", arb: "اختصاصي حلويات" },
-      strFacebookLink: "https://www.facebook.com/",
-      strInstagramLink: "https://www.instagram.com/",
-      strTwitterLink: "https://www.twitter.com/",
-      strImgPath: `${strServerAssetsPath}demo/chef-1.png`,
-      strSignImgPath: `${strServerAssetsPath}demo/sign.png`,
-      jsnDescription: {},
-    },
-    {
-      jsnName: { eng: "James Jhonson", arb: "جيمس جوهانسون" },
-      jsnSpecialization: { eng: "Chef Master", arb: "ماستر شيف" },
-      strFacebookLink: "https://www.facebook.com/",
-      strInstagramLink: "https://www.instagram.com/",
-      strTwitterLink: "https://www.twitter.com/",
-      strImgPath: `${strServerAssetsPath}demo/chef-2.png`,
-      strSignImgPath: `${strServerAssetsPath}demo/sign.png`,
-      jsnDescription: {},
     },
   ],
   jsnSystemSections: {
@@ -649,11 +626,11 @@ export const objRoleID = {
 export const Demo_objSystemLocation = {lat:35.856737,long:30.606619}
 
 export const tabsOptions = [
-  { key: 3891922142, value: "dessert" },
-  { key: 3156578173, value: "steak" },
-  { key: 9723164333, value: "coffee" },
-  { key: 7087331728, value: "pizza" },
-  { key: 8129351047, value: "burger" },
+  { key: 3891922142, jsnName: {eng:"dessert",arb:"حلويات"} },
+  { key: 3156578173, jsnName: {eng:"steak",arb:"ستيك"} },
+  { key: 9723164333, jsnName: {eng:"coffee",arb:"قهوة"} },
+  { key: 7087331728, jsnName: {eng:"pizza",arb:"بيتزا"} },
+  { key: 8129351047, jsnName: {eng:"burger",arb:"برغر"} },
 ];
 
 export const objTabsAssets = {

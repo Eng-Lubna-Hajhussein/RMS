@@ -98,7 +98,7 @@ function FeaturedCard({ item, lang }) {
           alignSelf={"center"}
           sx={styles.cardContent}
         >
-          {item?.blnOnSale && (
+          {item?.jsnCategoryInfo?.blnOnSale && (
             <Box sx={styles.saleBox}>
               <Grid container sx={{ height: "100%" }} alignItems={"center"}>
                 <Grid item xs="12" justify={"center"}>
@@ -108,10 +108,11 @@ function FeaturedCard({ item, lang }) {
             </Box>
           )}
           <Grid container>
-            <Grid item xs="12" container justifyContent={"center"}>
-              <img
+            <Grid item xs="12" container sx={{height:"fit-content"}} alignContent={'center'} justifyContent={"center"}>
+              <Box
+                component={'img'}
                 src={item?.jsnCategoryInfo?.strImgPath}
-                height={"250px"}
+                height={"180px"}
                 width={"250px"}
                 style={styles.itemImg}
               />
@@ -145,13 +146,13 @@ function FeaturedCard({ item, lang }) {
 
                       <Grid item>
                         <Typography sx={styles.price}>
-                          {item?.blnOnSale
+                          {item?.jsnCategoryInfo?.blnOnSale
                             ? item?.jsnCategoryInfo?.strSalePrice
                             : item?.jsnCategoryInfo?.strPrice}
                         </Typography>
                       </Grid>
                       <Grid item>
-                        {item?.blnOnSale && (
+                        {item?.jsnCategoryInfo?.blnOnSale && (
                           <Typography
                             component={"caption"}
                             px-1
