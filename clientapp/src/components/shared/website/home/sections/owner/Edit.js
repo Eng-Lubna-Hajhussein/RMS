@@ -59,7 +59,7 @@ function Edit({
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const {} = formJson;
+            const {titleEng,titleArb} = formJson;
             handleEditClose();
           },
         }}

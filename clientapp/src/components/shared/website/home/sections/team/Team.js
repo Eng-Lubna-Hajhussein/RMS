@@ -76,7 +76,7 @@ export default function Team({
           </Grid>
           <Grid item lg="3" xs={"6"} sx={styles.line} />
         </Grid>
-        <Grid
+        {editable&&<Grid
           item
           lg="12"
           px={3}
@@ -105,7 +105,7 @@ export default function Team({
               <AddIcon fontSize="medium" />
             </Grid>
           </Box>
-        </Grid>
+        </Grid>}
         <Grid container item xs="12">
           <Carousel
             slides={slides}

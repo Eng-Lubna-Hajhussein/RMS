@@ -1,4 +1,4 @@
-import { signupQuery } from "appHelper/appQueries/userQueries/userQueries"
+import { loginQuery, signupQuery } from "appHelper/appQueries/userQueries/userQueries"
 import { fetchData } from "../appFetch";
 
 export const signup = async(objInput) => {
@@ -8,4 +8,13 @@ export const signup = async(objInput) => {
     }
    const result = await fetchData(requestBody);
    return result?.data?.signup;
+}
+
+export const login = async(objInput) => {
+   const query = loginQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.login;
 }

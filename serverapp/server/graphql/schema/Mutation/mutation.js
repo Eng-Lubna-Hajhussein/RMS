@@ -196,7 +196,8 @@ const Mutation = new GraphQLObjectType({
     bulkCategories:{
       type: new GraphQLList(CategoryType),
       args: {
-        categories:{type:new GraphQLList(CategoryInputType)}
+        categories:{type:new GraphQLList(CategoryInputType)},
+        onDeleteIDs:{type:new GraphQLList(GraphQLBigInt)}
       },
       resolve: CategoryResolvers.bulkCategories,
     },

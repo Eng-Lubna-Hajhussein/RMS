@@ -24,14 +24,20 @@ function Home({
   addWS,
   ws,
   removeWS,
-  categories,
   editable,
+  adminEditMode,
+  customerEditMode,
+  loggedIn,
   adminNavList,
   onSaveUpperHeader,
+  userOrder,
+  addOrderProduct,
+  removeOrderProduct,
   onSaveHero,
   onSaveOwner,
   onSaveAbout,
   onSaveReservation,
+  systemID,
   addMenuCategory,
   deleteMenuCategory,
   editMenuCategory,
@@ -63,18 +69,19 @@ function Home({
         lang={lang}
         dir={dir}
         jsnSystemContact={systemInfo.jsnSystemContact}
-        editable={editable}
+        editable={adminEditMode}
         onSaveUpperHeader={onSaveUpperHeader}
         adminNavList={adminNavList}
         userImg={userImg}
         userName={userName}
+        intCartProduct={userOrder?.lstProduct?.length}
         blnUserLogin={blnUserLogin}
         userNavList={userNavList}
       />
       <Hero
         lang={lang}
         dir={dir}
-        editable={editable}
+        editable={adminEditMode}
         lstHeroSlides={systemInfo.jsnSystemSections.lstHeroSlides}
         wsCategory={wsCategory}
         onSaveHero={onSaveHero}
@@ -85,14 +92,14 @@ function Home({
         dir={dir}
         jsnOwnerSection={systemInfo.jsnSystemSections.jsnOwnerSection}
         onSaveOwner={onSaveOwner}
-        editable={editable}
+        editable={adminEditMode}
       />
       <Reservation
         lang={lang}
         dir={dir}
         jsnReservation={systemInfo.jsnSystemSections.jsnReservation}
         onSaveReservation={onSaveReservation}
-        editable={editable}
+        editable={adminEditMode}
       />
       <Menu
         lang={lang}
@@ -103,15 +110,22 @@ function Home({
         editMenuCategory={editMenuCategory}
         ws={ws}
         addWS={addWS}
+        userOrder={userOrder}
+        addOrderProduct={addOrderProduct}
+        removeOrderProduct={removeOrderProduct}
         removeWS={removeWS}
+        systemID={systemID}
         editable={editable}
+        customerEditMode={customerEditMode}
+        adminEditMode={adminEditMode}
+        loggedIn={loggedIn}
       />
       <MostOrdered lang={lang} dir={dir} lstMostOrdered={mostOrdered} />
       <Featured lang={lang} dir={dir} lstFeatured={featured} />
       <Team
         lang={lang}
         lstSystemTeam={systemInfo.lstSystemTeam}
-        editable={editable}
+        editable={adminEditMode}
         addChef={addChef}
         editChef={editChef}
         deleteChef={deleteChef}

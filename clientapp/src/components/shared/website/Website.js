@@ -2,17 +2,23 @@ import { Demo_categories, Demo_jsnSystemInfo } from "appHelper/appVariables";
 import Home from "./home/Home";
 
 function Website({
-  isDemo,
   systemInfo,
   addWS,
   removeWS,
+  userOrder,
+  addOrderProduct,
+  removeOrderProduct,
   ws,
   categories,
   editable,
+  adminEditMode,
+  customerEditMode,
+  loggedIn,
   adminNavList,
   onSaveUpperHeader,
   onSaveHero,
   onSaveOwner,
+  systemID,
   addMenuCategory,
   deleteMenuCategory,
   editMenuCategory,
@@ -37,6 +43,10 @@ function Website({
       onSaveHero={onSaveHero}
       onSaveOwner={onSaveOwner}
       onSaveAbout={onSaveAbout}
+      systemID={systemID}
+      userOrder={userOrder}
+      addOrderProduct={addOrderProduct}
+      removeOrderProduct={removeOrderProduct}
       addMenuCategory={addMenuCategory}
       deleteMenuCategory={deleteMenuCategory}
       editMenuCategory={editMenuCategory}
@@ -45,6 +55,9 @@ function Website({
       deleteChef={deleteChef}
       addWS={addWS}
       removeWS={removeWS}
+      adminEditMode={adminEditMode}
+      customerEditMode={customerEditMode}
+      loggedIn={loggedIn}
       ws={ws}
       lang={lang}
       onSaveReservation={onSaveReservation}

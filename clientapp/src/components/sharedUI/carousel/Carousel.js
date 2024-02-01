@@ -20,10 +20,6 @@ export const Carousel = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const indicators = Math.ceil(slides.length / activeSlides);
 
-  useEffect(()=>{
-    console.log({slides})
-  },[])
-
   return (
     <Grid container mx={0} className="carousel-container">
       <Grid item container xs="12">

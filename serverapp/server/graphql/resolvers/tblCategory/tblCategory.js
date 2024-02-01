@@ -27,8 +27,12 @@ module.exports = {
     }
   },
   //CREATE BULK
-   bulkCategories:async(_,{categories})=>{
+   bulkCategories:async(_,{categories,onDeleteIDs})=>{
     try {
+      // console.log(categories)
+      if(onDeleteIDs?.length){
+        await tblCategory.destroy({where:{bigID:[onDeleteIDs]}});
+      }
       return await tblCategory.bulkCreate(JSON.parse(JSON.stringify(categories)), {updateOnDuplicate: ['bigID']});
     } catch (err) {
       throw err;

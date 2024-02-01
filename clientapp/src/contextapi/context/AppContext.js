@@ -18,26 +18,30 @@ const initialAppState = {
     bigSystemID: null,
     jsnSystemContact: {},
     lstSystemReviews: [],
-    lstSystemTeam:[],
-    jsnSystemSections:[],
+    lstSystemTeam: [],
+    jsnSystemSections: [],
     bigWSCategoryID: null,
     jsnSystemLocation: {},
     lstContactUs: [],
-    strLogoPath:null,
+    strLogoPath: null,
     systemMenu: [],
-    systemRegion:[]
+    systemRegion: [],
   },
   userInfo: {
     bigUserID: "",
     strUserImage: "",
     jsnFullName: "",
     strEmail: "",
+    userOrder: {
+      lstProduct: [],
+      strTotalPrice: "",
+    },
   },
 };
 
 const AppContextProvider = (props) => {
   const localStorageAppState = JSON.parse(localStorage.getItem("appState"));
-  const [appState, appDispatch] = useReducer(AppReducer,{
+  const [appState, appDispatch] = useReducer(AppReducer, {
     ...initialAppState,
     ...localStorageAppState,
   });

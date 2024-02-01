@@ -24,7 +24,15 @@ const styles = {
 
 function Menu({ categories, lang, dir ,editable,  addMenuCategory,
   deleteMenuCategory,
-  editMenuCategory,addWS,removeWS,ws}) {
+  systemID,
+  editMenuCategory,addWS,removeWS,ws,
+  customerEditMode,
+  adminEditMode,
+  loggedIn,
+  userOrder,
+  addOrderProduct,
+  removeOrderProduct,
+}) {
   return (
     <Grid container sx={styles.container}>
       <Grid item lg="12" mb={4} container justifyContent={"center"}>
@@ -41,10 +49,17 @@ function Menu({ categories, lang, dir ,editable,  addMenuCategory,
         funAddCategory={addMenuCategory}
         funDeleteCategory={deleteMenuCategory}
         funEditCategory={editMenuCategory}
+        systemID={systemID}
         ws={ws}
         addWS={addWS}
+        userOrder={userOrder}
+        addOrderProduct={addOrderProduct}
+        removeOrderProduct={removeOrderProduct}
         removeWS={removeWS}
         editable={editable}
+        customerEditMode={customerEditMode}
+        adminEditMode={adminEditMode}
+        loggedIn={loggedIn}
       />}
     </Grid>
   );

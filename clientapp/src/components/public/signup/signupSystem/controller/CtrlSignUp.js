@@ -71,25 +71,31 @@ export const ctrlSignUp = {
         jsnAddress: jsnSystemAddress,
       };
       const regUser = await signup(objInputUser);
-      appState.clientInfo.blnUserLogin = true;
-      appState.userInfo = {
-        bigUserID: regUser.bigUserID,
-        bigUserRoleID: regUser.bigUserRoleID,
-        jsnAddress: JSON.parse(regUser.jsnAddress),
-        jsnClientPayment: JSON.parse(regUser.jsnClientPayment),
-        jsnFullName: JSON.parse(regUser.jsnFullName),
-        strEmail: regUser.strEmail,
-        jsnLocation: JSON.parse(regUser.jsnLocation),
-      };
-      appState.systemInfo.bigSystemID = regSystem.bigSystemID;
-      appState.systemInfo.jsnSystemName = JSON.parse(regSystem.jsnSystemName);
-      appState.systemInfo.strSystemPathURL = regSystem.strSystemPathURL;
-      appState.systemInfo.jsnSystemAddress = JSON.parse(regSystem.jsnSystemAddress);
-      appState.systemInfo.jsnSystemLocation = JSON.parse(regSystem.jsnSystemLocation);
-      appDispatch({...appState});
-      // if(appState?.clientInfo?.blnUserLogin===true){
-      //   navigate(`/${regSystem.strSystemPathURL}`);
-      // }
+      if(!regUser?.bigUserID){
+        alert("Registration failed");
+        return;
+      }
+      if(regUser?.bigUserID&&regSystem?.bigSystemID){
+        appState.clientInfo.blnUserLogin = true;
+        appState.userInfo = {
+          bigUserID: regUser.bigUserID,
+          bigUserRoleID: regUser.bigUserRoleID,
+          jsnAddress: JSON.parse(regUser.jsnAddress),
+          jsnClientPayment: JSON.parse(regUser.jsnClientPayment),
+          jsnFullName: JSON.parse(regUser.jsnFullName),
+          strEmail: regUser.strEmail,
+          jsnLocation: JSON.parse(regUser.jsnLocation),
+        };
+        appState.systemInfo.bigSystemID = regSystem.bigSystemID;
+        appState.systemInfo.jsnSystemName = JSON.parse(regSystem.jsnSystemName);
+        appState.systemInfo.strSystemPathURL = regSystem.strSystemPathURL;
+        appState.systemInfo.jsnSystemAddress = JSON.parse(regSystem.jsnSystemAddress);
+        appState.systemInfo.jsnSystemLocation = JSON.parse(regSystem.jsnSystemLocation);
+        appDispatch({...appState});
+        if(appState.clientInfo.blnUserLogin){
+          navigate(`/${regSystem.strSystemPathURL}`);
+        }
+      }
     } catch (err) {
       console.log({ err });
     }

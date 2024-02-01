@@ -1,4 +1,4 @@
-import { lstWebsiteNav } from "appHelper/appVariables";
+import { Demo_jsnSystemInfo, lstWebsiteNav } from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext } from "react";
@@ -41,7 +41,7 @@ function Signup() {
         lang={appState.clientInfo.strLanguage}
         dir={appState.clientInfo.strDir}
         navList={lstWebsiteNav}
-        jsnSystemContact={appState.systemInfo.jsnSystemContact}
+        jsnSystemContact={Demo_jsnSystemInfo.jsnSystemContact}
         editable={false}
       />
       <Tabs001 tabsContent={tabsContent} />

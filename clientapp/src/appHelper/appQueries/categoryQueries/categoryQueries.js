@@ -71,3 +71,24 @@ export const deleteCategoryQuery = (bigID) => {
         deleteCategory(bigID:${bigID})
       }`;
 };
+
+export const bulkCategoriesQuery = (categories, onDeleteIDs) => {
+  const queryCategories = categories?.map((category) =>`{
+  bigID:${category.bigID},bigSystemID:${
+    category.bigSystemID
+  },bigParentID:${category.bigParentID},bigCategoryTypeID:${category.bigCategoryTypeID},jsnName:"""${JSON.stringify(
+    category.jsnName
+  )}""",jsnCategoryInfo:"""${JSON.stringify(
+    category.jsnCategoryInfo
+  )}"""
+}`);
+  return `mutation {
+      bulkCategories(categories:[${queryCategories}],onDeleteIDs:[${onDeleteIDs}]){
+        bigID
+        bigParentID
+        bigSystemID
+        bigCategoryTypeID
+        jsnName
+        jsnCategoryInfo
+      }}`;
+};

@@ -17,6 +17,7 @@ function WebsiteHeader({
   editable,
   onSaveUpperHeader,
   adminNavList,
+  intCartProduct,
   userImg,
   userName,
   blnUserLogin,
@@ -43,6 +44,7 @@ function WebsiteHeader({
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}
           editable={editable}
+          intCartProduct={intCartProduct}
           adminNavList={adminNavList}
         />
       </AppBar>

@@ -33,7 +33,7 @@ import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useRef, useState } from "react";
 
-function AddItem({ open, handleClose, activeTabID,addWS,ws, lang, dir, onSave }) {
+function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, onSave }) {
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
@@ -73,6 +73,7 @@ function AddItem({ open, handleClose, activeTabID,addWS,ws, lang, dir, onSave })
               bigID: Number(bigID),
               bigCategoryTypeID: objCategoriesType.Menu,
               bigParentID: activeTabID,
+              bigSystemID:systemID,
               jsnName: { eng: nameEng, arb: nameArb },
               jsnCategoryInfo: {
                 strImgPath: img,
@@ -87,6 +88,7 @@ function AddItem({ open, handleClose, activeTabID,addWS,ws, lang, dir, onSave })
                 blnMostOrdered: !!onMostOrderedInput?.current?.checked,
               },
             };
+            console.log({item})
             setImg(null);
             setOnSaleChecked(false);
             onSave(item);

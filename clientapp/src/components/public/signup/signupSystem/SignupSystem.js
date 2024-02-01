@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "contextapi/context/AppContext";
 import bgImg from "assets/image/patron.jpg";
@@ -306,7 +306,6 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="text"
-                  autoFocus
                   label="CVV Code"
                   className={`form-control ${errors.cvv && "invalid"}`}
                   {...register("cvv", { required: "CVV Code is Required" })}
@@ -321,7 +320,6 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="text"
-                  autoFocus
                   label="Name On Card"
                   className={`form-control ${errors.cardName && "invalid"}`}
                   {...register("cardName", {

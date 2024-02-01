@@ -3,6 +3,13 @@ const { tblSystem } = models;
 
 module.exports = {
   // QUERY--------------------------------------------------------------------------------
+  findSystems: async (_) => {
+    try {
+      return await tblSystem.findAll({});
+    } catch (err) {
+      throw err;
+    }
+  },
   findSystem: async (_,{bigSystemID}) => {
     try {
       return await tblSystem.findOne({where:{bigSystemID:bigSystemID}});

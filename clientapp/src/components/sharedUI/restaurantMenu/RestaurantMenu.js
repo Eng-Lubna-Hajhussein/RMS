@@ -1,15 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Alert, Box, Grid, Icon, Paper, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Alert, Badge, Box, Grid, Icon, Paper, Typography } from "@mui/material";
 import * as appFunctions from "../../../appHelper/appFunctions";
 import "./RestaurantMenu.css";
 import { objTabsAssets, tabsOptions } from "appHelper/appVariables";
 import { Add, Delete, MoreVert } from "@mui/icons-material";
 import NavList from "../navList/NavList";
-import { App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AddTab from "./AddTab";
 import OptionList from "../optionList/OptionList";
 import AddItem from "./AddItem";
 import EditItem from "./EditItem";
+import shoppingIcon from "assets/image/shopping.svg";
 
 const styles = {
   addDish: {
@@ -17,6 +18,12 @@ const styles = {
     borderRadius: "50%",
     backgroundColor: "#ffd40d !important",
     cursor: "pointer",
+  },
+  shoppingIcon: {
+    padding: "8px",
+    background: "#ffd40d",
+    borderRadius: "10px",
+    cursor:"pointer"
   },
   menuTitle: {
     fontSize: { lg: "40px !important", xs: "20px" },
@@ -34,6 +41,13 @@ const styles = {
     borderRadius: "20px !important",
     paddingY: "50px",
     paddingLeft: { xs: "15px !important" },
+  },
+  shoppingBadge: {
+    "& .MuiBadge-badge": {
+      background: App_Primary_Color,
+      color: "#fff",
+      fontWeight: "800",
+    },
   },
   tabName: {
     width: "100%",
@@ -88,14 +102,18 @@ export default function RestaurantMenu({
   addWS,
   removeWS,
   ws,
-  blnOnSaveCategory,
-  blnOnSaveAction,
-  onSaveAction,
-  readOnly,
+  systemID,
   lang,
   dir,
-  editable,
+  customerEditMode,
+  adminEditMode,
+  loggedIn,
+  userOrder,
+  addOrderProduct,
+  removeOrderProduct,
 }) {
+  adminEditMode=false
+  customerEditMode=true
   const tabsAssets = objTabsAssets;
   const initialObjTabs = useMemo(() => {
     const objTabs = categories
@@ -135,15 +153,22 @@ export default function RestaurantMenu({
   const [editItemOpen, setEditItemOpen] = useState(false);
 
   const funAddTab = (tab) => {
+    if(!objTabs?.tabs?.length){
+      objTabs.activeTab = tab;
+    }
+    objTabs.tabs =[...objTabs.tabs, tab];
+    objTabs.tabsContent={ ...objTabs.tabsContent, [tab.bigID]: [] }
     setObjTabs({
       ...objTabs,
-      tabs: [...objTabs.tabs, tab],
-      tabsContent: { ...objTabs.tabsContent, [tab.bigID]: [] },
     });
     funAddCategory(tab);
   };
+
+  useEffect(()=>{
+    console.log({objTabs})
+  },[objTabs])
   const funDeleteTab = (tab) => {
-    if (objTabs.tabsContent[tab.bigID].length) {
+    if (objTabs?.tabsContent[tab.bigID]?.length) {
       setObjTabs({ ...objTabs, categoryOnAction: null });
       alert("You Can't Delete A Tab That Has Items!");
       return;
@@ -159,7 +184,7 @@ export default function RestaurantMenu({
     funDeleteCategory(tab.bigID);
   };
   const funAddItem = (item) => {
-    objTabs.tabsContent[item.bigParentID].push(item);
+    objTabs?.tabsContent[item?.bigParentID]?.push(item);
     funAddCategory(item);
   };
   const funEditItem = (item) => {
@@ -180,18 +205,15 @@ export default function RestaurantMenu({
     funDeleteCategory(item.bigID);
   };
 
-  useEffect(() => {
-    console.log("rerender");
-  }, []);
-
-  useEffect(() => {
-    console.log({ objTabs });
-  }, [objTabs]);
-
   const objAppActions = {
     Edit: 7244446400,
     Delete: 8324222478,
   };
+
+  const funCalculateItemQuantity =(item)=>{
+       const product = userOrder.lstProduct.find(({bigID})=>`${item.bigID}`===`${bigID}`);
+       return product?product?.intQuantity:0;
+  }
 
   const actionTabNavList = [
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
@@ -214,13 +236,13 @@ export default function RestaurantMenu({
                 xs="12"
                 justifyItems={"center"}
                 className={
-                  `${tab.bigID}` === `${objTabs.activeTab.bigID}`
+                  `${tab?.bigID}` === `${objTabs?.activeTab?.bigID}`
                     ? "nav-link active"
                     : "nav-link nav"
                 }
               >
                 {
-                  <Grid
+                  adminEditMode&&<Grid
                     item
                     lg="12"
                     px={2}
@@ -254,7 +276,7 @@ export default function RestaurantMenu({
                     src={tab?.jsnCategoryInfo?.strIconPath}
                     height={"50px"}
                     className={
-                      `${tab.bigID}` === `${objTabs.activeTab.bigID}`
+                      `${tab?.bigID}` === `${objTabs?.activeTab?.bigID}`
                         ? "tab-icon active"
                         : "tab-icon"
                     }
@@ -275,7 +297,7 @@ export default function RestaurantMenu({
               </Grid>
             </Grid>
           ))}
-          {tabsOptions?.length > objTabs?.tabs?.length && (
+          {adminEditMode&& (tabsOptions?.length > objTabs?.tabs?.length) && (
             <Grid item container lg={"2"} xs={"4"} py={3} px={2}>
               <Grid
                 container
@@ -364,12 +386,12 @@ export default function RestaurantMenu({
                       sx={{ height: "100%" }}
                       alignItems={"center"}
                     >
-                      <Grid item xs={blnOnSaveCategory ? "10" : "12"}>
+                      <Grid item xs={adminEditMode ? "10" : "12"}>
                         <Typography sx={styles.menuTitle}>
                           {objTabs.activeTab.jsnName[lang]}
                         </Typography>
                       </Grid>
-                      {blnOnSaveCategory && (
+                      {adminEditMode && (
                         <Grid item xs={"2"}>
                           <Box
                             sx={{
@@ -394,7 +416,7 @@ export default function RestaurantMenu({
                         </Grid>
                       )}
                       {objTabs?.tabsContent[objTabs.activeTab.bigID]?.map(
-                        (item, index, tabContent) => (
+                        (item, index, tabsContent) => (
                           <Grid
                             item
                             xs="12"
@@ -402,9 +424,7 @@ export default function RestaurantMenu({
                             container
                             alignContent={"start"}
                           >
-                            <Grid
-                              item
-                              xs="1"
+                            {adminEditMode&&<Grid item xs="1"
                               container
                               justify={"start"}
                               alignItems={"center"}
@@ -437,24 +457,22 @@ export default function RestaurantMenu({
                                 endIcon={<MoreVert />}
                                 lang={lang}
                               />
-                            </Grid>
+                            </Grid>}
                             <Grid
                               container
                               item
-                              xs={editable ? "11" : "12"}
+                              xs={adminEditMode ? "11" : "12"}
                               justify={"start"}
                               alignItems={"center"}
                               alignSelf={"flex-start"}
                               py={2}
                               sx={{
                                 borderBottom:
-                                  index !== tabContent.length - 1 &&
+                                  index !== tabsContent.length - 1 &&
                                   "1px dotted #555",
                               }}
                             >
-                              <Grid
-                                item
-                                xs="1"
+                              <Grid item xs="1"
                                 container
                                 alignContent={"center"}
                                 sx={{ height: "fit-content" }}
@@ -465,24 +483,25 @@ export default function RestaurantMenu({
                                   sx={styles.catImg}
                                 />
                               </Grid>
-
-                              <Grid item xs={editable ? "5" : "7"} px={1}>
+                              <Grid item xs={adminEditMode ? "8" : "6"} px={1}>
                                 <Typography sx={styles.dishName}>
                                   {item.jsnName[lang]}
                                 </Typography>
                               </Grid>
-                              <Grid
-                                item
-                                container
-                                xs={editable ? "4" : "4"}
+                              <Grid item container xs={"3"}
                                 justifySelf={"flex-end"}
-                                justifyContent={"flex-end"}
+                                justifyContent={"end"}
                                 justifyItems={"flex-end"}
                               >
                                 <Typography sx={styles.dishPrice}>
                                   ${item.jsnCategoryInfo.strPrice}
                                 </Typography>
                               </Grid>
+                              {customerEditMode&&<Grid item xs='2' px={1} container justifyContent={'end'}>
+                              <Badge badgeContent={funCalculateItemQuantity(item)} sx={styles.shoppingBadge}>
+                              <Box component={'img'} onClick={()=>addOrderProduct(item)} src={shoppingIcon} sx={styles.shoppingIcon} />
+                              </Badge>
+                              </Grid>}
                               <Grid item xs={"9"} p-0 m-0>
                                 <Typography sx={styles.dishDescription}>
                                   {item.jsnCategoryInfo.jsnDescription[lang]}
@@ -526,26 +545,9 @@ export default function RestaurantMenu({
                   paddingRight: { lg: dir === "rtl" && "180px", xs: "25px" },
                 }}
               >
-                <Grid
-                  item
-                  lg={"0"}
-                  xs={"12"}
-                  container
-                  justifyContent={"center"}
-                  sx={{ display: { lg: "none", xs: "flex" } }}
-                  pb={3}
-                >
-                  <Box
-                    component={"img"}
-                    src={objTabs.activeTab.jsnCategoryInfo.strImgPath}
-                    width={"200px"}
-                    height={"200px"}
-                    sx={styles.menuImgCat}
-                  />
-                </Grid>
                 <Grid item lg="11" xs={"12"} px-0>
                   <Grid container justify={"start"}>
-                    <Grid item xs={blnOnSaveCategory ? "10" : "12"}>
+                    <Grid item xs={adminEditMode ? "10" : "12"}>
                       <Typography sx={styles.menuTitle}>{"NONE"}</Typography>
                     </Grid>
                   </Grid>
@@ -555,17 +557,18 @@ export default function RestaurantMenu({
           </Grid>
         </Grid>
       )}
-      {editable && (
+      {adminEditMode && (
         <AddTab
           open={addTabOpen}
           handleClose={() => setAddTabOpen(false)}
           onSave={funAddTab}
           tabsIDs={Object.keys(objTabs?.tabsContent)}
+          systemID={systemID}
           lang={lang}
           dir={dir}
         />
       )}
-      {editable && (
+      {adminEditMode && (
         <AddItem
           open={addItemOpen}
           handleClose={() => setAddItemOpen(false)}
@@ -573,11 +576,12 @@ export default function RestaurantMenu({
           activeTabID={objTabs?.activeTab?.bigID}
           addWS={addWS}
           ws={ws}
+          systemID={systemID}
           lang={lang}
           dir={dir}
         />
       )}
-      {editable && (
+      {adminEditMode && (
         <EditItem
           open={editItemOpen}
           handleClose={() => setEditItemOpen(false)}

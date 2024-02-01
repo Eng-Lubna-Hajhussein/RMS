@@ -54,3 +54,14 @@ export const findSystemQuery = (bigSystemID) => {
     }
   }`
 }
+
+export const findSystemsQuery = () => {
+  return `query {
+    findSystems{
+      bigSystemID
+      strLogoPath
+      strSystemPathURL
+      jsnSystemName
+    }
+  }`
+}

@@ -38,6 +38,10 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: UserResolvers.login,
     },
+    findSystems: {
+      type: new GraphQLList(new GraphQLNonNull(SystemType)),
+      resolve: SystemResolvers.findSystems,
+    },
     findSystem: {
       type: new GraphQLNonNull(SystemType),
       args: {

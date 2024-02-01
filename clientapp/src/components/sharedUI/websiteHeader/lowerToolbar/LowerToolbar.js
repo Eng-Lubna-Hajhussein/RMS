@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Toolbar, Grid, Box, Badge, IconButton } from "@mui/material";
 import { ShoppingBagOutlined, Menu, Language } from "@mui/icons-material";
 import logoIcon from "assets/image/logo.png";
@@ -49,8 +49,10 @@ const styles = {
   menuIcon: { color: "#000" },
 };
 
-function LowerToolbar({ navList, setOpenDrawer, lang, editable,adminNavList }) {
+function LowerToolbar({ navList, setOpenDrawer,intCartProduct, lang, editable,adminNavList }) {
   const { onLangChange } = useLanguage();
+  const [cartProduct,setCartProduct] = useState(intCartProduct);
+  
   return (
     <Toolbar sx={styles.lowerToolBar}>
       <Grid container alignItems={"center"}>
@@ -89,7 +91,7 @@ function LowerToolbar({ navList, setOpenDrawer, lang, editable,adminNavList }) {
           justifyItems={"flex-end"}
         >
           <Grid item lg="2">
-            <Badge badgeContent={0} sx={styles.shoppingBadge}>
+            <Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
               <ShoppingBagOutlined fontSize="large" sx={styles.shoppingIcon} />
             </Badge>
           </Grid>

@@ -5,6 +5,7 @@ import { lstWebsiteNav } from "appHelper/appVariables";
 function Header({lang,dir, userImg,
   userName,
   blnUserLogin,
+  intCartProduct,
   userNavList,jsnSystemContact,adminNavList,editable,onSaveUpperHeader}) {
   return (
     <React.Fragment>
@@ -12,6 +13,7 @@ function Header({lang,dir, userImg,
         lang={lang}
         dir={dir}
         jsnSystemContact={jsnSystemContact}
+        intCartProduct={intCartProduct}
         navList={lstWebsiteNav}
         editable={editable}
         onSaveUpperHeader={onSaveUpperHeader}

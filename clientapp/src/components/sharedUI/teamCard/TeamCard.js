@@ -54,7 +54,7 @@ const styles = {
   },
 };
 
-function TeamCard({ item, lang,onDelete,onEdit }) {
+function TeamCard({ item, lang,onDelete,onEdit,editable }) {
   const objAppActions = {
     Edit: 7244446400,
     Delete: 8324222478,
@@ -68,7 +68,7 @@ function TeamCard({ item, lang,onDelete,onEdit }) {
   return (
     <>
       {
-        <Grid
+        editable&&<Grid
           item
           lg="12"
           px={2}
@@ -172,21 +172,6 @@ function TeamCard({ item, lang,onDelete,onEdit }) {
                 </Box>
               </Grid>
             </Grid>
-            {/* <Grid
-              item
-              xs={"12"}
-              pt={2}
-              container
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Box
-                component={"img"}
-                src={item.strSignImgPath}
-                height={"20px"}
-                width={"50%"}
-              />
-            </Grid> */}
           </Grid>
         </Box>
       </Grid>

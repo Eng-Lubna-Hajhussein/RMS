@@ -22,20 +22,25 @@ import {
   MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import { objCategoriesType, objTabsAssets, tabsOptions } from "appHelper/appVariables";
+import {
+  objCategoriesType,
+  objTabsAssets,
+  tabsOptions,
+} from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-function AddTab({ open, handleClose,tabsIDs, lang, dir, onSave }) {
-  const options = useMemo(()=>{
-   return tabsOptions.filter((option)=>!tabsIDs.includes(`${option.key}`))
-  },[tabsIDs]);
+function AddTab({ open, handleClose, tabsIDs, systemID, lang, dir, onSave }) {
+  const options = useMemo(() => {
+    console.log({tabsIDs})
+    return tabsOptions.filter((option) => !tabsIDs.includes(`${option.key}`));
+  }, [tabsIDs]);
   const [option, setOption] = useState(options[0]?.key);
-  useEffect(()=>{
-    if(options.length){
-      setOption(options[0].key)
+  useEffect(() => {
+    if (options.length) {
+      setOption(options[0].key);
     }
-  },[options])
+  }, [options]);
   return (
     <React.Fragment>
       <Dialog
@@ -45,15 +50,16 @@ function AddTab({ open, handleClose,tabsIDs, lang, dir, onSave }) {
           component: "form",
           onSubmit: (event) => {
             event.preventDefault();
-            const tabOp = tabsOptions.find(({key})=>key===option);
+            const tabOp = tabsOptions.find(({ key }) => key === option);
             const tab = {
-              bigID:option,
-              bigCategoryTypeID:objCategoriesType.Menu,
-              jsnName:tabOp?.jsnName,
-              jsnCategoryInfo:objTabsAssets[option],
+              bigID: option,
+              bigCategoryTypeID: objCategoriesType.Menu,
+              bigSystemID:systemID,
+              jsnName: tabOp?.jsnName,
+              jsnCategoryInfo: objTabsAssets[option],
               bigParentID: 0,
-            }
-            onSave(tab)
+            };
+            onSave(tab);
             handleClose();
           },
         }}
@@ -78,7 +84,7 @@ function AddTab({ open, handleClose,tabsIDs, lang, dir, onSave }) {
                     required
                     autoFocus
                     variant="outlined"
-                    label='Menu Category'
+                    label="Menu Category"
                     onChange={(e) => setOption(e.target.value)}
                     sx={{ background: "#fff", borderRadius: "5px" }}
                   >
@@ -110,7 +116,8 @@ function AddTab({ open, handleClose,tabsIDs, lang, dir, onSave }) {
                     height={"60px"}
                     width={"60px"}
                     sx={{
-                      filter:"invert(19%) sepia(91%) saturate(3389%) hue-rotate(339deg) brightness(108%) contrast(91%)",
+                      filter:
+                        "invert(19%) sepia(91%) saturate(3389%) hue-rotate(339deg) brightness(108%) contrast(91%)",
                     }}
                     src={objTabsAssets[option].strIconPath}
                   />
