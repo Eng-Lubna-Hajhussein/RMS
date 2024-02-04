@@ -11,7 +11,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 
-function Edit({ openEdit, handleEditClose, jsnSystemContact,onSave }) {
+function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }) {
   return (
     <Dialog
       open={openEdit}
@@ -137,4 +137,4 @@ function Edit({ openEdit, handleEditClose, jsnSystemContact,onSave }) {
   );
 }
 
-export default Edit;
+export default EditUpperToolbar;

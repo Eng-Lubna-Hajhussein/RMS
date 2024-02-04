@@ -56,7 +56,7 @@ export const ctrlSignUp = {
       const jsnClientPayment = {
         strCardNumber: formData.cardNumber,
         strCVV: formData.cvv,
-        strNmeOnCard: formData.cardName,
+        strNameOnCard: formData.cardName,
       };
       const jsnUserLocation = await mapLocation.getLocation();
       const objInputUser = {

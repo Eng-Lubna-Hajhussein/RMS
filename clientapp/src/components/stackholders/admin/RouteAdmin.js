@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Website from "./shared/website/Website";
+import Website from "components/shared/website/Website";
 import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   Demo_jsnSystemInfo,
   objCategoriesType,
-  objRoleID,
 } from "appHelper/appVariables";
 import {
   findSystem,
@@ -19,27 +18,19 @@ import {
 import { Button, Grid, Typography } from "@mui/material";
 import { Save } from "@mui/icons-material";
 
-function RouteLandingPage({ isDemo }) {
+function RouteAdmin() {
   const { appState, appDispatch } = useContext(AppContext);
-
   const { systemID } = useParams();
   const [systemInfo, setSystemInfo] = useState(
-    null
+    JSON.parse(JSON.stringify(appState.systemInfo))
   );
   const [saveMode, setSaveMode] = useState([]);
   const firstRender = useRef(true);
-  const adminEditMode =
-    appState.clientInfo.blnUserLogin &&
-    objRoleID["Admin"] === appState.userInfo.bigUserRoleID &&
-    appState.systemInfo.bigSystemID === Number(systemID);
-  const customerEditMode =
-    appState.clientInfo.blnUserLogin &&
-    objRoleID["Customer"] === appState.userInfo.bigUserRoleID &&
-    appState.systemInfo.bigSystemID === Number(systemID);
-  const loggedIn = appState?.clientInfo?.loggedIn;
   const [isLoading, setIsLoading] = useState(false);
   useLanguage();
+
   const instalData = async () => {
+    setIsLoading(true);
     const system = await findSystem(systemID);
     const categoriesData = await findCategories(systemID);
     const systemData = {};
@@ -82,20 +73,13 @@ function RouteLandingPage({ isDemo }) {
     );
     systemData.lstContactUs = JSON.parse(system?.lstContactUs);
     systemData.strLogoPath = system?.strLogoPath;
-    appState.systemInfo = {...appState.systemInfo,...systemData};
-    setSystemInfo({...appState.systemInfo,...systemData});
+    appState.systemInfo={...appState.systemInfo,...systemData};
+    setSystemInfo({...appState.systemInfo,...systemData})
     appDispatch({ ...appState });
+    setIsLoading(false);
   };
-
   useEffect(() => {
-    const funInstallData = async () => {
-      setIsLoading(true);
-      await instalData();
-      setIsLoading(false);
-    };
-    if (systemID) {     
-      funInstallData();
-    }
+      instalData();
   }, []);
 
   useEffect(() => {
@@ -106,7 +90,8 @@ function RouteLandingPage({ isDemo }) {
 
   useEffect(() => {
     setSystemInfo(JSON.parse(JSON.stringify(appState.systemInfo)));
-  }, [appState,appState.systemInfo]);
+  }, [appState]);
+
 
   const onSaveUpperHeader = (contacts) => {
     setSystemInfo({ ...systemInfo, jsnSystemContact: contacts });
@@ -313,58 +298,21 @@ function RouteLandingPage({ isDemo }) {
     setSaveMode([]);
     setIsLoading(false);
   };
-  const navigate = useNavigate();
 
   const adminNavList = [
     { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    { bigNavID: 3234146150, nav: { eng: "dashboard", arb: "داشبورد" } },
-    { bigNavID: 4324146478, nav: { eng: "orders", arb: "الطلبات" } },
-    { bigNavID: 5674146478, nav: { eng: "reservations", arb: "الحجوزات" } },
+    { bigNavID: 3234146150, nav: { eng: "dashboard", arb: "داشبورد" },path:'/admin/dashboard/'+systemInfo.strSystemPathURL },
     { bigNavID: 9864146478, nav: { eng: "messages", arb: "الرسائل" } },
     { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
   ];
 
   const onLogout = () => {
-    console.log("logout");
+    console.log("logout")
   };
-  const userNavList = [
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    {
-      bigNavID: 1166046478,
-      nav: { eng: "logout", arb: "تسجيل الخروج" },
-      onClick: onLogout,
-    },
-  ];
-
-  const addOrderProduct = (product) => {
-    const productPrice = product.jsnCategoryInfo.blnOnSale
-      ? product.jsnCategoryInfo.strSalePrice
-      : product.jsnCategoryInfo.strPrice;
-    const productIndex = appState.userInfo.userOrder.lstProduct.findIndex(
-      ({ bigID }) => `${product.bigID}` === `${bigID}`
-    );
-    if (productIndex === -1) {
-      appState.userInfo.userOrder.lstProduct.push({
-        bigID: product.bigID,
-        intQuantity: 1,
-        strPrice: productPrice,
-      });
-      appDispatch({ ...appState });
-      return;
-    }
-    appState.userInfo.userOrder.lstProduct[productIndex] = {
-      ...appState.userInfo.userOrder.lstProduct[productIndex],
-      intQuantity:
-        appState.userInfo.userOrder.lstProduct[productIndex]?.intQuantity + 1,
-    };
-    appDispatch({ ...appState });
-  };
-
-  const removeOrderProduct = (product) => {};
 
   return (
     <React.Fragment>
-      {!!saveMode.length && adminEditMode && (
+      {!!saveMode.length && (
         <Grid container justifyContent={"center"}>
           <Button color="secondary" onClick={onSave} startIcon={<Save />}>
             Save changes
@@ -372,18 +320,12 @@ function RouteLandingPage({ isDemo }) {
         </Grid>
       )}
       {isLoading && <Typography>loading</Typography>}
-      {!isLoading &&(systemInfo)&& (
+      {!isLoading && (systemInfo.bigSystemID) && (
         <Website
-          systemInfo={
-            isDemo ? Demo_jsnSystemInfo : JSON.parse(JSON.stringify(systemInfo))
-          }
-          editable={adminEditMode}
-          adminEditMode={adminEditMode}
-          customerEditMode={customerEditMode}
-          loggedIn={loggedIn}
-          userOrder={appState?.userInfo?.userOrder}
-          addOrderProduct={addOrderProduct}
-          removeOrderProduct={removeOrderProduct}
+          systemInfo={JSON.parse(JSON.stringify(systemInfo))}
+          editable={true}
+          adminEditMode={true}
+          customerEditMode={false}
           onSaveUpperHeader={onSaveUpperHeader}
           onSaveHero={onSaveHero}
           onSaveOwner={onSaveOwner}
@@ -404,7 +346,6 @@ function RouteLandingPage({ isDemo }) {
           userImg={appState?.userInfo?.strImgPath}
           userName={JSON.parse(JSON.stringify(appState?.userInfo?.jsnFullName))}
           blnUserLogin={appState?.clientInfo?.blnUserLogin}
-          userNavList={userNavList}
           dir={appState.clientInfo.strDir}
         />
       )}
@@ -412,4 +353,4 @@ function RouteLandingPage({ isDemo }) {
   );
 }
 
-export default RouteLandingPage;
+export default RouteAdmin;

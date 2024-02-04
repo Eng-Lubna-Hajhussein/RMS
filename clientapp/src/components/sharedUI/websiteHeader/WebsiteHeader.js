@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { AppBar, CssBaseline } from "@mui/material";
-import DrawerNav from "./drawerNav/DrawerNav";
-import UpperToolbar from "./upperToolbar/UpperToolbar";
-import LowerToolbar from "./lowerToolbar/LowerToolbar";
+import DrawerNav from "./DrawerNav/DrawerNav";
+import UpperToolbar from "./UpperToolbar/UpperToolbar";
+import LowerToolbar from "./LowerToolbar/LowerToolbar";
 
 const styles = {
   appBar: {
@@ -22,6 +22,7 @@ function WebsiteHeader({
   userName,
   blnUserLogin,
   userNavList,
+  customerEditMode
 }) {
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
@@ -46,6 +47,7 @@ function WebsiteHeader({
           editable={editable}
           intCartProduct={intCartProduct}
           adminNavList={adminNavList}
+          customerEditMode={customerEditMode}
         />
       </AppBar>
       <DrawerNav

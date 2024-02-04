@@ -10,9 +10,16 @@ module.exports = {
       throw err;
     }
   },
-  findOrder: async (_,{bigOrderID}) => {
+  findUnDeliveredOrder: async (_,{bigUserID,bigSystemID}) => {
     try {
-      return await tblOrder.findByPk(bigOrderID);
+      return await tblOrder.findOne({where:{bigUserID:bigUserID,bigSystemID:bigSystemID,blnDelivered:false}});
+    } catch (err) {
+      throw err;
+    }
+  },
+  findUserOrders: async (_,{bigUserID,bigSystemID}) => {
+    try {
+      return await tblOrder.findAll({where:{bigUserID:bigUserID,bigSystemID:bigSystemID}});
     } catch (err) {
       throw err;
     }
@@ -21,7 +28,7 @@ module.exports = {
   //CREATE
   createOrder: async (_, order) => {
     try {
-      return await tblOrder.create({ order });
+      return await tblOrder.create({ ...order });
     } catch (err) {
       throw err;
     }
@@ -33,7 +40,7 @@ module.exports = {
       if (!updatedOrder[0]) {
         throw new Error("No rows have been effected.");
       } else {
-        return await tblOrder.findByPk(order.bigOrderID);
+        return await tblOrder.findOne({where:{bigOrderID:order.bigOrderID}});
       }
     } catch (err) {
       throw err;

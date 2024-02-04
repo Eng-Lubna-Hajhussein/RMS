@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import RestaurantMenu from "components/sharedUI/restaurantMenu/RestaurantMenu";
+import RestaurantMenu from "components/sharedUI/SystemMenu/SystemMenu";
 
 const styles = {
   container: {
@@ -29,7 +29,7 @@ function Menu({ categories, lang, dir ,editable,  addMenuCategory,
   customerEditMode,
   adminEditMode,
   loggedIn,
-  userOrder,
+  userCart,
   addOrderProduct,
   removeOrderProduct,
 }) {
@@ -52,7 +52,7 @@ function Menu({ categories, lang, dir ,editable,  addMenuCategory,
         systemID={systemID}
         ws={ws}
         addWS={addWS}
-        userOrder={userOrder}
+        userCart={userCart}
         addOrderProduct={addOrderProduct}
         removeOrderProduct={removeOrderProduct}
         removeWS={removeWS}

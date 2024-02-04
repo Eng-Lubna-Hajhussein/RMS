@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import TeamCard from "components/sharedUI/teamCard/TeamCard";
-import Carousel from "components/sharedUI/carousel/Carousel";
+import TeamCard from "components/sharedUI/TeamCard/TeamCard";
+import Carousel from "components/sharedUI/Carousel/Carousel";
 import "./Team.css";
 import { App_Second_Color } from "appHelper/appColor";
 import AddIcon from "@mui/icons-material/Add";
@@ -76,36 +76,38 @@ export default function Team({
           </Grid>
           <Grid item lg="3" xs={"6"} sx={styles.line} />
         </Grid>
-        {editable&&<Grid
-          item
-          lg="12"
-          px={3}
-          pb={5}
-          pt={0}
-          container
-          justifyContent={"end"}
-        >
-          <Box
-            sx={{
-              height: "54px",
-              width: "54px",
-              textAlign: "center",
-              borderRadius: "50%",
-              background: App_Second_Color,
-              cursor: "pointer",
-            }}
-            onClick={() => setAddOpen(true)}
+        {editable && (
+          <Grid
+            item
+            lg="12"
+            px={3}
+            pb={5}
+            pt={0}
+            container
+            justifyContent={"end"}
           >
-            <Grid
-              container
-              sx={{ height: "100%" }}
-              justifyContent={"center"}
-              alignContent={"center"}
+            <Box
+              sx={{
+                height: "54px",
+                width: "54px",
+                textAlign: "center",
+                borderRadius: "50%",
+                background: App_Second_Color,
+                cursor: "pointer",
+              }}
+              onClick={() => setAddOpen(true)}
             >
-              <AddIcon fontSize="medium" />
-            </Grid>
-          </Box>
-        </Grid>}
+              <Grid
+                container
+                sx={{ height: "100%" }}
+                justifyContent={"center"}
+                alignContent={"center"}
+              >
+                <AddIcon fontSize="medium" />
+              </Grid>
+            </Box>
+          </Grid>
+        )}
         <Grid container item xs="12">
           <Carousel
             slides={slides}

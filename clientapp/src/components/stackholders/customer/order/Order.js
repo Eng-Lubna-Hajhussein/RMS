@@ -8,12 +8,12 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Icon, TextField, Typography } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/OptionList/OptionList";
-import { MoreVert } from "@mui/icons-material";
+import { MoreVert, TimeToLeave } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import Checkout from "../checkout/Checkout";
+import OrderTimer from "./OrderTimer/OrderTimer";
 
 const styles = {
   dishName: {
@@ -31,42 +31,39 @@ const styles = {
   },
 };
 
-function Cart() {
+function Order() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
-  const [openCheckout, setOpenCheckout] = useState(false);
-  const onChangeQuantity = (product, quantity) => {
-    const productIndex = appState.userInfo.userCart.lstProduct.findIndex(
-      ({ bigID }) => `${product.bigID}` === `${bigID}`
+  const calculateZDirection = (lat1, long1, lat2, long2) => {
+    let p1 = Math.pow(Math.pow(lat1, 2) + Math.pow(long1, 2), 0.5);
+    let p2 = Math.pow(Math.pow(lat2, 2) + Math.pow(long2, 2), 0.5);
+    return (Math.abs(p2 - p1) * 157) / (70 / 60);
+  };
+  const deliveryTime = useMemo(() => {
+    const coord = appState.userInfo.jsnLocation;
+    const systemCoord = appState.systemInfo.jsnSystemLocation;
+    let deliveryTime = calculateZDirection(
+      coord.lat,
+      coord.long,
+      systemCoord.lat,
+      systemCoord.long
     );
-    appState.userInfo.userCart.lstProduct[productIndex] = {
-      ...appState.userInfo.userCart.lstProduct[productIndex],
-      intQuantity: quantity,
-    };
-    appDispatch({ ...appState });
-  };
-
-  const objAppActions = {
-    Edit: 7244446400,
-    Delete: 8324222478,
-  };
-  const actionItemNavList = [
-    { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
-  ];
+    return Math.round(Number(deliveryTime));
+  }, []);
 
   const initOrderedCategories = useMemo(() => {
-    return appState?.userInfo?.userCart?.lstProduct.map((product) => {
+    return appState?.userInfo?.userOrder?.lstProduct.map((product) => {
       const category = appState.systemInfo.systemMenu.find(
         ({ bigID }) => `${product.bigID}` === `${bigID}`
       );
       return { ...product, ...category };
     });
-  }, [appState?.systemInfo?.userCart]);
+  }, [appState?.systemInfo?.userOrder]);
   const [orderedCategories, setOrderedCategories] = useState([
     ...initOrderedCategories,
   ]);
 
-  const totalPrice = appState?.userInfo?.userCart?.lstProduct.reduce(
+  const totalPrice = appState?.userInfo?.userOrder?.lstProduct.reduce(
     (total, { strPrice, intQuantity }) => {
       return total + Number(strPrice) * intQuantity;
     },
@@ -78,18 +75,27 @@ function Cart() {
     { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
   ];
 
-  const removeOrderProduct = (product) => {
-    appState.userInfo.userCart.lstProduct =
-      appState.userInfo.userCart.lstProduct.filter(
-        ({ bigID }) => `${bigID}` !== `${product.bigID}`
-      );
-    setOrderedCategories([
-      ...orderedCategories.filter(
-        ({ bigID }) => `${bigID}` !== `${product.bigID}`
-      ),
-    ]);
-    appDispatch({ ...appState });
+  const formateTime = (seconds) => {
+    let h = Math.floor(seconds / 3600);
+    let m = Math.floor((seconds - h * 3600) / 60);
+    let s = Math.floor(seconds - (h * 3600 + m * 60));
+    if (h < 10) {
+      h = "0" + h;
+    }
+    if (m < 10) {
+      m = "0" + m;
+    }
+    if (s < 10) {
+      s = "0" + s;
+    }
+    return {h:h,m:m,s:s};
   };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const instalData = async () => {
+         setIsLoading(true);
+        //  const 
+  }
 
   return (
     <React.Fragment>
@@ -102,7 +108,7 @@ function Cart() {
         editable={false}
         userImg={appState.userInfo.strImgPath}
         userName={appState.userInfo.jsnFullName}
-        intCartProduct={appState.userInfo.userCart?.lstProduct?.length}
+        intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}
         blnUserLogin={appState.clientInfo.blnUserLogin}
       />
       <Grid container justifyContent={"center"} sx={{ marginY: "50px" }}>
@@ -166,30 +172,6 @@ function Cart() {
                         sx={{ height: "fit-content" }}
                         alignContent={"center"}
                       >
-                        <Grid
-                          item
-                          xs="1"
-                          container
-                          justifyContent={"end"}
-                          alignContent={"center"}
-                          alignSelf={"flex-start"}
-                          // py={2}
-                          sx={{ height: "100px" }}
-                        >
-                          <OptionList
-                            nav={""}
-                            navList={actionItemNavList.map((nav) => ({
-                              ...nav,
-                              onClick: () => {
-                                if (objAppActions["Delete"] === nav.bigNavID) {
-                                  removeOrderProduct(item);
-                                }
-                              },
-                            }))}
-                            endIcon={<MoreVert />}
-                            lang={appState.clientInfo.strLanguage}
-                          />
-                        </Grid>
                         <Grid item xs="2">
                           <Box
                             component={"img"}
@@ -200,7 +182,7 @@ function Cart() {
                         </Grid>
                         <Grid
                           item
-                          xs="8"
+                          xs="9"
                           px={2}
                           container
                           justify={"start"}
@@ -227,31 +209,15 @@ function Cart() {
                       component="th"
                       scope="row"
                     >
-                      <TextField
-                        type="number"
-                        InputProps={{ inputProps: { min: 1, max: 10 } }}
-                        defaultValue={item.intQuantity}
+                      <Typography
+                        color={"#000"}
                         sx={{
-                          width: "100px",
-                          "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                              border: `3px solid ${App_Second_Color}`,
-                              borderRadius: "10px",
-                            },
-                            "&:hover fieldset": {
-                              border: `3px solid ${App_Second_Color}`,
-                              borderRadius: "10px",
-                            },
-                            "&.Mui-focused fieldset": {
-                              border: `3px solid ${App_Second_Color}`,
-                              borderRadius: "10px",
-                            },
-                          },
+                          fontSize: "18px",
+                          fontWeight: "800",
                         }}
-                        onChange={(e) => {
-                          onChangeQuantity(item, e.target.value);
-                        }}
-                      />
+                      >
+                        {item.intQuantity}
+                      </Typography>
                     </TableCell>
                     <TableCell
                       sx={{ border: "1px solid #c4c4c4" }}
@@ -268,63 +234,14 @@ function Cart() {
                       >
                         $
                         {Number(
-                          appState.userInfo.userCart.lstProduct[index].strPrice
+                          appState.userInfo.userOrder.lstProduct[index].strPrice
                         ) *
-                          appState.userInfo.userCart.lstProduct[index]
+                          appState.userInfo.userOrder.lstProduct[index]
                             .intQuantity}
                       </Typography>
                     </TableCell>
                   </TableRow>
                 ))}
-                <TableRow
-                  sx={{
-                    background: "#f4fcfc",
-                  }}
-                >
-                  <TableCell align="left" component="th" scope="row">
-                    <Button
-                      sx={{
-                        background: "#000",
-                        padding: "20px 40px",
-                        borderRadius: "10px",
-                        ":hover": {
-                          background: App_Primary_Color,
-                        },
-                      }}
-                    >
-                      <Typography
-                        color={"#fff"}
-                        sx={{
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        Apply Coupon
-                      </Typography>
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center"></TableCell>
-                  <TableCell align="right">
-                    <Button
-                      sx={{
-                        background: App_Primary_Color,
-                        padding: "20px 40px",
-                        borderRadius: "10px",
-                        ":hover": {
-                          background: "#000",
-                        },
-                      }}
-                    >
-                      <Typography
-                        color={"#fff"}
-                        sx={{
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        Update Cart
-                      </Typography>
-                    </Button>
-                  </TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </Grid>
@@ -341,23 +258,27 @@ function Cart() {
                 }}
               >
                 <Grid container sx={{ height: "100%" }} alignContent={"start"}>
-                  <Grid item xs="12" p={1}>
+                  <Grid item xs="12" p={1} container alignContent={'center'} alignItems={'center'} sx={{height:"fit-content"}}>
+                  <Grid item xs='2'>
+                    <TimeToLeave fontSize="large" />
+                    </Grid>
+                    <Grid item xs='10'> 
                     <Typography
                       sx={{
                         fontSize: "25px",
                         fontWeight: "800",
                       }}
                     >
-                      Apply Coupon
+                      Delivery Time
                     </Typography>
+                    </Grid>
+                    
                   </Grid>
                   <Grid item xs="12" p={1}>
-                    <TextField
-                      type="text"
-                      aria-readonly
-                      label="Coupon Code"
-                      fullWidth
-                      sx={{ background: "#fff", borderRadius: "8px" }}
+                    <OrderTimer
+                      deliveryTime={deliveryTime}
+                      order={appState.userInfo.userOrder}
+                      formateTime={formateTime}
                     />
                   </Grid>
                   <Grid item xs="12" p={1}>
@@ -378,7 +299,7 @@ function Cart() {
                           textTransform: "capitalize",
                         }}
                       >
-                        Apply Coupon
+                        Delivered
                       </Typography>
                     </Button>
                   </Grid>
@@ -403,7 +324,7 @@ function Cart() {
                         fontWeight: "800",
                       }}
                     >
-                      Cart Totals
+                      Order Totals
                     </Typography>
                   </Grid>
                   <Grid item xs="12">
@@ -536,9 +457,8 @@ function Cart() {
                     justifyContent={"end"}
                   >
                     <AnimButton0001
-                      label={"proceed to checkout"}
+                      label={"cancel order"}
                       color={App_Primary_Color}
-                      onClick={() => setOpenCheckout(true)}
                     />
                   </Grid>
                 </Grid>
@@ -547,12 +467,8 @@ function Cart() {
           </Grid>
         </Grid>
       </Grid>
-      <Checkout
-        open={openCheckout}
-        handleClose={() => setOpenCheckout(false)}
-      />
     </React.Fragment>
   );
 }
 
-export default Cart;
+export default Order;

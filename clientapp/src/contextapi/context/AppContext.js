@@ -36,6 +36,10 @@ const initialAppState = {
       lstProduct: [],
       strTotalPrice: "",
     },
+    userCart: {
+      lstProduct: [],
+      strTotalPrice: "",
+    },
   },
 };
 

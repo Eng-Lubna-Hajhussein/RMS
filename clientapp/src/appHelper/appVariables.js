@@ -656,3 +656,8 @@ export const objTabsAssets = {
     strImgPath: `${strServerAssetsPath}burger.png`,
   },
 };
+
+export const objAppActions = {
+  Edit: 7244446400,
+  Delete: 8324222478,
+};

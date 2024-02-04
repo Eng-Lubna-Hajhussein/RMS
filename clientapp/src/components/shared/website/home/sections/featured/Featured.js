@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
-import FeaturedCard from "components/sharedUI/featuredCard/FeaturedCard";
-import Carousel from "components/sharedUI/carousel/Carousel";
+import FeaturedCard from "components/sharedUI/FeaturedCard/FeaturedCard";
+import Carousel from "components/sharedUI/Carousel/Carousel";
 
 const styles = {
   container: {
@@ -33,7 +33,7 @@ export default function Featured({ lang, dir, lstFeatured }) {
       slideContent: <FeaturedCard lang={lang} dir={dir} item={item} />,
       sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
     }));
-  }, [lstFeatured,lang,dir]);
+  }, [lstFeatured, lang, dir]);
   return (
     <Grid
       container

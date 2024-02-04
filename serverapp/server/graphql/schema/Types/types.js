@@ -85,7 +85,7 @@ const OrderType = new GraphQLObjectType({
     strTotalPrice: { type: GraphQLString },
     jsnAddress: { type: GraphQLJSON },
     jsnLocation: { type: GraphQLJSON },
-    dtmOrderDate: { type: GraphQLDateTime },
+    dtmOrderDate: { type: GraphQLString },
     jsnClientInfo: { type: GraphQLJSON },
     jsnClientPayment: { type: GraphQLJSON },
     blnDelivered: { type: GraphQLBoolean },

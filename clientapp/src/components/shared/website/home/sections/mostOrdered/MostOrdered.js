@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
-import Carousel from "components/sharedUI/carousel/Carousel";
-import MostOrderedCard from "components/sharedUI/mostOrderedCard/MostOrderedCard";
+import Carousel from "components/sharedUI/Carousel/Carousel";
+import MostOrderedCard from "components/sharedUI/MostOrderedCard/MostOrderedCard";
 
 const styles = {
   container: {
@@ -31,7 +31,7 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
       slideContent: <MostOrderedCard lang={lang} dir={dir} item={item} />,
       sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
     }));
-  }, [lstMostOrdered,lang,dir]);
+  }, [lstMostOrdered, lang, dir]);
   return (
     <Grid
       container

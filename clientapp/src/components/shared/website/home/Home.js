@@ -12,8 +12,8 @@ import Team from "./sections/team/Team";
 import About from "./sections/about/About";
 import Follow from "./sections/follow/Follow";
 import Footer from "./sections/footer/Footer";
-import BtnProgressToTop from "components/sharedUI/btnProgressToTop/BtnProgressToTop";
-import Loader001 from "components/sharedUI/loader001/Loader001";
+import BtnProgressToTop from "components/sharedUI/BtnProgressToTop/BtnProgressToTop";
+import Loader001 from "components/sharedUI/Loader001/Loader001";
 
 function Home({
   systemInfo,
@@ -30,7 +30,7 @@ function Home({
   loggedIn,
   adminNavList,
   onSaveUpperHeader,
-  userOrder,
+  userCart,
   addOrderProduct,
   removeOrderProduct,
   onSaveHero,
@@ -74,7 +74,8 @@ function Home({
         adminNavList={adminNavList}
         userImg={userImg}
         userName={userName}
-        intCartProduct={userOrder?.lstProduct?.length}
+        customerEditMode={customerEditMode}
+        intCartProduct={customerEditMode&&userCart?.lstProduct?.length}
         blnUserLogin={blnUserLogin}
         userNavList={userNavList}
       />
@@ -110,7 +111,7 @@ function Home({
         editMenuCategory={editMenuCategory}
         ws={ws}
         addWS={addWS}
-        userOrder={userOrder}
+        userCart={userCart}
         addOrderProduct={addOrderProduct}
         removeOrderProduct={removeOrderProduct}
         removeWS={removeWS}

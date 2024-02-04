@@ -5,7 +5,7 @@ function Website({
   systemInfo,
   addWS,
   removeWS,
-  userOrder,
+  userCart,
   addOrderProduct,
   removeOrderProduct,
   ws,
@@ -13,7 +13,6 @@ function Website({
   editable,
   adminEditMode,
   customerEditMode,
-  loggedIn,
   adminNavList,
   onSaveUpperHeader,
   onSaveHero,
@@ -44,7 +43,7 @@ function Website({
       onSaveOwner={onSaveOwner}
       onSaveAbout={onSaveAbout}
       systemID={systemID}
-      userOrder={userOrder}
+      userCart={userCart}
       addOrderProduct={addOrderProduct}
       removeOrderProduct={removeOrderProduct}
       addMenuCategory={addMenuCategory}
@@ -57,7 +56,6 @@ function Website({
       removeWS={removeWS}
       adminEditMode={adminEditMode}
       customerEditMode={customerEditMode}
-      loggedIn={loggedIn}
       ws={ws}
       lang={lang}
       onSaveReservation={onSaveReservation}

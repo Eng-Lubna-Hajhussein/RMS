@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, Badge, Box, Grid, Icon, Paper, Typography } from "@mui/material";
-import * as appFunctions from "../../../appHelper/appFunctions";
-import "./RestaurantMenu.css";
-import { objTabsAssets, tabsOptions } from "appHelper/appVariables";
-import { Add, Delete, MoreVert } from "@mui/icons-material";
-import NavList from "../navList/NavList";
+import React, { useMemo, useState } from "react";
+import { Badge, Box, Grid, Paper, Typography } from "@mui/material";
+import "./SystemMenu.css";
+import {
+  objAppActions,
+  tabsOptions,
+} from "appHelper/appVariables";
+import { Add, MoreVert } from "@mui/icons-material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import AddTab from "./AddTab";
-import OptionList from "../optionList/OptionList";
-import AddItem from "./AddItem";
-import EditItem from "./EditItem";
+import AddTab from "./AddTab/AddTab";
+import OptionList from "../OptionList/OptionList";
+import AddItem from "./AddItem/AddItem";
+import EditItem from "./EditItem/EditItem";
 import shoppingIcon from "assets/image/shopping.svg";
 
 const styles = {
@@ -23,7 +24,7 @@ const styles = {
     padding: "8px",
     background: "#ffd40d",
     borderRadius: "10px",
-    cursor:"pointer"
+    cursor: "pointer",
   },
   menuTitle: {
     fontSize: { lg: "40px !important", xs: "20px" },
@@ -107,14 +108,9 @@ export default function RestaurantMenu({
   dir,
   customerEditMode,
   adminEditMode,
-  loggedIn,
-  userOrder,
+  userCart,
   addOrderProduct,
-  removeOrderProduct,
 }) {
-  adminEditMode=false
-  customerEditMode=true
-  const tabsAssets = objTabsAssets;
   const initialObjTabs = useMemo(() => {
     const objTabs = categories
       .sort((a, b) => a.bigParentID - b.bigParentID)
@@ -146,27 +142,23 @@ export default function RestaurantMenu({
     objTabs.activeTab = objTabs.tabs[0];
     return objTabs;
   }, []);
-
+  
   const [objTabs, setObjTabs] = useState(initialObjTabs);
   const [addTabOpen, setAddTabOpen] = useState(false);
   const [addItemOpen, setAddItemOpen] = useState(false);
   const [editItemOpen, setEditItemOpen] = useState(false);
 
   const funAddTab = (tab) => {
-    if(!objTabs?.tabs?.length){
+    if (!objTabs?.tabs?.length) {
       objTabs.activeTab = tab;
     }
-    objTabs.tabs =[...objTabs.tabs, tab];
-    objTabs.tabsContent={ ...objTabs.tabsContent, [tab.bigID]: [] }
+    objTabs.tabs = [...objTabs.tabs, tab];
+    objTabs.tabsContent = { ...objTabs.tabsContent, [tab.bigID]: [] };
     setObjTabs({
       ...objTabs,
     });
     funAddCategory(tab);
   };
-
-  useEffect(()=>{
-    console.log({objTabs})
-  },[objTabs])
   const funDeleteTab = (tab) => {
     if (objTabs?.tabsContent[tab.bigID]?.length) {
       setObjTabs({ ...objTabs, categoryOnAction: null });
@@ -193,7 +185,7 @@ export default function RestaurantMenu({
     );
     objTabs.categoryOnAction = null;
     objTabs.tabsContent[item.bigParentID][itemIndex] = item;
-    setObjTabs({ ...objTabs,categoryOnAction:null });
+    setObjTabs({ ...objTabs, categoryOnAction: null });
     funEditCategory(item);
   };
   const funDeleteItem = (item) => {
@@ -205,15 +197,12 @@ export default function RestaurantMenu({
     funDeleteCategory(item.bigID);
   };
 
-  const objAppActions = {
-    Edit: 7244446400,
-    Delete: 8324222478,
+  const funCalculateItemQuantity = (item) => {
+    const product = userCart?.lstProduct?.find(
+      ({ bigID }) => `${item.bigID}` === `${bigID}`
+    );
+    return product ? product?.intQuantity : 0;
   };
-
-  const funCalculateItemQuantity =(item)=>{
-       const product = userOrder.lstProduct.find(({bigID})=>`${item.bigID}`===`${bigID}`);
-       return product?product?.intQuantity:0;
-  }
 
   const actionTabNavList = [
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
@@ -241,8 +230,8 @@ export default function RestaurantMenu({
                     : "nav-link nav"
                 }
               >
-                {
-                  adminEditMode&&<Grid
+                {adminEditMode && (
+                  <Grid
                     item
                     lg="12"
                     px={2}
@@ -252,7 +241,7 @@ export default function RestaurantMenu({
                   >
                     <OptionList
                       nav={""}
-                      onClick={()=>{}}
+                      onClick={() => {}}
                       navList={actionTabNavList.map((nav) => ({
                         ...nav,
                         onClick: () => {
@@ -265,7 +254,7 @@ export default function RestaurantMenu({
                       lang={lang}
                     />
                   </Grid>
-                }
+                )}
                 <Grid
                   item
                   lg="12"
@@ -297,7 +286,7 @@ export default function RestaurantMenu({
               </Grid>
             </Grid>
           ))}
-          {adminEditMode&& (tabsOptions?.length > objTabs?.tabs?.length) && (
+          {adminEditMode && tabsOptions?.length > objTabs?.tabs?.length && (
             <Grid item container lg={"2"} xs={"4"} py={3} px={2}>
               <Grid
                 container
@@ -424,40 +413,44 @@ export default function RestaurantMenu({
                             container
                             alignContent={"start"}
                           >
-                            {adminEditMode&&<Grid item xs="1"
-                              container
-                              justify={"start"}
-                              alignItems={"center"}
-                              alignSelf={"flex-start"}
-                              py={2}
-                            >
-                              <OptionList
-                                nav={""}
-                                onClick={()=>{
-                                  setObjTabs({
-                                    ...objTabs,
-                                    categoryOnAction: item,
-                                  });
-                                }}
-                                navList={actionItemNavList.map((nav) => ({
-                                  ...nav,
-                                  onClick: () => {
-                                    if (
-                                      objAppActions["Delete"] === nav.bigNavID
-                                    ) {
-                                      funDeleteItem(item);
-                                    }
-                                    if (
-                                      objAppActions["Edit"] === nav.bigNavID
-                                    ) {
-                                      setEditItemOpen(true);
-                                    }
-                                  },
-                                }))}
-                                endIcon={<MoreVert />}
-                                lang={lang}
-                              />
-                            </Grid>}
+                            {adminEditMode && (
+                              <Grid
+                                item
+                                xs="1"
+                                container
+                                justify={"start"}
+                                alignItems={"center"}
+                                alignSelf={"flex-start"}
+                                py={2}
+                              >
+                                <OptionList
+                                  nav={""}
+                                  onClick={() => {
+                                    setObjTabs({
+                                      ...objTabs,
+                                      categoryOnAction: item,
+                                    });
+                                  }}
+                                  navList={actionItemNavList.map((nav) => ({
+                                    ...nav,
+                                    onClick: () => {
+                                      if (
+                                        objAppActions["Delete"] === nav.bigNavID
+                                      ) {
+                                        funDeleteItem(item);
+                                      }
+                                      if (
+                                        objAppActions["Edit"] === nav.bigNavID
+                                      ) {
+                                        setEditItemOpen(true);
+                                      }
+                                    },
+                                  }))}
+                                  endIcon={<MoreVert />}
+                                  lang={lang}
+                                />
+                              </Grid>
+                            )}
                             <Grid
                               container
                               item
@@ -472,7 +465,9 @@ export default function RestaurantMenu({
                                   "1px dotted #555",
                               }}
                             >
-                              <Grid item xs="1"
+                              <Grid
+                                item
+                                xs="1"
                                 container
                                 alignContent={"center"}
                                 sx={{ height: "fit-content" }}
@@ -488,7 +483,10 @@ export default function RestaurantMenu({
                                   {item.jsnName[lang]}
                                 </Typography>
                               </Grid>
-                              <Grid item container xs={"3"}
+                              <Grid
+                                item
+                                container
+                                xs={"3"}
                                 justifySelf={"flex-end"}
                                 justifyContent={"end"}
                                 justifyItems={"flex-end"}
@@ -497,11 +495,29 @@ export default function RestaurantMenu({
                                   ${item.jsnCategoryInfo.strPrice}
                                 </Typography>
                               </Grid>
-                              {customerEditMode&&<Grid item xs='2' px={1} container justifyContent={'end'}>
-                              <Badge badgeContent={funCalculateItemQuantity(item)} sx={styles.shoppingBadge}>
-                              <Box component={'img'} onClick={()=>addOrderProduct(item)} src={shoppingIcon} sx={styles.shoppingIcon} />
-                              </Badge>
-                              </Grid>}
+                              {customerEditMode && (
+                                <Grid
+                                  item
+                                  xs="2"
+                                  px={1}
+                                  container
+                                  justifyContent={"end"}
+                                >
+                                  <Badge
+                                    badgeContent={funCalculateItemQuantity(
+                                      item
+                                    )}
+                                    sx={styles.shoppingBadge}
+                                  >
+                                    <Box
+                                      component={"img"}
+                                      onClick={() => addOrderProduct(item)}
+                                      src={shoppingIcon}
+                                      sx={styles.shoppingIcon}
+                                    />
+                                  </Badge>
+                                </Grid>
+                              )}
                               <Grid item xs={"9"} p-0 m-0>
                                 <Typography sx={styles.dishDescription}>
                                   {item.jsnCategoryInfo.jsnDescription[lang]}

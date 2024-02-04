@@ -1,7 +1,6 @@
-import { formateDBStr, generateRandomID } from "appHelper/appFunctions";
-import { CITIES, COUNTRIES, Demo_jsnSystemInfo, objRoleID } from "appHelper/appVariables";
-import { createSystem, findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
-import { login, signup } from "appHelper/fetchapi/tblUser/tblUser";
+import { objRoleID } from "appHelper/appVariables";
+import { findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
+import { login } from "appHelper/fetchapi/tblUser/tblUser";
 
 export const ctrlLogin = {
   handelSubmit: async ({
@@ -52,7 +51,12 @@ export const ctrlLogin = {
           appState.systemInfo.strLogoPath =loggedSystem.strLogoPath;
           appDispatch({...appState});
           if(appState.systemInfo.bigSystemID&&appState.userInfo.bigUserID){
-            navigate(`/${loggedSystem.strSystemPathURL}`);
+            if(appState.userInfo.bigUserRoleID===objRoleID['Admin']){
+              navigate(`/admin/${loggedSystem.strSystemPathURL}`);
+            }
+            if(appState.userInfo.bigUserRoleID===objRoleID['Customer']){
+              navigate(`/customer/${loggedSystem.strSystemPathURL}`);
+            }
           }
       }
     } catch (err) {

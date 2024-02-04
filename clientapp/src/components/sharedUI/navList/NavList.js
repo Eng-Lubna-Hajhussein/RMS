@@ -4,7 +4,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Grid, Typography } from "@mui/material";
-import StyledMenu from "./StyledMenu";
+import StyledMenu from "../StyledMenu/StyledMenu";
+import { Link } from "react-router-dom";
 
 const styles = {
   nav: {
@@ -63,8 +64,8 @@ export default function NavList({
           open={open}
           onClose={handleClose}
         >
-          {navList.map(({ nav, onClick }, index) => (
-            <div>
+          {navList.map(({ nav, onClick,path }, index) => (
+            <Link to={path}>
               <MenuItem
                 onClick={() => {
                   if (onClick) {
@@ -79,7 +80,7 @@ export default function NavList({
                 </Typography>
               </MenuItem>
               {index !== navList.length - 1 && <Divider />}
-            </div>
+            </Link>
           ))}
         </StyledMenu>
       )}

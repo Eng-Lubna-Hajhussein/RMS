@@ -10,9 +10,20 @@ module.exports = {
       throw err;
     }
   },
+  findAvailableTables: async (_, { bigSystemID }) => {
+    try {
+      return await tblReservation.findAll({
+        where: { bigSystemID: bigSystemID, blnTableAvailable: true },
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
   findTable: async (_, { bigTableID }) => {
     try {
-      return await tblReservation.findByPk(bigTableID);
+      return await tblReservation.findOne({
+        where: { bigTableID: bigTableID },
+      });
     } catch (err) {
       throw err;
     }
@@ -21,7 +32,7 @@ module.exports = {
   //CREATE
   createTable: async (_, table) => {
     try {
-      return await tblReservation.create({ table });
+      return await tblReservation.create({ ...table });
     } catch (err) {
       throw err;
     }
@@ -36,7 +47,9 @@ module.exports = {
       if (!updatedTable[0]) {
         throw new Error("No rows have been effected.");
       } else {
-        return await tblReservation.findByPk(table.bigTableID);
+        return await tblReservation.findOne({
+          where: { bigTableID: bigTableID },
+        });
       }
     } catch (err) {
       throw err;
@@ -45,7 +58,9 @@ module.exports = {
   //DELETE
   deleteTable: async (_, { bigTableID }) => {
     try {
-      const deletedRows = await tblReservation.destroy({ where: { bigTableID } });
+      const deletedRows = await tblReservation.destroy({
+        where: { bigTableID },
+      });
       if (!deletedRows) {
         throw new Error("No rows have been effected.");
       } else {

@@ -1,10 +1,10 @@
-import Carousel from "components/sharedUI/carousel/Carousel";
+import Carousel from "components/sharedUI/Carousel/Carousel";
 import HeroContent from "./heroContent/HeroContent";
 import React, { useMemo } from "react";
 
 function Hero({ lang, dir, lstHeroSlides, wsCategory, editable, onSaveHero }) {
   const slides = useMemo(() => {
-    return lstHeroSlides.map((slide,index) => ({
+    return lstHeroSlides.map((slide, index) => ({
       image: slide?.strImgPath,
       slideContent: (
         <HeroContent
@@ -14,16 +14,16 @@ function Hero({ lang, dir, lstHeroSlides, wsCategory, editable, onSaveHero }) {
             jsnTitle: slide.jsnTitle,
             jsnSubtitle: slide.jsnSubtitle,
             strVideoPath: slide.strVideoPath,
-            strImgPath:slide.strImgPath,
+            strImgPath: slide.strImgPath,
             wsCategory: wsCategory,
-            index:index
+            index: index,
           }}
           lstHeroSlides={lstHeroSlides}
           editable={editable}
           onSaveHero={onSaveHero}
-          />
-          ),
-          bgAnimation:slide?.strBgAnimationType,
+        />
+      ),
+      bgAnimation: slide?.strBgAnimationType,
       sxStyle: { height: { lg: "600px", xs: "700px" } },
     }));
   }, [lstHeroSlides, lang, dir]);

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Toolbar, Grid, Box, Badge, IconButton } from "@mui/material";
 import { ShoppingBagOutlined, Menu, Language } from "@mui/icons-material";
 import logoIcon from "assets/image/logo.png";
-import NavList from "../../navList/NavList";
+import NavList from "../../NavList/NavList";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { App_Primary_Color } from "appHelper/appColor";
@@ -49,10 +49,16 @@ const styles = {
   menuIcon: { color: "#000" },
 };
 
-function LowerToolbar({ navList, setOpenDrawer,intCartProduct, lang, editable,adminNavList }) {
+function LowerToolbar({
+  navList,
+  setOpenDrawer,
+  customerEditMode,
+  intCartProduct,
+  lang,
+  editable,
+  adminNavList,
+}) {
   const { onLangChange } = useLanguage();
-  const [cartProduct,setCartProduct] = useState(intCartProduct);
-  
   return (
     <Toolbar sx={styles.lowerToolBar}>
       <Grid container alignItems={"center"}>
@@ -68,33 +74,42 @@ function LowerToolbar({ navList, setOpenDrawer,intCartProduct, lang, editable,ad
             />
           </Badge>
         </Grid>
-        <Grid item container justifyContent={'center'} lg="2" xs="5">
-          {editable&&<NavList
-            nav={<Box component={"img"} sx={styles.logo} src={logoIcon} />}
-            lang={lang}
-            navList={adminNavList}
-          />}
-          {!editable&&<Box component={"img"} sx={styles.logo} src={logoIcon} />}
+        <Grid item container justifyContent={"center"} lg="2" xs="5">
+          {editable && (
+            <NavList
+              nav={<Box component={"img"} sx={styles.logo} src={logoIcon} />}
+              lang={lang}
+              navList={adminNavList}
+            />
+          )}
+          {!editable && (
+            <Box component={"img"} sx={styles.logo} src={logoIcon} />
+          )}
         </Grid>
-        <Grid item container lg="6" sx={styles.navListContainer}>
+        <Grid item container lg={"6"} sx={styles.navListContainer}>
           {navList.map(({ nav, navList }) => (
             <Grid item xs="2">
               <NavList nav={nav[lang]} navList={navList} lang={lang} />
             </Grid>
           ))}
         </Grid>
-        <Grid  item  container  lg="3"
+        <Grid  item container  lg="3"
           xs="4"
           alignItems={"center"}
           justifySelf={"flex-end"}
           justifyContent={"flex-end"}
           justifyItems={"flex-end"}
         >
-          <Grid item lg="2">
-            <Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
-              <ShoppingBagOutlined fontSize="large" sx={styles.shoppingIcon} />
-            </Badge>
-          </Grid>
+          {customerEditMode && (
+            <Grid item lg="2">
+              <Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
+                <ShoppingBagOutlined
+                  fontSize="large"
+                  sx={styles.shoppingIcon}
+                />
+              </Badge>
+            </Grid>
+          )}
           <Grid item lg="8" sx={styles.reverseBtnContainer}>
             <AnimButton0001
               label={dictionary.buttons.reverseTableBtn[lang]}

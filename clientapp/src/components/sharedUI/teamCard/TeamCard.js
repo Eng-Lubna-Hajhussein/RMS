@@ -6,7 +6,7 @@ import {
   MoreVert,
   Twitter,
 } from "@mui/icons-material";
-import OptionList from "../optionList/OptionList";
+import OptionList from "../OptionList/OptionList";
 
 const styles = {
   chefContent: {
@@ -54,7 +54,7 @@ const styles = {
   },
 };
 
-function TeamCard({ item, lang,onDelete,onEdit,editable }) {
+function TeamCard({ item, lang, onDelete, onEdit, editable }) {
   const objAppActions = {
     Edit: 7244446400,
     Delete: 8324222478,
@@ -64,11 +64,11 @@ function TeamCard({ item, lang,onDelete,onEdit,editable }) {
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
     { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "تعديل" } },
   ];
-  
+
   return (
     <>
-      {
-        editable&&<Grid
+      {editable && (
+        <Grid
           item
           lg="12"
           px={2}
@@ -94,7 +94,7 @@ function TeamCard({ item, lang,onDelete,onEdit,editable }) {
             lang={lang}
           />
         </Grid>
-      }
+      )}
       <Grid item xs="12" sx={styles.imgContainer}>
         <Box
           component={"img"}

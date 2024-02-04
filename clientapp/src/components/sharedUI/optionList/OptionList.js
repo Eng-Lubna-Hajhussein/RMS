@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Grid, Icon, IconButton, Typography } from "@mui/material";
-import StyledMenu from "./StyledMenu";
+import StyledMenu from "../StyledMenu/StyledMenu";
 import { MoreVert } from "@mui/icons-material";
 
 const styles = {

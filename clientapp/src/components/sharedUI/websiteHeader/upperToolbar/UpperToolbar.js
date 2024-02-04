@@ -11,11 +11,11 @@ import {
 import { HowToRegOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import { dictionary } from "appHelper/appDictionary";
-import SystemContact from "./SystemContact";
-import SystemSocial from "./SystemSocial";
-import Edit from "./Edit";
+import SystemContact from "./SystemContact/SystemContact";
+import SystemSocial from "./SystemSocial/SystemSocial";
+import EditUpperToolbar from "./EditUpperToolbar/EditUpperToolbar";
 import { Link } from "react-router-dom";
-import NavList from "components/sharedUI/navList/NavList";
+import NavList from "components/sharedUI/NavList/NavList";
 
 const styles = {
   upperToolbar: {
@@ -143,9 +143,6 @@ function UpperToolbar({
                     </Icon>
                   </Box>
                 )}
-                {/* {blnUserLogin && (
-                  <Avatar src={userImg} height="50px" width="50px" />
-                )} */}
               </Grid>
               {!blnUserLogin && (
                 <Grid item alignSelf={"center"}>
@@ -175,23 +172,30 @@ function UpperToolbar({
               )}
               {blnUserLogin && (
                 <Grid item alignSelf={"center"}>
-                  <NavList nav={
-                    <Grid container sx={{height:"fit-content"}} alignItems={'center'} alignContent={'center'}>
-                      <Grid item px={1} sx={{height:"fit-content"}}>
-                      <Avatar src={userImg} height="50px" width="50px" />
+                  <NavList
+                    nav={
+                      <Grid
+                        container
+                        sx={{ height: "fit-content" }}
+                        alignItems={"center"}
+                        alignContent={"center"}
+                      >
+                        <Grid item px={1} sx={{ height: "fit-content" }}>
+                          <Avatar src={userImg} height="50px" width="50px" />
+                        </Grid>
+                        <Grid item>{userName[lang]}</Grid>
                       </Grid>
-                      <Grid item>
-                      {userName[lang]}
-                      </Grid>
-                    </Grid>
-                    } navList={userNavList} lang={lang} />
+                    }
+                    navList={userNavList}
+                    lang={lang}
+                  />
                 </Grid>
               )}
             </Grid>
           </Grid>
         </Grid>
       </Toolbar>
-      <Edit
+      <EditUpperToolbar
         openEdit={openEdit}
         handleEditOpen={handleEditOpen}
         handleEditClose={handleEditClose}

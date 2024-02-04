@@ -1,8 +1,5 @@
 import {
-  AnimationOutlined,
   Close,
-  StyleOutlined,
-  Upload,
 } from "@mui/icons-material";
 import {
   Dialog,
@@ -12,20 +9,20 @@ import {
   DialogActions,
   Grid,
   Typography,
-  Box,
-  Fab,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { generateRandomID } from "appHelper/appFunctions";
+import { createOrder } from "appHelper/fetchapi/tblOrder/tblOrder";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import React from "react";
+import { AppContext } from "contextapi/context/AppContext";
+import moment from "moment";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Checkout({ open, handleClose, lang, dir, onSave }) {
+  const { appState, appDispatch } = useContext(AppContext);
+  const navigate = useNavigate();
+
   return (
     <React.Fragment>
       <Dialog
@@ -33,11 +30,54 @@ function Checkout({ open, handleClose, lang, dir, onSave }) {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
+          onSubmit: async(event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const {} = formJson;
+            const {cardNumber,cvv,cardName} = formJson;
+            const totalPrice = appState?.userInfo?.userCart?.lstProduct.reduce(
+              (total, { strPrice, intQuantity }) => {
+                return total + Number(strPrice) * intQuantity;
+              },
+              0
+            );
+            const bigOrderID = Number(generateRandomID(10));          
+            const orderDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+            const objInputOrder = {
+               bigOrderID:bigOrderID,
+               bigSystemID:appState.systemInfo.bigSystemID,
+               bigUserID:appState.userInfo.bigUserID,
+               lstProduct:appState.userInfo.userCart.lstProduct,
+               strTotalPrice:`${totalPrice}`,
+               jsnAddress:appState.userInfo.jsnAddress,
+               jsnLocation:appState.userInfo.jsnLocation,
+               dtmOrderDate:orderDate,
+               jsnClientInfo:{
+                strEmail:appState.userInfo.strEmail,
+                strImgPath:appState.userInfo.strImgPath,
+                jsnFullName:appState.userInfo.jsnFullName
+               },
+               jsnClientPayment:{
+                strCardNumber: cardNumber,
+                strCVV: cvv,
+                strNameOnCard: cardName,
+               },
+               blnDelivered:false
+            }
+            const order = await createOrder(objInputOrder);
+            if(order.bigOrderID){
+              appState.userInfo.userCart = {
+                lstProduct:[],
+                strTotalPrice:""
+              }
+              appState.userInfo.userOrder = {
+                ...objInputOrder
+              }
+              appDispatch({...appState});
+              if(appState.userInfo.userOrder.bigOrderID){
+                navigate(`/customer/dashboard/order/${appState.systemInfo.strSystemPathURL}`);
+              }
+            }
             handleClose();
           },
         }}

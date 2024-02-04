@@ -56,6 +56,13 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: ReservationResolvers.findTables,
     },
+    findAvailableTables:{
+      type: new GraphQLList(new GraphQLNonNull(ReservationType)),
+      args: {
+        bigSystemID: { type: GraphQLBigInt },
+      },
+      resolve: ReservationResolvers.findAvailableTables,
+    },
     findTable: {
       type: new GraphQLNonNull(ReservationType),
       args: {
@@ -70,12 +77,21 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: OrderResolvers.findOrders,
     },
-    findOrder: {
-      type: new GraphQLNonNull(OrderType),
+    findUnDeliveredOrder: {
+      type: OrderType,
       args: {
-        bigOrderID: { type: GraphQLBigInt },
+        bigUserID: { type: GraphQLBigInt },
+        bigSystemID: { type: GraphQLBigInt },
       },
-      resolve: OrderResolvers.findOrder,
+      resolve: OrderResolvers.findUnDeliveredOrder,
+    },
+    findUserOrders: {
+      type: new GraphQLList(new GraphQLNonNull(OrderType)),
+      args: {
+        bigUserID: { type: GraphQLBigInt },
+        bigSystemID: { type: GraphQLBigInt },
+      },
+      resolve: OrderResolvers.findUserOrders,
     },
     findCategories: {
       type: new GraphQLList(new GraphQLNonNull(CategoryType)),

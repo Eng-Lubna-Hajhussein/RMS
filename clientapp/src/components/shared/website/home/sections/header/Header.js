@@ -6,6 +6,7 @@ function Header({lang,dir, userImg,
   userName,
   blnUserLogin,
   intCartProduct,
+  customerEditMode,
   userNavList,jsnSystemContact,adminNavList,editable,onSaveUpperHeader}) {
   return (
     <React.Fragment>
@@ -14,6 +15,7 @@ function Header({lang,dir, userImg,
         dir={dir}
         jsnSystemContact={jsnSystemContact}
         intCartProduct={intCartProduct}
+        customerEditMode={customerEditMode}
         navList={lstWebsiteNav}
         editable={editable}
         onSaveUpperHeader={onSaveUpperHeader}
