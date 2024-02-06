@@ -18,6 +18,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  TableFooter,
+  TablePagination,
   TextField,
   Typography,
 } from "@mui/material";
@@ -43,12 +45,27 @@ import { ctrlTables } from "./controller/CtrlTables";
 import EditTable from "./editTable/EditTable";
 
 function Tables() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const [tables, setTables] = useState([]);
   const { systemID, systemName } = useParams();
   const [tableOnAction, setTableOnAction] = useState();
   const [openEditTable, setOpenEditTable] = useState(false);
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tables.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const userNavList = [
     { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
@@ -82,7 +99,9 @@ function Tables() {
       path: `/admin/tables/${systemName}/${systemID}`,
     },
 
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
+    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" },
+    path: `/admin/users/${systemName}/${systemID}`,
+  },
     { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
@@ -314,7 +333,13 @@ function Tables() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tables?.map((table, index) => (
+                  {(rowsPerPage > 0
+                    ? tables.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : tables
+                  )?.map((table, index) => (
                     <TableRow>
                       <TableCell
                         sx={{ border: "1px solid #c4c4c4" }}
@@ -470,7 +495,62 @@ function Tables() {
                       </TableCell>
                     </TableRow>
                   ))}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
                 </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25]}
+                      count={tables.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: {
+                          "aria-label": "rows per page",
+                        },
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      labelDisplayedRows={({ page }) => {
+                        // return `Page: ${page+1}`;
+                        return (
+                          <Typography sx={{ color: "#000" }}>
+                            Page: {page + 1}
+                          </Typography>
+                        );
+                      }}
+                      backIconButtonProps={{
+                        color: "#fff",
+                      }}
+                      nextIconButtonProps={{ color: "#fff" }}
+                      showFirstButton={true}
+                      showLastButton={true}
+                      labelRowsPerPage={
+                        <Typography sx={{ color: "#000" }}>Rows:</Typography>
+                      }
+                      sx={{
+                        ".MuiTablePagination-toolbar": {
+                          backgroundColor: "#f4fcfc",
+                          textAlign: "center",
+                        },
+                        ".MuiTablePagination-selectLabel, .MuiTablePagination-input":
+                          {
+                            fontWeight: "800",
+                          },
+                        ".MuiTablePagination-input": {
+                          fontWeight: "bold",
+                          background: "#fff",
+                          borderRadius: "10px",
+                          border: "1px solid #000",
+                        },
+                      }}
+                    />
+                  </TableRow>
+                </TableFooter>
               </Table>
             </Grid>
           </Grid>

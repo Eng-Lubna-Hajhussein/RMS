@@ -48,3 +48,23 @@ export const updateUserQuery = (objInput) => {
       }
     }`
 }
+
+export const findUsersQuery = (bigSystemID) => {
+   return `query{
+      findUsers(bigSystemID:${bigSystemID}){
+        bigUserID
+        bigUserRoleID
+        bigSystemID
+        strEmail
+        strImgPath
+        jsnFullName
+        jsnLocation
+        jsnAddress
+        blnIsDeleted
+        blnIsActive
+        jsnClientPayment
+        dtmCreatedDate
+        dtmUpdatedDate
+      }
+    }`
+}
