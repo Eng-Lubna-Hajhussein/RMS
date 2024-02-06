@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "contextapi/context/AppContext";
 import bgImg from "assets/image/patron.jpg";
 import {
@@ -32,6 +32,7 @@ const style = {};
 function SignupUser() {
   const { appState, appDispatch } = useContext(AppContext);
   const { mapLocation } = useMapLocation();
+  const {systemID,systemName} = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [systems, setSystems] = useState([]);
   const [regSystem, setRegSystem] = useState();
@@ -100,6 +101,7 @@ function SignupUser() {
       formData,
       address,
       mapLocation,
+      systemID
     });
   };
 
@@ -125,12 +127,12 @@ function SignupUser() {
               <Grid item xs="12" container justifyContent={"center"}>
                 <Typography
                   component={"h3"}
-                  sx={{ color: "#000", fontWeight: "800", fontSize: "30px" }}
+                  sx={{ color: "#000",textTransform:"capitalize", fontWeight: "800", fontSize: "30px" }}
                 >
-                  User Registration
+                 {systemName} User Registration
                 </Typography>
               </Grid>
-              <Grid item xs="12" container>
+              {!systemID&&<Grid item xs="12" container>
                 <Grid item xs="12" p={2}>
                   <Typography
                     px={1}
@@ -177,7 +179,7 @@ function SignupUser() {
                 <Grid item xs="12" p={2}>
                   <Divider />
                 </Grid>
-              </Grid>
+              </Grid>}
               <Grid item xs="12" container>
                 <Grid item xs="12" p={2}>
                   <Typography

@@ -9,6 +9,7 @@ function Website({
   addOrderProduct,
   removeOrderProduct,
   ws,
+  navList,
   categories,
   editable,
   adminEditMode,
@@ -30,6 +31,7 @@ function Website({
   userName,
   blnUserLogin,
   userNavList,
+  systemPath,
   lang,
   dir,
 }) {
@@ -38,11 +40,13 @@ function Website({
       systemInfo={systemInfo}
       categories={categories}
       editable={editable}
+      systemPath={systemPath}
       onSaveUpperHeader={onSaveUpperHeader}
       onSaveHero={onSaveHero}
       onSaveOwner={onSaveOwner}
       onSaveAbout={onSaveAbout}
       systemID={systemID}
+      navList={navList}
       userCart={userCart}
       addOrderProduct={addOrderProduct}
       removeOrderProduct={removeOrderProduct}

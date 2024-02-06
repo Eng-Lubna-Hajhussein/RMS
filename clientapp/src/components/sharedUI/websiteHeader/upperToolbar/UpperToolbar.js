@@ -14,7 +14,7 @@ import { dictionary } from "appHelper/appDictionary";
 import SystemContact from "./SystemContact/SystemContact";
 import SystemSocial from "./SystemSocial/SystemSocial";
 import EditUpperToolbar from "./EditUpperToolbar/EditUpperToolbar";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NavList from "components/sharedUI/NavList/NavList";
 
 const styles = {
@@ -55,10 +55,12 @@ function UpperToolbar({
   lang,
   editable,
   onSaveUpperHeader,
+  systemPath
 }) {
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
+  const {systemID,systemName}=useParams();
 
   return (
     <React.Fragment>
@@ -146,7 +148,7 @@ function UpperToolbar({
               </Grid>
               {!blnUserLogin && (
                 <Grid item alignSelf={"center"}>
-                  <Link to={"/login"}>
+                  <Link to={systemID?`/login/${systemName}/${systemID}`:"/login"}>
                     <Typography
                       component={"p"}
                       sx={styles.regTypography}
@@ -159,7 +161,7 @@ function UpperToolbar({
               )}
               {!blnUserLogin && (
                 <Grid item alignSelf={"center"} px={1}>
-                  <Link to={"/signup"}>
+                  <Link to={systemID?`/signup/${systemName}/${systemID}`:"/signup"}>
                     <Typography
                       component={"p"}
                       sx={styles.regTypography}

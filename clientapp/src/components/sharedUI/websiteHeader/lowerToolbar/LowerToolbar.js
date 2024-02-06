@@ -87,9 +87,9 @@ function LowerToolbar({
           )}
         </Grid>
         <Grid item container lg={"6"} sx={styles.navListContainer}>
-          {navList.map(({ nav, navList }) => (
+          {navList.map(({ nav, navList,path }) => (
             <Grid item xs="2">
-              <NavList nav={nav[lang]} navList={navList} lang={lang} />
+              <NavList nav={nav[lang]} path={path} navList={navList} lang={lang} />
             </Grid>
           ))}
         </Grid>

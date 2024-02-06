@@ -3,10 +3,7 @@ import Website from "components/shared/website/Website";
 import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
 import { useParams } from "react-router-dom";
-import {
-  Demo_jsnSystemInfo,
-  objCategoriesType,
-} from "appHelper/appVariables";
+import { Demo_jsnSystemInfo, objCategoriesType } from "appHelper/appVariables";
 import {
   findSystem,
   updateSystem,
@@ -20,7 +17,7 @@ import { Save } from "@mui/icons-material";
 
 function RouteAdmin() {
   const { appState, appDispatch } = useContext(AppContext);
-  const { systemID } = useParams();
+  const { systemID,systemName } = useParams();
   const [systemInfo, setSystemInfo] = useState(
     JSON.parse(JSON.stringify(appState.systemInfo))
   );
@@ -30,7 +27,6 @@ function RouteAdmin() {
   useLanguage();
 
   const instalData = async () => {
-    setIsLoading(true);
     const system = await findSystem(systemID);
     const categoriesData = await findCategories(systemID);
     const systemData = {};
@@ -57,29 +53,28 @@ function RouteAdmin() {
       systemData.systemRegion = systemRegion;
     }
     systemData.bigSystemID = system.bigSystemID;
-    systemData.jsnSystemContact = JSON.parse(
-      system?.jsnSystemContact
-    );
-    systemData.lstSystemReviews = JSON.parse(
-      system?.lstSystemReviews
-    );
+    systemData.jsnSystemContact = JSON.parse(system?.jsnSystemContact);
+    systemData.lstSystemReviews = JSON.parse(system?.lstSystemReviews);
     systemData.lstSystemTeam = JSON.parse(system?.lstSystemTeam);
-    systemData.jsnSystemSections = JSON.parse(
-      system?.jsnSystemSections
-    );
+    systemData.jsnSystemSections = JSON.parse(system?.jsnSystemSections);
     systemData.bigWSCategoryID = system?.bigWSCategoryID;
-    systemData.jsnSystemLocation = JSON.parse(
-      system?.jsnSystemLocation
-    );
+    systemData.jsnSystemLocation = JSON.parse(system?.jsnSystemLocation);
     systemData.lstContactUs = JSON.parse(system?.lstContactUs);
     systemData.strLogoPath = system?.strLogoPath;
-    appState.systemInfo={...appState.systemInfo,...systemData};
-    setSystemInfo({...appState.systemInfo,...systemData})
+    appState.systemInfo = { ...appState.systemInfo, ...systemData };
+    setSystemInfo({ ...appState.systemInfo, ...systemData });
     appDispatch({ ...appState });
-    setIsLoading(false);
   };
   useEffect(() => {
-      instalData();
+    const funInstallData = async () => {
+      setIsLoading(true);
+      await instalData();
+      setIsLoading(false);
+    };
+    if (systemID) {
+      funInstallData();
+      console.log(appState);
+    }
   }, []);
 
   useEffect(() => {
@@ -91,7 +86,6 @@ function RouteAdmin() {
   useEffect(() => {
     setSystemInfo(JSON.parse(JSON.stringify(appState.systemInfo)));
   }, [appState]);
-
 
   const onSaveUpperHeader = (contacts) => {
     setSystemInfo({ ...systemInfo, jsnSystemContact: contacts });
@@ -157,6 +151,13 @@ function RouteAdmin() {
     }
   };
   const deleteMenuCategory = (bigID) => {
+    if (bigID === systemInfo.bigWSCategoryID) {
+      systemInfo.bigWSCategoryID = null;
+      if (!saveMode.includes("tblSystem")) {
+        saveMode.push("tblSystem");
+        setSaveMode([...saveMode]);
+      }
+    }
     systemInfo.systemMenu = systemInfo.systemMenu.filter(
       (category) => category.bigID !== bigID
     );
@@ -299,15 +300,43 @@ function RouteAdmin() {
     setIsLoading(false);
   };
 
+  const userNavList = [
+    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
+    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
+    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
+  ];
+
   const adminNavList = [
     { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    { bigNavID: 3234146150, nav: { eng: "dashboard", arb: "داشبورد" },path:'/admin/dashboard/'+systemInfo.strSystemPathURL },
-    { bigNavID: 9864146478, nav: { eng: "messages", arb: "الرسائل" } },
+    {
+      bigNavID: 3234146150,
+      nav: { eng: "dashboard", arb: "داشبورد" },
+    },
     { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
   ];
 
+  const navList = [
+    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" },
+    path:`/admin/${systemName}/${systemID}`
+  },
+
+    {
+      bigNavID: 8944146478,
+      nav: { eng: "orders", arb: "تسوق" },
+    },
+    {
+      bigNavID: 7943146478,
+      nav: { eng: "tables", arb: "الاخبار" },
+      path:`/admin/tables/${systemName}/${systemID}`
+    },
+    
+    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
+    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
+    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
+  ];
+
   const onLogout = () => {
-    console.log("logout")
+    console.log("logout");
   };
 
   return (
@@ -320,7 +349,7 @@ function RouteAdmin() {
         </Grid>
       )}
       {isLoading && <Typography>loading</Typography>}
-      {!isLoading && (systemInfo.bigSystemID) && (
+      {!isLoading && systemInfo.bigSystemID && (
         <Website
           systemInfo={JSON.parse(JSON.stringify(systemInfo))}
           editable={true}
@@ -328,8 +357,10 @@ function RouteAdmin() {
           customerEditMode={false}
           onSaveUpperHeader={onSaveUpperHeader}
           onSaveHero={onSaveHero}
+          navList={navList}
           onSaveOwner={onSaveOwner}
           onSaveReservation={onSaveReservation}
+          userNavList={userNavList}
           onSaveAbout={onSaveAbout}
           systemID={systemID}
           addMenuCategory={addMenuCategory}

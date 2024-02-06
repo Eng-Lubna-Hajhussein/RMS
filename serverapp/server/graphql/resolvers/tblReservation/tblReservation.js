@@ -48,7 +48,7 @@ module.exports = {
         throw new Error("No rows have been effected.");
       } else {
         return await tblReservation.findOne({
-          where: { bigTableID: bigTableID },
+          where: { bigTableID: table.bigTableID },
         });
       }
     } catch (err) {

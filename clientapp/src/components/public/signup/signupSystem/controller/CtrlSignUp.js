@@ -91,10 +91,21 @@ export const ctrlSignUp = {
         appState.systemInfo.strSystemPathURL = regSystem.strSystemPathURL;
         appState.systemInfo.jsnSystemAddress = JSON.parse(regSystem.jsnSystemAddress);
         appState.systemInfo.jsnSystemLocation = JSON.parse(regSystem.jsnSystemLocation);
+        appState.systemInfo.jsnSystemContact = JSON.parse(regSystem.jsnSystemContact);
+        appState.systemInfo.lstSystemTeam = JSON.parse(regSystem.lstSystemTeam);
+        appState.systemInfo.jsnSystemSections = JSON.parse(regSystem.jsnSystemSections);
+        appState.systemInfo.strLogoPath =regSystem.strLogoPath;
         appDispatch({...appState});
-        if(appState.clientInfo.blnUserLogin){
-          navigate(`/${regSystem.strSystemPathURL}`);
+        if(appState.systemInfo.bigSystemID&&appState.userInfo.bigUserID){
+          // navigate(`/${regSystem.strSystemPathURL}`);
+          if(appState.userInfo.bigUserRoleID===objRoleID['Admin']){
+            navigate(`/admin/${regSystem.strSystemPathURL}`);
+          }
+          if(appState.userInfo.bigUserRoleID===objRoleID['Customer']){
+            navigate(`/customer/${regSystem.strSystemPathURL}`);
+          }
         }
+        
       }
     } catch (err) {
       console.log({ err });

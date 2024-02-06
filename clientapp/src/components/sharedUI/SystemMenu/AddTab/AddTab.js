@@ -22,6 +22,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { generateRandomID } from "appHelper/appFunctions";
 import {
   objCategoriesType,
   objTabsAssets,
@@ -30,11 +31,10 @@ import {
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-function AddTab({ open, handleClose, tabsIDs, systemID, lang, dir, onSave }) {
+function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
   const options = useMemo(() => {
-    console.log({tabsIDs})
-    return tabsOptions.filter((option) => !tabsIDs.includes(`${option.key}`));
-  }, [tabsIDs]);
+    return tabsOptions.filter((option) => !tabsKey.includes(`${option.key}`));
+  }, [tabsKey]);
   const [option, setOption] = useState(options[0]?.key);
   useEffect(() => {
     if (options.length) {
@@ -51,8 +51,9 @@ function AddTab({ open, handleClose, tabsIDs, systemID, lang, dir, onSave }) {
           onSubmit: (event) => {
             event.preventDefault();
             const tabOp = tabsOptions.find(({ key }) => key === option);
+            const bigID = generateRandomID(10);
             const tab = {
-              bigID: option,
+              bigID: bigID,
               bigCategoryTypeID: objCategoriesType.Menu,
               bigSystemID:systemID,
               jsnName: tabOp?.jsnName,
@@ -119,7 +120,7 @@ function AddTab({ open, handleClose, tabsIDs, systemID, lang, dir, onSave }) {
                       filter:
                         "invert(19%) sepia(91%) saturate(3389%) hue-rotate(339deg) brightness(108%) contrast(91%)",
                     }}
-                    src={objTabsAssets[option].strIconPath}
+                    src={objTabsAssets[option]?.strIconPath}
                   />
                 </Grid>
               </Grid>
@@ -140,7 +141,7 @@ function AddTab({ open, handleClose, tabsIDs, systemID, lang, dir, onSave }) {
                     component={"img"}
                     height={"150px"}
                     width={"150px"}
-                    src={objTabsAssets[option].strImgPath}
+                    src={objTabsAssets[option]?.strImgPath}
                   />
                 </Grid>
               </Grid>

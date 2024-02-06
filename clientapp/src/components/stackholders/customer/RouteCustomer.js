@@ -2,18 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Website from "components/shared/website/Website";
 import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
-  Demo_jsnSystemInfo,
   objCategoriesType,
-  objRoleID,
 } from "appHelper/appVariables";
 import {
   findSystem,
-  updateSystem,
 } from "appHelper/fetchapi/tblSystem/tblSystem";
 import {
-  bulkCategories,
   findCategories,
 } from "appHelper/fetchapi/tblCategory/tblCategory";
 import { Typography } from "@mui/material";
@@ -123,6 +119,7 @@ function RouteCustomer({ isDemo }) {
     console.log("logout")
   };
   const userNavList = [
+    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
     { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
     { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" },onClick:onLogout },
   ];
@@ -142,6 +139,37 @@ function RouteCustomer({ isDemo }) {
   const removeOrderProduct = (product)=>{
   };
 
+  const navList = [
+    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
+    
+    {
+      bigNavID: 8944146478,
+      nav: { eng: "shop", arb: "تسوق" },
+      navList: [
+        { bigNavID: 8944146400, nav: { eng: "shop cart", arb: "كرت التسوق" } },
+        { bigNavID: 6944146478, nav: { eng: "cart checkout", arb: "الحساب" } },
+      ],
+    },
+    {
+      bigNavID: 7943146478,
+      nav: { eng: "order", arb: "الاخبار" },
+      navList: [
+        { nav: { eng: "undelivered order", arb: "مدونتنا" } },
+        { nav: { eng: "delivered orders", arb: "تفاصيل المدونة" } },
+      ],
+    },
+    {
+      bigNavID: 948246478,
+      nav: { eng: "table", arb: "الصفحات" },
+      navList: [
+        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" } },
+        { bigNavID: 968341478, nav: { eng: "reserved tables", arb: "خدماتنا" } },
+      ],
+    },
+    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
+    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" } },
+  ]
+
   return (
     <React.Fragment>
       {isLoading && <Typography>loading</Typography>}
@@ -149,6 +177,7 @@ function RouteCustomer({ isDemo }) {
         <Website
           systemInfo={ JSON.parse(JSON.stringify(systemInfo))  }
           editable={false}
+          navList={navList}
           adminEditMode={false}
           customerEditMode={true}
           userCart={appState?.userInfo?.userCart}

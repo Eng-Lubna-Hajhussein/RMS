@@ -627,31 +627,31 @@ export const objRoleID = {
 export const Demo_objSystemLocation = {lat:35.856737,long:30.606619}
 
 export const tabsOptions = [
-  { key: 3891922142, jsnName: {eng:"dessert",arb:"حلويات"} },
-  { key: 3156578173, jsnName: {eng:"steak",arb:"ستيك"} },
-  { key: 9723164333, jsnName: {eng:"coffee",arb:"قهوة"} },
-  { key: 7087331728, jsnName: {eng:"pizza",arb:"بيتزا"} },
-  { key: 8129351047, jsnName: {eng:"burger",arb:"برغر"} },
+  { key: "dessert", jsnName: {eng:"dessert",arb:"حلويات"} },
+  { key: "drinks", jsnName: {eng:"drinks",arb:"ستيك"} },
+  { key: "traditional", jsnName: {eng:"traditional",arb:"قهوة"} },
+  { key: "pizza", jsnName: {eng:"pizza",arb:"بيتزا"} },
+  { key: "burger", jsnName: {eng:"burger",arb:"برغر"} },
 ];
 
 export const objTabsAssets = {
-  3891922142: {
+  "dessert": {
     strIconPath: `${strServerAssetsPath}desert.svg`,
     strImgPath: `${strServerAssetsPath}desert.png`,
   },
-  3156578173: {
-    strIconPath: `${strServerAssetsPath}steak.svg`,
-    strImgPath: `${strServerAssetsPath}steak.png`,
+  "drinks": {
+    strIconPath: `${strServerAssetsPath}drinks.svg`,
+    strImgPath: `${strServerAssetsPath}drinks.png`,
   },
-  9723164333: {
-    strIconPath: `${strServerAssetsPath}coffee.svg`,
-    strImgPath: `${strServerAssetsPath}coffee.png`,
+  "traditional": {
+    strIconPath: `${strServerAssetsPath}traditional.svg`,
+    strImgPath: `${strServerAssetsPath}traditional.png`,
   },
-  7087331728: {
+  "pizza": {
     strIconPath: `${strServerAssetsPath}pizza.svg`,
     strImgPath: `${strServerAssetsPath}pizza.png`,
   },
-  8129351047: {
+  "burger": {
     strIconPath: `${strServerAssetsPath}burger.svg`,
     strImgPath: `${strServerAssetsPath}burger.png`,
   },

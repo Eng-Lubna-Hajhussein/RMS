@@ -14,9 +14,10 @@ export const ctrlSignUp = {
     formData,
     address,
     mapLocation,
+    systemID
   }) => {
     try {
-      const bigSystemID = regSystem.bigSystemID;
+      const bigSystemID =systemID?systemID: regSystem.bigSystemID;
       const jsnUserAddress = {
         jsnCountry: COUNTRIES[address.countryIndex],
         jsnCity:
@@ -61,9 +62,19 @@ export const ctrlSignUp = {
         appState.systemInfo.strSystemPathURL = system.strSystemPathURL;
         appState.systemInfo.jsnSystemAddress = JSON.parse(system.jsnSystemAddress);
         appState.systemInfo.jsnSystemLocation = JSON.parse(system.jsnSystemLocation);
+        appState.systemInfo.jsnSystemContact = JSON.parse(system.jsnSystemContact);
+        appState.systemInfo.lstSystemTeam = JSON.parse(system.lstSystemTeam);
+        appState.systemInfo.jsnSystemSections = JSON.parse(system.jsnSystemSections);
+        appState.systemInfo.strLogoPath =system.strLogoPath;
         appDispatch({...appState});
-        if(appState?.clientInfo?.blnUserLogin===true){
-          navigate(`/${system.strSystemPathURL}`);
+        if(appState.systemInfo.bigSystemID&&appState.userInfo.bigUserID){
+          // navigate(`/${system.strSystemPathURL}`);
+          if(appState.userInfo.bigUserRoleID===objRoleID['Admin']){
+            navigate(`/admin/${system.strSystemPathURL}`);
+          }
+          if(appState.userInfo.bigUserRoleID===objRoleID['Customer']){
+            navigate(`/customer/${system.strSystemPathURL}`);
+          }
         }
       }
     } catch (err) {

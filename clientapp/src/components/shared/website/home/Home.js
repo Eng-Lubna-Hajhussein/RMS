@@ -23,6 +23,8 @@ function Home({
   userNavList,
   addWS,
   ws,
+  navList,
+  systemPath,
   removeWS,
   editable,
   adminEditMode,
@@ -73,11 +75,13 @@ function Home({
         onSaveUpperHeader={onSaveUpperHeader}
         adminNavList={adminNavList}
         userImg={userImg}
+        navList={navList}
         userName={userName}
         customerEditMode={customerEditMode}
         intCartProduct={customerEditMode&&userCart?.lstProduct?.length}
         blnUserLogin={blnUserLogin}
         userNavList={userNavList}
+        systemPath={systemPath}
       />
       <Hero
         lang={lang}

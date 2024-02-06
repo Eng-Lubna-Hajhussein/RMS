@@ -7,9 +7,11 @@ import SignupSystem from "./signupSystem/SignupSystem";
 import SignupUser from "./signupUser/SignupUser";
 import { Grid, Typography } from "@mui/material";
 import { AppRegistrationSharp, FoodBank } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
 
 function Signup() {
   const { appState, appDispatch } = useContext(AppContext);
+  const {systemID,systemName} = useParams();
   const lang = appState.clientInfo.strLanguage;
   const tabsContent = [
     {
@@ -44,7 +46,8 @@ function Signup() {
         jsnSystemContact={Demo_jsnSystemInfo.jsnSystemContact}
         editable={false}
       />
-      <Tabs001 tabsContent={tabsContent} />
+      {!systemID&&<Tabs001 tabsContent={tabsContent} />}
+      {systemID&&<SignupUser />}
     </React.Fragment>
   );
 }

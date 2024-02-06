@@ -134,7 +134,7 @@ const Mutation = new GraphQLObjectType({
       resolve: ReservationResolvers.updateTable,
     },
     deleteTable: {
-      type: ReservationType,
+      type: GraphQLBoolean,
       args: {
         bigTableID: { type: GraphQLBigInt },
       },

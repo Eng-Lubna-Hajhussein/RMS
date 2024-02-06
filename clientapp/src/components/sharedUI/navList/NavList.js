@@ -28,6 +28,7 @@ export default function NavList({
   navList,
   lang,
   endIcon = <KeyboardArrowDownIcon />,
+  path
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -40,6 +41,7 @@ export default function NavList({
 
   return (
     <div>
+      {path&&<Link to={path}>
       <Button
         id="demo-customized-button"
         aria-controls={open ? "demo-customized-menu" : undefined}
@@ -51,9 +53,27 @@ export default function NavList({
         endIcon={navList?.length && endIcon}
         sx={styles.nav}
       >
+        
         {nav}
         &nbsp;
       </Button>
+        </Link>}
+        {!path&&
+      <Button
+        id="demo-customized-button"
+        aria-controls={open ? "demo-customized-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        variant="link"
+        disableElevation
+        onClick={handleClick}
+        endIcon={navList?.length && endIcon}
+        sx={styles.nav}
+      >
+        
+        {nav}
+        &nbsp;
+      </Button>}
       {navList?.length && (
         <StyledMenu
           id="demo-customized-menu"

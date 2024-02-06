@@ -21,6 +21,7 @@ function WebsiteHeader({
   userImg,
   userName,
   blnUserLogin,
+  systemPath,
   userNavList,
   customerEditMode
 }) {
@@ -38,6 +39,7 @@ function WebsiteHeader({
           userName={userName}
           blnUserLogin={blnUserLogin}
           userNavList={userNavList}
+          systemPath={systemPath}
         />
         <LowerToolbar
           navList={navList}

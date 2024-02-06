@@ -15,12 +15,13 @@ import {
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { ctrlLogin } from "./controller/CtrlLogin";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Login() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const navigate = useNavigate();
+  const {systemName} = useParams();
 
   const {
     register,
@@ -66,9 +67,9 @@ function Login() {
             <Grid item xs="12" pb={3} container justifyContent={"center"}>
               <Typography
                 component={"h3"}
-                sx={{ color: "#000", fontWeight: "800", fontSize: "30px" }}
+                sx={{ color: "#000",textTransform:"capitalize", fontWeight: "800", fontSize: "30px" }}
               >
-                Login
+              {systemName}  Login
               </Typography>
             </Grid>
             <Grid item xs="12" container>

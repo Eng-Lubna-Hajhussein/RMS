@@ -8,9 +8,21 @@ const styles = {
   },
 };
 
-function AnimButton0001({ label, color, fullWidth ,onClick=()=>{}, type='button'}) {
+function AnimButton0001({
+  label,
+  color,
+  disabled,
+  fullWidth,
+  onClick = () => {},
+  type = "button",
+}) {
   return (
-    <Button fullWidth={fullWidth} onClick={onClick} type={type}>
+    <Button
+      fullWidth={fullWidth}
+      disabled={disabled}
+      onClick={onClick}
+      type={type}
+    >
       <Typography
         className="animated-btn"
         sx={{

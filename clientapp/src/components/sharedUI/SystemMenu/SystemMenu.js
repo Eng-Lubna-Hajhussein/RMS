@@ -578,7 +578,7 @@ export default function RestaurantMenu({
           open={addTabOpen}
           handleClose={() => setAddTabOpen(false)}
           onSave={funAddTab}
-          tabsIDs={Object.keys(objTabs?.tabsContent)}
+          tabsKey={objTabs.tabs.map(tab=>tab.jsnName['eng'])}
           systemID={systemID}
           lang={lang}
           dir={dir}

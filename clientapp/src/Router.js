@@ -10,13 +10,19 @@ import RouteCustomer from "components/stackholders/customer/RouteCustomer";
 import Order from "components/stackholders/customer/order/Order";
 import Orders from "components/stackholders/customer/orders/Orders";
 import ReserveTable from "components/stackholders/customer/reserveTable/ReserveTable";
+import Tables from "components/stackholders/admin/tables/Tables";
+import CustomPaginationActionsTable from "components/stackholders/admin/TaPag";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<RouteLandingPage isDemo={true} />} />
+      <Route path="/test" element={<CustomPaginationActionsTable/>} />
       <Route path="/:systemName/:systemID" element={<RouteLandingPage />} />
+      <Route path="/signup/:systemName/:systemID" element={<Signup />} />
+      <Route path="/login/:systemName/:systemID" element={<Login />} />
       <Route path="/admin/:systemName/:systemID" element={<RouteAdmin />} />
+      <Route path="/admin/tables/:systemName/:systemID" element={<Tables />} />
       <Route path="/customer/:systemName/:systemID" element={<RouteCustomer />} />
       <Route path="/admin/dashboard/:systemName/:systemID" element={<AdminDashboard />} />
       <Route path="/customer/dashboard/reserve-table/:systemName/:systemID" element={<ReserveTable />} />

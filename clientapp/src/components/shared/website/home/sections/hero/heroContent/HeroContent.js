@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Grid, Rating, Typography,Button } from "@mui/material";
+import { Box, Grid, Rating, Typography, Button } from "@mui/material";
 import { dictionary } from "appHelper/appDictionary";
 import { App_Primary_Color } from "appHelper/appColor";
 import videoIcon from "assets/image/video.svg";
@@ -91,13 +91,28 @@ function HeroContent({
 
   return (
     <React.Fragment>
-      {editable&&<Grid item container justifyContent={'start'} sx={{background:"#dad8d9"}} xs='12'>
-        <Button variant="text" onClick={handleEditOpen}>
-          <Typography sx={{color:"#000",fontSize:"15px",fontWeight:"600",textTransform:"capitalize"}}>
-          edit Hero Section info
-          </Typography>
+      {editable && (
+        <Grid
+          item
+          container
+          justifyContent={"start"}
+          sx={{ background: "#dad8d9" }}
+          xs="12"
+        >
+          <Button variant="text" onClick={handleEditOpen}>
+            <Typography
+              sx={{
+                color: "#000",
+                fontSize: "15px",
+                fontWeight: "600",
+                textTransform: "capitalize",
+              }}
+            >
+              edit Hero Section info
+            </Typography>
           </Button>
-        </Grid>}
+        </Grid>
+      )}
       <Grid
         container
         alignContent={"center"}
@@ -108,92 +123,96 @@ function HeroContent({
         item
         xs="12"
       >
-        <Grid container item xs={editable?'11':'12'}>
-        <Grid item xs="12" sx={styles.py20} justify={"start"}>
-          <Typography sx={{ ...styles.title, ...content.jsnTitle.style }}>
-            {content.jsnTitle[lang]}
-          </Typography>
-        </Grid>
-        <Grid item xs="12" sx={styles.py20}>
-          <Typography sx={{...styles.subtitle,...content.jsnSubtitle.style}}>
-            {content.jsnSubtitle[lang]}
-          </Typography>
-        </Grid>
-        <Grid item lg="8" sx={styles.py20} xs={"12"}>
-          <Grid
-            container
-            spacing={2}
-            justify={"start"}
-            alignItems={"flex-start"}
-          >
-            <Grid item lg={"4"} xs={"12"}>
-              <AnimButton0001
-                label={dictionary.buttons.seeOurMenuBtn[lang]}
-                color={App_Primary_Color}
-              />
-            </Grid>
-            <Grid item lg={"4"} pt-5 xs={"12"}>
-              <AnimButton0002
+        <Grid container item xs={editable ? "11" : "12"}>
+          <Grid item xs="12" sx={styles.py20} justify={"start"}>
+            <Typography sx={{ ...styles.title, ...content.jsnTitle.style }}>
+              {content.jsnTitle[lang]}
+            </Typography>
+          </Grid>
+          <Grid item xs="12" sx={styles.py20}>
+            <Typography
+              sx={{ ...styles.subtitle, ...content.jsnSubtitle.style }}
+            >
+              {content.jsnSubtitle[lang]}
+            </Typography>
+          </Grid>
+          <Grid item lg="8" sx={styles.py20} xs={"12"}>
+            <Grid
+              container
+              spacing={2}
+              justify={"start"}
+              alignItems={"flex-start"}
+            >
+              <Grid item lg={"4"} xs={"12"}>
+                <AnimButton0001
+                  label={dictionary.buttons.seeOurMenuBtn[lang]}
+                  color={App_Primary_Color}
+                />
+              </Grid>
+              <Grid item lg={"4"} pt-5 xs={"12"}>
+                <AnimButton0002
                 img={videoIcon}
+                src={'https://www.youtube.com/'}
                 label={dictionary.buttons.watchVideo[lang]}
               />
-            </Grid>
-          </Grid>
-        </Grid>
-        {content?.wsCategory && (
-          <Grid item lg={"4"}>
-            <Grid container justify={"end"}>
-              <Grid item lg="12" xs={"12"} alignSelf={"flex-start"}>
-                <Box
-                  outline="0"
-                  elevation="0"
-                  hoverElevation="0"
-                  color="default"
-                  textColor="default"
-                  sx={styles.box}
-                >
-                  <span style={styles.boxCaption}>Weekly Special</span>
-                  <Grid container justify={"center"} p-0 m-0>
-                    <Grid item xs="8" container justify={"start"}>
-                      <Grid item xs="12" justify={"start"}>
-                        <Typography sx={styles.boxTitle}>
-                          <Typography sx={styles.dollarSign}>$</Typography>
-                          {content.wsCategory.jsnCategoryInfo.strPrice}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs="12">
-                        <Typography sx={styles.boxSubtitle}>
-                          {content.wsCategory.jsnName[lang]}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs="12">
-                        <Rating
-                          name="read-only"
-                          value={content.wsCategory.intRating}
-                          readOnly
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      item
-                      xs="4"
-                      container
-                      justifyContent={"center"}
-                      alignContent={"center"}
-                    >
-                      <Box
-                        component={"img"}
-                        src={content.wsCategory.jsnCategoryInfo.strImgPath}
-                        height={"150px"}
-                        width={"150px"}
-                      />
-                    </Grid>
-                  </Grid>
-                </Box>
+               
               </Grid>
             </Grid>
           </Grid>
-        )}
+          {content?.wsCategory && (
+            <Grid item lg={"4"}>
+              <Grid container justify={"end"}>
+                <Grid item lg="12" xs={"12"} alignSelf={"flex-start"}>
+                  <Box
+                    outline="0"
+                    elevation="0"
+                    hoverElevation="0"
+                    color="default"
+                    textColor="default"
+                    sx={styles.box}
+                  >
+                    <span style={styles.boxCaption}>Weekly Special</span>
+                    <Grid container justify={"center"} p-0 m-0>
+                      <Grid item xs="8" container justify={"start"}>
+                        <Grid item xs="12" justify={"start"}>
+                          <Typography sx={styles.boxTitle}>
+                            <Typography sx={styles.dollarSign}>$</Typography>
+                            {content.wsCategory.jsnCategoryInfo.strPrice}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs="12">
+                          <Typography sx={styles.boxSubtitle}>
+                            {content.wsCategory.jsnName[lang]}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs="12">
+                          <Rating
+                            name="read-only"
+                            value={content.wsCategory.intRating}
+                            readOnly
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        item
+                        xs="4"
+                        container
+                        justifyContent={"center"}
+                        alignContent={"center"}
+                      >
+                        <Box
+                          component={"img"}
+                          src={content.wsCategory.jsnCategoryInfo.strImgPath}
+                          height={"150px"}
+                          width={"150px"}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       </Grid>
       <Edit

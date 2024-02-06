@@ -2,28 +2,39 @@ import React from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { lstWebsiteNav } from "appHelper/appVariables";
 
-function Header({lang,dir, userImg,
+function Header({
+  lang,
+  dir,
+  userImg,
   userName,
   blnUserLogin,
   intCartProduct,
   customerEditMode,
-  userNavList,jsnSystemContact,adminNavList,editable,onSaveUpperHeader}) {
+  navList,
+  systemPath,
+  userNavList,
+  jsnSystemContact,
+  adminNavList,
+  editable,
+  onSaveUpperHeader,
+}) {
   return (
     <React.Fragment>
       <WebsiteHeader
         lang={lang}
         dir={dir}
+        systemPath={systemPath}
         jsnSystemContact={jsnSystemContact}
         intCartProduct={intCartProduct}
         customerEditMode={customerEditMode}
-        navList={lstWebsiteNav}
+        navList={navList}
         editable={editable}
         onSaveUpperHeader={onSaveUpperHeader}
         adminNavList={adminNavList}
         userImg={userImg}
-      userName={userName}
-      blnUserLogin={blnUserLogin}
-      userNavList={userNavList}
+        userName={userName}
+        blnUserLogin={blnUserLogin}
+        userNavList={userNavList}
       />
     </React.Fragment>
   );
