@@ -92,3 +92,11 @@ export const bulkCategoriesQuery = (categories, onDeleteIDs) => {
         jsnCategoryInfo
       }}`;
 };
+
+export const updateCategoryReviewsQuery = (objInput) => {
+  return `mutation {
+    updateCategory(bigID:${objInput.bigID},bigSystemID:${objInput.bigSystemID},jsnCategoryInfo:"""${JSON.stringify(objInput.jsnCategoryInfo)}"""){
+      jsnCategoryInfo
+    }
+  }`;
+};

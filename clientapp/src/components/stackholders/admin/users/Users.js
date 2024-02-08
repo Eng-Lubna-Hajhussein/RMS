@@ -1,4 +1,9 @@
-import { lstWebsiteNav, objAppActions } from "appHelper/appVariables";
+import {
+  lstWebsiteNav,
+  objAppActions,
+  objIDRole,
+  objRoleID,
+} from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
@@ -9,6 +14,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import {
+  Avatar,
   Box,
   Button,
   Chip,
@@ -40,10 +46,11 @@ import {
 import bgImg from "assets/image/patron.jpg";
 import { useForm } from "react-hook-form";
 import moment from "moment";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { ctrlTables } from "./controller/CtrlTables";
 // import EditTable from "./editTable/EditTable";
 import { findUsers } from "appHelper/fetchapi/tblUser/tblUser";
+import UserDetails from "./userDetails/UserDetails";
 
 function Users() {
   const [page, setPage] = useState(0);
@@ -52,8 +59,8 @@ function Users() {
   const lang = appState.clientInfo.strLanguage;
   const [users, setUsers] = useState([]);
   const { systemID, systemName } = useParams();
-  const [tableOnAction, setTableOnAction] = useState();
-  const [openEditTable, setOpenEditTable] = useState(false);
+  const [userOnAction, setUserOnAction] = useState();
+  const [openUserDetails, setOpenUserDetails] = useState(false);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -113,9 +120,16 @@ function Users() {
     setIsLoading(true);
     const systemUsers = await findUsers(appState.systemInfo.bigSystemID);
     if (systemUsers.length) {
-      setUsers([...systemUsers]);
+      const parsedUsers = systemUsers.map((user) => ({
+        ...user,
+        jsnFullName: JSON.parse(user?.jsnFullName),
+        jsnLocation: JSON.parse(user?.jsnLocation),
+        jsnAddress: JSON.parse(user?.jsnAddress),
+        jsnClientPayment: JSON.parse(user?.jsnClientPayment),
+      }));
+      setUsers([...parsedUsers]);
     }
-    console.log({ systemUsers });
+    // console.log({ systemUsers });
     setIsLoading(false);
   };
 
@@ -146,13 +160,316 @@ function Users() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
-          <Grid item xs="10" container>
+          <Grid item xs="12" container>
             <Grid item xs="12" sx={{ marginBottom: "50px" }} px={1}>
-                
+              <Table
+                sx={{ minWidth: 650, border: "1px solid #c4c4c4" }}
+                aria-label="simple table"
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      sx={{
+                        border: "1px solid #c4c4c4",
+                        background: App_Primary_Color,
+                        color: "#fff",
+                        fontSize: "15px",
+                        fontWeight: 800,
+                      }}
+                      align="center"
+                    >
+                      Account
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: "1px solid #c4c4c4",
+                        background: App_Primary_Color,
+                        color: "#fff",
+                        fontSize: "15px",
+                        fontWeight: 800,
+                      }}
+                      align="center"
+                    >
+                      Role
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: "1px solid #c4c4c4",
+                        background: App_Primary_Color,
+                        color: "#fff",
+                        fontSize: "15px",
+                        fontWeight: 800,
+                      }}
+                      align="center"
+                    >
+                      Email
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: "1px solid #c4c4c4",
+                        background: App_Primary_Color,
+                        color: "#fff",
+                        fontSize: "15px",
+                        fontWeight: 800,
+                      }}
+                      align="center"
+                    >
+                      Address
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: "1px solid #c4c4c4",
+                        background: App_Primary_Color,
+                        color: "#fff",
+                        fontSize: "15px",
+                        fontWeight: 800,
+                      }}
+                      align="center"
+                    >
+                      Status
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: "1px solid #c4c4c4",
+                        background: App_Primary_Color,
+                        color: "#fff",
+                        fontSize: "15px",
+                        fontWeight: 800,
+                      }}
+                      align="center"
+                    >
+                      Activity
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(rowsPerPage > 0
+                    ? users.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : users
+                  )?.map((user, index) => (
+                    <TableRow>
+                      <TableCell
+                        sx={{ border: "1px solid #c4c4c4" }}
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
+                        <Grid
+                          container
+                          sx={{ height: "fit-content" }}
+                          alignItems={"center"}
+                          alignContent={"center"}
+                        >
+                          <Grid item px={1} sx={{ height: "fit-content" }}>
+                            <Avatar
+                              src={user?.strImgPath}
+                              height="50px"
+                              width="50px"
+                            />
+                          </Grid>
+                          <Grid item>
+                          {appState.userInfo.bigUserID === user.bigUserID&&<Typography
+                          color={"primary"}
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "800",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                            Me (Owner)
+                        </Typography>}
+                        {!(appState.userInfo.bigUserID === user.bigUserID)&&<Link>
+                            <Typography
+                          color={"primary"}
+                          onClick={()=>{
+                            setUserOnAction(user);
+                            setOpenUserDetails(true);
+                        }}
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "800",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                            {user?.jsnFullName[lang]}
+                        </Typography> 
+                        </Link>}
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell
+                        sx={{ border: "1px solid #c4c4c4" }}
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
+                        <Typography
+                          color={"#000"}
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "800",
+                          }}
+                        >
+                          {objIDRole[user.bigUserRoleID]}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        sx={{ border: "1px solid #c4c4c4" }}
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
+                        <Typography
+                          color={"#000"}
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "800",
+                          }}
+                        >
+                          {user.strEmail}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        sx={{ border: "1px solid #c4c4c4" }}
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
+                        <Typography
+                          color={"#000"}
+                          sx={{
+                            fontSize: "14px",
+                            fontWeight: "800",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          {user.jsnAddress.jsnCity[lang] +
+                            ", " +
+                            user.jsnAddress.jsnCountry[lang]}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        sx={{ border: "1px solid #c4c4c4" }}
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
+                        {user.blnIsDeleted ? (
+                          <Chip
+                            color={"error"}
+                            label={
+                              <Typography
+                                sx={{
+                                  color: "#fff",
+                                  textTransform: "capitalize",
+                                  fontWeight: "700",
+                                }}
+                              >
+                                {"Banned"}
+                              </Typography>
+                            }
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </TableCell>
+                      <TableCell
+                        sx={{ border: "1px solid #c4c4c4" }}
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
+                        <Chip
+                          color={user.blnIsActive ? "success" : "error"}
+                          label={
+                            <Typography
+                              sx={{
+                                color: "#fff",
+                                textTransform: "capitalize",
+                                fontWeight: "700",
+                              }}
+                            >
+                              {user.blnIsActive ? "Active" : "Deactivated"}
+                            </Typography>
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25]}
+                      count={users.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: {
+                          "aria-label": "rows per page",
+                        },
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      labelDisplayedRows={({ page }) => {
+                        return (
+                          <Typography sx={{ color: "#000" }}>
+                            Page: {page + 1}
+                          </Typography>
+                        );
+                      }}
+                      backIconButtonProps={{
+                        color: "#fff",
+                      }}
+                      nextIconButtonProps={{ color: "#fff" }}
+                      showFirstButton={true}
+                      showLastButton={true}
+                      labelRowsPerPage={
+                        <Typography sx={{ color: "#000" }}>Rows:</Typography>
+                      }
+                      sx={{
+                        ".MuiTablePagination-toolbar": {
+                          backgroundColor: "#f4fcfc",
+                          textAlign: "center",
+                        },
+                        ".MuiTablePagination-selectLabel, .MuiTablePagination-input":
+                          {
+                            fontWeight: "800",
+                          },
+                        ".MuiTablePagination-input": {
+                          fontWeight: "bold",
+                          background: "#fff",
+                          borderRadius: "10px",
+                          border: "1px solid #000",
+                        },
+                      }}
+                    />
+                  </TableRow>
+                </TableFooter>
+              </Table>
             </Grid>
           </Grid>
         </Grid>
       )}
+      <UserDetails
+      open={openUserDetails}
+      handleClose={()=>setOpenUserDetails(false)}
+      user={userOnAction}
+      lang={lang}
+      />
     </React.Fragment>
   );
 }

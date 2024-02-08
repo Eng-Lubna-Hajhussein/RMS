@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import { AppRegistration } from "@mui/icons-material";
+import { App_Second_Color } from "appHelper/appColor";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,7 +20,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -40,7 +41,7 @@ function a11yProps(index) {
   };
 }
 
-export default function Tabs001({ tabsContent }) {
+export default function Tabs001({ tabsContent,justifyContent }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -50,7 +51,7 @@ export default function Tabs001({ tabsContent }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{}}>
-        <Grid container justifyContent={"center"}>
+        <Grid container justifyContent={justifyContent?justifyContent:"center"}>
           <Tabs
             indicatorColor="secondary"
             textColor="inherit"

@@ -1,6 +1,6 @@
 import { createSystemQuery,findSystemQuery,updateSystemQuery } from "appHelper/appQueries/systemQueries/systemQueries"
 import { fetchData } from "../appFetch";
-import { bulkCategoriesQuery, createCategoryQuery, deleteCategoryQuery, findCategoriesQuery, updateCategoryQuery } from "appHelper/appQueries/categoryQueries/categoryQueries";
+import { bulkCategoriesQuery, createCategoryQuery, deleteCategoryQuery, findCategoriesQuery, updateCategoryQuery, updateCategoryReviewsQuery } from "appHelper/appQueries/categoryQueries/categoryQueries";
 
 export const createCategory = async(objInput) => {
    const query = createCategoryQuery(objInput);
@@ -48,4 +48,14 @@ export const deleteCategory = async(bigID)=>{
      }
     const result = await fetchData(requestBody);
     return result?.data?.deleteCategory;
+}
+
+export const updateCategoryReviews = async(objInput) => {
+   const query = updateCategoryReviewsQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   // console.log({result})
+   return result?.data?.updateCategory;
 }

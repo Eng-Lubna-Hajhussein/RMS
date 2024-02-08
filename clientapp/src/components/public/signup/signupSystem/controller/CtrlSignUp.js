@@ -94,6 +94,7 @@ export const ctrlSignUp = {
         appState.systemInfo.jsnSystemContact = JSON.parse(regSystem.jsnSystemContact);
         appState.systemInfo.lstSystemTeam = JSON.parse(regSystem.lstSystemTeam);
         appState.systemInfo.jsnSystemSections = JSON.parse(regSystem.jsnSystemSections);
+        appState.systemInfo.lstSystemReviews = JSON.parse(regSystem.lstSystemReviews);
         appState.systemInfo.strLogoPath =regSystem.strLogoPath;
         appDispatch({...appState});
         if(appState.systemInfo.bigSystemID&&appState.userInfo.bigUserID){

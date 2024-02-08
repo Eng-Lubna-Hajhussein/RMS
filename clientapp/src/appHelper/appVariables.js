@@ -624,6 +624,11 @@ export const objRoleID = {
   Customer: 7411510928,
 };
 
+export const objIDRole = {
+  1511510928:'Admin',
+  7411510928:'Customer'
+}
+
 export const Demo_objSystemLocation = {lat:35.856737,long:30.606619}
 
 export const tabsOptions = [

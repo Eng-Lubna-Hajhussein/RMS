@@ -12,12 +12,15 @@ import Orders from "components/stackholders/customer/orders/Orders";
 import ReserveTable from "components/stackholders/customer/reserveTable/ReserveTable";
 import Tables from "components/stackholders/admin/tables/Tables";
 import Users from "components/stackholders/admin/users/Users";
+import Review from "components/stackholders/customer/review/Review";
+import Product from "components/shared/product/Product";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<RouteLandingPage isDemo={true} />} />
       <Route path="/:systemName/:systemID" element={<RouteLandingPage />} />
+      <Route path="/customer/product/:productID/:systemName/:systemID" element={<Product />} />
       <Route path="/signup/:systemName/:systemID" element={<Signup />} />
       <Route path="/login/:systemName/:systemID" element={<Login />} />
       <Route path="/admin/:systemName/:systemID" element={<RouteAdmin />} />
@@ -28,6 +31,7 @@ function Router() {
       <Route path="/customer/dashboard/reserve-table/:systemName/:systemID" element={<ReserveTable />} />
       <Route path="/customer/dashboard/order/:systemName/:systemID" element={<Order />} />
       <Route path="/customer/dashboard/orders/:systemName/:systemID" element={<Orders />} />
+      <Route path="/customer/dashboard/review/:systemName/:systemID" element={<Review />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/customer/dashboard/cart/:systemName/:systemID" element={<Cart />} />

@@ -1,6 +1,26 @@
 export const createSystemQuery = (objInput) => {
   return `mutation {
-    createSystem (bigSystemID:${objInput.bigSystemID},bigWSCategoryID:${objInput?.bigWSCategoryID||null},strLogoPath:${objInput?.strLogoPath?'"'+objInput?.strLogoPath+'"':null},jsnSystemLocation:"""${JSON.stringify(objInput?.jsnSystemLocation||{})}""",jsnSystemName:"""${JSON.stringify(objInput?.jsnSystemName||{})}""",strSystemPathURL:"${objInput?.strSystemPathURL||null}",jsnSystemAddress:"""${JSON.stringify(objInput?.jsnSystemAddress||{})}""",jsnSystemContact:"""${JSON.stringify(objInput?.jsnSystemContact||{})}""",lstSystemReviews:"""${JSON.stringify(objInput?.lstSystemReviews||[])}""",lstSystemTeam:"""${JSON.stringify(objInput?.lstSystemTeam||[])}""",jsnSystemSections:"""${JSON.stringify(objInput?.jsnSystemSections||{})}""",lstContactUs:"""${JSON.stringify(objInput?.lstContactUs||[])}"""){
+    createSystem (bigSystemID:${objInput.bigSystemID},bigWSCategoryID:${
+    objInput?.bigWSCategoryID || null
+  },strLogoPath:${
+    objInput?.strLogoPath ? '"' + objInput?.strLogoPath + '"' : null
+  },jsnSystemLocation:"""${JSON.stringify(
+    objInput?.jsnSystemLocation || {}
+  )}""",jsnSystemName:"""${JSON.stringify(
+    objInput?.jsnSystemName || {}
+  )}""",strSystemPathURL:"${
+    objInput?.strSystemPathURL || null
+  }",jsnSystemAddress:"""${JSON.stringify(
+    objInput?.jsnSystemAddress || {}
+  )}""",jsnSystemContact:"""${JSON.stringify(
+    objInput?.jsnSystemContact || {}
+  )}""",lstSystemReviews:"""${JSON.stringify(
+    objInput?.lstSystemReviews || []
+  )}""",lstSystemTeam:"""${JSON.stringify(
+    objInput?.lstSystemTeam || []
+  )}""",jsnSystemSections:"""${JSON.stringify(
+    objInput?.jsnSystemSections || {}
+  )}""",lstContactUs:"""${JSON.stringify(objInput?.lstContactUs || [])}"""){
       bigSystemID
       bigWSCategoryID
       strLogoPath
@@ -18,8 +38,28 @@ export const createSystemQuery = (objInput) => {
 };
 
 export const updateSystemQuery = (objInput) => {
-    return `mutation {
-      updateSystem (bigSystemID:${objInput.bigSystemID},bigWSCategoryID:${objInput?.bigWSCategoryID||null},strLogoPath:${objInput?.strLogoPath?'"'+objInput?.strLogoPath+'"':null},jsnSystemLocation:"""${JSON.stringify(objInput?.jsnSystemLocation||{})}""",jsnSystemName:"""${JSON.stringify(objInput?.jsnSystemName||{})}""",strSystemPathURL:"${objInput?.strSystemPathURL||null}",jsnSystemAddress:"""${JSON.stringify(objInput?.jsnSystemAddress||{})}""",jsnSystemContact:"""${JSON.stringify(objInput?.jsnSystemContact||{})}""",lstSystemReviews:"""${JSON.stringify(objInput?.lstSystemReviews||[])}""",lstSystemTeam:"""${JSON.stringify(objInput?.lstSystemTeam||[])}""",jsnSystemSections:"""${JSON.stringify(objInput?.jsnSystemSections||{})}""",lstContactUs:"""${JSON.stringify(objInput?.lstContactUs||[])}"""){
+  return `mutation {
+      updateSystem (bigSystemID:${objInput.bigSystemID},bigWSCategoryID:${
+    objInput?.bigWSCategoryID || null
+  },strLogoPath:${
+    objInput?.strLogoPath ? '"' + objInput?.strLogoPath + '"' : null
+  },jsnSystemLocation:"""${JSON.stringify(
+    objInput?.jsnSystemLocation || {}
+  )}""",jsnSystemName:"""${JSON.stringify(
+    objInput?.jsnSystemName || {}
+  )}""",strSystemPathURL:"${
+    objInput?.strSystemPathURL || null
+  }",jsnSystemAddress:"""${JSON.stringify(
+    objInput?.jsnSystemAddress || {}
+  )}""",jsnSystemContact:"""${JSON.stringify(
+    objInput?.jsnSystemContact || {}
+  )}""",lstSystemReviews:"""${JSON.stringify(
+    objInput?.lstSystemReviews || []
+  )}""",lstSystemTeam:"""${JSON.stringify(
+    objInput?.lstSystemTeam || []
+  )}""",jsnSystemSections:"""${JSON.stringify(
+    objInput?.jsnSystemSections || {}
+  )}""",lstContactUs:"""${JSON.stringify(objInput?.lstContactUs || [])}"""){
         bigSystemID
         bigWSCategoryID
         strLogoPath
@@ -33,7 +73,17 @@ export const updateSystemQuery = (objInput) => {
         jsnSystemSections
         lstContactUs
       }
-    }`
+    }`;
+};
+
+export const updateSystemReviewsQuery = (objInput) => {
+  return `mutation{
+    updateSystem(bigSystemID:${
+      objInput.bigSystemID
+    },lstSystemReviews:"""${JSON.stringify(objInput.lstSystemReviews)}"""){
+      lstSystemReviews
+    }
+  }`;
 };
 
 export const findSystemQuery = (bigSystemID) => {
@@ -52,8 +102,8 @@ export const findSystemQuery = (bigSystemID) => {
       jsnSystemSections
       lstContactUs
     }
-  }`
-}
+  }`;
+};
 
 export const findSystemsQuery = () => {
   return `query {
@@ -63,5 +113,5 @@ export const findSystemsQuery = () => {
       strSystemPathURL
       jsnSystemName
     }
-  }`
-}
+  }`;
+};

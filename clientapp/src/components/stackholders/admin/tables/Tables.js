@@ -21,6 +21,7 @@ import {
   TableFooter,
   TablePagination,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -45,8 +46,7 @@ import { ctrlTables } from "./controller/CtrlTables";
 import EditTable from "./editTable/EditTable";
 
 function Tables() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const [tables, setTables] = useState([]);
@@ -54,6 +54,8 @@ function Tables() {
   const [tableOnAction, setTableOnAction] = useState();
   const [openEditTable, setOpenEditTable] = useState(false);
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tables.length) : 0;
@@ -144,6 +146,8 @@ function Tables() {
       reset,
     });
   };
+
+  
 
   return (
     <React.Fragment>

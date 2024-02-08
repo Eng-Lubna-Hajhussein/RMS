@@ -48,6 +48,7 @@ export const ctrlLogin = {
           appState.systemInfo.jsnSystemContact = JSON.parse(loggedSystem.jsnSystemContact);
           appState.systemInfo.lstSystemTeam = JSON.parse(loggedSystem.lstSystemTeam);
           appState.systemInfo.jsnSystemSections = JSON.parse(loggedSystem.jsnSystemSections);
+          appState.systemInfo.lstSystemReviews = JSON.parse(loggedSystem.lstSystemReviews);
           appState.systemInfo.strLogoPath =loggedSystem.strLogoPath;
           appDispatch({...appState});
           if(appState.systemInfo.bigSystemID&&appState.userInfo.bigUserID){

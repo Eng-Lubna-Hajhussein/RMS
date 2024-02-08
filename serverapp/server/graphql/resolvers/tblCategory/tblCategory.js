@@ -45,7 +45,7 @@ module.exports = {
       if (!updatedCategory[0]) {
         throw new Error("No rows have been effected.");
       } else {
-        return await tblCategory.findByPk(category.bigID);
+        return await tblCategory.findOne({where:{bigID:category.bigID}});
       }
     } catch (err) {
       throw err;
