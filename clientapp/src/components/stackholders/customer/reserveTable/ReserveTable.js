@@ -32,6 +32,7 @@ import bgImg from "assets/image/patron.jpg";
 import { useForm } from "react-hook-form";
 import moment from "moment";
 import ReservationCheckout from "./ReservationCheckout";
+import { useParams } from "react-router-dom";
 
 const styles = {
   dishName: {
@@ -51,16 +52,12 @@ const styles = {
 
 function ReserveTable() {
   const { appState, appDispatch } = useContext(AppContext);
+  const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const [tables, setTables] = useState([]);
   const [openCheckout, setOpenCheckout] = useState(false);
-  const [tableOnAction,setTableOnAction] = useState();
+  const [tableOnAction, setTableOnAction] = useState();
 
-  const userNavList = [
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    { bigNavID: 5674846478, nav: { eng: "settings", arb: "الاعدادات" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
   const [isLoading, setIsLoading] = useState(false);
   const instalData = async () => {
     setIsLoading(true);
@@ -83,36 +80,82 @@ function ReserveTable() {
     instalData();
   }, []);
 
+  const userNavList = [
+    {
+      bigNavID: 9974846478,
+      nav: { eng: "profile", arb: "حسابي" },
+      path: `/customer/profile/${systemName}/${systemID}`,
+    },
+    {
+      bigNavID: 1234846478,
+      nav: { eng: "settings", arb: "حسابي" },
+      path: `/customer/settings/${systemName}/${systemID}`,
+    },
+  ];
+
   const navList = [
-    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
-    
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "home", arb: "الرئيسية" },
+      path: `/customer/${systemName}/${systemID}`,
+    },
+
     {
       bigNavID: 8944146478,
       nav: { eng: "shop", arb: "تسوق" },
       navList: [
-        { bigNavID: 8944146400, nav: { eng: "shop cart", arb: "كرت التسوق" } },
-        { bigNavID: 6944146478, nav: { eng: "cart checkout", arb: "الحساب" } },
+        {
+          bigNavID: 8944146400,
+          nav: { eng: "shop cart", arb: "كرت التسوق" },
+          path: `/customer/cart/${systemName}/${systemID}`,
+        },
+        {
+          bigNavID: 7644146400,
+          nav: {
+            eng: "menu",
+            arb: "كرت التسوق",
+            path: `/customer/${systemName}/${systemID}`,
+          },
+        },
       ],
     },
     {
       bigNavID: 7943146478,
       nav: { eng: "order", arb: "الاخبار" },
       navList: [
-        { nav: { eng: "undelivered order", arb: "مدونتنا" } },
-        { nav: { eng: "delivered orders", arb: "تفاصيل المدونة" } },
+        {
+          nav: { eng: "undelivered order", arb: "مدونتنا" },
+          path: `/customer/order/${systemName}/${systemID}`,
+        },
+        {
+          nav: { eng: "delivered orders", arb: "تفاصيل المدونة" },
+          path: `/customer/orders/${systemName}/${systemID}`,
+        },
       ],
     },
     {
       bigNavID: 948246478,
       nav: { eng: "table", arb: "الصفحات" },
       navList: [
-        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" } },
-        { bigNavID: 968341478, nav: { eng: "reserved tables", arb: "خدماتنا" } },
+        {
+          bigNavID: 341246078,
+          nav: { eng: "reserve table", arb: "عنا" },
+          path: `/customer/reserve-table/${systemName}/${systemID}`,
+        },
+        {
+          bigNavID: 968341478,
+          nav: { eng: "reserved tables", arb: "خدماتنا" },
+          path: `/customer/tables/${systemName}/${systemID}`,
+        },
       ],
     },
     { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
-    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" } },
-  ]
+    {
+      bigNavID: 2344146478,
+      nav: { eng: "review", arb: "المنيو" },
+      path: `/customer/review/${systemName}/${systemID}`,
+    },
+  ];
 
   return (
     <React.Fragment>
@@ -326,13 +369,13 @@ function ReserveTable() {
                       scope="row"
                     >
                       <Typography
-                      color={"#000"}
-                      sx={{
-                        fontSize: "18px",
-                        fontWeight: "800",
-                      }}
+                        color={"#000"}
+                        sx={{
+                          fontSize: "18px",
+                          fontWeight: "800",
+                        }}
                       >
-                      #{table.bigTableID}
+                        #{table.bigTableID}
                       </Typography>
                     </TableCell>
                     <TableCell
@@ -342,13 +385,13 @@ function ReserveTable() {
                       scope="row"
                     >
                       <Typography
-                      color={"#000"}
-                      sx={{
-                        fontSize: "18px",
-                        fontWeight: "800",
-                      }}
+                        color={"#000"}
+                        sx={{
+                          fontSize: "18px",
+                          fontWeight: "800",
+                        }}
                       >
-                      {table.intSeatsNumber}
+                        {table.intSeatsNumber}
                       </Typography>
                     </TableCell>
                     <TableCell
@@ -374,7 +417,7 @@ function ReserveTable() {
                         label={"Reserve"}
                         color={App_Second_Color}
                         onClick={() => {
-                          setTableOnAction({...table});
+                          setTableOnAction({ ...table });
                           setOpenCheckout(true);
                           // const date = (startDate.current.value+' '+startTime.current.value)
                           // console.log(moment(new Date(date)).format('YYYY-MM-DD HH:mm:ss'))
@@ -396,6 +439,8 @@ function ReserveTable() {
         endDate={endDate}
         endTime={endTime}
         handleClose={() => setOpenCheckout(false)}
+        setTables={setTables}
+        tables={tables}
       />
     </React.Fragment>
   );

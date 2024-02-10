@@ -1,6 +1,6 @@
 import { updateCategoryQuery } from "appHelper/appQueries/categoryQueries/categoryQueries";
 import { fetchData } from "../appFetch";
-import { createOrderQuery, findUnDeliveredOrderQuery, findUserOrdersQuery } from "appHelper/appQueries/orderQueries/orderQueries";
+import { createOrderQuery, findUnDeliveredOrderQuery, findUserOrdersQuery, setOrderDeliveredQuery } from "appHelper/appQueries/orderQueries/orderQueries";
 
 export const createOrder = async(objInput) => {
    const query = createOrderQuery(objInput);
@@ -36,4 +36,14 @@ export const findUserOrders = async(objInput) => {
     }
    const result = await fetchData(requestBody);
    return result?.data?.findUserOrders;
+}
+
+// setOrderDelivered
+export const setOrderDelivered = async(bigOrderID) => {
+   const query = setOrderDeliveredQuery(bigOrderID);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateOrder;
 }

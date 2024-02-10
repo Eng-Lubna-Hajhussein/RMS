@@ -8,12 +8,14 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Grid, Icon, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Icon, TableFooter, TablePagination, TextField, Typography } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/OptionList/OptionList";
 import { MoreVert, TimeToLeave } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import OrderTimer from "./OrderTimer/OrderTimer";
+import { ctrlOrder } from "./controller/CtrlOrder";
+import { useParams } from "react-router-dom";
 
 const styles = {
   dishName: {
@@ -33,6 +35,7 @@ const styles = {
 
 function Order() {
   const { appState, appDispatch } = useContext(AppContext);
+  const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const calculateZDirection = (lat1, long1, lat2, long2) => {
     let p1 = Math.pow(Math.pow(lat1, 2) + Math.pow(long1, 2), 0.5);
@@ -63,6 +66,23 @@ function Order() {
     ...initOrderedCategories,
   ]);
 
+  const [isLoading,setIsLoading] = useState(false);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orderedCategories.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const totalPrice = appState?.userInfo?.userOrder?.lstProduct.reduce(
     (total, { strPrice, intQuantity }) => {
       return total + Number(strPrice) * intQuantity;
@@ -71,8 +91,72 @@ function Order() {
   );
 
   const userNavList = [
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
+    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" },
+    path: `/customer/profile/${systemName}/${systemID}`,
+  },
+    { bigNavID: 1234846478, nav: { eng: "settings", arb: "حسابي" },
+    path: `/customer/settings/${systemName}/${systemID}`,
+  },
+  ];
+
+  const navList = [
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "home", arb: "الرئيسية" },
+      path: `/customer/${systemName}/${systemID}`,
+    },
+
+    {
+      bigNavID: 8944146478,
+      nav: { eng: "shop", arb: "تسوق" },
+      navList: [
+        {
+          bigNavID: 8944146400,
+          nav: { eng: "shop cart", arb: "كرت التسوق" },
+          path: `/customer/cart/${systemName}/${systemID}`,
+        },
+        {
+          bigNavID: 7644146400,
+          nav: {
+            eng: "menu",
+            arb: "كرت التسوق",
+            path: `/customer/${systemName}/${systemID}`,
+          },
+        },
+      ],
+    },
+    {
+      bigNavID: 7943146478,
+      nav: { eng: "order", arb: "الاخبار" },
+      navList: [
+        {
+          nav: { eng: "undelivered order", arb: "مدونتنا" },
+          path: `/customer/order/${systemName}/${systemID}`,
+        },
+        {
+          nav: { eng: "delivered orders", arb: "تفاصيل المدونة" },
+          path: `/customer/orders/${systemName}/${systemID}`,
+        },
+      ],
+    },
+    {
+      bigNavID: 948246478,
+      nav: { eng: "table", arb: "الصفحات" },
+      navList: [
+        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" },
+      path:`/customer/reserve-table/${systemName}/${systemID}`
+      },
+        {
+          bigNavID: 968341478,
+          nav: { eng: "reserved tables", arb: "خدماتنا" },
+          path:`/customer/tables/${systemName}/${systemID}`
+        },
+      ],
+    },
+    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
+    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" },
+    path:`/customer/review/${systemName}/${systemID}`
+  },
   ];
 
   const formateTime = (seconds) => {
@@ -91,18 +175,12 @@ function Order() {
     return {h:h,m:m,s:s};
   };
 
-  const [isLoading, setIsLoading] = useState(false);
-  const instalData = async () => {
-         setIsLoading(true);
-        //  const 
-  }
-
   return (
     <React.Fragment>
       <WebsiteHeader
         lang={appState.clientInfo.strLanguage}
         dir={appState.clientInfo.strDir}
-        navList={lstWebsiteNav}
+        navList={navList}
         userNavList={userNavList}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
@@ -111,7 +189,8 @@ function Order() {
         intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}
         blnUserLogin={appState.clientInfo.blnUserLogin}
       />
-      <Grid container justifyContent={"center"} sx={{ marginY: "50px" }}>
+      {isLoading&&<Typography>Loading...</Typography>}
+      {!(isLoading)&&<Grid container justifyContent={"center"} sx={{ marginY: "50px" }}>
         <Grid item xs="10" container>
           <Grid item xs="12" px={1}>
             <Table
@@ -159,7 +238,13 @@ function Order() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orderedCategories?.map((item, index) => (
+              {(rowsPerPage > 0
+                    ? orderedCategories.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : orderedCategories
+                  )?.map((item, index) => (
                   <TableRow key={item.bigID}>
                     <TableCell
                       sx={{ border: "1px solid #c4c4c4" }}
@@ -242,7 +327,62 @@ function Order() {
                     </TableCell>
                   </TableRow>
                 ))}
+                {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
               </TableBody>
+              <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25]}
+                      count={orderedCategories.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: {
+                          "aria-label": "rows per page",
+                        },
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      labelDisplayedRows={({ page }) => {
+                        // return `Page: ${page+1}`;
+                        return (
+                          <Typography sx={{ color: "#000" }}>
+                            Page: {page + 1}
+                          </Typography>
+                        );
+                      }}
+                      backIconButtonProps={{
+                        color: "#fff",
+                      }}
+                      nextIconButtonProps={{ color: "#fff" }}
+                      showFirstButton={true}
+                      showLastButton={true}
+                      labelRowsPerPage={
+                        <Typography sx={{ color: "#000" }}>Rows:</Typography>
+                      }
+                      sx={{
+                        ".MuiTablePagination-toolbar": {
+                          backgroundColor: "#f4fcfc",
+                          textAlign: "center",
+                        },
+                        ".MuiTablePagination-selectLabel, .MuiTablePagination-input":
+                          {
+                            fontWeight: "800",
+                          },
+                        ".MuiTablePagination-input": {
+                          fontWeight: "bold",
+                          background: "#fff",
+                          borderRadius: "10px",
+                          border: "1px solid #000",
+                        },
+                      }}
+                    />
+                  </TableRow>
+                </TableFooter>
             </Table>
           </Grid>
           <Grid item xs="12" container sx={{ marginTop: "40px" }}>
@@ -281,7 +421,7 @@ function Order() {
                       formateTime={formateTime}
                     />
                   </Grid>
-                  <Grid item xs="12" p={1}>
+                  {!!(orderedCategories?.length)&&<Grid item xs="12" p={1}>
                     <Button
                       sx={{
                         background: "#000",
@@ -292,6 +432,15 @@ function Order() {
                         },
                       }}
                       fullWidth
+                      onClick={()=>{
+                        ctrlOrder.orderDelivered({
+                          appDispatch:appDispatch,
+                          appState:appState,
+                          bigOrderID:appState?.userInfo?.userOrder?.bigOrderID,
+                          setIsLoading:setIsLoading,
+                          setOrderedCategories:setOrderedCategories
+                        })
+                      }}
                     >
                       <Typography
                         color={"#fff"}
@@ -302,7 +451,7 @@ function Order() {
                         Delivered
                       </Typography>
                     </Button>
-                  </Grid>
+                  </Grid>}
                 </Grid>
               </Paper>
             </Grid>
@@ -448,7 +597,7 @@ function Order() {
                       </Grid>
                     </Paper>
                   </Grid>
-                  <Grid
+                  {!!(orderedCategories?.length)&&<Grid
                     item
                     xs="12"
                     p={1}
@@ -460,13 +609,13 @@ function Order() {
                       label={"cancel order"}
                       color={App_Primary_Color}
                     />
-                  </Grid>
+                  </Grid>}
                 </Grid>
               </Paper>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid>}
     </React.Fragment>
   );
 }

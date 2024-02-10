@@ -42,7 +42,7 @@ export default function OrderTimer({ deliveryTime, order, formateTime }) {
         <Grid item px={1}>
           <Typography
           sx={{fontSize:"20px",fontWeight:"800"}}>
-            {time.h}</Typography>
+            {time.h|'00'}</Typography>
         </Grid>
         <Grid item px={1}>
           <Typography
@@ -52,7 +52,7 @@ export default function OrderTimer({ deliveryTime, order, formateTime }) {
         <Grid item px={1}>
           <Typography
           sx={{fontSize:"20px",fontWeight:"600"}}>
-            {time.m}</Typography>
+            {time.m||'00'}</Typography>
         </Grid>
         <Grid item px={1}>
           <Typography
@@ -62,7 +62,7 @@ export default function OrderTimer({ deliveryTime, order, formateTime }) {
         <Grid item px={1}>
           <Typography
           sx={{fontSize:"20px",fontWeight:"400"}}>
-            {time.s}</Typography>
+            {time.s||'00'}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>

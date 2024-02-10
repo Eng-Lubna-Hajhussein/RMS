@@ -1,10 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Badge, Box, Grid, Paper, Typography } from "@mui/material";
 import "./SystemMenu.css";
-import {
-  objAppActions,
-  tabsOptions,
-} from "appHelper/appVariables";
+import { objAppActions, tabsOptions } from "appHelper/appVariables";
 import { Add, MoreVert } from "@mui/icons-material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AddTab from "./AddTab/AddTab";
@@ -12,6 +9,7 @@ import OptionList from "../OptionList/OptionList";
 import AddItem from "./AddItem/AddItem";
 import EditItem from "./EditItem/EditItem";
 import shoppingIcon from "assets/image/shopping.svg";
+import { Link, useParams } from "react-router-dom";
 
 const styles = {
   addDish: {
@@ -142,11 +140,13 @@ export default function RestaurantMenu({
     objTabs.activeTab = objTabs.tabs[0];
     return objTabs;
   }, []);
-  
+
   const [objTabs, setObjTabs] = useState(initialObjTabs);
   const [addTabOpen, setAddTabOpen] = useState(false);
   const [addItemOpen, setAddItemOpen] = useState(false);
   const [editItemOpen, setEditItemOpen] = useState(false);
+
+  const { systemName } = useParams();
 
   const funAddTab = (tab) => {
     if (!objTabs?.tabs?.length) {
@@ -479,9 +479,29 @@ export default function RestaurantMenu({
                                 />
                               </Grid>
                               <Grid item xs={adminEditMode ? "8" : "6"} px={1}>
-                                <Typography sx={styles.dishName}>
-                                  {item.jsnName[lang]}
-                                </Typography>
+                                {customerEditMode && (
+                                  <Link
+                                    to={`/customer/product/${item.bigID}/${systemName}/${systemID}`}
+                                  >
+                                    <Typography sx={styles.dishName}>
+                                      {item.jsnName[lang]}
+                                    </Typography>
+                                  </Link>
+                                )}
+                                {adminEditMode && (
+                                  <Link
+                                    to={`/admin/product/${item.bigID}/${systemName}/${systemID}`}
+                                  >
+                                    <Typography sx={styles.dishName}>
+                                      {item.jsnName[lang]}
+                                    </Typography>
+                                  </Link>
+                                )}
+                                {!adminEditMode && !customerEditMode && (
+                                  <Typography sx={styles.dishName}>
+                                    {item.jsnName[lang]}
+                                  </Typography>
+                                )}
                               </Grid>
                               <Grid
                                 item
@@ -578,7 +598,7 @@ export default function RestaurantMenu({
           open={addTabOpen}
           handleClose={() => setAddTabOpen(false)}
           onSave={funAddTab}
-          tabsKey={objTabs.tabs.map(tab=>tab.jsnName['eng'])}
+          tabsKey={objTabs.tabs.map((tab) => tab.jsnName["eng"])}
           systemID={systemID}
           lang={lang}
           dir={dir}

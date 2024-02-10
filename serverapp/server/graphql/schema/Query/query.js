@@ -56,6 +56,14 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: ReservationResolvers.findTables,
     },
+    findUserTables: {
+      type: new GraphQLList(new GraphQLNonNull(ReservationType)),
+      args: {
+        bigSystemID: { type: GraphQLBigInt },
+        bigUserID: { type: GraphQLBigInt },
+      },
+      resolve: ReservationResolvers.findUserTables,
+    },
     findAvailableTables:{
       type: new GraphQLList(new GraphQLNonNull(ReservationType)),
       args: {

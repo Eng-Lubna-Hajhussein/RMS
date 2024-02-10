@@ -115,3 +115,20 @@ export const updateTableQuery = (objInput)=>{
     }
   }`
 }
+
+export const findUserTablesQuery = (objInput)=>{
+  return `query{
+    findUserTables(bigSystemID:${objInput.bigSystemID},bigUserID:${objInput.bigUserID}){
+      bigTableID
+      bigSystemID
+      bigUserID
+      intSeatsNumber
+      strTablePrice
+      jsnClientInfo
+      jsnClientPayment
+      dtmReservationStart
+      dtmReservationEnd
+      blnTableAvailable
+    }
+  }`
+}

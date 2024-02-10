@@ -69,3 +69,11 @@ export const findUnDeliveredOrderQuery = (objInput)=>{
     }
   }`
 }
+
+export const setOrderDeliveredQuery = (bigOrderID)=>{
+  return `mutation {
+  updateOrder(bigOrderID:${bigOrderID},blnDelivered:true){
+    blnDelivered   
+  }
+}`
+}

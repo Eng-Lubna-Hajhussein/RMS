@@ -35,7 +35,7 @@ import {
 import bgImg from "assets/image/patron.jpg";
 import { useForm } from "react-hook-form";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ctrlReview } from "./controller/CtrlReview";
 
 const styles = {
@@ -56,6 +56,7 @@ const styles = {
 
 function Review() {
   const { appState, appDispatch } = useContext(AppContext);
+  const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const initialReviews = useMemo(() => {
     return appState?.systemInfo?.lstSystemReviews || [];
@@ -84,42 +85,72 @@ function Review() {
     setPage(0);
   };
   const userNavList = [
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    { bigNavID: 5674846478, nav: { eng: "settings", arb: "الاعدادات" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
+    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" },
+    path: `/customer/profile/${systemName}/${systemID}`,
+  },
+    { bigNavID: 1234846478, nav: { eng: "settings", arb: "حسابي" },
+    path: `/customer/settings/${systemName}/${systemID}`,
+  },
   ];
+
   const navList = [
-    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "home", arb: "الرئيسية" },
+      path: `/customer/${systemName}/${systemID}`,
+    },
 
     {
       bigNavID: 8944146478,
       nav: { eng: "shop", arb: "تسوق" },
       navList: [
-        { bigNavID: 8944146400, nav: { eng: "shop cart", arb: "كرت التسوق" } },
-        { bigNavID: 6944146478, nav: { eng: "cart checkout", arb: "الحساب" } },
+        {
+          bigNavID: 8944146400,
+          nav: { eng: "shop cart", arb: "كرت التسوق" },
+          path: `/customer/cart/${systemName}/${systemID}`,
+        },
+        {
+          bigNavID: 7644146400,
+          nav: {
+            eng: "menu",
+            arb: "كرت التسوق",
+            path: `/customer/${systemName}/${systemID}`,
+          },
+        },
       ],
     },
     {
       bigNavID: 7943146478,
       nav: { eng: "order", arb: "الاخبار" },
       navList: [
-        { nav: { eng: "undelivered order", arb: "مدونتنا" } },
-        { nav: { eng: "delivered orders", arb: "تفاصيل المدونة" } },
+        {
+          nav: { eng: "undelivered order", arb: "مدونتنا" },
+          path: `/customer/order/${systemName}/${systemID}`,
+        },
+        {
+          nav: { eng: "delivered orders", arb: "تفاصيل المدونة" },
+          path: `/customer/orders/${systemName}/${systemID}`,
+        },
       ],
     },
     {
       bigNavID: 948246478,
       nav: { eng: "table", arb: "الصفحات" },
       navList: [
-        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" } },
+        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" },
+      path:`/customer/reserve-table/${systemName}/${systemID}`
+      },
         {
           bigNavID: 968341478,
           nav: { eng: "reserved tables", arb: "خدماتنا" },
+          path:`/customer/tables/${systemName}/${systemID}`
         },
       ],
     },
     { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
-    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" } },
+    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" },
+    path:`/customer/review/${systemName}/${systemID}`
+  },
   ];
 
   const [intRating, setIntRating] = useState(userReview?.intRating);

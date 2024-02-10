@@ -71,6 +71,7 @@ const styles = {
     fontWeight: "700",
     lineHeight: "1.2",
     fontSize: "18px",
+    textTransform: "capitalize",
   },
   py20: {
     paddingY: "20px",
@@ -151,11 +152,10 @@ function HeroContent({
               </Grid>
               <Grid item lg={"4"} pt-5 xs={"12"}>
                 <AnimButton0002
-                img={videoIcon}
-                src={'https://www.youtube.com/'}
-                label={dictionary.buttons.watchVideo[lang]}
-              />
-               
+                  img={videoIcon}
+                  src={"https://www.youtube.com/"}
+                  label={dictionary.buttons.watchVideo[lang]}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -183,6 +183,21 @@ function HeroContent({
                         <Grid item xs="12">
                           <Typography sx={styles.boxSubtitle}>
                             {content.wsCategory.jsnName[lang]}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs="12">
+                          <Typography
+                            sx={{
+                              color: "#555",
+                              fontWeight: "400",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {
+                              content.wsCategory.jsnCategoryInfo.jsnDescription[
+                                lang
+                              ]
+                            }
                           </Typography>
                         </Grid>
                         <Grid item xs="12">

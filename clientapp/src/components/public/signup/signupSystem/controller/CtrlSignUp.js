@@ -1,5 +1,10 @@
 import { formateDBStr, generateRandomID } from "appHelper/appFunctions";
-import { CITIES, COUNTRIES, Demo_jsnSystemInfo, objRoleID } from "appHelper/appVariables";
+import {
+  CITIES,
+  COUNTRIES,
+  Demo_jsnSystemInfo,
+  objRoleID,
+} from "appHelper/appVariables";
 import { createSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
 import { signup } from "appHelper/fetchapi/tblUser/tblUser";
 
@@ -41,13 +46,13 @@ export const ctrlSignUp = {
         jsnSystemName: jsnSystemName,
         strSystemPathURL: strSystemPathURL,
         jsnSystemLocation: jsnSystemLocation,
-        jsnSystemContact:Demo_jsnSystemInfo.jsnSystemContact,
-        lstSystemTeam:Demo_jsnSystemInfo.lstSystemTeam,
-        jsnSystemSections:Demo_jsnSystemInfo.jsnSystemSections,
-        strLogoPath:Demo_jsnSystemInfo.strLogoPath
+        jsnSystemContact: Demo_jsnSystemInfo.jsnSystemContact,
+        lstSystemTeam: Demo_jsnSystemInfo.lstSystemTeam,
+        jsnSystemSections: Demo_jsnSystemInfo.jsnSystemSections,
+        strLogoPath: Demo_jsnSystemInfo.strLogoPath,
       };
       const regSystem = await createSystem(objInputSystem);
-      console.log({regSystem})
+      console.log({ regSystem });
       const bigUserID = generateRandomID(10);
       const jsnFullName = {
         eng: formData.ownerNameEng,
@@ -71,11 +76,11 @@ export const ctrlSignUp = {
         jsnAddress: jsnSystemAddress,
       };
       const regUser = await signup(objInputUser);
-      if(!regUser?.bigUserID){
+      if (!regUser?.bigUserID) {
         alert("Registration failed");
         return;
       }
-      if(regUser?.bigUserID&&regSystem?.bigSystemID){
+      if (regUser?.bigUserID && regSystem?.bigSystemID) {
         appState.clientInfo.blnUserLogin = true;
         appState.userInfo = {
           bigUserID: regUser.bigUserID,
@@ -85,28 +90,41 @@ export const ctrlSignUp = {
           jsnFullName: JSON.parse(regUser.jsnFullName),
           strEmail: regUser.strEmail,
           jsnLocation: JSON.parse(regUser.jsnLocation),
+          blnIsDeleted: regUser.blnIsDeleted,
+          blnIsActive: regUser.blnIsActive,
+          dtmCreatedDate: regUser.dtmCreatedDate,
+          dtmUpdatedDate: regUser.dtmUpdatedDate,
         };
         appState.systemInfo.bigSystemID = regSystem.bigSystemID;
         appState.systemInfo.jsnSystemName = JSON.parse(regSystem.jsnSystemName);
         appState.systemInfo.strSystemPathURL = regSystem.strSystemPathURL;
-        appState.systemInfo.jsnSystemAddress = JSON.parse(regSystem.jsnSystemAddress);
-        appState.systemInfo.jsnSystemLocation = JSON.parse(regSystem.jsnSystemLocation);
-        appState.systemInfo.jsnSystemContact = JSON.parse(regSystem.jsnSystemContact);
+        appState.systemInfo.jsnSystemAddress = JSON.parse(
+          regSystem.jsnSystemAddress
+        );
+        appState.systemInfo.jsnSystemLocation = JSON.parse(
+          regSystem.jsnSystemLocation
+        );
+        appState.systemInfo.jsnSystemContact = JSON.parse(
+          regSystem.jsnSystemContact
+        );
         appState.systemInfo.lstSystemTeam = JSON.parse(regSystem.lstSystemTeam);
-        appState.systemInfo.jsnSystemSections = JSON.parse(regSystem.jsnSystemSections);
-        appState.systemInfo.lstSystemReviews = JSON.parse(regSystem.lstSystemReviews);
-        appState.systemInfo.strLogoPath =regSystem.strLogoPath;
-        appDispatch({...appState});
-        if(appState.systemInfo.bigSystemID&&appState.userInfo.bigUserID){
+        appState.systemInfo.jsnSystemSections = JSON.parse(
+          regSystem.jsnSystemSections
+        );
+        appState.systemInfo.lstSystemReviews = JSON.parse(
+          regSystem.lstSystemReviews
+        );
+        appState.systemInfo.strLogoPath = regSystem.strLogoPath;
+        appDispatch({ ...appState });
+        if (appState.systemInfo.bigSystemID && appState.userInfo.bigUserID) {
           // navigate(`/${regSystem.strSystemPathURL}`);
-          if(appState.userInfo.bigUserRoleID===objRoleID['Admin']){
+          if (appState.userInfo.bigUserRoleID === objRoleID["Admin"]) {
             navigate(`/admin/${regSystem.strSystemPathURL}`);
           }
-          if(appState.userInfo.bigUserRoleID===objRoleID['Customer']){
+          if (appState.userInfo.bigUserRoleID === objRoleID["Customer"]) {
             navigate(`/customer/${regSystem.strSystemPathURL}`);
           }
         }
-        
       }
     } catch (err) {
       console.log({ err });

@@ -23,13 +23,9 @@ import { reserveTable } from "appHelper/fetchapi/tblReservation/tblReservation";
   function ReservationCheckout({ open, handleClose,table, lang, dir, startDate,
     startTime,
     endDate,
-    endTime, }) {
+    endTime,setTables ,tables}) {
     const { appState, appDispatch } = useContext(AppContext);
     const navigate = useNavigate();
-
-    // useEffect(()=>{
-    //   console.log({table})
-    // },[table])
   
     return (
       <React.Fragment>
@@ -65,6 +61,10 @@ import { reserveTable } from "appHelper/fetchapi/tblReservation/tblReservation";
                  blnTableAvailable:false
                 }
               const reservedTable = await reserveTable(objInput);
+              if(reservedTable){
+                  const unreservedTables = tables.filter((table)=>table.bigTableID!==reservedTable.bigTableID);
+                  setTables(unreservedTables);
+              }
               handleClose();
             },
           }}

@@ -74,7 +74,7 @@ module.exports = {
     }
   },
   //UPDATE
-  updateUser: async (parent, user, context) => {
+  updateUser: async (_, user) => {
     try {
       const updatedUser = await tblUser.update(
         { ...user },

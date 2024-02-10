@@ -108,9 +108,16 @@ function FeaturedCard({ item, lang }) {
             </Box>
           )}
           <Grid container>
-            <Grid item xs="12" container sx={{height:"fit-content"}} alignContent={'center'} justifyContent={"center"}>
+            <Grid
+              item
+              xs="12"
+              container
+              sx={{ height: "fit-content" }}
+              alignContent={"center"}
+              justifyContent={"center"}
+            >
               <Box
-                component={'img'}
+                component={"img"}
                 src={item?.jsnCategoryInfo?.strImgPath}
                 height={"180px"}
                 width={"250px"}
@@ -120,16 +127,19 @@ function FeaturedCard({ item, lang }) {
             <Grid item xs="12">
               <Grid container px={5}>
                 <Grid item xs="12">
-                  <Rating
-                    color={"#ffd40d"}
-                    value={item?.intRating}
-                    sx={styles.itemRating}
-                    readOnly={true}
-                  />
-                </Grid>
-                <Grid item xs="12">
                   <Typography sx={styles.itemName}>
                     {item?.jsnName[lang]}
+                  </Typography>
+                </Grid>
+                <Grid item xs="12">
+                  <Typography
+                    sx={{
+                      color: "#555",
+                      fontWeight: "400",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {item?.jsnCategoryInfo?.jsnDescription[lang]}
                   </Typography>
                 </Grid>
                 <Grid item xs="12">

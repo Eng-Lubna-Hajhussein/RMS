@@ -28,6 +28,15 @@ module.exports = {
       throw err;
     }
   },
+  findUserTables: async (_, { bigSystemID,bigUserID }) => {
+    try {
+      return await tblReservation.findAll({
+        where: { bigSystemID: bigSystemID,bigUserID:bigUserID },
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
   // MUTATION--------------------------------------------------------------------------------
   //CREATE
   createTable: async (_, table) => {

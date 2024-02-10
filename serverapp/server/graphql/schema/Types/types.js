@@ -28,8 +28,8 @@ const UserType = new GraphQLObjectType({
     jsnAddress: { type: GraphQLJSON },
     blnIsDeleted: { type: GraphQLBoolean },
     blnIsActive: { type: GraphQLBoolean },
-    dtmCreatedDate: { type: GraphQLDate },
-    dtmUpdatedDate: { type: GraphQLDate },
+    dtmCreatedDate: { type: GraphQLString },
+    dtmUpdatedDate: { type: GraphQLString },
     jsnClientPayment: { type: GraphQLJSON },
   }),
 });

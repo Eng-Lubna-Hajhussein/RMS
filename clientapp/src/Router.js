@@ -10,31 +10,37 @@ import RouteCustomer from "components/stackholders/customer/RouteCustomer";
 import Order from "components/stackholders/customer/order/Order";
 import Orders from "components/stackholders/customer/orders/Orders";
 import ReserveTable from "components/stackholders/customer/reserveTable/ReserveTable";
-import Tables from "components/stackholders/admin/tables/Tables";
+import SystemTables from "components/stackholders/admin/tables/Tables";
+import CustomerTables from "components/stackholders/customer/tables/Tables";
 import Users from "components/stackholders/admin/users/Users";
 import Review from "components/stackholders/customer/review/Review";
-import Product from "components/shared/product/Product";
+import ProductReviewCustomer from "components/stackholders/customer/product/Product";
+import CustomerSettings from 'components/stackholders/customer/settings/Settings'
+import CustomerProfile from "components/stackholders/customer/profile/Profile";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<RouteLandingPage isDemo={true} />} />
       <Route path="/:systemName/:systemID" element={<RouteLandingPage />} />
-      <Route path="/customer/product/:productID/:systemName/:systemID" element={<Product />} />
+      <Route path="/customer/product/:productID/:systemName/:systemID" element={<ProductReviewCustomer />} />
       <Route path="/signup/:systemName/:systemID" element={<Signup />} />
       <Route path="/login/:systemName/:systemID" element={<Login />} />
       <Route path="/admin/:systemName/:systemID" element={<RouteAdmin />} />
-      <Route path="/admin/tables/:systemName/:systemID" element={<Tables />} />
+      <Route path="/admin/tables/:systemName/:systemID" element={<SystemTables />} />
       <Route path="/admin/users/:systemName/:systemID" element={<Users />} />
       <Route path="/customer/:systemName/:systemID" element={<RouteCustomer />} />
       <Route path="/admin/dashboard/:systemName/:systemID" element={<AdminDashboard />} />
-      <Route path="/customer/dashboard/reserve-table/:systemName/:systemID" element={<ReserveTable />} />
-      <Route path="/customer/dashboard/order/:systemName/:systemID" element={<Order />} />
-      <Route path="/customer/dashboard/orders/:systemName/:systemID" element={<Orders />} />
-      <Route path="/customer/dashboard/review/:systemName/:systemID" element={<Review />} />
+      <Route path="/customer/reserve-table/:systemName/:systemID" element={<ReserveTable />} />
+      <Route path="/customer/order/:systemName/:systemID" element={<Order />} />
+      <Route path="/customer/orders/:systemName/:systemID" element={<Orders />} />
+      <Route path="/customer/review/:systemName/:systemID" element={<Review />} />
+      <Route path="/customer/tables/:systemName/:systemID" element={<CustomerTables />} />
+      <Route path="/customer/settings/:systemName/:systemID" element={<CustomerSettings />} />
+      <Route path="/customer/profile/:systemName/:systemID" element={<CustomerProfile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/customer/dashboard/cart/:systemName/:systemID" element={<Cart />} />
+      <Route path="/customer/cart/:systemName/:systemID" element={<Cart />} />
     </Routes>
   );
 }

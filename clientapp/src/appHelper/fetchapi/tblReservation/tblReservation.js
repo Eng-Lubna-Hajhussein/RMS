@@ -1,9 +1,11 @@
+import { findUserOrdersQuery } from "appHelper/appQueries/orderQueries/orderQueries";
 import { fetchData } from "../appFetch";
 import {
   createTableQuery,
   deleteTableQuery,
   findAvailableTablesQuery,
   findTablesQuery,
+  findUserTablesQuery,
   freeTableQuery,
   reserveTableQuery,
   updateTableQuery,
@@ -70,4 +72,13 @@ export const updateTable = async (objInput) => {
   };
   const result = await fetchData(requestBody);
   return result?.data?.updateTable;
+};
+
+export const findUserTables = async (objInput) => {
+  const query = findUserTablesQuery(objInput);
+  const requestBody = {
+    query: query,
+  };
+  const result = await fetchData(requestBody);
+  return result?.data?.findUserTables;
 };

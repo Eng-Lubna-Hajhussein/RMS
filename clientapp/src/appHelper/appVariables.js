@@ -666,3 +666,39 @@ export const objAppActions = {
   Edit: 7244446400,
   Delete: 8324222478,
 };
+
+export const initialAppState = {
+  clientInfo: {
+    blnUserLogin: false,
+    strLanguage: "eng", // arb,
+    strDir: "ltr", //rtl
+  },
+  systemInfo: {
+    bigSystemID: null,
+    jsnSystemContact: {},
+    lstSystemReviews: [],
+    lstSystemTeam: [],
+    jsnSystemSections: [],
+    bigWSCategoryID: null,
+    jsnSystemLocation: {},
+    lstContactUs: [],
+    strLogoPath: null,
+    systemMenu: [],
+    systemRegion: [],
+  },
+  userInfo: {
+    bigUserID: "",
+    strUserImage: "",
+    jsnFullName: "",
+    strEmail: "",
+    userOrder: {
+      lstProduct: [],
+      strTotalPrice: "",
+    },
+    userCart: {
+      lstProduct: [],
+      strTotalPrice: "",
+    },
+    jsnClientPayment:{}
+  },
+};

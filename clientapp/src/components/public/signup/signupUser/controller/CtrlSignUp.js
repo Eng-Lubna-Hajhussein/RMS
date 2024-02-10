@@ -56,6 +56,10 @@ export const ctrlSignUp = {
           jsnFullName: JSON.parse(regUser.jsnFullName),
           strEmail: regUser.strEmail,
           jsnLocation: JSON.parse(regUser.jsnLocation),
+          blnIsDeleted:regUser.blnIsDeleted,
+          blnIsActive:regUser.blnIsActive,
+          dtmCreatedDate:regUser.dtmCreatedDate,
+          dtmUpdatedDate:regUser.dtmUpdatedDate
         };
         appState.systemInfo.bigSystemID = system.bigSystemID;
         appState.systemInfo.jsnSystemName = JSON.parse(system.jsnSystemName);

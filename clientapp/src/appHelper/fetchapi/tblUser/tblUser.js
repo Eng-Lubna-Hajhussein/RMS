@@ -1,4 +1,4 @@
-import { findUsersQuery, loginQuery, signupQuery } from "appHelper/appQueries/userQueries/userQueries"
+import { customerDeleteAccountQuery, customerUpdateSettingsQuery, findUsersQuery, loginQuery, signupQuery, userUploadImgQuery } from "appHelper/appQueries/userQueries/userQueries"
 import { fetchData } from "../appFetch";
 
 export const signup = async(objInput) => {
@@ -26,4 +26,31 @@ export const findUsers = async(bigSystemID) => {
     }
    const result = await fetchData(requestBody);
    return result?.data?.findUsers;
+}
+
+export const customerUpdateSettings = async (objInput)=>{
+   const query = customerUpdateSettingsQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const customerDeleteAccount = async (bigUserID)=>{
+   const query = customerDeleteAccountQuery(bigUserID);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const userUploadImg = async (objInput)=>{
+   const query = userUploadImgQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
 }

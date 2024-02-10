@@ -17,15 +17,17 @@ export const ctrlLogin = {
         strPassword: formData.password,
       };
       const loggedUser = await login(objInputUser);
-      console.log({loggedUser})
       if(!loggedUser?.bigUserID){
         alert("logged in failed");
         return;
       }
       const loggedSystem = await findSystem(loggedUser?.bigSystemID);
-      console.log({loggedSystem})
       if(!loggedSystem?.bigSystemID){
         alert("logged in failed");
+        return;
+      }
+      if(loggedUser?.blnIsDeleted){
+        alert("your account has been deleted or banned");
         return;
       }
       if(loggedUser?.bigUserID&&loggedSystem?.bigSystemID){
@@ -39,6 +41,10 @@ export const ctrlLogin = {
             jsnFullName: JSON.parse(loggedUser.jsnFullName),
             strEmail: loggedUser.strEmail,
             jsnLocation: JSON.parse(loggedUser.jsnLocation),
+            blnIsDeleted:loggedUser.blnIsDeleted,
+            blnIsActive:loggedUser.blnIsActive,
+            dtmCreatedDate:loggedUser.dtmCreatedDate,
+            dtmUpdatedDate:loggedUser.dtmUpdatedDate
           };
           appState.systemInfo.bigSystemID = loggedSystem.bigSystemID;
           appState.systemInfo.jsnSystemName = JSON.parse(loggedSystem.jsnSystemName);
