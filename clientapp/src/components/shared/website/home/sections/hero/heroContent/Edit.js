@@ -24,6 +24,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimationBG from "components/sharedUI/AnimationBG/AnimationBG";
+import AnimationEditor from "components/sharedUI/AnimationEditor/AnimationEditor";
 import TextEditor from "components/sharedUI/TextEditor/TextEditor";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useState } from "react";
@@ -48,10 +49,16 @@ function Edit({
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
   const [slide, setSlide] = useState({ ...content });
   const [openTextEditor, setOpenTextEditor] = useState(false);
+  const [openAnimationEditor, setOpenAnimationEditor] = useState(false);
   const handleTextEditorOpen = () => {
     setOpenTextEditor(true);
   };
   const handleTextEditorClose = () => setOpenTextEditor(false);
+
+  const handleAnimationEditorOpen = () => {
+    setOpenAnimationEditor(true);
+  };
+  const handleAnimationEditorClose = () => setOpenAnimationEditor(false);
 
   const onImgChange = (e) => {
     setRequestFiles([...e.target.files]);
@@ -65,6 +72,11 @@ function Edit({
   }, [data]);
   const onChangeTextEditor = (style) => {
     slide[slide.onStyleKey].style = style;
+    setSlide({ ...slide });
+  };
+  const onChangeAnimationEditor = (animationType) => {
+    
+    slide[slide.onAnimationKey].strAnimationType = animationType;
     setSlide({ ...slide });
   };
   return (
@@ -167,6 +179,7 @@ function Edit({
                   <FormControl fullWidth>
                     <InputLabel>Background Animation</InputLabel>
                     <Select
+                    label='Background Animation'
                       value={slide?.strBgAnimationType || "none"}
                       required
                       autoFocus
@@ -251,6 +264,14 @@ function Edit({
                     sx={{ height: "55px", boxShadow: "none" }}
                     variant="contained"
                     startIcon={<AnimationOutlined />}
+                    onClick={() => {
+                      setSlide({
+                        ...slide,
+                        onAnimationKey: "jsnTitle",
+                        defaultStyle: titleDefaultStyle,
+                      });
+                      handleAnimationEditorOpen();
+                    }}
                   >
                     <Typography
                       sx={{
@@ -343,6 +364,14 @@ function Edit({
                     sx={{ height: "55px", boxShadow: "none" }}
                     variant="contained"
                     startIcon={<AnimationOutlined />}
+                    onClick={() => {
+                      setSlide({
+                        ...slide,
+                        onAnimationKey: "jsnSubtitle",
+                        defaultStyle: subtitleDefaultStyle,
+                      });
+                      handleAnimationEditorOpen();
+                    }}
                   >
                     <Typography
                       sx={{
@@ -415,6 +444,14 @@ function Edit({
           objText={slide}
           onChange={onChangeTextEditor}
           open={openTextEditor}
+        />
+        <AnimationEditor
+          dir={dir}
+          lang={lang}
+          handleClose={handleAnimationEditorClose}
+          objText={slide}
+          onChange={onChangeAnimationEditor}
+          open={openAnimationEditor}
         />
       </Dialog>
     </React.Fragment>

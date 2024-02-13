@@ -281,17 +281,6 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
                 </Typography>
               </Grid>
             </Grid>
-            {/* <Grid item xs='12' container justifyContent={'center'} py={2}
-           >
-              <Grid item xs="3">
-              <AnimButton0001
-                label={"save styles"}
-                color={App_Primary_Color}
-                fullWidth={true}
-                onClick={()=>onChange(style)}
-              />
-              </Grid>
-            </Grid> */}
           </div>
         </Grid>
       </DialogContent>

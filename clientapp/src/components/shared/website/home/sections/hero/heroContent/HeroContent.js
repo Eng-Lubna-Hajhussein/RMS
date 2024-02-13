@@ -8,6 +8,7 @@ import AnimButton0002 from "components/sharedUI/AnimButton0002/AnimButton0002";
 import Edit from "./Edit";
 import EditIcon from "@mui/icons-material/Edit";
 import { MoreVert } from "@mui/icons-material";
+import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   container: {
@@ -126,16 +127,40 @@ function HeroContent({
       >
         <Grid container item xs={editable ? "11" : "12"}>
           <Grid item xs="12" sx={styles.py20} justify={"start"}>
-            <Typography sx={{ ...styles.title, ...content.jsnTitle.style }}>
-              {content.jsnTitle[lang]}
-            </Typography>
+            <AnimationBox
+              animationMode="loop"
+              easing={"linear"}
+              forceTrigger={true}
+              trigger="manual"
+              type={
+                content?.jsnTitle?.strAnimationType
+                  ? content?.jsnTitle?.strAnimationType
+                  : "none"
+              }
+            >
+              <Typography sx={{ ...styles.title, ...content.jsnTitle.style }}>
+                {content.jsnTitle[lang]}
+              </Typography>
+            </AnimationBox>
           </Grid>
           <Grid item xs="12" sx={styles.py20}>
-            <Typography
-              sx={{ ...styles.subtitle, ...content.jsnSubtitle.style }}
+            <AnimationBox
+              animationMode="loop"
+              easing={"linear"}
+              forceTrigger={true}
+              trigger="manual"
+              type={
+                content?.jsnSubtitle?.strAnimationType
+                  ? content?.jsnSubtitle?.strAnimationType
+                  : "none"
+              }
             >
-              {content.jsnSubtitle[lang]}
-            </Typography>
+              <Typography
+                sx={{ ...styles.subtitle, ...content.jsnSubtitle.style }}
+              >
+                {content.jsnSubtitle[lang]}
+              </Typography>
+            </AnimationBox>
           </Grid>
           <Grid item lg="8" sx={styles.py20} xs={"12"}>
             <Grid
