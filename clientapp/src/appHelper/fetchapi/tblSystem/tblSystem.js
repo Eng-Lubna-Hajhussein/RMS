@@ -1,4 +1,4 @@
-import { createSystemQuery,findSystemQuery,findSystemsQuery,updateSystemQuery, updateSystemReviewsQuery } from "appHelper/appQueries/systemQueries/systemQueries"
+import { createSystemQuery,findSystemQuery,findSystemsQuery,systemUploadLogoQuery,updateSystemQuery, updateSystemReviewsQuery } from "appHelper/appQueries/systemQueries/systemQueries"
 import { fetchData } from "../appFetch";
 
 export const createSystem = async(objInput) => {
@@ -38,12 +38,21 @@ export const updateSystem = async(objInput) => {
    return result?.data?.updateSystem;
 }
 
+export const systemUploadLogo = async(objInput) => {
+   const query = systemUploadLogoQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateSystem;
+}
+
+
 export const updateSystemReviews = async(objInput) => {
    const query = updateSystemReviewsQuery(objInput);
    const requestBody = {
       query: query
     }
    const result = await fetchData(requestBody);
-   // console.log({result})
    return result?.data?.updateSystem;
 }

@@ -57,6 +57,7 @@ function LowerToolbar({
   lang,
   editable,
   adminNavList,
+  websiteLogo
 }) {
   const { onLangChange } = useLanguage();
   return (
@@ -75,18 +76,18 @@ function LowerToolbar({
           </Badge>
         </Grid>
         <Grid item container justifyContent={"center"} lg="2" xs="5">
-          {editable && (
+          {adminNavList && (
             <NavList
-              nav={<Box component={"img"} sx={styles.logo} src={logoIcon} />}
+              nav={<Box component={"img"} sx={styles.logo} src={websiteLogo} />}
               lang={lang}
               navList={adminNavList}
             />
           )}
-          {!editable && (
-            <Box component={"img"} sx={styles.logo} src={logoIcon} />
+          {!adminNavList && (
+            <Box component={"img"} sx={styles.logo} src={websiteLogo} />
           )}
         </Grid>
-        <Grid item container lg={"6"} sx={styles.navListContainer}>
+        <Grid item container justifyContent={'center'} lg={"6"} sx={styles.navListContainer}>
           {navList.map(({ nav, navList,path }) => (
             <Grid item xs="2">
               <NavList nav={nav[lang]} path={path} navList={navList} lang={lang} />

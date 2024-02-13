@@ -8,7 +8,7 @@ const styles = {
     border: "5px solid #ffd40d",
     borderRadius: "30px",
     minHeight: { lg: "300px", xs: "200px" },
-    height: "fit-content",
+    height: { lg: "300px", xs: "200px" },
     width: "100%",
   },
   fullHeight: {
@@ -48,7 +48,7 @@ function ReviewCard({ review, lang, dir }) {
         sx={styles.fullHeight}
         alignContent={"flex-start"}
       >
-        <Grid item xs="12">
+        <Grid item xs="12" sx={{height:"150px",overflow:"auto"}}>
           <Typography sx={styles.review}>
             {review?.jsnComment[lang]
               ? review?.jsnComment[lang]

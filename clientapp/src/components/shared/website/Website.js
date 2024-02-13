@@ -8,6 +8,7 @@ function Website({
   userCart,
   addOrderProduct,
   removeOrderProduct,
+  websiteLogo,
   ws,
   navList,
   categories,
@@ -46,6 +47,7 @@ function Website({
       onSaveOwner={onSaveOwner}
       onSaveAbout={onSaveAbout}
       systemID={systemID}
+      websiteLogo={websiteLogo}
       navList={navList}
       userCart={userCart}
       addOrderProduct={addOrderProduct}

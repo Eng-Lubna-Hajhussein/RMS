@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Website from "components/shared/website/Website";
 import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
-import { useParams } from "react-router-dom";
-import { Demo_jsnSystemInfo, objCategoriesType } from "appHelper/appVariables";
+import { useNavigate, useParams } from "react-router-dom";
+import { Demo_jsnSystemInfo, initialAppState, objCategoriesType } from "appHelper/appVariables";
 import {
   findSystem,
   updateSystem,
@@ -14,16 +14,21 @@ import {
 } from "appHelper/fetchapi/tblCategory/tblCategory";
 import { Button, Grid, Typography } from "@mui/material";
 import { Save } from "@mui/icons-material";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "./uploadLogo/UploadLogo";
 
 function RouteAdmin() {
   const { appState, appDispatch } = useContext(AppContext);
-  const { systemID,systemName } = useParams();
+  const { systemID, systemName } = useParams();
   const [systemInfo, setSystemInfo] = useState(
     JSON.parse(JSON.stringify(appState.systemInfo))
   );
   const [saveMode, setSaveMode] = useState([]);
   const firstRender = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const navigate = useNavigate();
   useLanguage();
 
   const instalData = async () => {
@@ -300,44 +305,58 @@ function RouteAdmin() {
     setIsLoading(false);
   };
 
+  const onLogout = () => {
+    appState.clientInfo.blnUserLogin = false;
+    appState.clientInfo = initialAppState.clientInfo;
+    appState.systemInfo = initialAppState.systemInfo;
+    appState.userInfo = initialAppState.userInfo;
+    appDispatch({ ...appState });
+  };
+
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
+
   const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
+    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" },
+    onClick:()=>{setUploadPicture(true)}
+  },
+    {
+      bigNavID: 1166046478,
+      nav: { eng: "logout", arb: "تسجيل الخروج" },
+      onClick: onLogout,
+    },
   ];
 
   const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
+    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" },
+    onClick:()=>{setUploadLogo(true)}
+  },
   ];
 
   const navList = [
-    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" },
-    path:`/admin/${systemName}/${systemID}`
-  },
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "home", arb: "الرئيسية" },
+      path: `/admin/${systemName}/${systemID}`,
+    },
 
     {
       bigNavID: 8944146478,
       nav: { eng: "orders", arb: "تسوق" },
+      path: `/admin/orders/${systemName}/${systemID}`,
     },
     {
       bigNavID: 7943146478,
       nav: { eng: "tables", arb: "الاخبار" },
-      path:`/admin/tables/${systemName}/${systemID}`
+      path: `/admin/tables/${systemName}/${systemID}`,
     },
-    
+
     { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
-
-  const onLogout = () => {
-    console.log("logout");
-  };
 
   return (
     <React.Fragment>
@@ -375,11 +394,20 @@ function RouteAdmin() {
           adminNavList={adminNavList}
           lang={appState.clientInfo.strLanguage}
           userImg={appState?.userInfo?.strImgPath}
+          websiteLogo={appState?.systemInfo?.strLogoPath}
           userName={JSON.parse(JSON.stringify(appState?.userInfo?.jsnFullName))}
           blnUserLogin={appState?.clientInfo?.blnUserLogin}
           dir={appState.clientInfo.strDir}
         />
       )}
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+      />
     </React.Fragment>
   );
 }

@@ -77,7 +77,6 @@ function Users() {
 
   const userNavList = [
     { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
     { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
   ];
 
@@ -100,6 +99,7 @@ function Users() {
     {
       bigNavID: 8944146478,
       nav: { eng: "orders", arb: "تسوق" },
+      path:`/admin/orders/${systemName}/${systemID}`
     },
     {
       bigNavID: 7943146478,
@@ -107,12 +107,7 @@ function Users() {
       path: `/admin/tables/${systemName}/${systemID}`,
     },
 
-    {
-      bigNavID: 2344146478,
-      nav: { eng: "users", arb: "المنيو" },
-      path: `/admin/users/${systemName}/${systemID}`,
-    },
-    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
+    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
   const [isLoading, setIsLoading] = useState(false);
@@ -150,6 +145,7 @@ function Users() {
         dir={appState.clientInfo.strDir}
         navList={navList}
         userNavList={userNavList}
+        adminNavList={adminNavList}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
         userImg={appState.userInfo.strImgPath}
@@ -160,7 +156,54 @@ function Users() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
-          <Grid item xs="12" container>
+          <Grid item xs="10" container>
+          <Grid
+              item
+              xs="12"
+              px={1}
+              pb={10}
+              justifyContent={"center"}
+              sx={{
+                background: "#f4fcfc",
+                height: "100px",
+                marginY: "50px",
+                borderRadius: "20px",
+                padding: "20px",
+              }}
+            >
+              <Grid container>
+                <Grid item xs="12" container px={2} justifyContent={"start"}>
+                  <Typography
+                    sx={{
+                      textTransform: "uppercase",
+                      fontSize: "28px",
+                      fontWeight: "800",
+                      color: App_Primary_Color,
+                      borderBottom: "3px solid #ffd40d",
+                      width: "fit-content",
+                    }}
+                  >
+                    System Users !
+                  </Typography>
+                </Grid>
+                <Grid item xs="12" container justifyContent={"start"}>
+                  <form
+                    
+                    style={{ width: "100%" }}
+                  >
+                    <Grid item xs="12" container py={3}>
+                      <Grid item xs="6" px={2}>
+                       
+                      </Grid>
+                      <Grid item xs="6" px={2}>
+                       
+                      </Grid>
+                    
+                    </Grid>
+                  </form>
+                </Grid>
+              </Grid>
+            </Grid>
             <Grid item xs="12" sx={{ marginBottom: "50px" }} px={1}>
               <Table
                 sx={{ minWidth: 650, border: "1px solid #c4c4c4" }}

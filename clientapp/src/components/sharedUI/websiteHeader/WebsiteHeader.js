@@ -23,7 +23,8 @@ function WebsiteHeader({
   blnUserLogin,
   systemPath,
   userNavList,
-  customerEditMode
+  customerEditMode,
+  websiteLogo
 }) {
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
@@ -50,6 +51,7 @@ function WebsiteHeader({
           intCartProduct={intCartProduct}
           adminNavList={adminNavList}
           customerEditMode={customerEditMode}
+          websiteLogo={websiteLogo}
         />
       </AppBar>
       <DrawerNav

@@ -52,6 +52,24 @@ export const findUserOrdersQuery = (objInput)=>{
   }`
 }
 
+export const findSystemOrdersQuery = (bigSystemID)=>{
+  return `query {
+    findOrders(bigSystemID:${bigSystemID}){
+        bigOrderID
+        bigSystemID
+        bigUserID
+        lstProduct
+        strTotalPrice
+        jsnAddress
+        jsnLocation
+        dtmOrderDate
+        jsnClientInfo
+        jsnClientPayment
+        blnDelivered
+    }
+  }`
+}
+
 export const findUnDeliveredOrderQuery = (objInput)=>{
   return `query {
     findUnDeliveredOrder(bigUserID:${objInput.bigUserID},bigSystemID:${objInput.bigSystemID}){

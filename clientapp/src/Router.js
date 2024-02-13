@@ -8,7 +8,8 @@ import RouteAdmin from "components/stackholders/admin/RouteAdmin";
 import AdminDashboard from 'components/stackholders/admin/dashboard/Dahboard';
 import RouteCustomer from "components/stackholders/customer/RouteCustomer";
 import Order from "components/stackholders/customer/order/Order";
-import Orders from "components/stackholders/customer/orders/Orders";
+import CustomerOrders from "components/stackholders/customer/orders/Orders";
+import SystemOrders from "components/stackholders/admin/orders/Orders";
 import ReserveTable from "components/stackholders/customer/reserveTable/ReserveTable";
 import SystemTables from "components/stackholders/admin/tables/Tables";
 import CustomerTables from "components/stackholders/customer/tables/Tables";
@@ -17,6 +18,7 @@ import Review from "components/stackholders/customer/review/Review";
 import ProductReviewCustomer from "components/stackholders/customer/product/Product";
 import CustomerSettings from 'components/stackholders/customer/settings/Settings'
 import CustomerProfile from "components/stackholders/customer/profile/Profile";
+import SystemReviews from 'components/stackholders/admin/reviews/Reviews';
 
 function Router() {
   return (
@@ -29,11 +31,13 @@ function Router() {
       <Route path="/admin/:systemName/:systemID" element={<RouteAdmin />} />
       <Route path="/admin/tables/:systemName/:systemID" element={<SystemTables />} />
       <Route path="/admin/users/:systemName/:systemID" element={<Users />} />
+      <Route path="/admin/reviews/:systemName/:systemID" element={<SystemReviews />} />
       <Route path="/customer/:systemName/:systemID" element={<RouteCustomer />} />
       <Route path="/admin/dashboard/:systemName/:systemID" element={<AdminDashboard />} />
       <Route path="/customer/reserve-table/:systemName/:systemID" element={<ReserveTable />} />
       <Route path="/customer/order/:systemName/:systemID" element={<Order />} />
-      <Route path="/customer/orders/:systemName/:systemID" element={<Orders />} />
+      <Route path="/customer/orders/:systemName/:systemID" element={<CustomerOrders />} />
+      <Route path="/admin/orders/:systemName/:systemID" element={<SystemOrders />} />
       <Route path="/customer/review/:systemName/:systemID" element={<Review />} />
       <Route path="/customer/tables/:systemName/:systemID" element={<CustomerTables />} />
       <Route path="/customer/settings/:systemName/:systemID" element={<CustomerSettings />} />

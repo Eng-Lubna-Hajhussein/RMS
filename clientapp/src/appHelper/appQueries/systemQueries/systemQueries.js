@@ -86,6 +86,16 @@ export const updateSystemReviewsQuery = (objInput) => {
   }`;
 };
 
+export const systemUploadLogoQuery = (objInput) => {
+  return `mutation {
+    updateSystem(bigSystemID:${objInput.bigSystemID},strLogoPath:"${objInput.strLogoPath}"){
+      strLogoPath
+    }
+  }`;
+};
+
+
+
 export const findSystemQuery = (bigSystemID) => {
   return `query {
     findSystem(bigSystemID:${bigSystemID}){

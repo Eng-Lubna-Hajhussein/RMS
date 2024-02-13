@@ -9,6 +9,7 @@ function Header({
   userName,
   blnUserLogin,
   intCartProduct,
+  websiteLogo,
   customerEditMode,
   navList,
   systemPath,
@@ -29,6 +30,7 @@ function Header({
         customerEditMode={customerEditMode}
         navList={navList}
         editable={editable}
+        websiteLogo={websiteLogo}
         onSaveUpperHeader={onSaveUpperHeader}
         adminNavList={adminNavList}
         userImg={userImg}

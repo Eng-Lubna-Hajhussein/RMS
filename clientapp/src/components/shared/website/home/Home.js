@@ -22,6 +22,7 @@ function Home({
   blnUserLogin,
   userNavList,
   addWS,
+  websiteLogo,
   ws,
   navList,
   systemPath,
@@ -82,6 +83,7 @@ function Home({
         blnUserLogin={blnUserLogin}
         userNavList={userNavList}
         systemPath={systemPath}
+        websiteLogo={websiteLogo}
       />
       <Hero
         lang={lang}
@@ -138,14 +140,14 @@ function Home({
       {/* 
       
        */}
-      {/* <Testimonial
+      {systemInfo?.lstSystemReviews?.length&&<Testimonial
         lang={lang}
         dir={dir}
         lstSystemReviews={systemInfo.lstSystemReviews}
         jsnTestimonialSection={
           systemInfo.jsnSystemSections.jsnTestimonialSection
         }
-      /> */}
+      />}
       {/* <Team lang={lang} lstSystemTeam={systemInfo.lstSystemTeam} />
        */}
       <About

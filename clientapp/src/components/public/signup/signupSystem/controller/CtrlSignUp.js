@@ -48,7 +48,14 @@ export const ctrlSignUp = {
         jsnSystemLocation: jsnSystemLocation,
         jsnSystemContact: Demo_jsnSystemInfo.jsnSystemContact,
         lstSystemTeam: Demo_jsnSystemInfo.lstSystemTeam,
-        jsnSystemSections: Demo_jsnSystemInfo.jsnSystemSections,
+        jsnSystemSections: {...Demo_jsnSystemInfo.jsnSystemSections,
+          jsnOwnerSection:{...Demo_jsnSystemInfo.jsnSystemSections.jsnOwnerSection,
+            jsnOwnerName:{
+              eng: formData.ownerNameEng,
+              arb: formData.ownerNameArb,
+            }
+          }
+        },
         strLogoPath: Demo_jsnSystemInfo.strLogoPath,
       };
       const regSystem = await createSystem(objInputSystem);

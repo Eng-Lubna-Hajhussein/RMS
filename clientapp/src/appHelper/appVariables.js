@@ -260,7 +260,7 @@ export const Demo_jsnSystemInfo = {
   bigWSCategoryID: 3013919779,
   jsnLocation: {},
   lstContactUs: [],
-  strLogoPath:`${strServerAssetsPath}logo.png`,
+  strLogoPath:`${strServerAssetsPath}demo/logo.png`,
   systemMenu:[
     {
       bigID: 3891922142,

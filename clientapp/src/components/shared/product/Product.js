@@ -50,11 +50,6 @@ const styles = {
     borderRadius: "50% !important",
     width: "60px",
     height: "60px",
-    // position: "absolute",
-    // textAlign: "center",
-    // top: "9px",
-    // left: "15px",
-    // zIndex: "111",
   },
   saleTitle: {
     color: "#000",
