@@ -114,6 +114,38 @@ export const customerDeleteAccountQuery = (bigUserID) => {
     }`;
 };
 
+export const banCustomerQuery = (bigUserID) => {
+  return `mutation{
+      updateUser(bigUserID:${bigUserID},blnIsDeleted:true){
+         blnIsDeleted
+      }
+    }`;
+};
+
+export const unBanCustomerQuery = (bigUserID) => {
+  return `mutation{
+      updateUser(bigUserID:${bigUserID},blnIsDeleted:false){
+         blnIsDeleted
+      }
+    }`;
+};
+
+export const deactivateCustomerQuery = (bigUserID) => {
+  return `mutation{
+      updateUser(bigUserID:${bigUserID},blnIsActive:false){
+        blnIsActive
+      }
+    }`;
+};
+
+export const activateCustomerQuery = (bigUserID) => {
+  return `mutation{
+      updateUser(bigUserID:${bigUserID},blnIsActive:true){
+        blnIsActive
+      }
+    }`;
+};
+
 export const userUploadImgQuery = (objInput) => {
   return `mutation{
       updateUser(bigUserID:${objInput.bigUserID},strImgPath:"${objInput.strImgPath}"){

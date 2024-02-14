@@ -1,4 +1,4 @@
-import { customerDeleteAccountQuery, customerUpdateSettingsQuery, findUsersQuery, loginQuery, signupQuery, userUploadImgQuery } from "appHelper/appQueries/userQueries/userQueries"
+import { activateCustomerQuery, banCustomerQuery, customerDeleteAccountQuery, customerUpdateSettingsQuery, deactivateCustomerQuery, findUsersQuery, loginQuery, signupQuery, unBanCustomerQuery, userUploadImgQuery } from "appHelper/appQueries/userQueries/userQueries"
 import { fetchData } from "../appFetch";
 
 export const signup = async(objInput) => {
@@ -39,6 +39,42 @@ export const customerUpdateSettings = async (objInput)=>{
 
 export const customerDeleteAccount = async (bigUserID)=>{
    const query = customerDeleteAccountQuery(bigUserID);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const banCustomer= async (bigUserID)=>{
+   const query = banCustomerQuery(bigUserID);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const unBanCustomer= async (bigUserID)=>{
+   const query = unBanCustomerQuery(bigUserID);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const deactivateCustomer = async (bigUserID)=>{
+   const query = deactivateCustomerQuery(bigUserID);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const activateCustomer = async (bigUserID)=>{
+   const query = activateCustomerQuery(bigUserID);
    const requestBody = {
       query: query
     }

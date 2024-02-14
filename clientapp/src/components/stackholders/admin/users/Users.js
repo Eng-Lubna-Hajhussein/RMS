@@ -511,6 +511,8 @@ function Users() {
       open={openUserDetails}
       handleClose={()=>setOpenUserDetails(false)}
       user={userOnAction}
+      users={users}
+      setUsers={setUsers}
       lang={lang}
       />
     </React.Fragment>

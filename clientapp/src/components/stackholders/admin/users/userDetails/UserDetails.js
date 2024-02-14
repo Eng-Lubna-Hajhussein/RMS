@@ -1,5 +1,6 @@
 import {
   AccountBox,
+  AccountCircle,
   AppRegistrationSharp,
   Block,
   Checklist,
@@ -11,6 +12,7 @@ import {
   LocationOn,
   Message,
   NoAccounts,
+  RemoveCircle,
   Reviews,
 } from "@mui/icons-material";
 import {
@@ -34,16 +36,19 @@ import CopyToClipboardButton from "components/sharedUI/CopyToClipboardButton/Cop
 import Tabs001 from "components/sharedUI/Tabs001/Tabs001";
 import { AppContext } from "contextapi/context/AppContext";
 import moment from "moment";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import Location from "./Location/Location";
 import Review from "./Review/Review";
 import Activities from "./Activities/Activities";
+import { CtrlUsers } from "../controller/CtrlUsers";
 
-function UserDetails({ open, handleClose, user, lang, dir, onSave }) {
+function UserDetails({ open, handleClose,users, user,setUsers, lang, dir, onSave }) {
   const { appState, appDispatch } = useContext(AppContext);
   const navigate = useNavigate();
+  const [isLoading,setIsLoading] = useState(false);
+
 
   useEffect(() => {
     console.log({ user });
@@ -142,7 +147,8 @@ function UserDetails({ open, handleClose, user, lang, dir, onSave }) {
                     width="50px"
                   />
                 </Grid>
-                <Grid
+                {isLoading&&<Typography>Loading...</Typography>}
+                {!isLoading&&<Grid
                   item
                   container
                   xs="10"
@@ -164,20 +170,72 @@ function UserDetails({ open, handleClose, user, lang, dir, onSave }) {
                   </Grid>
                   <Grid item xs="12" container>
                     <Grid item pr={2}>
-                      <Tooltip title="ban user">
+                      {user?.blnIsDeleted&&<Tooltip title="unban user">
                         <Block
                           fontSize="small"
                           sx={{ cursor: "pointer", color: "red" }}
+                          onClick={()=>
+                            {CtrlUsers.unBanCustomerHandler({
+                              bigUserID:user?.bigUserID,
+                              setIsLoading:setIsLoading,
+                              user:user,
+                              setUsers:setUsers,
+                              users:users,
+                              handleClose:handleClose
+                            })}
+                          }
                         />
-                      </Tooltip>
+                      </Tooltip>}
+                      {!(user?.blnIsDeleted)&&<Tooltip title="ban user">
+                        <RemoveCircle
+                          fontSize="small"
+                          sx={{ cursor: "pointer", color: "red" }}
+                          onClick={()=>
+                            {CtrlUsers.banCustomerHandler({
+                              bigUserID:user?.bigUserID,
+                              setIsLoading:setIsLoading,
+                              user:user,
+                              setUsers:setUsers,
+                              users:users,
+                              handleClose:handleClose
+                            })}
+                          }
+                        />
+                      </Tooltip>}
                     </Grid>
                     <Grid item pr={2}>
-                      <Tooltip title="deactivate user">
-                        <NoAccounts
+                      {user?.blnIsActive&&<Tooltip title="deactivate user">
+                        <AccountCircle
+                          onClick={()=>
+                            {CtrlUsers.deactivateCustomerHandler({
+                              bigUserID:user?.bigUserID,
+                              setIsLoading:setIsLoading,
+                              user:user,
+                              setUsers:setUsers,
+                              users:users,
+                              handleClose:handleClose
+                            })}
+                          }
                           fontSize="small"
                           sx={{ cursor: "pointer", color: "gray" }}
                         />
-                      </Tooltip>
+                      </Tooltip>}
+                      {!(user?.blnIsActive)&&<Tooltip title="activate user">
+                        <NoAccounts
+                          onClick={()=>
+                            {CtrlUsers.activateCustomerHandler({
+                              bigUserID:user?.bigUserID,
+                              setIsLoading:setIsLoading,
+                              user:user,
+                              setUsers:setUsers,
+                              users:users,
+                              handleClose:handleClose
+                            })}
+                          }
+                          fontSize="small"
+                          sx={{ cursor: "pointer", color: "gray" }}
+                        />
+                      </Tooltip>}
                     </Grid>
                     <Grid item pr={2}>
                       <Tooltip title="message user">
@@ -188,7 +246,7 @@ function UserDetails({ open, handleClose, user, lang, dir, onSave }) {
                       </Tooltip>
                     </Grid>
                   </Grid>
-                </Grid>
+                </Grid>}
               </Grid>
               <Grid item xs="2" py={2} container justifyContent={"end"}>
                 <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
