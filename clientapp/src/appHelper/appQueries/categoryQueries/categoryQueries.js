@@ -79,7 +79,7 @@ export const bulkCategoriesQuery = (categories, onDeleteIDs) => {
   },bigParentID:${category.bigParentID},bigCategoryTypeID:${category.bigCategoryTypeID},jsnName:"""${JSON.stringify(
     category.jsnName
   )}""",jsnCategoryInfo:"""${JSON.stringify(
-    category.jsnCategoryInfo
+    category?.jsnCategoryInfo|| {}
   )}"""
 }`);
   return `mutation {

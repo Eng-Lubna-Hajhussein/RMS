@@ -16,3 +16,25 @@ export function generateRandomID(n) {
 export function formateDBStr(str){
   return str.toLowerCase().trim()
 }
+
+export const orderRegions = ({ Regions: regions }) => {
+  const appRegionsID = {};
+  const ccID = {};
+  const regionName = {};
+  const sub = {};
+  const categories = regions;
+  regions.forEach(({ bigID, jsnName, bigParentID }) => {
+    regionName[bigID] = jsnName;
+    if (bigParentID === 0) {
+      appRegionsID[bigID] = {};
+    } else if (appRegionsID[bigParentID]) {
+      appRegionsID[bigParentID][bigID] = [];
+      ccID[bigID] = bigParentID;
+      sub[bigParentID] = sub[bigParentID] ? ++sub[bigParentID] : 1;
+    } else if (appRegionsID[ccID[bigParentID]]) {
+      appRegionsID[ccID[bigParentID]][bigParentID].push(bigID);
+      sub[bigParentID] = sub[bigParentID] ? ++sub[bigParentID] : 1;
+    }
+  });
+  return { appRegionsID, regionName, ccID, sub, categories };
+};

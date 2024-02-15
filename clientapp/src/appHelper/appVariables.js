@@ -14,7 +14,7 @@ export const icons = {
 };
 
 export const objCategoriesType = {
-  Region:4026111142,
+  DeliveryAddress:4026111142,
   Menu:3916121742
 }
 

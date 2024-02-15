@@ -8,14 +8,28 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Grid, Icon, TableFooter, TablePagination, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Icon,
+  TableFooter,
+  TablePagination,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/OptionList/OptionList";
 import { MoreVert, TimeToLeave, Visibility } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import { findSystemOrders, findUserOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
+import {
+  findSystemOrders,
+  findUserOrders,
+} from "appHelper/fetchapi/tblOrder/tblOrder";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import arrowImg from "assets/image/arrow-2.png";
+import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   dishName: {
@@ -56,7 +70,7 @@ function Orders() {
 
   const instalData = async () => {
     setIsLoading(true);
-    const bigSystemID= appState.systemInfo.bigSystemID;
+    const bigSystemID = appState.systemInfo.bigSystemID;
     const jsnOrdersData = await findSystemOrders(bigSystemID);
     if (jsnOrdersData?.length) {
       const ordersData = jsnOrdersData.map((order) => ({
@@ -96,7 +110,7 @@ function Orders() {
     {
       bigNavID: 8944146478,
       nav: { eng: "orders", arb: "تسوق" },
-      path:`/admin/orders/${systemName}/${systemID}`
+      path: `/admin/orders/${systemName}/${systemID}`,
     },
     {
       bigNavID: 7943146478,
@@ -131,7 +145,7 @@ function Orders() {
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
           <Grid item xs="10" container>
-          <Grid
+            <Grid
               item
               xs="12"
               px={1}
@@ -139,26 +153,49 @@ function Orders() {
               justifyContent={"center"}
               sx={{
                 background: "#f4fcfc",
-                height: "100px",
+                height: "140px",
                 marginY: "50px",
                 borderRadius: "20px",
                 padding: "20px",
               }}
             >
               <Grid container>
-                <Grid item xs="12" container px={2} justifyContent={"start"}>
-                  <Typography
-                    sx={{
-                      textTransform: "uppercase",
-                      fontSize: "28px",
-                      fontWeight: "800",
-                      color: App_Primary_Color,
-                      borderBottom: "3px solid #ffd40d",
-                      width: "fit-content",
-                    }}
+                <Grid item container xs="5" px={2} justifyContent={"start"}>
+                  <Grid item xs="12">
+                    <Typography
+                      sx={{
+                        textTransform: "uppercase",
+                        fontSize: "28px",
+                        fontWeight: "800",
+                        color: App_Primary_Color,
+                        borderBottom: "3px solid #ffd40d",
+                        width: "fit-content",
+                      }}
+                    >
+                      Restaurant Orders !
+                    </Typography>
+                  </Grid>
+                  <Grid item xs="12">
+                    <Typography sx={{ fontWeight: "800" }}>{`( ${
+                      orders?.length || 0
+                    } Orders ) `}</Typography>
+                  </Grid>
+                </Grid>
+                <Grid item container xs="2" justifyContent={"start"} py={2}>
+                  <AnimationBox animationMode="reverse" easing={"ease-in"}
+                  forceTrigger={true} type="fadeOut"
+                  trigger="manual"
                   >
-                    System Orders !
-                  </Typography>
+                  <Box
+                    component={"img"}
+                    sx={{
+                      transform: "rotate(180deg)",
+                      height: "80px",
+                      width: "100%",
+                    }}
+                    src={arrowImg}
+                  />
+                  </AnimationBox>
                 </Grid>
               </Grid>
             </Grid>
@@ -244,7 +281,7 @@ function Orders() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                   {(rowsPerPage > 0
+                  {(rowsPerPage > 0
                     ? orders.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
@@ -354,7 +391,7 @@ function Orders() {
                       </TableCell>
                     </TableRow>
                   ))}
-                   {emptyRows > 0 && (
+                  {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
                     </TableRow>

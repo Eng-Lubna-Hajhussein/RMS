@@ -83,7 +83,7 @@ function UserDetails({ open, handleClose,users, user,setUsers, lang, dir, onSave
           </Grid>
         </Grid>
       ),
-      content: <Activities />,
+      content: <Activities user={user} lang={lang} />,
     },
     {
       tabLabel: (
@@ -98,7 +98,7 @@ function UserDetails({ open, handleClose,users, user,setUsers, lang, dir, onSave
           </Grid>
         </Grid>
       ),
-      content: <Review bigUserID={user?.bigUserID} />,
+      content: <Review bigUserID={user?.bigUserID} lang={lang} />,
     },
     {
       tabLabel: (

@@ -16,9 +16,12 @@ import CustomerTables from "components/stackholders/customer/tables/Tables";
 import Users from "components/stackholders/admin/users/Users";
 import Review from "components/stackholders/customer/review/Review";
 import ProductReviewCustomer from "components/stackholders/customer/product/Product";
+import SystemProductReviews from "components/stackholders/admin/product/Product";
+
 import CustomerSettings from 'components/stackholders/customer/settings/Settings'
 import CustomerProfile from "components/stackholders/customer/profile/Profile";
 import SystemReviews from 'components/stackholders/admin/reviews/Reviews';
+import DeliveryAddress from "components/stackholders/admin/deliveryAddress/DeliveryAddress";
 
 function Router() {
   return (
@@ -32,8 +35,10 @@ function Router() {
       <Route path="/admin/tables/:systemName/:systemID" element={<SystemTables />} />
       <Route path="/admin/users/:systemName/:systemID" element={<Users />} />
       <Route path="/admin/reviews/:systemName/:systemID" element={<SystemReviews />} />
+      <Route path="/admin/deliveryAddress/:systemName/:systemID" element={<DeliveryAddress />} />
       <Route path="/customer/:systemName/:systemID" element={<RouteCustomer />} />
-      <Route path="/admin/dashboard/:systemName/:systemID" element={<AdminDashboard />} />
+      {/* <Route path="/admin/dashboard/:systemName/:systemID" element={<AdminDashboard />} /> */}
+      <Route path="/admin/product/:productID/:systemName/:systemID" element={<SystemProductReviews />} />
       <Route path="/customer/reserve-table/:systemName/:systemID" element={<ReserveTable />} />
       <Route path="/customer/order/:systemName/:systemID" element={<Order />} />
       <Route path="/customer/orders/:systemName/:systemID" element={<CustomerOrders />} />

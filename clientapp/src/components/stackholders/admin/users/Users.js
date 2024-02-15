@@ -51,6 +51,8 @@ import { Link, useParams } from "react-router-dom";
 // import EditTable from "./editTable/EditTable";
 import { findUsers } from "appHelper/fetchapi/tblUser/tblUser";
 import UserDetails from "./userDetails/UserDetails";
+import arrowImg from "assets/image/arrow-2.png";
+import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 function Users() {
   const [page, setPage] = useState(0);
@@ -165,42 +167,49 @@ function Users() {
               justifyContent={"center"}
               sx={{
                 background: "#f4fcfc",
-                height: "100px",
+                height: "140px",
                 marginY: "50px",
                 borderRadius: "20px",
                 padding: "20px",
               }}
             >
-              <Grid container>
-                <Grid item xs="12" container px={2} justifyContent={"start"}>
-                  <Typography
-                    sx={{
-                      textTransform: "uppercase",
-                      fontSize: "28px",
-                      fontWeight: "800",
-                      color: App_Primary_Color,
-                      borderBottom: "3px solid #ffd40d",
-                      width: "fit-content",
-                    }}
-                  >
-                    System Users !
-                  </Typography>
+             <Grid container>
+                <Grid item container xs="5" px={2} justifyContent={"start"}>
+                  <Grid item xs="12">
+                    <Typography
+                      sx={{
+                        textTransform: "uppercase",
+                        fontSize: "28px",
+                        fontWeight: "800",
+                        color: App_Primary_Color,
+                        borderBottom: "3px solid #ffd40d",
+                        width: "fit-content",
+                      }}
+                    >
+                      Restaurant Users !
+                    </Typography>
+                  </Grid>
+                  <Grid item xs="12">
+                    <Typography sx={{ fontWeight: "800" }}>{`( ${
+                      users?.length || 0
+                    } Users ) `}</Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs="12" container justifyContent={"start"}>
-                  <form
-                    
-                    style={{ width: "100%" }}
+                <Grid item container xs="2" justifyContent={"start"} py={2}>
+                  <AnimationBox animationMode="reverse" easing={"ease-in"}
+                  forceTrigger={true} type="fadeOut"
+                  trigger="manual"
                   >
-                    <Grid item xs="12" container py={3}>
-                      <Grid item xs="6" px={2}>
-                       
-                      </Grid>
-                      <Grid item xs="6" px={2}>
-                       
-                      </Grid>
-                    
-                    </Grid>
-                  </form>
+                  <Box
+                    component={"img"}
+                    sx={{
+                      transform: "rotate(180deg)",
+                      height: "80px",
+                      width: "100%",
+                    }}
+                    src={arrowImg}
+                  />
+                  </AnimationBox>
                 </Grid>
               </Grid>
             </Grid>

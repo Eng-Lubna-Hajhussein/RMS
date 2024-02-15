@@ -37,7 +37,7 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 import { Link, useParams } from "react-router-dom";
 import arrowImg from "assets/image/arrow-2.png";
-import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+// import { ctrlReview } from "./controller/CtrlProduct";
 
 const styles = {
   dishName: {
@@ -46,6 +46,22 @@ const styles = {
     color: "#000",
     fontFamily: "sans-serif",
   },
+  saleBox: {
+    backgroundColor: "#ffd40d !important",
+    borderRadius: "50% !important",
+    width: "60px",
+    height: "60px",
+    // position: "absolute",
+    // textAlign: "center",
+    // top: "9px",
+    // left: "15px",
+    // zIndex: "111",
+  },
+  saleTitle: {
+    color: "#000",
+    fontSize: "18px !important",
+    fontWeight: "800 !important",
+  },
   dishDescription: {
     fontSize: { lg: "18px !important", xs: "9px" },
     fontWeight: "400 !important",
@@ -53,23 +69,44 @@ const styles = {
     fontFamily: "Epilogue",
     lineHeight: { lg: "30px !important", xs: "20px" },
   },
+  price: {
+    fontSize: "32px",
+    fontWeight: "800",
+    fontFamily: "sans-serif",
+    color: "#555",
+  },
+  salePrice: {
+    textDecoration: "line-through",
+    fontSize: "24px",
+    fontWeight: "800",
+    fontFamily: "sans-serif",
+    color: "#555",
+  },
 };
 
-function Reviews() {
+function Product() {
   const { appState, appDispatch } = useContext(AppContext);
-  const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
-  const initialReviews = useMemo(() => {
-    return appState?.systemInfo?.lstSystemReviews || [];
-  });
+  const { productID } = useParams();
+  const productInitial = useMemo(() => {
+    return appState.systemInfo.systemMenu.find(
+      ({ bigID }) => Number(bigID) === Number(productID)
+    );
+  }, []);
+  const [product, setProduct] = useState(productInitial);
 
-  const [reviews, setReviews] = useState(initialReviews);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - reviews.length) : 0;
+    page > 0
+      ? Math.max(
+          0,
+          (1 + page) * rowsPerPage -
+            product?.jsnCategoryInfo?.lstReviews?.length
+        )
+      : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -80,101 +117,58 @@ function Reviews() {
     setPage(0);
   };
   const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
+    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
+    { bigNavID: 5674846478, nav: { eng: "settings", arb: "الاعدادات" } },
     { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
   ];
-
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
-
   const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
+    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
 
     {
       bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
+      nav: { eng: "shop", arb: "تسوق" },
+      navList: [
+        { bigNavID: 8944146400, nav: { eng: "shop cart", arb: "كرت التسوق" } },
+        { bigNavID: 6944146478, nav: { eng: "cart checkout", arb: "الحساب" } },
+      ],
     },
     {
       bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
+      nav: { eng: "order", arb: "الاخبار" },
+      navList: [
+        { nav: { eng: "undelivered order", arb: "مدونتنا" } },
+        { nav: { eng: "delivered orders", arb: "تفاصيل المدونة" } },
+      ],
     },
-
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
+    {
+      bigNavID: 948246478,
+      nav: { eng: "table", arb: "الصفحات" },
+      navList: [
+        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" } },
+        {
+          bigNavID: 968341478,
+          nav: { eng: "reserved tables", arb: "خدماتنا" },
+        },
+      ],
+    },
+    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
+    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" } },
   ];
 
-  //   const [intRating, setIntRating] = useState(userReview?.intRating);
-  //   const reviewTextEng = useRef();
-  //   const reviewTextArb = useRef();
+  const userReview = useMemo(() => {
+    return (
+      product?.jsnCategoryInfo?.lstReviews?.find(
+        (review) => review.bigUserID === appState.userInfo.bigUserID
+      ) || null
+    );
+  }, [product]);
+  const [intRating, setIntRating] = useState(userReview?.intRating);
+  const reviewTextEng = useRef();
+  const reviewTextArb = useRef();
 
-  //   const handleAdd = () => {
-  //     const review = {
-  //       bigUserID: appState.userInfo.bigUserID,
-  //       jsnUserName: appState.userInfo.jsnFullName,
-  //       intRating: Number(intRating),
-  //       jsnComment: {
-  //         eng: reviewTextEng.current.value,
-  //         arb: reviewTextArb.current.value,
-  //       },
-  //       strImgPath: appState.userInfo.strImgPath,
-  //       dtmReviewDate: moment(new Date()).format("YYYY-MM-DD"),
-  //     };
-  //     ctrlReview.addReview({
-  //       appState: appState,
-  //       appDispatch: appDispatch,
-  //       isLoading: isLoading,
-  //       setIsLoading: setIsLoading,
-  //       reviews: reviews,
-  //       setReviews: setReviews,
-  //       review: review,
-  //     });
-  //   };
-
-  //   const handleEdit = () => {
-  //     const review = {
-  //       bigUserID: appState.userInfo.bigUserID,
-  //       jsnUserName: appState.userInfo.jsnFullName,
-  //       intRating: Number(intRating),
-  //       jsnComment: {
-  //         eng: reviewTextEng.current.value,
-  //         arb: reviewTextArb.current.value,
-  //       },
-  //       strImgPath: appState.userInfo.strImgPath,
-  //       dtmReviewDate: moment(new Date()).format("YYYY-MM-DD"),
-  //     };
-  //     ctrlReview.editReview({
-  //       appState: appState,
-  //       appDispatch: appDispatch,
-  //       isLoading: isLoading,
-  //       setIsLoading: setIsLoading,
-  //       reviews: reviews,
-  //       setReviews: setReviews,
-  //       review: review,
-  //     });
-  //   };
-
-  //   const handleDelete = () => {
-  //     ctrlReview.deleteReview({
-  //       appState: appState,
-  //       appDispatch: appDispatch,
-  //       setIsLoading:setIsLoading,
-  //       reviews:reviews,
-  //       setReviews:setReviews,
-  //       bigUserID:appState.userInfo.bigUserID,
-  //     });
-  //   };
+  useEffect(() => {
+    setIntRating(userReview?.intRating);
+  }, [userReview]);
 
   return (
     <React.Fragment>
@@ -183,7 +177,6 @@ function Reviews() {
         dir={appState.clientInfo.strDir}
         navList={navList}
         userNavList={userNavList}
-        adminNavList={adminNavList}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
         userImg={appState.userInfo.strImgPath}
@@ -195,69 +188,153 @@ function Reviews() {
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
           <Grid item xs="10" container>
-            <Grid item xs="12">
+            <Grid item xs="12" container sx={{ marginY: "50px" }}>
+              <Grid item xs="4" px={4}>
+                <Box
+                  sx={{
+                    height: "430px",
+                    width: "100%",
+                    border: `4px solid ${App_Second_Color}`,
+                    borderRadius: "20px",
+                  }}
+                >
+                  <Grid
+                    container
+                    sx={{ height: "100%" }}
+                    justifyContent={"center"}
+                    p={2}
+                  >
+                    <Grid item xs="12">
+                      {product?.jsnCategoryInfo?.blnOnSale && (
+                        <Box sx={styles.saleBox}>
+                          <Grid
+                            container
+                            sx={{ height: "100%" }}
+                            justifyContent={"center"}
+                            alignContent={"center"}
+                          >
+                            <Typography sx={styles.saleTitle}>Sale</Typography>
+                          </Grid>
+                        </Box>
+                      )}
+                    </Grid>
+                    <Grid item xs="12" container justifyContent={"center"}>
+                      <Box
+                        src={product?.jsnCategoryInfo?.strImgPath}
+                        component={"img"}
+                        sx={{
+                          height: "300px",
+                          width: "250px",
+                          padding: "50px 30px",
+                          background: App_Primary_Color,
+                          borderRadius: "20px",
+                          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;",
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
               <Grid
                 item
-                xs="12"
-                px={1}
-                pb={10}
-                justifyContent={"center"}
-                sx={{
-                  background: "#f4fcfc",
-                  height: "140px",
-                  marginY: "50px",
-                  borderRadius: "20px",
-                  padding: "20px",
-                }}
+                xs="8"
+                px={4}
+                container
+                alignContent={"start"}
+                justifyContent={"end"}
               >
-               <Grid container>
-                <Grid item container xs="5" px={2} justifyContent={"start"}>
-                  <Grid item xs="12">
-                    <Typography
-                      sx={{
-                        textTransform: "uppercase",
-                        fontSize: "28px",
-                        fontWeight: "800",
-                        color: App_Primary_Color,
-                        borderBottom: "3px solid #ffd40d",
-                        width: "fit-content",
-                      }}
-                    >
-                      Restaurant Reviews !
-                    </Typography>
+                <Grid item xs="12" container>
+                  <Grid item>
+                    <Rating
+                      readOnly
+                      value={Number(product?.jsnCategoryInfo?.intRating)}
+                    />
                   </Grid>
-                  <Grid item xs="12">
+                  <Grid item px={3}>
                     <Typography sx={{ fontWeight: "800" }}>{`( ${
-                      reviews?.length || 0
+                      product?.jsnCategoryInfo?.lstReviews?.length || 0
                     } Reviews ) `}</Typography>
                   </Grid>
                 </Grid>
-                <Grid item container xs="2" justifyContent={"start"} py={2}>
-                  <AnimationBox animationMode="reverse" easing={"ease-in"}
-                  forceTrigger={true} type="fadeOut"
-                  trigger="manual"
-                  >
-                  <Box
-                    component={"img"}
+                <Grid item xs="12" container>
+                  <Grid
+                    item
+                    xs="12"
+                    px={1}
+                    pb={10}
+                    justifyContent={"center"}
                     sx={{
-                      transform: "rotate(180deg)",
-                      height: "80px",
-                      width: "100%",
+                      background: "#f4fcfc",
+                      height: "345px",
+                      marginY: "50px",
+                      borderRadius: "20px",
+                      padding: "20px",
                     }}
-                    src={arrowImg}
-                  />
-                  </AnimationBox>
+                  >
+                    <Grid item xs="12">
+                      <Typography
+                        sx={{
+                          color: "#000",
+                          fontSize: "40px",
+                          fontWeight: "800",
+                        }}
+                      >
+                        {product?.jsnName[lang]}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs="12">
+                      <Typography
+                        sx={{
+                          fontWeight: "800",
+                        }}
+                      >
+                        {product?.jsnCategoryInfo?.jsnDescription[lang]}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs="12" container>
+                      <Grid item>
+                        <Typography sx={styles.price}>
+                          $
+                          {product?.jsnCategoryInfo?.blnOnSale
+                            ? product?.jsnCategoryInfo?.strSalePrice
+                            : product?.jsnCategoryInfo?.strPrice}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        {product?.jsnCategoryInfo?.blnOnSale && (
+                          <Typography
+                            component={"caption"}
+                            px-1
+                            sx={styles.salePrice}
+                          >
+                            ${product?.jsnCategoryInfo?.strPrice}
+                          </Typography>
+                        )}
+                      </Grid>
+                    </Grid>
+                    <Grid item xs="12" container p={2}>
+                      <Box
+                        component={"img"}
+                        sx={{
+                          transform: "rotate(180deg)",
+                          height: "150px",
+                          width: "200px",
+                        }}
+                        src={arrowImg}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
-              </Grid>
             </Grid>
+
             <Grid item xs="12" container>
               {(rowsPerPage > 0
-                ? reviews.slice(
+                ? product?.jsnCategoryInfo?.lstReviews?.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : reviews
+                : product?.jsnCategoryInfo?.lstReviews
               )?.map((review, index) => (
                 <Grid item xs="12" container py={1}>
                   <Box
@@ -323,7 +400,6 @@ function Reviews() {
                       </Grid>
                       <Grid item xs="12" px={1} container>
                         <Typography
-                          // color={"primary"}
                           sx={{
                             fontSize: "14px",
                             fontWeight: "800",
@@ -342,11 +418,11 @@ function Reviews() {
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
-              {!!reviews.length && (
+              {!!product?.jsnCategoryInfo?.lstReviews?.length && (
                 <Grid item xs="12" container justifyContent={"center"}>
                   <TablePagination
                     rowsPerPageOptions={[3, 5, 10, 25]}
-                    count={reviews.length}
+                    count={product?.jsnCategoryInfo?.lstReviews?.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     SelectProps={{
@@ -402,4 +478,4 @@ function Reviews() {
   );
 }
 
-export default Reviews;
+export default Product;

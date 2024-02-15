@@ -3,7 +3,11 @@ import Website from "components/shared/website/Website";
 import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
 import { useNavigate, useParams } from "react-router-dom";
-import { Demo_jsnSystemInfo, initialAppState, objCategoriesType } from "appHelper/appVariables";
+import {
+  Demo_jsnSystemInfo,
+  initialAppState,
+  objCategoriesType,
+} from "appHelper/appVariables";
 import {
   findSystem,
   updateSystem,
@@ -24,6 +28,8 @@ function RouteAdmin() {
     JSON.parse(JSON.stringify(appState.systemInfo))
   );
   const [saveMode, setSaveMode] = useState([]);
+  const isSystemUpdated = useRef(false);
+  const isMenuUpdated = useRef(false);
   const firstRender = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadPictureOpen, setUploadPicture] = useState(false);
@@ -37,7 +43,7 @@ function RouteAdmin() {
     const systemData = {};
     if (Array.isArray(categoriesData)) {
       const systemMenu = [];
-      const systemRegion = [];
+      const systemDeliveryAddress = [];
       categoriesData.forEach((category) => {
         if (category.bigCategoryTypeID === objCategoriesType["Menu"]) {
           systemMenu.push({
@@ -45,17 +51,19 @@ function RouteAdmin() {
             jsnName: JSON.parse(category?.jsnName || {}),
             jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
           });
-          if (category.bigCategoryTypeID === objCategoriesType.Region) {
-            systemRegion.push({
-              ...category,
-              jsnName: JSON.parse(category?.jsnName || {}),
-              jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
-            });
-          }
+        }
+        if (
+          category.bigCategoryTypeID === objCategoriesType["DeliveryAddress"]
+        ) {
+          systemDeliveryAddress.push({
+            ...category,
+            jsnName: JSON.parse(category?.jsnName || {}),
+            jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
+          });
         }
       });
       systemData.systemMenu = systemMenu;
-      systemData.systemRegion = systemRegion;
+      systemData.systemDeliveryAddress = systemDeliveryAddress;
     }
     systemData.bigSystemID = system.bigSystemID;
     systemData.jsnSystemContact = JSON.parse(system?.jsnSystemContact);
@@ -103,10 +111,11 @@ function RouteAdmin() {
         lstHeroSlides: heroSectionUpdated,
       },
     });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
   const onSaveOwner = (ownerSectionUpdated) => {
     setSystemInfo({
@@ -116,10 +125,11 @@ function RouteAdmin() {
         jsnOwnerSection: ownerSectionUpdated,
       },
     });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
+    isSystemUpdated.current=true;
   };
   const onSaveReservation = (resSectionUpdated) => {
     setSystemInfo({
@@ -129,10 +139,11 @@ function RouteAdmin() {
         jsnReservation: resSectionUpdated,
       },
     });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
   const onSaveAbout = (aboutSectionUpdated) => {
     setSystemInfo({
@@ -142,35 +153,39 @@ function RouteAdmin() {
         jsnAboutSection: aboutSectionUpdated,
       },
     });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
   const addMenuCategory = (category) => {
     systemInfo.systemMenu.push(category);
     setSystemInfo({ ...systemInfo, systemMenu: [...systemInfo?.systemMenu] });
-    if (!saveMode.includes("tblCategory")) {
-      saveMode.push("tblCategory");
-      setSaveMode([...saveMode]);
-    }
+    isMenuUpdated.current=true;
+    // if (!saveMode.includes("tblCategory")) {
+    //   saveMode.push("tblCategory");
+    //   setSaveMode([...saveMode]);
+    // }
   };
   const deleteMenuCategory = (bigID) => {
     if (bigID === systemInfo.bigWSCategoryID) {
       systemInfo.bigWSCategoryID = null;
-      if (!saveMode.includes("tblSystem")) {
-        saveMode.push("tblSystem");
-        setSaveMode([...saveMode]);
-      }
+      isMenuUpdated.current=true;
+      // if (!saveMode.includes("tblSystem")) {
+      //   saveMode.push("tblSystem");
+      //   setSaveMode([...saveMode]);
+      // }
     }
     systemInfo.systemMenu = systemInfo.systemMenu.filter(
       (category) => category.bigID !== bigID
     );
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblCategory")) {
-      saveMode.push("tblCategory");
-      setSaveMode([...saveMode]);
-    }
+    isMenuUpdated.current=true;
+    // if (!saveMode.includes("tblCategory")) {
+    //   saveMode.push("tblCategory");
+    //   setSaveMode([...saveMode]);
+    // }
   };
   const editMenuCategory = (category) => {
     const categoryIndex = systemInfo.systemMenu.findIndex(
@@ -178,36 +193,40 @@ function RouteAdmin() {
     );
     systemInfo.systemMenu[categoryIndex] = category;
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblCategory")) {
-      saveMode.push("tblCategory");
-      setSaveMode([...saveMode]);
-    }
+    isMenuUpdated.current=true;
+    // if (!saveMode.includes("tblCategory")) {
+    //   saveMode.push("tblCategory");
+    //   setSaveMode([...saveMode]);
+    // }
   };
   const addWS = (categoryID) => {
     systemInfo.bigWSCategoryID = categoryID;
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
 
   const removeWS = () => {
     systemInfo.bigWSCategoryID = null;
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
 
   const addChef = (chef) => {
     systemInfo.lstSystemTeam.push(chef);
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
 
   const editChef = (chef) => {
@@ -216,10 +235,11 @@ function RouteAdmin() {
     );
     systemInfo.lstSystemTeam[chefIndex] = chef;
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
 
   const deleteChef = (bigID) => {
@@ -227,17 +247,16 @@ function RouteAdmin() {
       (chef) => chef.bigID !== bigID
     );
     setSystemInfo({ ...systemInfo });
-    if (!saveMode.includes("tblSystem")) {
-      saveMode.push("tblSystem");
-      setSaveMode([...saveMode]);
-    }
+    isSystemUpdated.current=true;
+    // if (!saveMode.includes("tblSystem")) {
+    //   saveMode.push("tblSystem");
+    //   setSaveMode([...saveMode]);
+    // }
   };
 
   const onSave = async () => {
-    if (saveMode?.length) {
-      setIsLoading(true);
-    }
-    if (saveMode.includes("tblCategory")) {
+    setIsLoading(true);
+    if (isMenuUpdated.current) {
       const categoriesOnDeleteIDs = (
         appState?.systemInfo?.systemMenu || []
       ).reduce((IDs, category) => {
@@ -256,28 +275,20 @@ function RouteAdmin() {
       );
       if (Array.isArray(categoriesData)) {
         const systemMenu = [];
-        const systemRegion = [];
         categoriesData.forEach((category) => {
-          if (category.bigCategoryTypeID === objCategoriesType["Menu"]) {
+          if (category.bigCategoryTypeID === objCategoriesType.Menu) {
             systemMenu.push({
               ...category,
               jsnName: JSON.parse(category?.jsnName || {}),
               jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
             });
-            if (category.bigCategoryTypeID === objCategoriesType.Region) {
-              systemRegion.push({
-                ...category,
-                jsnName: JSON.parse(category?.jsnName || {}),
-                jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
-              });
-            }
           }
         });
         appState.systemInfo.systemMenu = systemMenu;
-        appState.systemInfo.systemRegion = systemRegion;
       }
     }
-    if (saveMode.includes("tblSystem")) {
+    console.log(isSystemUpdated.current)
+    if (isSystemUpdated.current) {
       const objInputSystem = JSON.parse(JSON.stringify(systemInfo));
       const systemData = await updateSystem(objInputSystem);
       appState.systemInfo.bigSystemID = systemData.bigSystemID;
@@ -301,7 +312,9 @@ function RouteAdmin() {
     if (saveMode?.length) {
       appDispatch({ ...appState });
     }
-    setSaveMode([]);
+    // setSaveMode([]);
+    isMenuUpdated.current=false;
+    isSystemUpdated.current=false;
     setIsLoading(false);
   };
 
@@ -320,9 +333,13 @@ function RouteAdmin() {
   }, [appState.clientInfo.blnUserLogin]);
 
   const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" },
-    onClick:()=>{setUploadPicture(true)}
-  },
+    {
+      bigNavID: 6774846478,
+      nav: { eng: "upload picture", arb: "حسابي" },
+      onClick: () => {
+        setUploadPicture(true);
+      },
+    },
     {
       bigNavID: 1166046478,
       nav: { eng: "logout", arb: "تسجيل الخروج" },
@@ -331,9 +348,19 @@ function RouteAdmin() {
   ];
 
   const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" },
-    onClick:()=>{setUploadLogo(true)}
-  },
+    {
+      bigNavID: 1234146400,
+      nav: { eng: "upload logo", arb: "صورة اللوغو" },
+      onClick: () => {
+        setUploadLogo(true);
+      },
+    },
+    { bigNavID: 1654146400, nav: { eng: "settings", arb: "صورة اللوغو" } },
+    {
+      bigNavID: 2354146400,
+      nav: { eng: "delivery address", arb: "صورة اللوغو" },
+    },
+    { bigNavID: 2554146400, nav: { eng: "shared link", arb: "صورة اللوغو" } },
   ];
 
   const navList = [
@@ -360,7 +387,7 @@ function RouteAdmin() {
 
   return (
     <React.Fragment>
-      {!!saveMode.length && (
+      {!!(isSystemUpdated.current||isMenuUpdated.current) && (
         <Grid container justifyContent={"center"}>
           <Button color="secondary" onClick={onSave} startIcon={<Save />}>
             Save changes
