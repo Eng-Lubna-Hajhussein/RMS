@@ -184,6 +184,7 @@ function Reviews() {
         navList={navList}
         userNavList={userNavList}
         adminNavList={adminNavList}
+        websiteLogo={appState?.systemInfo?.strLogoPath}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
         userImg={appState.userInfo.strImgPath}

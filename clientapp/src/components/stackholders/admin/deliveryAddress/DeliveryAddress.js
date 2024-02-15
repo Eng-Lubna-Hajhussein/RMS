@@ -265,6 +265,7 @@ function DeliveryAddress() {
         userName={appState.userInfo.jsnFullName}
         intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}
         blnUserLogin={appState.clientInfo.blnUserLogin}
+        websiteLogo={appState?.systemInfo?.strLogoPath}
       />
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
@@ -333,6 +334,8 @@ function DeliveryAddress() {
                     label={"Delivery Address Countries"}
                     onChange={(e) => {
                       setSelectedCountry(e.target.value);
+                      setSelectedCity("none");
+                      setSelectedTown("none");
                     }}
                     sx={{ background: "#fff", borderRadius: "5px" }}
                   >
@@ -432,6 +435,7 @@ function DeliveryAddress() {
                       label={"Delivery Address Cities"}
                       onChange={(e) => {
                         setSelectedCity(e.target.value);
+                        setSelectedTown("none");
                       }}
                       sx={{ background: "#fff", borderRadius: "5px" }}
                     >

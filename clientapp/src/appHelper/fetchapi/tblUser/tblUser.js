@@ -1,4 +1,4 @@
-import { activateCustomerQuery, banCustomerQuery, customerDeleteAccountQuery, customerUpdateSettingsQuery, deactivateCustomerQuery, findUsersQuery, loginQuery, signupQuery, unBanCustomerQuery, userUploadImgQuery } from "appHelper/appQueries/userQueries/userQueries"
+import { activateCustomerQuery, adminUpdateSettingsQuery, banCustomerQuery, customerDeleteAccountQuery, customerUpdateSettingsQuery, deactivateCustomerQuery, findUsersQuery, loginQuery, signupQuery, unBanCustomerQuery, userUploadImgQuery } from "appHelper/appQueries/userQueries/userQueries"
 import { fetchData } from "../appFetch";
 
 export const signup = async(objInput) => {
@@ -30,6 +30,15 @@ export const findUsers = async(bigSystemID) => {
 
 export const customerUpdateSettings = async (objInput)=>{
    const query = customerUpdateSettingsQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.updateUser;
+}
+
+export const adminUpdateSettings = async (objInput)=>{
+   const query = adminUpdateSettingsQuery(objInput);
    const requestBody = {
       query: query
     }

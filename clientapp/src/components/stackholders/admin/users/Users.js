@@ -151,6 +151,7 @@ function Users() {
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
         userImg={appState.userInfo.strImgPath}
+        websiteLogo={appState?.systemInfo?.strLogoPath}
         userName={appState.userInfo.jsnFullName}
         intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}
         blnUserLogin={appState.clientInfo.blnUserLogin}

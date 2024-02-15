@@ -18,10 +18,13 @@ export const ctrlSignUp = {
   }) => {
     try {
       const bigSystemID =systemID?systemID: regSystem.bigSystemID;
+      const jsnCountry = address.countryID? regSystem.deliveryAddress?.regionName[address.countryID]:{}
+      const jsnCity = address.cityID? regSystem.deliveryAddress?.regionName[address.cityID]:{}
+      const jsnTown = address.townID? regSystem.deliveryAddress?.regionName[address.townID]:{}
       const jsnUserAddress = {
-        jsnCountry: COUNTRIES[address.countryIndex],
-        jsnCity:
-          CITIES[COUNTRIES[address.countryIndex]["eng"]][address.cityIndex],
+        jsnCountry: {...jsnCountry,bigID:(address.countryID+'')||0},
+        jsnCity:{...jsnCity,bigID:(address.cityID+'')||0},
+        jsnTown:{...jsnTown,bigID:(address.townID+'')||0},
       };
       const bigUserID = generateRandomID(10);
       const jsnFullName = {

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function PersonalInfo({ user, lang }) {
   const { systemName, systemID } = useParams();
   return (
-    <Grid container  >
+    <Grid container>
       <Grid item xs="12" py={1} px={3}>
         <CopyToClipboardButton
           label="User Profile Link"

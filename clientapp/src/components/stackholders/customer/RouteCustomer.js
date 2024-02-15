@@ -33,25 +33,25 @@ function RouteCustomer() {
     const userOrder = await findUnDeliveredOrder(userOrderObjInput);
     if (Array.isArray(categoriesData)) {
       const systemMenu = [];
-      const systemRegion = [];
+      const systemDeliveryAddress = [];
       categoriesData.forEach((category) => {
-        if (category.bigCategoryTypeID === objCategoriesType["Menu"]) {
+        if (category.bigCategoryTypeID === objCategoriesType.Menu) {
           systemMenu.push({
             ...category,
             jsnName: JSON.parse(category?.jsnName || {}),
             jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
           });
-          if (category.bigCategoryTypeID === objCategoriesType.Region) {
-            systemRegion.push({
-              ...category,
-              jsnName: JSON.parse(category?.jsnName || {}),
-              jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
-            });
-          }
+        }
+        if (category.bigCategoryTypeID === objCategoriesType.DeliveryAddress) {
+          systemDeliveryAddress.push({
+            ...category,
+            jsnName: JSON.parse(category?.jsnName || {}),
+            jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
+          });
         }
       });
       systemData.systemMenu = systemMenu;
-      systemData.systemRegion = systemRegion;
+      systemData.systemDeliveryAddress = systemDeliveryAddress;
     }
     if (userOrder) {
       appState.userInfo.userOrder = {

@@ -1,6 +1,6 @@
 import { createSystemQuery,findSystemQuery,updateSystemQuery } from "appHelper/appQueries/systemQueries/systemQueries"
 import { fetchData } from "../appFetch";
-import { bulkCategoriesQuery, createCategoryQuery, deleteCategoryQuery, findCategoriesQuery, updateCategoryQuery, updateCategoryReviewsQuery } from "appHelper/appQueries/categoryQueries/categoryQueries";
+import { bulkCategoriesQuery, createCategoryQuery, deleteCategoryQuery, findCategoriesQuery, findDeliveryAddressCategoriesQuery, findMenuCategoriesQuery, updateCategoryQuery, updateCategoryReviewsQuery } from "appHelper/appQueries/categoryQueries/categoryQueries";
 
 export const createCategory = async(objInput) => {
    const query = createCategoryQuery(objInput);
@@ -56,6 +56,23 @@ export const updateCategoryReviews = async(objInput) => {
       query: query
     }
    const result = await fetchData(requestBody);
-   // console.log({result})
    return result?.data?.updateCategory;
+}
+
+export const findMenuCategories = async(objInput) => {
+   const query = findMenuCategoriesQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.findMenuCategories;
+}
+
+export const findDeliveryAddressCategories = async(objInput) => {
+   const query = findDeliveryAddressCategoriesQuery(objInput);
+   const requestBody = {
+      query: query
+    }
+   const result = await fetchData(requestBody);
+   return result?.data?.findDeliveryAddressCategories;
 }

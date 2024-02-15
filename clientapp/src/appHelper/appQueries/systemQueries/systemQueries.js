@@ -125,3 +125,11 @@ export const findSystemsQuery = () => {
     }
   }`;
 };
+
+export const systemUpdateSettingsQuery = (objInput)=>{
+  return `mutation {
+    updateSystem(bigSystemID:${objInput.bigSystemID},jsnSystemAddress:"""${JSON.stringify(objInput.jsnSystemAddress)}"""){
+      jsnSystemAddress
+    }
+  }`
+}

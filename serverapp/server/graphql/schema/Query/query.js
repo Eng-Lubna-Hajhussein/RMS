@@ -108,6 +108,20 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: CategoryResolvers.findCategories,
     },
+    findMenuCategories: {
+      type: new GraphQLList(new GraphQLNonNull(CategoryType)),
+      args: {
+        bigSystemID: { type: GraphQLBigInt },
+      },
+      resolve: CategoryResolvers.findMenuCategories,
+    },
+    findDeliveryAddressCategories: {
+      type: new GraphQLList(new GraphQLNonNull(CategoryType)),
+      args: {
+        bigSystemID: { type: GraphQLBigInt },
+      },
+      resolve: CategoryResolvers.findDeliveryAddressCategories,
+    },
     findCategory: {
       type: new GraphQLNonNull(CategoryType),
       args: {

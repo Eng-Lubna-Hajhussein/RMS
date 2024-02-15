@@ -4,6 +4,8 @@ export const Demo_System_ID = 10101010;
 
 export const App_Server_Url = "http://localhost:4000";
 
+export const App_Localhost_Client_Url = "http://localhost:3000/";
+
 export const App_Server_URL_GraphQL = 'http://localhost:4000/graphql';
 
 export const strServerAssetsPath = "http://localhost:4000/assets/";

@@ -140,6 +140,7 @@ function Orders() {
         userName={appState.userInfo.jsnFullName}
         intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}
         blnUserLogin={appState.clientInfo.blnUserLogin}
+        websiteLogo={appState?.systemInfo?.strLogoPath}
       />
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (

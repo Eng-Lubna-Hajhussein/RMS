@@ -54,26 +54,43 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlSittings } from "./controller/CtrlSettings";
+import { orderRegions } from "appHelper/appFunctions";
 
 function Settings() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const { systemID, systemName } = useParams();
   const navigate = useNavigate();
-  const addressInitial = {
-    countryIndex: 0,
-    cityIndex: 0,
-  };
+  const deliveryAddress = useMemo(()=>{
+    return orderRegions({Regions:appState?.systemInfo?.systemDeliveryAddress})
+  },[])
+  const  addressInitial = useMemo(()=>{
+    return {
+      countryID: appState?.userInfo?.jsnAddress?.jsnCountry?.bigID,
+      cityID: appState?.userInfo?.jsnAddress?.jsnCity?.bigID,
+      townID:Number(appState?.userInfo?.jsnAddress?.jsnTown?.bigID)
+    };
+  },[]);
+  
   const [address, setAddress] = useState(addressInitial);
   const onChangeCountry = (event) => {
-    const index = event.target.value;
-    address.countryIndex = index;
-    address.cityIndex = 0;
+    const countryID = event.target.value;
+    address.countryID = countryID;
+    address.cityID = countryID? Object.keys(
+      deliveryAddress?.appRegionsID[countryID] || {}
+    )[0]:null;
+    address.townID=(countryID&&address.cityID)?deliveryAddress?.appRegionsID[countryID][address.cityID][0]:null;
     setAddress({ ...address });
   };
   const onChangeCity = (event) => {
-    const index = event.target.value;
-    address.cityIndex = index;
+    const cityID = event.target.value;
+    address.cityID = cityID;
+    address.townID=(address.countryID&&address.cityID)?deliveryAddress?.appRegionsID[address.countryID][address.cityID][0]:null;
+    setAddress({ ...address });
+  };
+  const onChangeTown = (event) => {
+    const townID = event.target.value;
+    address.townID = townID;
     setAddress({ ...address });
   };
 
@@ -93,6 +110,7 @@ function Settings() {
       formData,
       address: address,
       setIsLoading: setIsLoading,
+      deliveryAddress:deliveryAddress
     });
   };
 
@@ -282,43 +300,81 @@ function Settings() {
                       px: "3px",
                     }}
                   >
-                    Address
+                   Delivery Address
                   </Typography>
                 </Grid>
                 <Grid item xs="12" container>
-                  <Grid item xs="6" p={2}>
+                {address.countryID&&<Grid item xs="4" p={2}>
                     <FormControl fullWidth>
                       <InputLabel>Country</InputLabel>
-
                       <Select
-                        defaultValue={address?.countryIndex}
+                        value={address.countryID}
                         required
                         onChange={onChangeCountry}
                         sx={{ background: "#fff", borderRadius: "5px" }}
                       >
-                        {COUNTRIES.map((country, index) => (
-                          <MenuItem value={index}>{country[lang]}</MenuItem>
+                        {Object.keys(
+                          deliveryAddress?.appRegionsID || {}
+                        ).map((countryID) => (
+                          <MenuItem value={countryID}>
+                            {
+                              deliveryAddress?.regionName[countryID][
+                                lang
+                              ]
+                            }
+                          </MenuItem>
                         ))}
                       </Select>
                     </FormControl>
-                  </Grid>
-                  <Grid item xs="6" p={2}>
+                  </Grid>}
+                  {address.cityID&&<Grid item xs="4" p={2}>
                     <FormControl fullWidth>
                       <InputLabel>City</InputLabel>
                       <Select
-                        value={address?.cityIndex}
+                        value={address.cityID}
                         required
                         onChange={onChangeCity}
                         sx={{ background: "#fff", borderRadius: "5px" }}
                       >
-                        {CITIES[COUNTRIES[address?.countryIndex]["eng"]].map(
-                          (city, index) => (
-                            <MenuItem value={index}>{city[lang]}</MenuItem>
-                          )
-                        )}
+                        {Object.keys(
+                          deliveryAddress?.appRegionsID[
+                            address?.countryID
+                          ] || {}
+                        ).map((cityID) => (
+                          <MenuItem value={cityID}>
+                            {
+                              deliveryAddress?.regionName[cityID][
+                                lang
+                              ]
+                            }
+                          </MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
-                  </Grid>
+                  </Grid>}
+                  {address.townID&&<Grid item xs="4" p={2}>
+                    <FormControl fullWidth>
+                      <InputLabel>Town</InputLabel>
+                      <Select
+                        value={address.townID}
+                        required
+                        onChange={onChangeTown}
+                        sx={{ background: "#fff", borderRadius: "5px" }}
+                      >
+                        {deliveryAddress?.appRegionsID[
+                            address?.countryID
+                          ][address?.cityID].map((townID) => (
+                          <MenuItem value={townID}>
+                            {
+                              deliveryAddress?.regionName[townID][
+                                lang
+                              ]
+                            }
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>}
                 </Grid>
               </Grid>
               <Grid item container xs="12">

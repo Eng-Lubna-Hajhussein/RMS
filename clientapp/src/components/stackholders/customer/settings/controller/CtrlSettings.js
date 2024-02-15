@@ -13,14 +13,18 @@ export const ctrlSittings = {
     setIsLoading,
     formData,
     address,
+    deliveryAddress
   }) => {
     try {
         setIsLoading(true);
-      const jsnAddress = {
-        jsnCountry: COUNTRIES[address.countryIndex],
-        jsnCity:
-          CITIES[COUNTRIES[address.countryIndex]["eng"]][address.cityIndex],
-      };
+        const jsnCountry = address.countryID? deliveryAddress?.regionName[address.countryID]:{}
+        const jsnCity = address.cityID? deliveryAddress?.regionName[address.cityID]:{}
+        const jsnTown = address.townID? deliveryAddress?.regionName[address.townID]:{}
+        const jsnAddress = {
+          jsnCountry: {...jsnCountry,bigID:address.countryID||0},
+          jsnCity:{...jsnCity,bigID:address.cityID||0},
+          jsnTown:{...jsnTown,bigID:address.townID||0},
+        };
       const jsnFullName = {
         eng: formData.nameEng,
         arb: formData.nameArb,

@@ -158,6 +158,7 @@ function Tables() {
         adminNavList={adminNavList}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
+        websiteLogo={appState?.systemInfo?.strLogoPath}
         userImg={appState.userInfo.strImgPath}
         userName={appState.userInfo.jsnFullName}
         intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}

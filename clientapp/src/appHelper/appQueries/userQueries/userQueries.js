@@ -106,6 +106,15 @@ export const customerUpdateSettingsQuery = (objInput) => {
     }`;
 };
 
+export const adminUpdateSettingsQuery = (objInput) => {
+  return `mutation {
+    updateUser(bigUserID:${objInput.bigUserID},jsnAddress:"""${JSON.stringify(objInput.jsnAddress)}""",jsnClientPayment:"""${JSON.stringify(objInput.jsnClientPayment)}"""){
+      jsnAddress
+      jsnClientPayment
+    }
+  }`;
+};
+
 export const customerDeleteAccountQuery = (bigUserID) => {
   return `mutation{
       updateUser(bigUserID:${bigUserID},blnIsDeleted:true){

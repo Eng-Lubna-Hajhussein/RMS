@@ -66,6 +66,32 @@ export const findCategoriesQuery = (bigSystemID) => {
       }`;
 };
 
+export const findDeliveryAddressCategoriesQuery = (bigSystemID) => {
+  return `query{
+    findDeliveryAddressCategories(bigSystemID:${bigSystemID}){
+      bigID
+      bigSystemID
+      bigCategoryTypeID
+      jsnName
+      bigParentID
+      jsnCategoryInfo
+    }
+  }`;
+};
+
+export const findMenuCategoriesQuery = (bigSystemID) => {
+  return `query{
+    findMenuCategories(bigSystemID:${bigSystemID}){
+      bigID
+      bigSystemID
+      bigCategoryTypeID
+      jsnName
+      bigParentID
+      jsnCategoryInfo
+    }
+  }`;
+};
+
 export const deleteCategoryQuery = (bigID) => {
   return `mutation {
         deleteCategory(bigID:${bigID})

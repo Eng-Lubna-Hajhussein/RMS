@@ -177,6 +177,7 @@ function Product() {
         dir={appState.clientInfo.strDir}
         navList={navList}
         userNavList={userNavList}
+        websiteLogo={appState?.systemInfo?.strLogoPath}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
         userImg={appState.userInfo.strImgPath}

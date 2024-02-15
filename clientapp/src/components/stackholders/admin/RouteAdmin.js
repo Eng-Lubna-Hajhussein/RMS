@@ -20,6 +20,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { Save } from "@mui/icons-material";
 import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 import UploadLogo from "./uploadLogo/UploadLogo";
+import SharedLink from "./sharedLink/SharedLink";
 
 function RouteAdmin() {
   const { appState, appDispatch } = useContext(AppContext);
@@ -34,6 +35,7 @@ function RouteAdmin() {
   const [isLoading, setIsLoading] = useState(false);
   const [uploadPictureOpen, setUploadPicture] = useState(false);
   const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
   const navigate = useNavigate();
   useLanguage();
 
@@ -287,7 +289,6 @@ function RouteAdmin() {
         appState.systemInfo.systemMenu = systemMenu;
       }
     }
-    console.log(isSystemUpdated.current)
     if (isSystemUpdated.current) {
       const objInputSystem = JSON.parse(JSON.stringify(systemInfo));
       const systemData = await updateSystem(objInputSystem);
@@ -309,10 +310,7 @@ function RouteAdmin() {
       appState.systemInfo.lstContactUs = JSON.parse(systemData?.lstContactUs);
       appState.systemInfo.strLogoPath = systemData?.strLogoPath;
     }
-    if (saveMode?.length) {
-      appDispatch({ ...appState });
-    }
-    // setSaveMode([]);
+    appDispatch({ ...appState });
     isMenuUpdated.current=false;
     isSystemUpdated.current=false;
     setIsLoading(false);
@@ -355,12 +353,15 @@ function RouteAdmin() {
         setUploadLogo(true);
       },
     },
+    { bigNavID: 1874146400, nav: { eng: "Dashboard", arb: "صورة اللوغو" } },
     { bigNavID: 1654146400, nav: { eng: "settings", arb: "صورة اللوغو" } },
     {
       bigNavID: 2354146400,
       nav: { eng: "delivery address", arb: "صورة اللوغو" },
     },
-    { bigNavID: 2554146400, nav: { eng: "shared link", arb: "صورة اللوغو" } },
+    { bigNavID: 2554146400, nav: { eng: "shared link", arb: "صورة اللوغو" },onClick: () => {
+      setSharedLinkOpen(true);
+    }, },
   ];
 
   const navList = [
@@ -434,6 +435,10 @@ function RouteAdmin() {
       <UploadLogo
         open={uploadLogoOpen}
         handleClose={() => setUploadLogo(false)}
+      />
+      <SharedLink
+      open={sharedLinkOpen}
+      handleClose={()=>setSharedLinkOpen(false)}
       />
     </React.Fragment>
   );

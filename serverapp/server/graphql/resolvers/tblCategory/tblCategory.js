@@ -10,6 +10,20 @@ module.exports = {
       throw err;
     }
   },
+  findMenuCategories: async (_,{bigSystemID}) => {
+    try {
+      return await tblCategory.findAll({where:{bigSystemID:bigSystemID,bigCategoryTypeID:3916121742}});
+    } catch (err) {
+      throw err;
+    }
+  },
+  findDeliveryAddressCategories: async (_,{bigSystemID}) => {
+    try {
+      return await tblCategory.findAll({where:{bigSystemID:bigSystemID,bigCategoryTypeID:4026111142}});
+    } catch (err) {
+      throw err;
+    }
+  },
   findCategory: async (_,{bigID}) => {
     try {
       return await tblCategory.findOne({where:{bigID:bigID}});
