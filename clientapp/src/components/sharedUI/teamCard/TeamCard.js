@@ -7,6 +7,7 @@ import {
   Twitter,
 } from "@mui/icons-material";
 import OptionList from "../OptionList/OptionList";
+import { objAppActions } from "appHelper/appVariables";
 
 const styles = {
   chefContent: {
@@ -52,14 +53,12 @@ const styles = {
   fullHeight: {
     height: "100%",
   },
+  optionListContainer: {
+    marginBottom: "-100px",
+  },
 };
 
 function TeamCard({ item, lang, onDelete, onEdit, editable }) {
-  const objAppActions = {
-    Edit: 7244446400,
-    Delete: 8324222478,
-  };
-
   const actionNavList = [
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
     { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "تعديل" } },
@@ -72,7 +71,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
           item
           lg="12"
           px={2}
-          sx={{ marginBottom: "-100px" }}
+          sx={styles.optionListContainer}
           container
           justifyContent={"flex-end"}
         >

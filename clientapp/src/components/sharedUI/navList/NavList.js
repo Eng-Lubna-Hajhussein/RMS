@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import StyledMenu from "../StyledMenu/StyledMenu";
 import { Link } from "react-router-dom";
 

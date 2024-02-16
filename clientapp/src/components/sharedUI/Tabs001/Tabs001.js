@@ -5,8 +5,17 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
-import { AppRegistration } from "@mui/icons-material";
-import { App_Second_Color } from "appHelper/appColor";
+
+const styles = {
+  box: {
+    width: "100%",
+  },
+  tab: {
+    width: "fit-content",
+    maxWidth: "fit-content",
+    minWidth: "200px",
+  },
+};
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,7 +50,7 @@ function a11yProps(index) {
   };
 }
 
-export default function Tabs001({ tabsContent,justifyContent }) {
+export default function Tabs001({ tabsContent, justifyContent }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -49,9 +58,12 @@ export default function Tabs001({ tabsContent,justifyContent }) {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{}}>
-        <Grid container justifyContent={justifyContent?justifyContent:"center"}>
+    <Box sx={styles.box}>
+      <Box>
+        <Grid
+          container
+          justifyContent={justifyContent ? justifyContent : "center"}
+        >
           <Tabs
             indicatorColor="secondary"
             textColor="inherit"
@@ -63,11 +75,7 @@ export default function Tabs001({ tabsContent,justifyContent }) {
             {tabsContent.map(({ tabLabel }, index) => (
               <Tab
                 iconPosition="start"
-                sx={{
-                  width: "fit-content",
-                  maxWidth: "fit-content",
-                  minWidth: "200px",
-                }}
+                sx={styles.tab}
                 label={tabLabel}
                 {...a11yProps(index)}
               />
@@ -77,8 +85,8 @@ export default function Tabs001({ tabsContent,justifyContent }) {
       </Box>
       {tabsContent.map(({ content }, index) => (
         <CustomTabPanel value={value} index={index}>
-        {content}
-      </CustomTabPanel>
+          {content}
+        </CustomTabPanel>
       ))}
     </Box>
   );

@@ -1,9 +1,6 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
-  AnimationOutlined,
   Close,
-  Favorite,
-  FavoriteBorder,
-  StyleOutlined,
   Upload,
 } from "@mui/icons-material";
 import {
@@ -14,31 +11,60 @@ import {
   DialogActions,
   Grid,
   Typography,
-  Box,
   Fab,
-  Divider,
-  Button,
-  FormControl,
   InputLabel,
-  Select,
-  MenuItem,
   Checkbox,
   FormGroup,
   FormControlLabel,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
-import { generateRandomID } from "appHelper/appFunctions";
-import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
-import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const styles = {
   title: {
     fontWeight: "600",
     px: "3px",
     textTransform: "capitalize",
+  },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
+  dishImgContainer: {
+    height: "186px",
+    border: "4px dashed #ececec",
+    borderRadius: "10px",
+  },
+  dishImgContainerItem: {
+    height: "150px",
+    backgroundSize: "100% 100%",
+  },
+  displayNone: {
+    display: "none",
+  },
+  wsNote: {
+    textTransform: "capitalize",
+    "&": { margin: "0" },
+  },
+  formControlLabel: {
+    textTransform: "capitalize",
+    "&": { margin: "0" },
+  },
+  textfield: {
+    textTransform: "capitalize",
+  },
+  dialogAction: {
+    py: "0",
   },
 };
 
@@ -121,19 +147,19 @@ function EditItem({
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+            <Close sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid
             container
             py={1}
             justifyContent={"start"}
             alignContent={"start"}
             alignItems={"start"}
-            sx={{ height: "fit-content" }}
+            sx={styles.fitContentHeight}
           >
             <Grid item xs="6" container>
               <Grid item xs="12" p={1}>
@@ -156,11 +182,7 @@ function EditItem({
                 container
                 justifyContent={"center"}
                 alignContent={"center"}
-                sx={{
-                  height: "186px",
-                  border: "4px dashed #ececec",
-                  borderRadius: "10px",
-                }}
+                sx={styles.dishImgContainer}
               >
                 <Grid
                   item
@@ -169,14 +191,13 @@ function EditItem({
                   justifyContent={"center"}
                   alignContent={"center"}
                   sx={{
-                    height: "150px",
                     background: `url(${img})`,
-                    backgroundSize: "100% 100%",
+                    ...styles.dishImgContainerItem,
                   }}
                 >
                   <label htmlFor="upload-photo">
                     <input
-                      style={{ display: "none" }}
+                      style={styles.displayNone}
                       id="upload-photo"
                       name="upload-photo"
                       type="file"
@@ -226,19 +247,13 @@ function EditItem({
                 px={0}
                 py={1}
                 container
-                sx={{ height: "fit-content" }}
+                sx={styles.fitContentHeight}
                 alignContent={"start"}
               >
                 <FormGroup>
                   {!!ws && ws !== categoryOnAction?.bigID && (
                     <InputLabel>
-                      <Typography
-                        fontSize={"12px"}
-                        sx={{
-                          textTransform: "capitalize",
-                          "&": { margin: "0" },
-                        }}
-                      >
+                      <Typography fontSize={"12px"} sx={styles.wsNote}>
                         {dictionary.menuSection.weeklySpecialMealNote[lang]}
                       </Typography>
                     </InputLabel>
@@ -250,10 +265,7 @@ function EditItem({
                         defaultChecked={ws === categoryOnAction?.bigID}
                       />
                     }
-                    sx={{
-                      textTransform: "capitalize",
-                      "&": { margin: "0" },
-                    }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.weeklySpecialMeal[lang]}
                     inputRef={onWeeklySpecial}
                   />
@@ -266,7 +278,7 @@ function EditItem({
                         }
                       />
                     }
-                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.featured[lang]}
                   />
                   <FormControlLabel
@@ -278,7 +290,7 @@ function EditItem({
                         }
                       />
                     }
-                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.mostOrdered[lang]}
                   />
                   <FormControlLabel
@@ -289,7 +301,7 @@ function EditItem({
                         checked={onSaleChecked}
                       />
                     }
-                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.onSale[lang]}
                   />
                 </FormGroup>
@@ -298,14 +310,13 @@ function EditItem({
                 <Grid item xs="12" p={1}>
                   <TextField
                     color="warning"
-                    
                     required={onSaleChecked}
                     defaultValue={
                       categoryOnAction?.jsnCategoryInfo?.strSalePrice &&
                       categoryOnAction?.jsnCategoryInfo?.strSalePrice
                     }
                     name="salePrice"
-                    sx={{ textTransform: "capitalize" }}
+                    sx={styles.textfield}
                     label={dictionary.labels.salePrice[lang]}
                     type="text"
                     fullWidth
@@ -325,18 +336,17 @@ function EditItem({
                       dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                   {dictionary.menuSection.dishName[lang]}
+                  {dictionary.menuSection.dishName[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  
                   defaultValue={categoryOnAction?.jsnName["eng"]}
                   required
                   dir="ltr"
                   name="nameEng"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.nameEng[lang]}
                   type="text"
                   fullWidth
@@ -347,12 +357,11 @@ function EditItem({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  
                   required
                   dir="rtl"
                   name="nameArb"
                   defaultValue={categoryOnAction?.jsnName["arb"]}
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.nameArb[lang]}
                   type="text"
                   fullWidth
@@ -363,7 +372,7 @@ function EditItem({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-              <Typography
+                <Typography
                   sx={{
                     ...styles.title,
                     borderLeft:
@@ -378,13 +387,12 @@ function EditItem({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  
                   required
                   defaultValue={
                     categoryOnAction?.jsnCategoryInfo?.jsnDescription["eng"]
                   }
                   name="descEng"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.descriptionEng[lang]}
                   dir="ltr"
                   type="text"
@@ -397,14 +405,13 @@ function EditItem({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  
                   required
                   dir="rtl"
                   defaultValue={
                     categoryOnAction?.jsnCategoryInfo?.jsnDescription["arb"]
                   }
                   name="descArb"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.descriptionArb[lang]}
                   type="text"
                   fullWidth
@@ -416,7 +423,7 @@ function EditItem({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-              <Typography
+                <Typography
                   sx={{
                     ...styles.title,
                     borderLeft:
@@ -431,11 +438,10 @@ function EditItem({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  
                   required
                   defaultValue={categoryOnAction?.jsnCategoryInfo?.strPrice}
                   name="price"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.price[lang]}
                   fullWidth
                   variant="outlined"
@@ -444,7 +450,7 @@ function EditItem({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogAction}>
           <Grid
             container
             p={2}

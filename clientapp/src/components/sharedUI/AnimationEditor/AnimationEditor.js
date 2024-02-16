@@ -12,6 +12,30 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import AnimationBox from "../AnimationBox/AnimationBox";
+import { animationEditorOptions } from "appHelper/appVariables";
+
+const styles = {
+  dialogTitle: {
+    height: "fit-content",
+    width: "100%",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+    width: "100%",
+  },
+  select: {
+    background: "#fff",
+    borderRadius: "5px",
+  },
+  viewBoxContainer: {
+    height: "250px",
+    backgroundSize: "100% 100%",
+    backgroundColor: "#000",
+  },
+};
 
 const AnimationEditor = ({
   objText,
@@ -21,44 +45,15 @@ const AnimationEditor = ({
   lang,
   dir,
 }) => {
-  const options = [
-    { key: "none", value: "none" },
-    { key: "fadeIn", value: "fadeIn" },
-    { key: "fadeOut", value: "fadeOut" },
-    { key: "fadeInGrow", value: "fadeInGrow" },
-    { key: "fadeOutGrow", value: "fadeOutGrow" },
-    { key: "slideIn", value: "slideIn" },
-    { key: "slideOut", value: "slideOut" },
-    { key: "grow", value: "grow" },
-    { key: "slideInRotate", value: "slideInRotate" },
-    { key: "slideOutRotate", value: "slideOutRotate" },
-    { key: "fadeOutSlideOut", value: "fadeOutSlideOut" },
-    { key: "wobble", value: "wobble" },
-    { key: "hinge", value: "hinge" },
-    { key: "flip", value: "flip" },
-    { key: "flipInX", value: "flipInX" },
-    { key: "flipOutX", value: "flipOutX" },
-    { key: "flipInY", value: "flipInY" },
-    { key: "flipOutY", value: "flipOutY" },
-    { key: "rollIn", value: "rollIn" },
-    { key: "rollOut", value: "rollOut" },
-    { key: "rotateOut", value: "rotateOut" },
-    { key: "rotateIn", value: "rotateIn" },
-    { key: "slideInUp", value: "slideInUp" },
-    { key: "slideInDown", value: "slideInDown" },
-    { key: "slideInLeft", value: "slideInLeft" },
-    { key: "slideInRight", value: "slideInRight" },
-    { key: "slideOutUp", value: "slideOutUp" },
-  ];
   return (
     <Dialog open={open} onClose={handleClose} fullScreen maxWidth="sm">
-      <DialogTitle sx={{ height: "fit-content", width: "100%" }}>
+      <DialogTitle sx={styles.dialogTitle}>
         <Grid container justifyContent={"end"}>
-          <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+          <Close sx={styles.closeIcon} onClick={handleClose} />
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{ py: "0", width: "100%" }}>
-        <div class="animation-editor-container">
+      <DialogContent sx={styles.dialogContent}>
+        <div className="animation-editor-container">
           <Grid container py={1} justifyContent={"center"}>
             <Grid container xs="12">
               <FormControl fullWidth>
@@ -74,10 +69,12 @@ const AnimationEditor = ({
                   onChange={(e) => {
                     onChange(e.target.value);
                   }}
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.select}
                 >
-                  {options.map((type, index) => (
-                    <MenuItem value={type.key}>{type.value}</MenuItem>
+                  {animationEditorOptions.map((type, index) => (
+                    <MenuItem key={index} value={type.key}>
+                      {type.value}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -86,11 +83,9 @@ const AnimationEditor = ({
               container
               xs="12"
               sx={{
-                height: "250px",
+                ...styles.viewBoxContainer,
                 background:
                   objText?.strImgPath && `url(${objText?.strImgPath})`,
-                backgroundSize: "100% 100%",
-                backgroundColor: "#000",
               }}
               mt={5}
               p={2}

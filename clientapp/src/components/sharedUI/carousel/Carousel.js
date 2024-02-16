@@ -1,10 +1,30 @@
-import "./Carousel.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Grid } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import AnimationBG from "../AnimationBG/AnimationBG";
+import "./Carousel.css";
 
-const styles = {};
+const styles = {
+  container: {
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    
+    height: { lg: "600px", xs: "700px" },
+    width: "100%",
+    content: '""',
+    position: "absolute",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    zIndex: "-1",
+  },
+  lgDisplay: {
+    display: { lg: "flex", xs: "none" },
+  },
+  insetIndicators: {
+    marginTop: "-80px",
+    paddingX: { lg: "60px !important", xs: "15px" },
+  },
+};
 
 export const Carousel = ({
   slides,
@@ -37,22 +57,13 @@ export const Carousel = ({
                     ...slide.sxStyle,
                     ":before": slide?.image && {
                       background: `url(${slide?.image})`,
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
                       transform: dir === "rtl" && "scaleX(-1)",
-                      height: { lg: "600px", xs: "700px" },
-                      width: "100%",
-                      content: '""',
-                      position: "absolute",
-                      left: "0",
-                      right: "0",
-                      bottom: "0",
-                      zIndex: "-1",
+                      ...styles.container,
                     },
                   }}
                 >
                   {activeSlides === 1 && slide?.slideContent}
-                  {/* {activeSlides === 2 && (
+                  {activeSlides === 2 && index === 0 && (
                     <>
                       <Grid item container xs={"12"} lg="6">
                         {slide?.slideContent}
@@ -63,54 +74,29 @@ export const Carousel = ({
                           container
                           xs={"12"}
                           lg="6"
-                          sx={{ display: { lg: "flex", xs: "none" } }}
+                          sx={styles.lgDisplay}
                         >
                           {slides[index + 1]?.slideContent}
                         </Grid>
                       )}
-                    </>
-                  )} */}
-                  {activeSlides===2&&index===0&&(<>
-                      <Grid item container xs={"12"} lg="6">
-                        {slide?.slideContent}
-                      </Grid>
-                      {slides[index + 1] && (
-                        <Grid
-                          item
-                          container
-                          xs={"12"}
-                          lg="6"
-                          sx={{ display: { lg: "flex", xs: "none" } }}
-                        >
-                          {slides[index + 1]?.slideContent}
-                        </Grid>
-                      )}
-                    </>)}
-                  {activeSlides === 2&&index!==0 && (
-                    <>
-                      {slides[index * activeSlides]?.slideContent && (
-                            <Grid
-                              item
-                              
-                              lg="6"
-                              sx={{ display: { lg: "flex", xs: "none" } }}
-                            >
-                              { slides[index * activeSlides]?.slideContent}
-                            </Grid>
-                          )}
-                      { slides[index * activeSlides + 1]?.slideContent && (
-                            <Grid
-                              item
-                              lg="6"
-                              sx={{ display: { lg: "flex", xs: "none" } }}
-                            >
-                              { slides[index * activeSlides + 1]
-                                    ?.slideContent}
-                            </Grid>
-                          )}
                     </>
                   )}
-                  {activeSlides===3&&index===0&&(<>
+                  {activeSlides === 2 && index !== 0 && (
+                    <>
+                      {slides[index * activeSlides]?.slideContent && (
+                        <Grid item lg="6" sx={styles.lgDisplay}>
+                          {slides[index * activeSlides]?.slideContent}
+                        </Grid>
+                      )}
+                      {slides[index * activeSlides + 1]?.slideContent && (
+                        <Grid item lg="6" sx={styles.lgDisplay}>
+                          {slides[index * activeSlides + 1]?.slideContent}
+                        </Grid>
+                      )}
+                    </>
+                  )}
+                  {activeSlides === 3 && index === 0 && (
+                    <>
                       <Grid item container xs={"12"} lg="4">
                         {slide?.slideContent}
                       </Grid>
@@ -120,7 +106,7 @@ export const Carousel = ({
                           container
                           xs={"12"}
                           lg="4"
-                          sx={{ display: { lg: "flex", xs: "none" } }}
+                          sx={styles.lgDisplay}
                         >
                           {slides[index + 1]?.slideContent}
                         </Grid>
@@ -131,48 +117,32 @@ export const Carousel = ({
                           container
                           xs={"12"}
                           lg="4"
-                          sx={{ display: { lg: "flex", xs: "none" } }}
+                          sx={styles.lgDisplay}
                         >
                           {slides[index + 2]?.slideContent}
                         </Grid>
                       )}
-                    </>)}
-                  {activeSlides === 3&&index!==0 && (
+                    </>
+                  )}
+                  {activeSlides === 3 && index !== 0 && (
                     <>
                       {slides[index * activeSlides]?.slideContent && (
-                            <Grid
-                              item
-                              xs={"4"}
-                              lg="4"
-                              sx={{ display: { lg: "flex", xs: "none" } }}
-                            >
-                              { slides[index * activeSlides]?.slideContent}
-                            </Grid>
-                          )}
-                      { slides[index * activeSlides + 1]?.slideContent && (
-                            <Grid
-                              item
-                              xs={"4"}
-                              lg="4"
-                              sx={{ display: { lg: "flex", xs: "none" } }}
-                            >
-                              { slides[index * activeSlides + 1]
-                                    ?.slideContent}
-                            </Grid>
-                          )}
-                      { slides[index * activeSlides + 2]?.slideContent && (
-                            <Grid
-                              item
-                              xs={"4"}
-                              lg="4"
-                              sx={{ display: { lg: "flex", xs: "none" } }}
-                            >
-                              {index === 0
-                                ? slides[index + 2]?.slideContent
-                                : slides[index * activeSlides + 2]
-                                    ?.slideContent}
-                            </Grid>
-                          )}
+                        <Grid item xs={"4"} lg="4" sx={styles.lgDisplay}>
+                          {slides[index * activeSlides]?.slideContent}
+                        </Grid>
+                      )}
+                      {slides[index * activeSlides + 1]?.slideContent && (
+                        <Grid item xs={"4"} lg="4" sx={styles.lgDisplay}>
+                          {slides[index * activeSlides + 1]?.slideContent}
+                        </Grid>
+                      )}
+                      {slides[index * activeSlides + 2]?.slideContent && (
+                        <Grid item xs={"4"} lg="4" sx={styles.lgDisplay}>
+                          {index === 0
+                            ? slides[index + 2]?.slideContent
+                            : slides[index * activeSlides + 2]?.slideContent}
+                        </Grid>
+                      )}
                     </>
                   )}
                 </Grid>
@@ -187,13 +157,8 @@ export const Carousel = ({
           container
           xs="12"
           justifyContent={justify}
-          display={{ lg: "flex", xs: "none" }}
-          sx={
-            inset && {
-              marginTop: "-80px",
-              paddingX: { lg: "60px !important", xs: "15px" },
-            }
-          }
+          display={styles.lg}
+          sx={inset && styles.insetIndicators}
           className="indicators"
           py={!inset && 3}
         >
@@ -226,12 +191,7 @@ export const Carousel = ({
           xs="12"
           justifyContent={justify}
           display={{ lg: "none", xs: "flex" }}
-          sx={
-            inset && {
-              marginTop: "-50px",
-              paddingX: { lg: "60px !important", xs: "15px" },
-            }
-          }
+          sx={inset && styles.insetIndicators}
           className="indicators"
         >
           {Array(indicators)

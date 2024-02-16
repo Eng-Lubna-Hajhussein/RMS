@@ -36,6 +36,13 @@ const styles = {
     height: "30px",
     width: "30px",
   },
+  reviewContainer: {
+    height: "150px",
+    overflow: "auto",
+  },
+  lgDisplay: {
+    display: { lg: "flex", xs: "none" },
+  },
 };
 
 function ReviewCard({ review, lang, dir }) {
@@ -48,7 +55,7 @@ function ReviewCard({ review, lang, dir }) {
         sx={styles.fullHeight}
         alignContent={"flex-start"}
       >
-        <Grid item xs="12" sx={{height:"150px",overflow:"auto"}}>
+        <Grid item xs="12" sx={styles.reviewContainer}>
           <Typography sx={styles.review}>
             {review?.jsnComment[lang]
               ? review?.jsnComment[lang]
@@ -82,7 +89,7 @@ function ReviewCard({ review, lang, dir }) {
           alignItems={"end"}
           justifyContent={"flex-end"}
           justifyItems={"flex-end"}
-          sx={{ display: { lg: "flex", xs: "none" } }}
+          sx={styles.lgDisplay}
         >
           <Box sx={styles.quoteIconBox}>
             <Grid

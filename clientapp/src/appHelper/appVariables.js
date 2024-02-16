@@ -703,3 +703,43 @@ export const initialAppState = {
     jsnClientPayment:{}
   },
 };
+
+export const animationEditorOptions=[
+  { key: "none", value: "none" },
+  { key: "fadeIn", value: "fadeIn" },
+  { key: "fadeOut", value: "fadeOut" },
+  { key: "fadeInGrow", value: "fadeInGrow" },
+  { key: "fadeOutGrow", value: "fadeOutGrow" },
+  { key: "slideIn", value: "slideIn" },
+  { key: "slideOut", value: "slideOut" },
+  { key: "grow", value: "grow" },
+  { key: "slideInRotate", value: "slideInRotate" },
+  { key: "slideOutRotate", value: "slideOutRotate" },
+  { key: "fadeOutSlideOut", value: "fadeOutSlideOut" },
+  { key: "wobble", value: "wobble" },
+  { key: "hinge", value: "hinge" },
+  { key: "flip", value: "flip" },
+  { key: "flipInX", value: "flipInX" },
+  { key: "flipOutX", value: "flipOutX" },
+  { key: "flipInY", value: "flipInY" },
+  { key: "flipOutY", value: "flipOutY" },
+  { key: "rollIn", value: "rollIn" },
+  { key: "rollOut", value: "rollOut" },
+  { key: "rotateOut", value: "rotateOut" },
+  { key: "rotateIn", value: "rotateIn" },
+  { key: "slideInUp", value: "slideInUp" },
+  { key: "slideInDown", value: "slideInDown" },
+  { key: "slideInLeft", value: "slideInLeft" },
+  { key: "slideInRight", value: "slideInRight" },
+  { key: "slideOutUp", value: "slideOutUp" },
+]
+
+export const fontList = [
+  "Arial",
+  "Verdana",
+  "Times New Roman",
+  "Garamond",
+  "Georgia",
+  "Courier New",
+  "cursive",
+];

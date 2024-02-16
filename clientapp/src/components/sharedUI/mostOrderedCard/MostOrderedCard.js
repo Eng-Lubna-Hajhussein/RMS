@@ -24,7 +24,7 @@ const styles = {
     fontSize: { lg: "15px !important", xs: "8px" },
   },
   crossBox: {
-    backgroundColor: "#ffd40d !important",
+    backgroundColor: "#ffd40d",
     borderRadius: "50% !important",
     width: { lg: "150px !important", xs: "100px" },
     height: { lg: "150px !important", xs: "100px" },
@@ -43,12 +43,15 @@ const styles = {
     fontFamily: "sans-serif",
     textTransform: "capitalize !important",
   },
-  fullHeight:{
-    height: "100%" 
+  fullHeight: {
+    height: "100%",
   },
-  itemImg:{
-    height: { lg: "180px", xs: "100px" }
-  }
+  itemImg: {
+    height: { lg: "180px", xs: "100px" },
+  },
+  crossBoxGrid: {
+    marginTop: { lg: "-100px", xs: "-60px" },
+  },
 };
 
 function MostOrderedCard({ item, lang, dir }) {
@@ -56,12 +59,7 @@ function MostOrderedCard({ item, lang, dir }) {
     <Grid container item>
       <Grid item xs="12" container px={2}>
         <Paper sx={styles.paper}>
-          <Grid
-            container
-            item
-            sx={styles.fullHeight}
-            alignItems={"flex-start"}
-          >
+          <Grid container item sx={styles.fullHeight} alignItems={"flex-start"}>
             <Grid item xs={7} container>
               <Grid item lg="12">
                 <Typography sx={styles.title}>{item?.jsnName[lang]}</Typography>
@@ -77,14 +75,14 @@ function MostOrderedCard({ item, lang, dir }) {
               container
               sx={styles.fullHeight}
               alignContent={"center"}
-              xs={'5'}
+              xs={"5"}
             >
-                <Box
-                  src={item?.jsnCategoryInfo?.strImgPath}
-                  component={"img"}
-                  width={'100%'}
-                  sx={styles.itemImg}
-                />
+              <Box
+                src={item?.jsnCategoryInfo?.strImgPath}
+                component={"img"}
+                width={"100%"}
+                sx={styles.itemImg}
+              />
             </Grid>
           </Grid>
         </Paper>
@@ -92,7 +90,7 @@ function MostOrderedCard({ item, lang, dir }) {
           item
           lg="12"
           sx={{
-            marginTop: { lg: "-100px", xs: "-60px" },
+            ...styles.crossBoxGrid,
             marginLeft: dir === "ltr" && "30px",
             marginRight: dir === "rtl" && "30px",
           }}
@@ -100,28 +98,34 @@ function MostOrderedCard({ item, lang, dir }) {
           <Box
             sx={{
               ...styles.crossBox,
-              backgroundColor: "#ffd40d",
+
               border: item?.jsnCategoryInfo?.blnOnSale && "5px solid #f3274c",
             }}
           >
             <Grid
               container
-              justify={"center"}
-              sx={{ height: "100%" }}
+              sx={styles.fullHeight}
               alignItems={"center"}
               alignSelf={"center"}
             >
               <Grid item xs={"12"}>
-                <Grid container justify={"center"}>
+                <Grid container>
                   <Grid item lg="12" container justifyContent={"center"} px={1}>
                     <Typography
                       sx={{
                         ...styles.price,
-                        color: item?.jsnCategoryInfo?.blnOnSale ? "#555" : "#f3274c",
-                        textDecoration: item?.jsnCategoryInfo?.blnOnSale && "line-through",
+                        color: item?.jsnCategoryInfo?.blnOnSale
+                          ? "#555"
+                          : "#f3274c",
+                        textDecoration:
+                          item?.jsnCategoryInfo?.blnOnSale && "line-through",
                         fontSize: {
-                          lg: item?.jsnCategoryInfo?.blnOnSale ? "15px" : "25px",
-                          xs: item?.jsnCategoryInfo?.blnOnSale ? "12px" : "15px",
+                          lg: item?.jsnCategoryInfo?.blnOnSale
+                            ? "15px"
+                            : "25px",
+                          xs: item?.jsnCategoryInfo?.blnOnSale
+                            ? "12px"
+                            : "15px",
                         },
                       }}
                     >

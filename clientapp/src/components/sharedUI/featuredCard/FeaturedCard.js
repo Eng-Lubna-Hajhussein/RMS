@@ -78,11 +78,14 @@ const styles = {
     background: "#ffd40d",
     borderRadius: "10px",
   },
-  description:{
+  description: {
     color: "#555",
     fontWeight: "400",
     fontSize: "14px",
-  }
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
 };
 
 function FeaturedCard({ item, lang }) {
@@ -105,7 +108,7 @@ function FeaturedCard({ item, lang }) {
         >
           {item?.jsnCategoryInfo?.blnOnSale && (
             <Box sx={styles.saleBox}>
-              <Grid container sx={{ height: "100%" }} alignItems={"center"}>
+              <Grid container sx={styles.fullHeight} alignItems={"center"}>
                 <Grid item xs="12" justify={"center"}>
                   <Typography sx={styles.saleTitle}>Sale</Typography>
                 </Grid>
@@ -117,7 +120,7 @@ function FeaturedCard({ item, lang }) {
               item
               xs="12"
               container
-              sx={{ height: "fit-content" }}
+              sx={styles.fitContentHeight}
               alignContent={"center"}
               justifyContent={"center"}
             >
@@ -137,9 +140,7 @@ function FeaturedCard({ item, lang }) {
                   </Typography>
                 </Grid>
                 <Grid item xs="12">
-                  <Typography
-                    sx={styles.description}
-                  >
+                  <Typography sx={styles.description}>
                     {item?.jsnCategoryInfo?.jsnDescription[lang]}
                   </Typography>
                 </Grid>
@@ -148,7 +149,7 @@ function FeaturedCard({ item, lang }) {
                     container
                     alignContent={"center"}
                     alignItems={"center"}
-                    sx={{ height: "fit-content" }}
+                    sx={styles.fitContentHeight}
                   >
                     <Grid item xs="12" container>
                       <Grid item>

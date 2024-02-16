@@ -16,11 +16,23 @@ const styles = {
   title: {
     fontWeight: "600",
     px: "3px",
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
-  textfield:{
-    textTransform:"capitalize"
-  }
+  textfield: {
+    textTransform: "capitalize",
+  },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  dialogActions: {
+    py: "0",
+  },
 };
 
 function EditUpperToolbar({
@@ -29,7 +41,7 @@ function EditUpperToolbar({
   jsnSystemContact,
   onSave,
   dir,
-  lang
+  lang,
 }) {
   return (
     <Dialog
@@ -56,20 +68,20 @@ function EditUpperToolbar({
       }}
       maxWidth="md"
     >
-      <DialogTitle sx={{ height: "fit-content" }}>
+      <DialogTitle sx={styles.dialogTitle}>
         <Grid container justifyContent={"end"}>
-          <Close sx={{ cursor: "pointer" }} onClick={handleEditClose} />
+          <Close sx={styles.closeIcon} onClick={handleEditClose} />
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{ py: "0" }}>
+      <DialogContent sx={styles.dialogContent}>
         <Grid container py={1} justifyContent={"center"}>
           <Grid item container xs="12">
             <Grid item xs="12" p={1}>
               <Typography
                 sx={{
                   ...styles.title,
-                  borderLeft:dir==='ltr'&& `5px solid ${App_Second_Color}`,
-                  borderRight:dir==='rtl'&& `5px solid ${App_Second_Color}`,
+                  borderLeft: dir === "ltr" && `5px solid ${App_Second_Color}`,
+                  borderRight: dir === "rtl" && `5px solid ${App_Second_Color}`,
                 }}
               >
                 {dictionary.editUpperHeaderSection.title[lang]}
@@ -109,8 +121,8 @@ function EditUpperToolbar({
               <Typography
                 sx={{
                   ...styles.title,
-                  borderLeft:dir==='ltr'&& `5px solid ${App_Second_Color}`,
-                  borderRight:dir==='rtl'&& `5px solid ${App_Second_Color}`,
+                  borderLeft: dir === "ltr" && `5px solid ${App_Second_Color}`,
+                  borderRight: dir === "rtl" && `5px solid ${App_Second_Color}`,
                 }}
               >
                 {dictionary.editUpperHeaderSection.subtitle[lang]}
@@ -161,7 +173,7 @@ function EditUpperToolbar({
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ py: "0" }}>
+      <DialogActions sx={styles.dialogActions}>
         <Grid
           container
           p={2}

@@ -1,27 +1,20 @@
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  AnimationOutlined,
   Close,
-  StyleOutlined,
-  Upload,
 } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
-  TextField,
   DialogActions,
   Grid,
-  Typography,
   Box,
-  Fab,
-  Divider,
-  Button,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import {
@@ -30,7 +23,47 @@ import {
   tabsOptions,
 } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+
+const styles = {
+  dialog: {
+    width: "100%",
+  },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  inputLabel: {
+    textTransform: "capitalize",
+  },
+  dialogContent: {
+    py: "0",
+    width: "100%",
+  },
+  select: {
+    background: "#fff",
+    borderRadius: "5px",
+    textTransform: "capitalize",
+  },
+  tabIconContainer: {
+    height: "200px",
+    border: "4px dashed #ececec",
+    borderRadius: "20px",
+  },
+  tabIcon: {
+    filter:
+      "invert(19%) sepia(91%) saturate(3389%) hue-rotate(339deg) brightness(108%) contrast(91%)",
+  },
+  tabImgContainer: {
+    height: "200px",
+    border: "4px dashed #ececec",
+    borderRadius: "20px",
+  },
+  dialogActions: {
+    py: "0",
+  },
+};
 
 function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
   const options = useMemo(() => {
@@ -56,7 +89,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             const tab = {
               bigID: bigID,
               bigCategoryTypeID: objCategoriesType.Menu,
-              bigSystemID:systemID,
+              bigSystemID: systemID,
               jsnName: tabOp?.jsnName,
               jsnCategoryInfo: objTabsAssets[option],
               bigParentID: 0,
@@ -67,20 +100,22 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
         }}
         maxWidth="sm"
         fullWidth
-        sx={{ width: "100%" }}
+        sx={styles.dialog}
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+            <Close sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0", width: "100%" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}></Grid>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1} container>
                 <FormControl fullWidth>
-                  <InputLabel sx={{textTransform:"capitalize"}}>{dictionary.menuSection.menuCategory[lang]}</InputLabel>
+                  <InputLabel sx={styles.inputLabel}>
+                    {dictionary.menuSection.menuCategory[lang]}
+                  </InputLabel>
                   <Select
                     value={option}
                     required
@@ -88,7 +123,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
                     variant="outlined"
                     label={dictionary.menuSection.menuCategory[lang]}
                     onChange={(e) => setOption(e.target.value)}
-                    sx={{ background: "#fff", borderRadius: "5px",textTransform:"capitalize" }}
+                    sx={styles.select}
                   >
                     {options.map((tab, index) => (
                       <MenuItem value={tab.key}>{tab.jsnName[lang]}</MenuItem>
@@ -107,20 +142,13 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
-                  sx={{
-                    height: "200px",
-                    border: "4px dashed #ececec",
-                    borderRadius: "20px",
-                  }}
+                  sx={styles.tabIconContainer}
                 >
                   <Box
                     component={"img"}
                     height={"60px"}
                     width={"60px"}
-                    sx={{
-                      filter:
-                        "invert(19%) sepia(91%) saturate(3389%) hue-rotate(339deg) brightness(108%) contrast(91%)",
-                    }}
+                    sx={styles.tabIcon}
                     src={objTabsAssets[option]?.strIconPath}
                   />
                 </Grid>
@@ -132,11 +160,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
-                  sx={{
-                    height: "200px",
-                    border: "4px dashed #ececec",
-                    borderRadius: "20px",
-                  }}
+                  sx={styles.tabImgContainer}
                 >
                   <Box
                     component={"img"}
@@ -149,7 +173,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}

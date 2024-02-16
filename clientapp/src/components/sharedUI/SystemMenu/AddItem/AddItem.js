@@ -27,6 +27,44 @@ const styles = {
     px: "3px",
     textTransform: "capitalize",
   },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
+  dishImgContainer: {
+    height: "186px",
+    border: "4px dashed #ececec",
+    borderRadius: "10px",
+  },
+  dishImgContainerItem: {
+    height: "150px",
+    backgroundSize: "100% 100%",
+  },
+  displayNone: {
+    display: "none",
+  },
+  wsNote: {
+    textTransform: "capitalize",
+    "&": { margin: "0" },
+  },
+  formControlLabel: {
+    textTransform: "capitalize",
+    "&": { margin: "0" },
+  },
+  textfield: {
+    textTransform: "capitalize",
+  },
+  dialogAction: {
+    py: "0",
+  },
 };
 
 function AddItem({
@@ -105,19 +143,19 @@ function AddItem({
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+            <Close sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid
             container
             py={1}
             justifyContent={"start"}
             alignContent={"start"}
             alignItems={"start"}
-            sx={{ height: "fit-content" }}
+            sx={styles.fitContentHeight}
           >
             <Grid item xs="6" container>
               <Grid item xs="12" p={1}>
@@ -140,27 +178,22 @@ function AddItem({
                 container
                 justifyContent={"center"}
                 alignContent={"center"}
-                sx={{
-                  height: "186px",
-                  border: "4px dashed #ececec",
-                  borderRadius: "10px",
-                }}
+                sx={styles.dishImgContainer}
               >
                 <Grid
                   item
-                  xs="8"
+                  xs="12"
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
                   sx={{
-                    height: "150px",
                     background: `url(${img})`,
-                    backgroundSize: "100% 100%",
+                    ...styles.dishImgContainerItem,
                   }}
                 >
                   <label htmlFor="upload-photo">
                     <input
-                      style={{ display: "none" }}
+                      style={styles.displayNone}
                       id="upload-photo"
                       name="upload-photo"
                       type="file"
@@ -210,20 +243,14 @@ function AddItem({
                 px={0}
                 py={1}
                 container
-                sx={{ height: "fit-content" }}
+                sx={styles.fitContentHeight}
                 justifyContent={"start"}
                 alignContent={"start"}
               >
                 <FormGroup>
                   {!!ws && (
                     <InputLabel>
-                      <Typography
-                        fontSize={"12px"}
-                        sx={{
-                          textTransform: "capitalize",
-                          "&": { margin: "0" },
-                        }}
-                      >
+                      <Typography fontSize={"12px"} sx={styles.wsNote}>
                         {dictionary.menuSection.weeklySpecialMealNote[lang]}
                       </Typography>
                     </InputLabel>
@@ -232,20 +259,17 @@ function AddItem({
                     control={
                       <Checkbox disabled={!!ws} inputRef={onWeeklySpecial} />
                     }
-                    sx={{
-                      textTransform: "capitalize",
-                      "&": { margin: "0" },
-                    }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.weeklySpecialMeal[lang]}
                   />
                   <FormControlLabel
                     control={<Checkbox inputRef={onFeaturedInput} />}
-                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.featured[lang]}
                   />
                   <FormControlLabel
                     control={<Checkbox inputRef={onMostOrderedInput} />}
-                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.mostOrdered[lang]}
                   />
                   <FormControlLabel
@@ -256,7 +280,7 @@ function AddItem({
                         onChange={() => setOnSaleChecked((prev) => !prev)}
                       />
                     }
-                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    sx={styles.formControlLabel}
                     label={dictionary.menuSection.onSale[lang]}
                   />
                 </FormGroup>
@@ -267,7 +291,7 @@ function AddItem({
                     color="warning"
                     required={onSaleChecked}
                     name="salePrice"
-                    sx={{ textTransform: "capitalize" }}
+                    sx={styles.textfield}
                     label={dictionary.labels.salePrice[lang]}
                     type="text"
                     fullWidth
@@ -296,7 +320,7 @@ function AddItem({
                   required
                   name="nameEng"
                   dir="ltr"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.nameEng[lang]}
                   type="text"
                   fullWidth
@@ -310,7 +334,7 @@ function AddItem({
                   required
                   dir="rtl"
                   name="nameArb"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.nameArb[lang]}
                   type="text"
                   fullWidth
@@ -338,7 +362,7 @@ function AddItem({
                   color="warning"
                   required
                   name="descEng"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.descriptionEng[lang]}
                   dir="ltr"
                   type="text"
@@ -354,7 +378,7 @@ function AddItem({
                   required
                   dir="rtl"
                   name="descArb"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.descriptionArb[lang]}
                   type="text"
                   fullWidth
@@ -383,7 +407,7 @@ function AddItem({
                   color="warning"
                   required
                   name="price"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textfield}
                   label={dictionary.labels.price[lang]}
                   fullWidth
                   variant="outlined"
@@ -392,7 +416,7 @@ function AddItem({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogAction}>
           <Grid
             container
             p={2}

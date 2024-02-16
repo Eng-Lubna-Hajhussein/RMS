@@ -1,20 +1,42 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import "./TextEditor.css";
 import {
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
   Typography,
-  Button,
 } from "@mui/material";
-import AnimButton0001 from "../AnimButton0001/AnimButton0001";
 import { Close } from "@mui/icons-material";
-import { App_Primary_Color } from "appHelper/appColor";
+import { fontList } from "appHelper/appVariables";
+
+const styles = {
+  dialogTitle: {
+    height: "fit-content",
+    width: "100%",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: { py: "0", width: "100%" },
+  cursorPointer: {
+    cursor: "pointer",
+  },
+  boldBtn: {
+    cursor: "pointer",
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+  },
+  viewBox: {
+    height: "250px",
+    backgroundSize: "100% 100%",
+    backgroundColor: "#000",
+  },
+};
 
 const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
-    const [active, setActive] = useState({
+  const [active, setActive] = useState({
     justifyLeft: false,
     justifyCenter: false,
     justifyRight: false,
@@ -28,21 +50,21 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
       objText?.defaultStyle?.background,
   });
 
-  useEffect(()=>{
-       setActive({
-        justifyLeft: false,
-        justifyCenter: false,
-        justifyRight: false,
-        justifyFull: false,
-        boldBtn: false,
-        fontColor:
-          objText[objText?.onStyleKey]?.style?.color ||
-          objText?.defaultStyle?.color,
-        highlightColor:
-          objText[objText?.onStyleKey]?.style?.background ||
-          objText?.defaultStyle?.background,
-       })
-  },[objText.onStyleKey])
+  useEffect(() => {
+    setActive({
+      justifyLeft: false,
+      justifyCenter: false,
+      justifyRight: false,
+      justifyFull: false,
+      boldBtn: false,
+      fontColor:
+        objText[objText?.onStyleKey]?.style?.color ||
+        objText?.defaultStyle?.color,
+      highlightColor:
+        objText[objText?.onStyleKey]?.style?.background ||
+        objText?.defaultStyle?.background,
+    });
+  }, [objText.onStyleKey]);
 
   useEffect(() => {
     if (objText.onStyleKey) {
@@ -55,30 +77,20 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
     }
   }, [active]);
 
-  let fontList = [
-    "Arial",
-    "Verdana",
-    "Times New Roman",
-    "Garamond",
-    "Georgia",
-    "Courier New",
-    "cursive",
-  ];
-
   return (
     <Dialog open={open} onClose={handleClose} fullScreen maxWidth="sm">
-      <DialogTitle sx={{ height: "fit-content", width: "100%" }}>
+      <DialogTitle sx={styles.dialogTitle}>
         <Grid container justifyContent={"end"}>
-          <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+          <Close sx={styles.closeIcon} onClick={handleClose} />
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{ py: "0", width: "100%" }}>
+      <DialogContent sx={styles.dialogContent}>
         <Grid container py={1} justifyContent={"center"}>
           <div class="text-editor-container">
             <div class="options">
               {/* <!-- Text Format --> */}
               <button
-                style={{ cursor: "pointer" }}
+                style={styles.cursorPointer}
                 onClick={(e) => {
                   setActive({
                     ...active,
@@ -90,11 +102,8 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
                 <i
                   id="bold"
                   style={{
-                    cursor: "pointer",
                     backgroundColor: active.boldBtn ? "#e9e9ff" : "#fff",
-                    width: "100%",
-                    height: "100%",
-                    alignItems: "center",
+                    ...styles.boldBtn,
                   }}
                   class="fa-solid fa-bold"
                 ></i>
@@ -138,10 +147,8 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
                   let userLink = prompt("Enter a URL");
                   //if link has http then pass directly else add http
                   if (/http/i.test(userLink)) {
-                    //   modifyText(e.target.id, false, userLink);
                   } else {
                     userLink = "http://" + userLink;
-                    //   modifyText(e.target.id, false, userLink);
                   }
                 }}
                 class="adv-option-button"
@@ -260,11 +267,9 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
             <Grid
               container
               sx={{
-                height: "250px",
                 background:
                   objText?.strImgPath && `url(${objText?.strImgPath})`,
-                backgroundSize: "100% 100%",
-                backgroundColor: "#000",
+                ...styles.viewBox,
               }}
               mt={5}
               p={2}

@@ -91,6 +91,35 @@ const styles = {
     borderRadius: "10px",
     cursor: "pointer",
   },
+  tabOptionListContainer: {
+    marginBottom: "-50px",
+  },
+  lgDisplay: {
+    display: { lg: "flex", xs: "none" },
+  },
+  addIcon: {
+    color: "#e4e4e4",
+  },
+  tabImg: {
+    position: "absolute",
+    height: "100%",
+    top: "70px",
+    display: { lg: "flex", xs: "none" },
+  },
+  fullHeight: {
+    height: "100%",
+  },
+  xsDisplay: {
+    display: { lg: "none", xs: "flex" },
+  },
+  addItemBox: {
+    height: "54px",
+    width: "54px",
+    textAlign: "center",
+    borderRadius: "50%",
+    background: App_Second_Color,
+    cursor: "pointer",
+  },
 };
 
 export default function RestaurantMenu({
@@ -196,7 +225,6 @@ export default function RestaurantMenu({
     objTabs.categoryOnAction = null;
     funDeleteCategory(item.bigID);
   };
-
   const funCalculateItemQuantity = (item) => {
     const product = userCart?.lstProduct?.find(
       ({ bigID }) => `${item.bigID}` === `${bigID}`
@@ -235,7 +263,7 @@ export default function RestaurantMenu({
                     item
                     lg="12"
                     px={2}
-                    sx={{ marginBottom: "-50px" }}
+                    sx={styles.tabOptionListContainer}
                     container
                     justifyContent={"flex-end"}
                   >
@@ -258,7 +286,7 @@ export default function RestaurantMenu({
                 <Grid
                   item
                   lg="12"
-                  sx={{ display: { lg: "flex", xs: "none" } }}
+                  sx={styles.lgDisplay}
                   className="icon-container"
                 >
                   <img
@@ -297,7 +325,7 @@ export default function RestaurantMenu({
                 sx={styles.addTabIcon}
                 onClick={() => setAddTabOpen(true)}
               >
-                <Add sx={{ color: "#e4e4e4" }} />
+                <Add sx={styles.addIcon} />
               </Grid>
             </Grid>
           )}
@@ -321,12 +349,9 @@ export default function RestaurantMenu({
               alignSelf={"center"}
               alignContent={"center"}
               sx={{
-                position: "absolute",
-                height: "100%",
                 right: dir === "rtl" && "10px",
                 left: dir === "ltr" && "10px",
-                top: "70px",
-                display: { lg: "flex", xs: "none" },
+                ...styles.tabImg,
               }}
             >
               <Box
@@ -346,7 +371,7 @@ export default function RestaurantMenu({
                   alignItems={"center"}
                   alignSelf={"center"}
                   sx={{
-                    height: "100%",
+                    ...styles.fullHeight,
                     paddingLeft: { lg: dir === "ltr" && "180px", xs: "25px" },
                     paddingRight: { lg: dir === "rtl" && "180px", xs: "25px" },
                   }}
@@ -357,7 +382,7 @@ export default function RestaurantMenu({
                     xs={"12"}
                     container
                     justifyContent={"center"}
-                    sx={{ display: { lg: "none", xs: "flex" } }}
+                    sx={styles.xsDisplay}
                     pb={3}
                   >
                     <Box
@@ -382,20 +407,10 @@ export default function RestaurantMenu({
                       </Grid>
                       {adminEditMode && (
                         <Grid item xs={"2"}>
-                          <Box
-                            sx={{
-                              height: "54px",
-                              width: "54px",
-                              textAlign: "center",
-                              borderRadius: "50%",
-                              background: App_Second_Color,
-                              cursor: "pointer",
-                            }}
-                            onClick={() => setAddItemOpen(true)}
-                          >
+                          <Box sx={styles.addItemBox} onClick={() => setAddItemOpen(true)}>
                             <Grid
                               container
-                              sx={{ height: "100%" }}
+                              sx={styles.fullHeight}
                               justifyContent={"center"}
                               alignContent={"center"}
                             >
@@ -576,7 +591,7 @@ export default function RestaurantMenu({
                 alignItems={"center"}
                 alignSelf={"center"}
                 sx={{
-                  height: "100%",
+                  ...styles.fullHeight,
                   paddingLeft: { lg: dir === "ltr" && "180px", xs: "25px" },
                   paddingRight: { lg: dir === "rtl" && "180px", xs: "25px" },
                 }}
