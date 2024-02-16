@@ -253,7 +253,7 @@ function Tables() {
             </Grid>
             <Grid item xs="12" sx={{ marginBottom: "50px" }} px={1}>
               <Table
-                sx={{ minWidth: 650, border: "1px solid #c4c4c4" }}
+                sx={{  border: "1px solid #c4c4c4" }}
                 aria-label="simple table"
                 initialState={{
                   pagination: {

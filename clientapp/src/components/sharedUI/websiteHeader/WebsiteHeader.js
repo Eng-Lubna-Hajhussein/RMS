@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { AppBar, CssBaseline } from "@mui/material";
 import DrawerNav from "./DrawerNav/DrawerNav";
 import UpperToolbar from "./UpperToolbar/UpperToolbar";
@@ -24,7 +24,8 @@ function WebsiteHeader({
   systemPath,
   userNavList,
   customerEditMode,
-  websiteLogo
+  websiteLogo,
+  dir
 }) {
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
@@ -37,6 +38,7 @@ function WebsiteHeader({
           lang={lang}
           editable={editable}
           userImg={userImg}
+          dir={dir}
           userName={userName}
           blnUserLogin={blnUserLogin}
           userNavList={userNavList}

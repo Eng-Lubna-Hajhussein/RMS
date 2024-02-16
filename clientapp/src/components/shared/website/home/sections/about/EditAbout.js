@@ -1,9 +1,5 @@
-import {
-  AnimationOutlined,
-  Close,
-  StyleOutlined,
-  Upload,
-} from "@mui/icons-material";
+import React from "react";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -12,31 +8,42 @@ import {
   DialogActions,
   Grid,
   Typography,
-  Box,
-  Fab,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import AnimationBG from "components/sharedUI/AnimationBG/AnimationBG";
-import TextEditor from "components/sharedUI/TextEditor/TextEditor";
-import useUpload from "hooks/useUpload/useUpload";
-import React, { useEffect, useRef, useState } from "react";
+import { dictionary } from "appHelper/appDictionary";
 
-function Edit({
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  textField: {
+    textTransform: "capitalize",
+  },
+  dialogActions: {
+    py: "0",
+  },
+};
+
+function EditAbout({
   openEdit,
   handleEditClose,
-  jsnReservation,
+  jsnAboutSection,
   lang,
   dir,
   onSave,
 }) {
-
   return (
     <React.Fragment>
       <Dialog
@@ -48,71 +55,73 @@ function Edit({
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const { titleEng, titleArb, descEng, descArb } = formJson;
+            const { titleEng, titleArb, subtitleEng, subtitleArb } = formJson;
             onSave({
-                ...jsnReservation,
-                jsnTitle:{
-                    eng:titleEng,
-                    arb:titleArb
-                },
-                jsnDescription:{
-                    eng:descEng,
-                    arb:descArb
-                }
-            })
+              ...jsnAboutSection,
+              jsnTitle: {
+                eng: titleEng,
+                arb: titleArb,
+              },
+              jsnSubtitle: {
+                eng: subtitleEng,
+                arb: subtitleArb,
+              },
+            });
             handleEditClose();
           },
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleEditClose} />
+            <Close sx={styles.closeIcon} onClick={handleEditClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Title
+                  {dictionary.editAboutSection.title[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="titleEng"
-                  label="Title English"
+                  label={dictionary.labels.titleEng[lang]}
                   type="text"
                   fullWidth
+                  sx={styles.textField}
                   variant="outlined"
                   multiline
                   rows={2}
-                  defaultValue={jsnReservation.jsnTitle["eng"]}
+                  defaultValue={jsnAboutSection.jsnTitle["eng"]}
                 />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
+                  sx={styles.textField}
                   name="titleArb"
-                  label="Title Arabic"
+                  label={dictionary.labels.titleArb[lang]}
                   type="text"
                   fullWidth
                   multiline
                   rows={2}
                   variant="outlined"
-                  defaultValue={jsnReservation.jsnTitle["arb"]}
+                  defaultValue={jsnAboutSection.jsnTitle["arb"]}
                 />
               </Grid>
             </Grid>
@@ -120,49 +129,51 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Description
+                  {dictionary.editAboutSection.subtitle[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
-                  name="descEng"
-                  label="Description English"
+                  name="subtitleEng"
+                  label={dictionary.labels.subtitleEng[lang]}
                   type="text"
                   fullWidth
+                  sx={styles.textField}
                   multiline
-                  rows={4}
+                  rows={2}
                   variant="outlined"
-                  defaultValue={jsnReservation.jsnDescription["eng"]}
+                  defaultValue={jsnAboutSection.jsnSubtitle["eng"]}
                 />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
-                  name="descArb"
-                  label="Description Arabic"
+                  sx={styles.textField}
+                  name="subtitleArb"
+                  label={dictionary.labels.subtitleArb[lang]}
                   type="text"
                   fullWidth
                   multiline
-                  rows={4}
+                  rows={2}
                   variant="outlined"
-                  defaultValue={jsnReservation.jsnDescription["arb"]}
+                  defaultValue={jsnAboutSection.jsnSubtitle["arb"]}
                 />
               </Grid>
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}
@@ -172,7 +183,7 @@ function Edit({
           >
             <Grid item xs="2">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"
@@ -185,4 +196,4 @@ function Edit({
   );
 }
 
-export default Edit;
+export default EditAbout;

@@ -22,6 +22,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import {
   objCategoriesType,
@@ -79,15 +80,15 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             <Grid item container xs="12">
               <Grid item xs="12" p={1} container>
                 <FormControl fullWidth>
-                  <InputLabel>Menu Category</InputLabel>
+                  <InputLabel sx={{textTransform:"capitalize"}}>{dictionary.menuSection.menuCategory[lang]}</InputLabel>
                   <Select
                     value={option}
                     required
                     autoFocus
                     variant="outlined"
-                    label="Menu Category"
+                    label={dictionary.menuSection.menuCategory[lang]}
                     onChange={(e) => setOption(e.target.value)}
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={{ background: "#fff", borderRadius: "5px",textTransform:"capitalize" }}
                   >
                     {options.map((tab, index) => (
                       <MenuItem value={tab.key}>{tab.jsnName[lang]}</MenuItem>
@@ -158,7 +159,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
           >
             <Grid item xs="4">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"

@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
 import RestaurantMenu from "components/sharedUI/SystemMenu/SystemMenu";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -13,6 +14,7 @@ const styles = {
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
+    textTransform: "capitalize",
   },
   line: {
     width: "100%",
@@ -22,10 +24,18 @@ const styles = {
   },
 };
 
-function Menu({ categories, lang, dir ,editable,  addMenuCategory,
+function Menu({
+  categories,
+  lang,
+  dir,
+  editable,
+  addMenuCategory,
   deleteMenuCategory,
   systemID,
-  editMenuCategory,addWS,removeWS,ws,
+  editMenuCategory,
+  addWS,
+  removeWS,
+  ws,
   customerEditMode,
   adminEditMode,
   loggedIn,
@@ -37,30 +47,34 @@ function Menu({ categories, lang, dir ,editable,  addMenuCategory,
     <Grid container sx={styles.container}>
       <Grid item lg="12" mb={4} container justifyContent={"center"}>
         <Grid item lg="12" container justifyContent={"center"}>
-          <Typography sx={styles.mainTitle}>Discover Menu</Typography>
+          <Typography sx={styles.mainTitle}>
+            {dictionary.menuSection.title[lang]}
+          </Typography>
         </Grid>
-        <Grid item lg="3" xs={"6"} pt-0 sx={styles.line} />
+        <Grid item lg="3" xs={"6"} sx={styles.line} />
       </Grid>
-      {<RestaurantMenu
-        categories={categories}
-        blnOnSaveCategory={true}
-        lang={lang}
-        dir={dir}
-        funAddCategory={addMenuCategory}
-        funDeleteCategory={deleteMenuCategory}
-        funEditCategory={editMenuCategory}
-        systemID={systemID}
-        ws={ws}
-        addWS={addWS}
-        userCart={userCart}
-        addOrderProduct={addOrderProduct}
-        removeOrderProduct={removeOrderProduct}
-        removeWS={removeWS}
-        editable={editable}
-        customerEditMode={customerEditMode}
-        adminEditMode={adminEditMode}
-        loggedIn={loggedIn}
-      />}
+      {
+        <RestaurantMenu
+          categories={categories}
+          blnOnSaveCategory={true}
+          lang={lang}
+          dir={dir}
+          funAddCategory={addMenuCategory}
+          funDeleteCategory={deleteMenuCategory}
+          funEditCategory={editMenuCategory}
+          systemID={systemID}
+          ws={ws}
+          addWS={addWS}
+          userCart={userCart}
+          addOrderProduct={addOrderProduct}
+          removeOrderProduct={removeOrderProduct}
+          removeWS={removeWS}
+          editable={editable}
+          customerEditMode={customerEditMode}
+          adminEditMode={adminEditMode}
+          loggedIn={loggedIn}
+        />
+      }
     </Grid>
   );
 }

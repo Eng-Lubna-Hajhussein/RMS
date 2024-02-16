@@ -100,6 +100,7 @@ function Home({
         jsnOwnerSection={systemInfo.jsnSystemSections.jsnOwnerSection}
         onSaveOwner={onSaveOwner}
         editable={adminEditMode}
+        websiteLogo={websiteLogo}
       />
       <Reservation
         lang={lang}
@@ -131,15 +132,13 @@ function Home({
       <Featured lang={lang} dir={dir} lstFeatured={featured} />
       <Team
         lang={lang}
+        dir={dir}
         lstSystemTeam={systemInfo.lstSystemTeam}
         editable={adminEditMode}
         addChef={addChef}
         editChef={editChef}
         deleteChef={deleteChef}
       />
-      {/* 
-      
-       */}
       {systemInfo?.lstSystemReviews?.length&&<Testimonial
         lang={lang}
         dir={dir}
@@ -148,8 +147,6 @@ function Home({
           systemInfo.jsnSystemSections.jsnTestimonialSection
         }
       />}
-      {/* <Team lang={lang} lstSystemTeam={systemInfo.lstSystemTeam} />
-       */}
       <About
         lang={lang}
         dir={dir}
@@ -159,7 +156,6 @@ function Home({
       />
       <Follow lang={lang} />
       <Footer lang={lang} />
-      {/* <BtnProgressToTop lang={lang} /> */}
       <Loader001 status={"loaded"} />
     </React.Fragment>
   );

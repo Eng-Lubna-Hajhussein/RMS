@@ -9,13 +9,12 @@ import {
   Avatar,
 } from "@mui/material";
 import { HowToRegOutlined } from "@mui/icons-material";
-import EditIcon from "@mui/icons-material/Edit";
-import { dictionary } from "appHelper/appDictionary";
 import SystemContact from "./SystemContact/SystemContact";
 import SystemSocial from "./SystemSocial/SystemSocial";
 import EditUpperToolbar from "./EditUpperToolbar/EditUpperToolbar";
 import { Link, useParams } from "react-router-dom";
 import NavList from "components/sharedUI/NavList/NavList";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   upperToolbar: {
@@ -44,6 +43,21 @@ const styles = {
     borderRadius: "50%",
     border: "2px solid #000",
   },
+  editBox: {
+    background: "#dad8d9",
+  },
+  editNote: {
+    color: "#000",
+    fontSize: "15px",
+    fontWeight: "600",
+    textTransform: "capitalize",
+  },
+  regIcon: {
+    color: "#000000",
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
 };
 
 function UpperToolbar({
@@ -54,13 +68,13 @@ function UpperToolbar({
   userNavList,
   lang,
   editable,
+  dir,
   onSaveUpperHeader,
-  systemPath
 }) {
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
-  const {systemID,systemName}=useParams();
+  const { systemID, systemName } = useParams();
 
   return (
     <React.Fragment>
@@ -69,19 +83,12 @@ function UpperToolbar({
           item
           container
           justifyContent={"start"}
-          sx={{ background: "#dad8d9" }}
+          sx={styles.editBox}
           xs="12"
         >
           <Button variant="text" onClick={handleEditOpen}>
-            <Typography
-              sx={{
-                color: "#000",
-                fontSize: "15px",
-                fontWeight: "600",
-                textTransform: "capitalize",
-              }}
-            >
-              edit Upper Header info
+            <Typography sx={styles.editNote}>
+              {dictionary.upperHeaderSection.title[lang]}
             </Typography>
           </Button>
         </Grid>
@@ -141,14 +148,18 @@ function UpperToolbar({
                 {!blnUserLogin && (
                   <Box sx={styles.regIconBox}>
                     <Icon>
-                      <HowToRegOutlined sx={{ color: "#000000" }} />
+                      <HowToRegOutlined sx={styles.regIcon} />
                     </Icon>
                   </Box>
                 )}
               </Grid>
               {!blnUserLogin && (
                 <Grid item alignSelf={"center"}>
-                  <Link to={systemID?`/login/${systemName}/${systemID}`:"/login"}>
+                  <Link
+                    to={
+                      systemID ? `/login/${systemName}/${systemID}` : "/login"
+                    }
+                  >
                     <Typography
                       component={"p"}
                       sx={styles.regTypography}
@@ -161,7 +172,11 @@ function UpperToolbar({
               )}
               {!blnUserLogin && (
                 <Grid item alignSelf={"center"} px={1}>
-                  <Link to={systemID?`/signup/${systemName}/${systemID}`:"/signup"}>
+                  <Link
+                    to={
+                      systemID ? `/signup/${systemName}/${systemID}` : "/signup"
+                    }
+                  >
                     <Typography
                       component={"p"}
                       sx={styles.regTypography}
@@ -178,11 +193,11 @@ function UpperToolbar({
                     nav={
                       <Grid
                         container
-                        sx={{ height: "fit-content" }}
+                        sx={styles.fitContentHeight}
                         alignItems={"center"}
                         alignContent={"center"}
                       >
-                        <Grid item px={1} sx={{ height: "fit-content" }}>
+                        <Grid item px={1} sx={styles.fitContentHeight}>
                           <Avatar src={userImg} height="50px" width="50px" />
                         </Grid>
                         <Grid item>{userName[lang]}</Grid>
@@ -203,6 +218,8 @@ function UpperToolbar({
         handleEditClose={handleEditClose}
         jsnSystemContact={jsnSystemContact}
         onSave={onSaveUpperHeader}
+        dir={dir}
+        lang={lang}
       />
     </React.Fragment>
   );

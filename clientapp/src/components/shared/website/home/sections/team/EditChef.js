@@ -27,13 +27,22 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useRef, useState } from "react";
 
-function Edit({ open, handleClose, chef, lang, dir, onSave }) {
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+};
+
+function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
@@ -43,9 +52,9 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
 
   const [img, setImg] = useState(chef?.strImgPath);
 
-  useEffect(()=>{
-    setImg(chef?.strImgPath)
-  },[chef])
+  useEffect(() => {
+    setImg(chef?.strImgPath);
+  }, [chef]);
 
   useEffect(() => {
     if (!!data && data[0]?.strFileFullPath) {
@@ -109,12 +118,14 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Image
+                  {dictionary.teamSection.chefImg[lang]}
                 </Typography>
               </Grid>
               <Grid
@@ -179,21 +190,24 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Contact
+                  {dictionary.teamSection.chefContact[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="facebook"
-                  label="Facebook"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.facebook[lang]}
+                  dir="ltr"
                   type="url"
                   fullWidth
                   defaultValue={chef?.strFacebookLink}
@@ -203,10 +217,11 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="twitter"
-                  label="Twitter"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.twitter[lang]}
+                  dir="ltr"
                   type="url"
                   fullWidth
                   defaultValue={chef?.strInstagramLink}
@@ -216,10 +231,11 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="instagram"
-                  label="Instagram"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.instagram[lang]}
+                  dir="ltr"
                   type="url"
                   fullWidth
                   defaultValue={chef?.strTwitterLink}
@@ -231,24 +247,27 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Name
+                  {dictionary.teamSection.chefName[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="nameEng"
-                  label="Name English"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.nameEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
-                  defaultValue={chef?.jsnName['eng']}
+                  defaultValue={chef?.jsnName["eng"]}
                   variant="outlined"
                   multiline
                 />
@@ -256,59 +275,62 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
                   name="nameArb"
-                  label="Name Arabic"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.nameArb[lang]}
                   type="text"
                   fullWidth
                   multiline
-                  defaultValue={chef?.jsnName['arb']}
+                  defaultValue={chef?.jsnName["arb"]}
                   variant="outlined"
                 />
               </Grid>
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
+              <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Specialization
+                  {dictionary.teamSection.chefSpecialization[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="specializationEng"
-                  label="Specialization English"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.specializationEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
                   multiline
                   rows={2}
-                  defaultValue={chef?.jsnSpecialization['eng']}
+                  defaultValue={chef?.jsnSpecialization["eng"]}
                   variant="outlined"
                 />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
                   name="specializationArb"
-                  label="Specialization Arabic"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.specializationArb[lang]}
                   type="text"
                   fullWidth
                   multiline
                   rows={2}
-                  defaultValue={chef?.jsnSpecialization['arb']}
+                  defaultValue={chef?.jsnSpecialization["arb"]}
                   variant="outlined"
                 />
               </Grid>
@@ -325,7 +347,7 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
           >
             <Grid item xs="2">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"
@@ -338,4 +360,4 @@ function Edit({ open, handleClose, chef, lang, dir, onSave }) {
   );
 }
 
-export default Edit;
+export default EditChef;

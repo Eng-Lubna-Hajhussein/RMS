@@ -5,8 +5,9 @@ import Carousel from "components/sharedUI/Carousel/Carousel";
 import "./Team.css";
 import { App_Second_Color } from "appHelper/appColor";
 import AddIcon from "@mui/icons-material/Add";
-import Add from "./Add";
-import Edit from "./Edit";
+import AddChef from "./AddChef";
+import EditChef from "./EditChef";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -21,6 +22,7 @@ const styles = {
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
+    textTransform:"capitalize"
   },
   line: {
     width: "100%",
@@ -72,7 +74,7 @@ export default function Team({
       >
         <Grid item lg="12" mb={4} container justifyContent={"center"}>
           <Grid item lg="12" container justifyContent={"center"}>
-            <Typography sx={styles.mainTitle}>Meet Our Experts</Typography>
+            <Typography sx={styles.mainTitle}>{dictionary.teamSection.title[lang]}</Typography>
           </Grid>
           <Grid item lg="3" xs={"6"} sx={styles.line} />
         </Grid>
@@ -120,7 +122,7 @@ export default function Team({
           />
         </Grid>
       </Grid>
-      <Add
+      <AddChef
         open={addOpen}
         handleClose={() => setAddOpen(false)}
         editable={editable}
@@ -128,7 +130,7 @@ export default function Team({
         lang={lang}
         dir={dir}
       />
-      <Edit
+      <EditChef
         open={editOpen}
         handleClose={() => setEditOpen(false)}
         editable={editable}

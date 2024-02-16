@@ -11,14 +11,22 @@ export default function BtnProgressToTop() {
       document.documentElement.clientHeight;
     let scrollValue = Math.round((pos * 100) / calcHeight);
     if (pos > 100) {
-      scrollProgress.current.style.display = "grid";
+      if (scrollProgress?.current?.style) {
+        scrollProgress.current.style.display = "grid";
+      }
     } else {
-      scrollProgress.current.style.display = "none";
+      if (scrollProgress?.current?.style) {
+        scrollProgress.current.style.display = "none";
+      }
     }
-    scrollProgress.current.addEventListener("click", () => {
-      document.documentElement.scrollTop = 0;
-    });
-    scrollProgress.current.style.background = `conic-gradient(rgb(243, 39, 76) ${scrollValue}%, rgb(215, 215, 215) ${scrollValue}%)`;
+    if (scrollProgress?.current) {
+      scrollProgress.current.addEventListener("click", () => {
+        document.documentElement.scrollTop = 0;
+      });
+    }
+    if (scrollProgress?.current?.style) {
+      scrollProgress.current.style.background = `conic-gradient(rgb(243, 39, 76) ${scrollValue}%, rgb(215, 215, 215) ${scrollValue}%)`;
+    }
   };
   window.onscroll = calcScrollValue;
 

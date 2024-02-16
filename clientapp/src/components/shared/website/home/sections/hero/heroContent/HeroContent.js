@@ -5,9 +5,7 @@ import { App_Primary_Color } from "appHelper/appColor";
 import videoIcon from "assets/image/video.svg";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimButton0002 from "components/sharedUI/AnimButton0002/AnimButton0002";
-import Edit from "./Edit";
-import EditIcon from "@mui/icons-material/Edit";
-import { MoreVert } from "@mui/icons-material";
+import EditHeroContent from "./EditHeroContent";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
@@ -77,6 +75,15 @@ const styles = {
   py20: {
     paddingY: "20px",
   },
+  editBox: {
+    background: "#dad8d9",
+  },
+  editNote: {
+    color: "#000",
+    fontSize: "15px",
+    fontWeight: "600",
+    textTransform: "capitalize",
+  },
 };
 
 function HeroContent({
@@ -98,20 +105,11 @@ function HeroContent({
           item
           container
           justifyContent={"start"}
-          sx={{ background: "#dad8d9" }}
+          sx={styles.editBox}
           xs="12"
         >
           <Button variant="text" onClick={handleEditOpen}>
-            <Typography
-              sx={{
-                color: "#000",
-                fontSize: "15px",
-                fontWeight: "600",
-                textTransform: "capitalize",
-              }}
-            >
-              edit Hero Section info
-            </Typography>
+            <Typography sx={styles.editNote}>{dictionary.heroSection.title[lang]}</Typography>
           </Button>
         </Grid>
       )}
@@ -120,7 +118,6 @@ function HeroContent({
         alignContent={"center"}
         alignItems={"center"}
         alignSelf={"center"}
-        justify={"center"}
         sx={styles.container}
         item
         xs="12"
@@ -163,12 +160,7 @@ function HeroContent({
             </AnimationBox>
           </Grid>
           <Grid item lg="8" sx={styles.py20} xs={"12"}>
-            <Grid
-              container
-              spacing={2}
-              justify={"start"}
-              alignItems={"flex-start"}
-            >
+            <Grid container px={2} justify={"start"} alignItems={"flex-start"}>
               <Grid item lg={"4"} xs={"12"}>
                 <AnimButton0001
                   label={dictionary.buttons.seeOurMenuBtn[lang]}
@@ -255,7 +247,7 @@ function HeroContent({
           )}
         </Grid>
       </Grid>
-      <Edit
+      <EditHeroContent
         openEdit={openEdit}
         handleEditOpen={handleEditOpen}
         handleEditClose={handleEditClose}

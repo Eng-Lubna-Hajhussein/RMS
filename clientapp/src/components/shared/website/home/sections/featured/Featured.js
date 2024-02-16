@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
 import FeaturedCard from "components/sharedUI/FeaturedCard/FeaturedCard";
 import Carousel from "components/sharedUI/Carousel/Carousel";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -18,6 +19,7 @@ const styles = {
     lineHeight: "1.2",
     fontFamily: "sans-serif",
     width: "fit-content",
+    textTransform: "capitalize",
   },
   line: {
     width: "100%",
@@ -44,9 +46,11 @@ export default function Featured({ lang, dir, lstFeatured }) {
     >
       <Grid item lg="12" mb={4} container justifyContent={"center"}>
         <Grid item lg="12" container justifyContent={"center"}>
-          <Typography sx={styles.mainTitle}>Featured</Typography>
+          <Typography sx={styles.mainTitle}>
+            {dictionary.featuredSection.title[lang]}
+          </Typography>
         </Grid>
-        <Grid item lg="3" xs={"6"} pt-0 sx={styles.line} />
+        <Grid item lg="3" xs={"6"} pt={0} sx={styles.line} />
       </Grid>
       <Grid item lg="12" xs={"12"} alignSelf={"flex-end"}>
         <Grid container alignItems={"flex-end"} alignSelf={"flex-end"}>

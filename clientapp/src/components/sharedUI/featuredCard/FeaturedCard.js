@@ -78,6 +78,11 @@ const styles = {
     background: "#ffd40d",
     borderRadius: "10px",
   },
+  description:{
+    color: "#555",
+    fontWeight: "400",
+    fontSize: "14px",
+  }
 };
 
 function FeaturedCard({ item, lang }) {
@@ -133,11 +138,7 @@ function FeaturedCard({ item, lang }) {
                 </Grid>
                 <Grid item xs="12">
                   <Typography
-                    sx={{
-                      color: "#555",
-                      fontWeight: "400",
-                      fontSize: "14px",
-                    }}
+                    sx={styles.description}
                   >
                     {item?.jsnCategoryInfo?.jsnDescription[lang]}
                   </Typography>

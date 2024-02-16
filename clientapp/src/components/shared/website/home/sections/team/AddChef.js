@@ -28,13 +28,31 @@ import {
   Alert,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useRef, useState } from "react";
 
-function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+};
+
+function AddChef({
+  open,
+  handleClose,
+  activeTabID,
+  addWS,
+  ws,
+  lang,
+  dir,
+  onSave,
+}) {
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
@@ -72,14 +90,17 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
             } = formJson;
             const bigID = generateRandomID(10);
             const chef = {
-                bigID:Number(bigID),
-                jsnName: { eng: nameEng, arb: nameArb },
-                jsnSpecialization: { eng: specializationEng, arb: specializationArb },
-                strFacebookLink: facebook,
-                strInstagramLink: instagram,
-                strTwitterLink: twitter,
-                strImgPath: img,
-            }
+              bigID: Number(bigID),
+              jsnName: { eng: nameEng, arb: nameArb },
+              jsnSpecialization: {
+                eng: specializationEng,
+                arb: specializationArb,
+              },
+              strFacebookLink: facebook,
+              strInstagramLink: instagram,
+              strTwitterLink: twitter,
+              strImgPath: img,
+            };
             setImg(null);
             onSave(chef);
             handleClose();
@@ -101,19 +122,21 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
             alignItems={"start"}
             sx={{ height: "fit-content" }}
           >
-            <Grid item xs='12' container>
-               {/* remove bg */}
+            <Grid item xs="12" container>
+              {/* remove bg */}
             </Grid>
             <Grid item xs="6" container>
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Image
+                  {dictionary.teamSection.chefImg[lang]}
                 </Typography>
               </Grid>
               <Grid
@@ -178,21 +201,24 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Contact
+                  {dictionary.teamSection.chefContact[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="facebook"
-                  label="Facebook"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.facebook[lang]}
+                  dir="ltr"
                   type="url"
                   fullWidth
                   variant="outlined"
@@ -201,10 +227,11 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="twitter"
-                  label="Twitter"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.twitter[lang]}
+                  dir="ltr"
                   type="url"
                   fullWidth
                   variant="outlined"
@@ -213,10 +240,11 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="instagram"
-                  label="Instagram"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.instagram[lang]}
+                  dir="ltr"
                   type="url"
                   fullWidth
                   variant="outlined"
@@ -227,21 +255,24 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Name
+                  {dictionary.teamSection.chefName[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="nameEng"
-                  label="Name English"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.nameEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -251,11 +282,11 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
                   name="nameArb"
-                  label="Name Arabic"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.nameArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -267,21 +298,24 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Chef Specialization
+                  {dictionary.teamSection.chefSpecialization[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="specializationEng"
-                  label="Specialization English"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.specializationEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
                   multiline
@@ -292,11 +326,11 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
                   name="specializationArb"
-                  label="Specialization Arabic"
+                  sx={{textTransform:"capitalize"}}
+                  label={dictionary.labels.specializationArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -317,7 +351,7 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
           >
             <Grid item xs="2">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"
@@ -330,4 +364,4 @@ function Add({ open, handleClose, activeTabID, addWS, ws, lang, dir, onSave }) {
   );
 }
 
-export default Add;
+export default AddChef;

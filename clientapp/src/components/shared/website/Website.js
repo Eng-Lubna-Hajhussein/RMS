@@ -1,4 +1,5 @@
-import { Demo_categories, Demo_jsnSystemInfo } from "appHelper/appVariables";
+import BtnProgressToTop from "components/sharedUI/BtnProgressToTop/BtnProgressToTop";
+import Chatbot from "../../public/chatbot/Chatbot";
 import Home from "./home/Home";
 
 function Website({
@@ -37,6 +38,7 @@ function Website({
   dir,
 }) {
   return (
+    <>
     <Home
       systemInfo={systemInfo}
       categories={categories}
@@ -72,6 +74,9 @@ function Website({
       userNavList={userNavList}
       dir={dir}
     />
+    <Chatbot />
+    <BtnProgressToTop />
+    </>
   );
 }
 

@@ -1,3 +1,5 @@
+import { chatbotData } from "./chatbotData";
+
 export const generateID =()=>Math.random();
 
 export function generateRandomID(n) {
@@ -38,3 +40,16 @@ export const orderRegions = ({ Regions: regions }) => {
   });
   return { appRegionsID, regionName, ccID, sub, categories };
 };
+
+export const getBotMsg = (userMsg) => {
+  return chatbotData.find((msg)=>{
+      if(userMsg.type==="constant"){
+          return msg.keywords.includes(userMsg.msg);
+      }
+      if(userMsg.type==="dynamic"){
+          return msg.keywords.some((keyword)=>{
+              return userMsg.msg.includes(keyword);
+          });
+      }
+  })
+}

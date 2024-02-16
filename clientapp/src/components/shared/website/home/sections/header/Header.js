@@ -1,6 +1,5 @@
 import React from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
-import { lstWebsiteNav } from "appHelper/appVariables";
 
 function Header({
   lang,

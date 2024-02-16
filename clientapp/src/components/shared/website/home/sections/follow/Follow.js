@@ -1,5 +1,6 @@
 import { Instagram } from "@mui/icons-material";
 import { Box, Grid, Typography } from "@mui/material";
+import { dictionary } from "appHelper/appDictionary";
 import bgImg from "assets/image/follow.jpg";
 
 const styles = {
@@ -26,18 +27,20 @@ const styles = {
     fontSize: "40px",
     color: "#000",
     fontWeight: "800",
+    textTransform: "capitalize",
   },
   subTitle: {
     fontSize: "16px",
     color: "#555",
     fontWeight: "400",
+    textTransform: "capitalize",
   },
-  fullHeight:{
-    height:"100%"
-  }
+  fullHeight: {
+    height: "100%",
+  },
 };
 
-export default function Follow() {
+export default function Follow({ lang }) {
   return (
     <Grid container sx={styles.container}>
       <Grid
@@ -63,11 +66,13 @@ export default function Follow() {
           </Box>
         </Grid>
         <Grid item xs="12" container justifyContent={"center"}>
-          <Typography sx={styles.title}>Follow @Winsfolio.com</Typography>
+          <Typography sx={styles.title}>
+            {dictionary.followSection.title[lang]}
+          </Typography>
         </Grid>
         <Grid item xs="12" container justifyContent={"center"}>
           <Typography sx={styles.subTitle}>
-            Join our community to inspire your desires
+            {dictionary.followSection.subtitle[lang]}
           </Typography>
         </Grid>
       </Grid>

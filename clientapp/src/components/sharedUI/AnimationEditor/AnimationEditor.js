@@ -1,21 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
 import "./AnimationEditor.css";
 import {
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
   Typography,
-  Button,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import AnimButton0001 from "../AnimButton0001/AnimButton0001";
 import { Close } from "@mui/icons-material";
-import { App_Primary_Color } from "appHelper/appColor";
 import AnimationBox from "../AnimationBox/AnimationBox";
 
 const AnimationEditor = ({
@@ -27,7 +22,6 @@ const AnimationEditor = ({
   dir,
 }) => {
   const options = [
-    //  *   type:  '' | '' | 'slideOutDown' | 'slideOutLeft' | 'slideOutRight',
     { key: "none", value: "none" },
     { key: "fadeIn", value: "fadeIn" },
     { key: "fadeOut", value: "fadeOut" },
@@ -66,32 +60,31 @@ const AnimationEditor = ({
       <DialogContent sx={{ py: "0", width: "100%" }}>
         <div class="animation-editor-container">
           <Grid container py={1} justifyContent={"center"}>
-            <Grid container xs='12'>
-            <FormControl fullWidth>
-                    <InputLabel>Background Animation</InputLabel>
-                    <Select
-                    label='Background Animation'
-                      value={objText[objText.onAnimationKey]?.strAnimationType || "none"}
-                      required
-                      autoFocus
-                      variant="outlined"
-                      onChange={(e) =>
-                        {
-                            console.log(e.target.value)
-                            onChange(e.target.value)
-                        }
-                      }
-                      sx={{ background: "#fff", borderRadius: "5px" }}
-                    >
-                      {options.map((type, index) => (
-                        <MenuItem value={type.key}>{type.value}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+            <Grid container xs="12">
+              <FormControl fullWidth>
+                <InputLabel>Background Animation</InputLabel>
+                <Select
+                  label="Background Animation"
+                  value={
+                    objText[objText.onAnimationKey]?.strAnimationType || "none"
+                  }
+                  required
+                  autoFocus
+                  variant="outlined"
+                  onChange={(e) => {
+                    onChange(e.target.value);
+                  }}
+                  sx={{ background: "#fff", borderRadius: "5px" }}
+                >
+                  {options.map((type, index) => (
+                    <MenuItem value={type.key}>{type.value}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid
               container
-              xs='12'
+              xs="12"
               sx={{
                 height: "250px",
                 background:
@@ -104,24 +97,22 @@ const AnimationEditor = ({
             >
               <Grid item xs="12">
                 <AnimationBox
-              animationMode="loop"
-              easing={"linear"}
-              forceTrigger={true}
-              trigger="manual"
-              type={
-                objText[objText.onAnimationKey]?.strAnimationType
-              }
-            >
-                <Typography
-                  sx={{
-                    ...objText.defaultStyle,
-                    ...objText[objText.onAnimationKey]?.style,
-                  }}
+                  animationMode="loop"
+                  easing={"linear"}
+                  forceTrigger={true}
+                  trigger="manual"
+                  type={objText[objText.onAnimationKey]?.strAnimationType}
                 >
-                  {objText[objText?.onAnimationKey] &&
-                    objText[objText?.onAnimationKey][lang]}
-                </Typography>
-            </AnimationBox>
+                  <Typography
+                    sx={{
+                      ...objText.defaultStyle,
+                      ...objText[objText.onAnimationKey]?.style,
+                    }}
+                  >
+                    {objText[objText?.onAnimationKey] &&
+                      objText[objText?.onAnimationKey][lang]}
+                  </Typography>
+                </AnimationBox>
               </Grid>
             </Grid>
           </Grid>

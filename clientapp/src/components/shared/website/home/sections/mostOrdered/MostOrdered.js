@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
 import Carousel from "components/sharedUI/Carousel/Carousel";
 import MostOrderedCard from "components/sharedUI/MostOrderedCard/MostOrderedCard";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -16,6 +17,7 @@ const styles = {
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
+    textTransform:"capitalize"
   },
   line: {
     width: "100%",
@@ -42,7 +44,7 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
     >
       <Grid item lg="12" mb={4} container justifyContent={"center"}>
         <Grid item lg="12" container justifyContent={"center"}>
-          <Typography sx={styles.mainTitle}>Most Ordered</Typography>
+          <Typography sx={styles.mainTitle}>{dictionary.mostOrderedSection.title[lang]}</Typography>
         </Grid>
         <Grid item lg="3" xs={"6"} sx={styles.line} />
       </Grid>

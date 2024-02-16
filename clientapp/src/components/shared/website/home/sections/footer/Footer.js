@@ -10,7 +10,7 @@ import bgImg from "assets/image/footer.png";
 import logo from "assets/image/logo-white.png";
 import tripaLogo from "assets/image/tripa.png";
 import { Link } from "react-router-dom";
-import { ArrowForward, ArrowForwardIos } from "@mui/icons-material";
+import {  ArrowForwardIos } from "@mui/icons-material";
 
 const style = {
   navListTitle: {
@@ -20,58 +20,47 @@ const style = {
     fontFamily: "sans-serif !important",
     width: "fit-content",
     borderBottom: "6px solid #ffd40d",
-    xs: {},
   },
   line: {
     width: "100%",
     background: "#ffd40d",
     borderRadius: "26px",
     height: "12px",
-    xs: {},
   },
   container: {
-    height: "98vh",
+    height: {lg:"98vh",xs:"fit-content"},
     background: "#f5f8fd",
-    paddingTop: "100px !important",
-    xs: {
-      height: "fit-content",
-    },
+    paddingTop: "100px",
   },
   containerItem: {
     height: "100%",
     background: `url(${bgImg})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    xs: {},
   },
   box: {
     padding: "40px",
     borderRadius: "30px",
     background: "#f3274c",
     width: "90%",
-    xs: {},
   },
   date: {
     color: "#fff",
-    fontSize: "16px !important",
+    fontSize: {lg:"16px",xs:"14px"},
     lineHeight: "30px !important",
     display: "inline !important",
-    xs: {
-      fontSize: "14px !important",
-      fontWeight: "800 !important",
-    },
+    fontWeight:{xs:"800"}
   },
   closedDateBtn: {
     fontSize: "16px",
     lineHeight: "30px",
     display: "inline",
-    borderBottom:"1px solid #000"
+    borderBottom: "1px solid #000",
   },
   tripaReview: {
     fontSize: "16px !important",
     color: "#fff",
     fontWeight: "800 !important",
-    xs: {},
   },
   nav: {
     color: "#fff",
@@ -81,17 +70,14 @@ const style = {
     cursor: "pointer !important",
     display: "inline !important",
     transition: ".3 ease-in-out",
-    xs: {},
   },
   copyRights: {
     fontSize: "18px !important",
     fontWeight: "800 !important",
-    xs: {},
   },
   line: {
     borderBottom: "6px solid #ffd40d",
     width: "100%",
-    xs: {},
   },
   socialLink: {
     fontSize: "15px",
@@ -133,7 +119,7 @@ export default function Footer() {
           >
             <Grid
               container
-              spacing={2}
+              px={2}
               alignItems={"flex-start"}
               alignSelf={"flex-start"}
             >
@@ -150,20 +136,16 @@ export default function Footer() {
                       <img src={logo} />
                     </Grid>
                     <Grid item xs="12" container pb={2}>
-                        <Grid item>
-
-                      <Typography sx={style.date}>
-                        Tuesday - Saturday: 12:00pm - 23:00pm
+                      <Grid item>
+                        <Typography sx={style.date}>
+                          Tuesday - Saturday: 12:00pm - 23:00pm
                         </Typography>
-                        </Grid>
-                        <Grid item>
-
-                        <Typography
-                          sx={style.closedDateBtn}
-                        >
+                      </Grid>
+                      <Grid item>
+                        <Typography sx={style.closedDateBtn}>
                           Closed on Sunday
                         </Typography>
-                        </Grid>
+                      </Grid>
                     </Grid>
                     <Grid item xs="12">
                       <img src={tripaLogo} />
@@ -283,27 +265,23 @@ export default function Footer() {
                   alignSelf={"flex-start"}
                 >
                   <Grid item xs="12">
-                    <Grid
-                      container
-                      justify={"start"}
-                      alignItems={"flex-start"}
-                      spacing={3}
-                    >
-                      <Grid item xs="12" justify={"start"}>
+                    <Grid container justify={"start"} alignItems={"flex-start"}>
+                      <Grid item xs="12" justify={"start"} py={2}>
                         <Typography sx={style.navListTitle}>
                           Newsletter
                         </Typography>
                       </Grid>
-
-                      <Grid item xs="12" justify={"start"} pt-6>
+                      <Grid item xs="12" justify={"start"} py={2}>
                         <Typography>Get recent news and updates.</Typography>
                       </Grid>
-                      <Grid item xs="12" py-5>
-                        <TextField color="warning" label="Enter Your Email Address..." />
+                      <Grid item xs="12" py={2}>
+                        <TextField
+                          color="warning"
+                          label="Enter Your Email Address..."
+                        />
                       </Grid>
                       <Grid item lg="7" xs={"12"}>
                         <Button
-                          //   mode="link"
                           className="header-nav-001"
                         >
                           <Typography className="animated-btn-001">

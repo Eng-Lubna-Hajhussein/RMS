@@ -1,11 +1,4 @@
-import {
-  AnimationOutlined,
-  Close,
-  Favorite,
-  FavoriteBorder,
-  StyleOutlined,
-  Upload,
-} from "@mui/icons-material";
+import { Close, Upload } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -14,26 +7,39 @@ import {
   DialogActions,
   Grid,
   Typography,
-  Box,
   Fab,
-  Divider,
-  Button,
-  FormControl,
   InputLabel,
-  Select,
-  MenuItem,
   Checkbox,
   FormGroup,
   FormControlLabel,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useRef, useState } from "react";
 
-function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, onSave }) {
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+};
+
+function AddItem({
+  open,
+  handleClose,
+  systemID,
+  activeTabID,
+  addWS,
+  ws,
+  lang,
+  dir,
+  onSave,
+}) {
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
@@ -54,7 +60,6 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
     }
   }, [data]);
 
-
   return (
     <React.Fragment>
       <Dialog
@@ -73,7 +78,7 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               bigID: Number(bigID),
               bigCategoryTypeID: objCategoriesType.Menu,
               bigParentID: activeTabID,
-              bigSystemID:systemID,
+              bigSystemID: systemID,
               jsnName: { eng: nameEng, arb: nameArb },
               jsnCategoryInfo: {
                 strImgPath: img,
@@ -88,11 +93,11 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
                 blnMostOrdered: !!onMostOrderedInput?.current?.checked,
               },
             };
-            console.log({item})
+            console.log({ item });
             setImg(null);
             setOnSaleChecked(false);
             onSave(item);
-            if(!!onWeeklySpecial?.current?.checked){
+            if (!!onWeeklySpecial?.current?.checked) {
               addWS(item?.bigID);
             }
             handleClose();
@@ -111,28 +116,36 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
             py={1}
             justifyContent={"start"}
             alignContent={"start"}
-            alignItems={'start'}
-            sx={{height:"fit-content"}}
+            alignItems={"start"}
+            sx={{ height: "fit-content" }}
           >
             <Grid item xs="6" container>
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Dish Image
+                  {dictionary.menuSection.dishImg[lang]}
                 </Typography>
               </Grid>
-              <Grid item xs="12" p={1} container justifyContent={"center"}
-                  alignContent={"center"}
-                  sx={{
-                    height: "186px",
-                    border: "4px dashed #ececec",
-                    borderRadius: "10px",
-                  }}>
+              <Grid
+                item
+                xs="12"
+                p={1}
+                container
+                justifyContent={"center"}
+                alignContent={"center"}
+                sx={{
+                  height: "186px",
+                  border: "4px dashed #ececec",
+                  borderRadius: "10px",
+                }}
+              >
                 <Grid
                   item
                   xs="8"
@@ -181,39 +194,59 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Dish Configuration
+                  {dictionary.menuSection.dishConfiguration[lang]}
                 </Typography>
               </Grid>
               <Grid
                 item
                 xs="12"
-                p={1}
+                px={0}
+                py={1}
                 container
                 sx={{ height: "fit-content" }}
+                justifyContent={"start"}
                 alignContent={"start"}
               >
                 <FormGroup>
-                  {!!ws&&<InputLabel>
-                  <Typography fontSize={'12px'}>You Can't Choose More Than One Meal For Weekly Special Meal</Typography>
-                  </InputLabel>}
+                  {!!ws && (
+                    <InputLabel>
+                      <Typography
+                        fontSize={"12px"}
+                        sx={{
+                          textTransform: "capitalize",
+                          "&": { margin: "0" },
+                        }}
+                      >
+                        {dictionary.menuSection.weeklySpecialMealNote[lang]}
+                      </Typography>
+                    </InputLabel>
+                  )}
                   <FormControlLabel
-                    control={<Checkbox disabled={!!ws}
-                    inputRef={onWeeklySpecial}
-                    />}
-                    label="Weekly Special Meal"
+                    control={
+                      <Checkbox disabled={!!ws} inputRef={onWeeklySpecial} />
+                    }
+                    sx={{
+                      textTransform: "capitalize",
+                      "&": { margin: "0" },
+                    }}
+                    label={dictionary.menuSection.weeklySpecialMeal[lang]}
                   />
                   <FormControlLabel
                     control={<Checkbox inputRef={onFeaturedInput} />}
-                    label="Featured"
+                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    label={dictionary.menuSection.featured[lang]}
                   />
                   <FormControlLabel
                     control={<Checkbox inputRef={onMostOrderedInput} />}
-                    label="Most Ordered"
+                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    label={dictionary.menuSection.mostOrdered[lang]}
                   />
                   <FormControlLabel
                     control={
@@ -223,7 +256,8 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
                         onChange={() => setOnSaleChecked((prev) => !prev)}
                       />
                     }
-                    label="On Sale"
+                    sx={{ textTransform: "capitalize", "&": { margin: "0" } }}
+                    label={dictionary.menuSection.onSale[lang]}
                   />
                 </FormGroup>
               </Grid>
@@ -231,10 +265,10 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
                 <Grid item xs="12" p={1}>
                   <TextField
                     color="warning"
-                    autoFocus
                     required={onSaleChecked}
                     name="salePrice"
-                    label="Sale Price"
+                    sx={{ textTransform: "capitalize" }}
+                    label={dictionary.labels.salePrice[lang]}
                     type="text"
                     fullWidth
                     variant="outlined"
@@ -246,21 +280,24 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Dish Name
+                  {dictionary.menuSection.dishName[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="nameEng"
-                  label="Name English"
+                  dir="ltr"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.nameEng[lang]}
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -270,11 +307,11 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
                   name="nameArb"
-                  label="Name Arabic"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.nameArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -286,21 +323,24 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Dish Description
+                  {dictionary.menuSection.dishDescription[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="descEng"
-                  label="Description English"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.descriptionEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
                   multiline
@@ -311,11 +351,11 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   dir="rtl"
                   name="descArb"
-                  label="Description Arabic"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.descriptionArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -328,21 +368,23 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Dish Price
+                  {dictionary.menuSection.dishPrice[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
                   required
                   name="price"
-                  label="Price"
+                  sx={{ textTransform: "capitalize" }}
+                  label={dictionary.labels.price[lang]}
                   fullWidth
                   variant="outlined"
                 />
@@ -360,7 +402,7 @@ function AddItem({ open, handleClose,systemID, activeTabID,addWS,ws, lang, dir, 
           >
             <Grid item xs="2">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"

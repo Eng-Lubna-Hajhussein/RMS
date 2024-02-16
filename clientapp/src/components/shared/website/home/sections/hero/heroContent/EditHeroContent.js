@@ -22,6 +22,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimationBG from "components/sharedUI/AnimationBG/AnimationBG";
 import AnimationEditor from "components/sharedUI/AnimationEditor/AnimationEditor";
@@ -29,7 +30,15 @@ import TextEditor from "components/sharedUI/TextEditor/TextEditor";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useState } from "react";
 
-function Edit({
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+};
+
+function EditHeroContent({
   openEdit,
   handleEditClose,
   lstHeroSlides,
@@ -40,11 +49,12 @@ function Edit({
   dir,
   onSave,
 }) {
-  const bgAnimationTypes = ["squareTriangleCircleCross",
-   "square", 
-   "cross",
-   "circle",
-   "triangle",
+  const bgAnimationTypes = [
+    "squareTriangleCircleCross",
+    "square",
+    "cross",
+    "circle",
+    "triangle",
   ];
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
   const [slide, setSlide] = useState({ ...content });
@@ -75,7 +85,6 @@ function Edit({
     setSlide({ ...slide });
   };
   const onChangeAnimationEditor = (animationType) => {
-    
     slide[slide.onAnimationKey].strAnimationType = animationType;
     setSlide({ ...slide });
   };
@@ -127,12 +136,14 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Slide Image
+                  {dictionary.editHeroSection.slideImg[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="12" container>
@@ -170,19 +181,21 @@ function Edit({
                           fontWeight: "800",
                         }}
                       >
-                        Change Slide Image
+                        {dictionary.buttons.changeSlideImg[lang]}
                       </Typography>
                     </Fab>
                   </label>
                 </Grid>
                 <Grid item xs="6" p={1} container justifyContent={"end"}>
                   <FormControl fullWidth>
-                    <InputLabel>Background Animation</InputLabel>
+                    <InputLabel sx={{ textTransform: "capitalize" }}>
+                      {dictionary.labels.backgroundAnimation[lang]}
+                    </InputLabel>
                     <Select
-                    label='Background Animation'
+                      label={dictionary.labels.backgroundAnimation[lang]}
                       value={slide?.strBgAnimationType || "none"}
                       required
-                      autoFocus
+                      dir="ltr"
                       variant="outlined"
                       onChange={(e) =>
                         setSlide({
@@ -190,7 +203,11 @@ function Edit({
                           strBgAnimationType: e.target.value,
                         })
                       }
-                      sx={{ background: "#fff", borderRadius: "5px" }}
+                      sx={{
+                        background: "#fff",
+                        borderRadius: "5px",
+                        textTransform: "capitalize",
+                      }}
                     >
                       <MenuItem value={"none"}>{"none"}</MenuItem>
                       {bgAnimationTypes.map((type, index) => (
@@ -221,12 +238,14 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Slide Title
+                  {dictionary.editHeroSection.title[lang]}
                 </Typography>
               </Grid>
               <Grid container item xs="12">
@@ -247,13 +266,14 @@ function Edit({
                     }}
                   >
                     <Typography
+                      px={1}
                       sx={{
                         color: "#fff",
                         fontWeight: "800",
                         textTransform: "capitalize",
                       }}
                     >
-                      Text Editor
+                      {dictionary.buttons.textEditor[lang]}
                     </Typography>
                   </Button>
                 </Grid>
@@ -274,13 +294,14 @@ function Edit({
                     }}
                   >
                     <Typography
+                      px={1}
                       sx={{
                         color: "#fff",
                         fontWeight: "800",
                         textTransform: "capitalize",
                       }}
                     >
-                      Text Animation
+                      {dictionary.buttons.textAnimation[lang]}
                     </Typography>
                   </Button>
                 </Grid>
@@ -288,10 +309,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   name="titleEng"
-                  label="Title English"
+                  label={dictionary.labels.titleEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -303,11 +325,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   dir="rtl"
                   name="titleArb"
-                  label="Title Arabic"
+                  label={dictionary.labels.titleArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -321,12 +343,14 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Slide Subtitle
+                  {dictionary.editHeroSection.subtitle[lang]}
                 </Typography>
               </Grid>
               <Grid container item xs="12">
@@ -347,13 +371,14 @@ function Edit({
                     }}
                   >
                     <Typography
+                      px={1}
                       sx={{
                         color: "#fff",
                         fontWeight: "800",
                         textTransform: "capitalize",
                       }}
                     >
-                      Text Editor
+                      {dictionary.buttons.textEditor[lang]}
                     </Typography>
                   </Button>
                 </Grid>
@@ -374,13 +399,14 @@ function Edit({
                     }}
                   >
                     <Typography
+                      px={1}
                       sx={{
                         color: "#fff",
                         fontWeight: "800",
                         textTransform: "capitalize",
                       }}
                     >
-                      Text Animation
+                      {dictionary.buttons.textAnimation[lang]}
                     </Typography>
                   </Button>
                 </Grid>
@@ -388,10 +414,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   name="subtitleEng"
-                  label="Subtitle English"
+                  label={dictionary.labels.subtitleEng[lang]}
+                  dir="ltr"
                   type="text"
                   fullWidth
                   multiline
@@ -403,11 +430,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   dir="rtl"
                   name="subtitleArb"
-                  label="Subtitle Arabic"
+                  label={dictionary.labels.subtitleArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -429,7 +456,7 @@ function Edit({
           >
             <Grid item xs="2">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"
@@ -458,4 +485,4 @@ function Edit({
   );
 }
 
-export default Edit;
+export default EditHeroContent;

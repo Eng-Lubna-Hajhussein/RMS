@@ -4,14 +4,14 @@ import Button0001 from "components/sharedUI/Button0001/Button0001";
 import { dictionary } from "appHelper/appDictionary";
 import googlePlayIcon from "assets/image/google-play.png";
 import appleIcon from "assets/image/apple.png";
-import Edit from "./Edit";
+import EditAbout from "./EditAbout";
 
 const styles = {
   container: {
     marginY: "100px",
     background: "#f5f8fd",
   },
-  containerItem:{
+  containerItem: {
     paddingX: { lg: "60px", xs: "15px" },
   },
   leftItemContainer: {
@@ -29,18 +29,6 @@ const styles = {
     fontWeight: "800",
     textTransform: "capitalize",
   },
-  circle: {
-    border: "5px solid #ffd40d",
-    height: "15px",
-    width: "15px",
-    borderRadius: "100%",
-  },
-  feature: {
-    fontSize: { lg: "18px", xs: "10px" },
-    fontWeight: "400",
-    color: "#555",
-    textTransform: "capitalize",
-  },
   googlePlayBtn: {
     background: "#f3274c",
     paddingY: "15px",
@@ -53,61 +41,78 @@ const styles = {
     borderRadius: "15px",
     ":hover": { background: "#000" },
   },
+  editNote: {
+    color: "#000",
+    fontSize: "15px",
+    fontWeight: "600",
+    textTransform: "capitalize",
+  },
+  editBox: {
+    background: "#dad8d9",
+  },
 };
 
-function About({ lang, dir, jsnAboutSection, editable,onSaveAbout }) {
+function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
   return (
     <React.Fragment>
-    <Grid container sx={styles.container}>
-      {editable&&<Grid item container justifyContent={'start'} sx={{background:"#dad8d9"}} xs='12'>
-        <Button variant="text" onClick={handleEditOpen}>
-          <Typography sx={{color:"#000",fontSize:"15px",fontWeight:"600",textTransform:"capitalize"}}>
-          edit about Section info
-          </Typography>
-          </Button>
-        </Grid>}
-      <Grid item container sx={styles.containerItem} xs='12'>
-      <Grid item container lg="6" xs="12" sx={styles.leftItemContainer}>
-        <Grid item xs="12">
-          <Typography sx={styles.title}>
-            {jsnAboutSection.jsnTitle[lang]}
-          </Typography>
-        </Grid>
-        <Grid item xs="12">
-          <Typography sx={styles.subtitle}>
-            {jsnAboutSection.jsnSubtitle[lang]}
-          </Typography>
-        </Grid>
-        <Grid item xs="12" container>
-          <Grid item lg="5" xs="6" px={2}>
-            <Button0001
-              startIcon={googlePlayIcon}
-              label={dictionary.buttons.googlePlay[lang]}
-              style={styles.appStoreBtn}
+      <Grid container sx={styles.container}>
+        {editable && (
+          <Grid
+            item
+            container
+            justifyContent={"start"}
+            sx={styles.editBox}
+            xs="12"
+          >
+            <Button variant="text" onClick={handleEditOpen}>
+              <Typography sx={styles.editNote}>
+                {dictionary.aboutSection.title[lang]}
+              </Typography>
+            </Button>
+          </Grid>
+        )}
+        <Grid item container sx={styles.containerItem} xs="12">
+          <Grid item container lg="6" xs="12" sx={styles.leftItemContainer}>
+            <Grid item xs="12">
+              <Typography sx={styles.title}>
+                {jsnAboutSection.jsnTitle[lang]}
+              </Typography>
+            </Grid>
+            <Grid item xs="12">
+              <Typography sx={styles.subtitle}>
+                {jsnAboutSection.jsnSubtitle[lang]}
+              </Typography>
+            </Grid>
+            <Grid item xs="12" container>
+              <Grid item lg="5" xs="6" px={2}>
+                <Button0001
+                  startIcon={googlePlayIcon}
+                  label={dictionary.buttons.googlePlay[lang]}
+                  style={styles.appStoreBtn}
+                />
+              </Grid>
+              <Grid item lg="5" xs="6" px={2}>
+                <Button0001
+                  startIcon={appleIcon}
+                  label={dictionary.buttons.appStore[lang]}
+                  style={styles.googlePlayBtn}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item container lg="6" xs="12">
+            <Box
+              component={"img"}
+              src={jsnAboutSection.strImgPath}
+              width={"100%"}
             />
           </Grid>
-          <Grid item lg="5" xs="6" px={2}>
-            <Button0001
-              startIcon={appleIcon}
-              label={dictionary.buttons.appStore[lang]}
-              style={styles.googlePlayBtn}
-            />
-          </Grid>
         </Grid>
       </Grid>
-      <Grid item container lg="6" xs="12">
-        <Box
-          component={"img"}
-          src={jsnAboutSection.strImgPath}
-          width={"100%"}
-        />
-      </Grid>
-      </Grid>
-    </Grid>
-    <Edit
+      <EditAbout
         openEdit={openEdit}
         handleEditOpen={handleEditOpen}
         handleEditClose={handleEditClose}

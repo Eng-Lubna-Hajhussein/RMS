@@ -4,7 +4,6 @@ import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  Demo_jsnSystemInfo,
   initialAppState,
   objCategoriesType,
 } from "appHelper/appVariables";
@@ -127,10 +126,6 @@ function RouteAdmin() {
         jsnOwnerSection: ownerSectionUpdated,
       },
     });
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
     isSystemUpdated.current=true;
   };
   const onSaveReservation = (resSectionUpdated) => {

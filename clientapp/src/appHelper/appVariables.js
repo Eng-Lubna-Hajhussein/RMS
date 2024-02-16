@@ -215,7 +215,6 @@ export const Demo_jsnSystemInfo = {
         eng: "nisl quam nestibulum ac quam nec odio eleme aucan ligula. orci varius nat oque pena tibus et urient monte nascete ridiculus mus nellentesq um ac qu am nec odio rbine. nisl quam nestibu aucan ligula.",
         arb: "لقد قمت بتاسيس هذا المطعم بجهد شديد لتقديم افضل الخدمات تحت اشراف افضل الايادي العاملة وافضل الطباخين المحترفين",
       },
-      strOwnerImgPath: "assets/image/owner-avatar.jpg",
       jsnOwnerName: { eng: "willimes james", arb: "ويليام جيمس" },
       jsnOwnerSpecialization: {
         eng: "director and chief operations officer",

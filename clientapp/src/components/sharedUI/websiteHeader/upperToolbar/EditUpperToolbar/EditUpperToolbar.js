@@ -9,9 +9,28 @@ import {
   Typography,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 
-function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }) {
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform:"capitalize"
+  },
+  textfield:{
+    textTransform:"capitalize"
+  }
+};
+
+function EditUpperToolbar({
+  openEdit,
+  handleEditClose,
+  jsnSystemContact,
+  onSave,
+  dir,
+  lang
+}) {
   return (
     <Dialog
       open={openEdit}
@@ -22,16 +41,16 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
           const formJson = Object.fromEntries(formData.entries());
-          const {email,phone,facebook,instagram,youtube} = formJson;
+          const { email, phone, facebook, instagram, youtube } = formJson;
           const updatedContacts = {
-            strEmail:email,
-            strPhone:phone,
-            strFacebook:facebook,
-            strInstagram:instagram,
-            strYoutube:youtube
-          }
-          onSave(updatedContacts)
-          
+            strEmail: email,
+            strPhone: phone,
+            strFacebook: facebook,
+            strInstagram: instagram,
+            strYoutube: youtube,
+          };
+          onSave(updatedContacts);
+
           handleEditClose();
         },
       }}
@@ -39,22 +58,31 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
     >
       <DialogTitle sx={{ height: "fit-content" }}>
         <Grid container justifyContent={"end"}>
-          <Close sx={{cursor:"pointer"}} onClick={handleEditClose} />
+          <Close sx={{ cursor: "pointer" }} onClick={handleEditClose} />
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{py:"0"}}>
-        <Grid container py={1} justifyContent={'center'}>
+      <DialogContent sx={{ py: "0" }}>
+        <Grid container py={1} justifyContent={"center"}>
           <Grid item container xs="12">
-            <Grid item xs='12' p={1}>
-                <Typography sx={{borderLeft:`5px solid ${App_Second_Color}`,fontWeight:"600",px:"3px"}}>System Contact</Typography>
+            <Grid item xs="12" p={1}>
+              <Typography
+                sx={{
+                  ...styles.title,
+                  borderLeft:dir==='ltr'&& `5px solid ${App_Second_Color}`,
+                  borderRight:dir==='rtl'&& `5px solid ${App_Second_Color}`,
+                }}
+              >
+                {dictionary.editUpperHeaderSection.title[lang]}
+              </Typography>
             </Grid>
             <Grid item xs="6" p={1}>
               <TextField
                 color="warning"
-                autoFocus
                 required
+                dir="ltr"
                 name="email"
-                label="Email Address"
+                label={dictionary.labels.emailAddress[lang]}
+                sx={styles.textfield}
                 type="email"
                 fullWidth
                 variant="outlined"
@@ -64,10 +92,11 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
             <Grid item xs="6" p={1}>
               <TextField
                 color="warning"
-                autoFocus
+                dir="ltr"
                 required
                 name="phone"
-                label="Phone Number"
+                label={dictionary.labels.phoneNumber[lang]}
+                sx={styles.textfield}
                 type="text"
                 fullWidth
                 variant="outlined"
@@ -76,18 +105,27 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
             </Grid>
           </Grid>
           <Grid item container xs="12">
-          <Grid item xs='12' p={1}>
-                <Typography sx={{borderLeft:`5px solid ${App_Second_Color}`,fontWeight:"600",px:"3px"}}>System Social</Typography>
+            <Grid item xs="12" p={1}>
+              <Typography
+                sx={{
+                  ...styles.title,
+                  borderLeft:dir==='ltr'&& `5px solid ${App_Second_Color}`,
+                  borderRight:dir==='rtl'&& `5px solid ${App_Second_Color}`,
+                }}
+              >
+                {dictionary.editUpperHeaderSection.subtitle[lang]}
+              </Typography>
             </Grid>
             <Grid item xs="12" p={1}>
               <TextField
                 color="warning"
-                autoFocus
                 required
                 name="facebook"
-                label="Facebook"
+                label={dictionary.labels.facebook[lang]}
+                sx={styles.textfield}
                 type="url"
                 fullWidth
+                dir="ltr"
                 variant="outlined"
                 defaultValue={jsnSystemContact.strFacebook}
               />
@@ -95,12 +133,13 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
             <Grid item xs="12" p={1}>
               <TextField
                 color="warning"
-                autoFocus
                 required
                 name="instagram"
-                label="Instagram"
+                label={dictionary.labels.instagram[lang]}
+                sx={styles.textfield}
                 type="url"
                 fullWidth
+                dir="ltr"
                 variant="outlined"
                 defaultValue={jsnSystemContact.strInstagram}
               />
@@ -108,10 +147,11 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
             <Grid item xs="12" p={1}>
               <TextField
                 color="warning"
-                autoFocus
                 required
+                dir="ltr"
                 name="youtube"
-                label="Youtube"
+                label={dictionary.labels.youtube[lang]}
+                sx={styles.textfield}
                 type="url"
                 fullWidth
                 variant="outlined"
@@ -121,14 +161,19 @@ function EditUpperToolbar({ openEdit, handleEditClose, jsnSystemContact,onSave }
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{py:"0"}}>
-        <Grid container p={2} justifyItems={"flex-end"} justifyContent={"flex-end"}>
-          <Grid item xs="3">
+      <DialogActions sx={{ py: "0" }}>
+        <Grid
+          container
+          p={2}
+          justifyItems={"flex-end"}
+          justifyContent={"flex-end"}
+        >
+          <Grid item xs="2">
             <AnimButton0001
-              label={"save"}
+              label={dictionary.buttons.saveBtn[lang]}
               color={App_Primary_Color}
               fullWidth={true}
-              type='submit'
+              type="submit"
             />
           </Grid>
         </Grid>

@@ -22,13 +22,22 @@ import {
   MenuItem,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimationBG from "components/sharedUI/AnimationBG/AnimationBG";
 import TextEditor from "components/sharedUI/TextEditor/TextEditor";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useState } from "react";
 
-function Edit({
+const styles = {
+  title: {
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+};
+
+function EditOwner({
   openEdit,
   handleEditClose,
   jsnOwnerSection,
@@ -59,7 +68,35 @@ function Edit({
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const {titleEng,titleArb} = formJson;
+            const {
+              titleEng,
+              titleArb,
+              subtitleEng,
+              subtitleArb,
+              ownerSpecializationEng,
+              ownerSpecializationArb,
+              ownerCommentEng,
+              ownerCommentArb,
+            } = formJson;
+            onSave({
+              ...jsnOwnerSection,
+              jsnTitle: {
+                eng: titleEng,
+                arb: titleArb,
+              },
+              jsnSubtitle: {
+                eng: subtitleEng,
+                arb: subtitleArb,
+              },
+              jsnOwnerComment: {
+                eng: ownerCommentEng,
+                arb: ownerCommentArb,
+              },
+              jsnOwnerSpecialization: {
+                eng: ownerSpecializationEng,
+                arb: ownerSpecializationArb,
+              },
+            });
             handleEditClose();
           },
         }}
@@ -76,21 +113,24 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Section Title
+                  {dictionary.editOwnerSection.title[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   name="titleEng"
-                  label="Title English"
+                  dir="ltr"
+                  label={dictionary.labels.titleEng[lang]}
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -102,11 +142,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   dir="rtl"
                   name="titleArb"
-                  label="Title Arabic"
+                  label={dictionary.labels.titleArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -120,21 +160,24 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Section Subtitle
+                  {dictionary.editOwnerSection.subtitle[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   name="subtitleEng"
-                  label="Subtitle English"
+                  dir="ltr"
+                  label={dictionary.labels.subtitleEng[lang]}
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -146,11 +189,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   dir="rtl"
                   name="subtitleArb"
-                  label="Subtitle Arabic"
+                  label={dictionary.labels.subtitleArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -164,21 +207,24 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Owner Specialization
+                  {dictionary.editOwnerSection.ownerSpecialization[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
+                  dir="ltr"
                   name="ownerSpecializationEng"
-                  label="Owner Specialization English"
+                  label={dictionary.labels.ownerSpecializationEng[lang]}
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -190,11 +236,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   dir="rtl"
                   name="ownerSpecializationArb"
-                  label="Owner Specialization Arabic"
+                  label={dictionary.labels.ownerSpecializationArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -208,21 +254,24 @@ function Edit({
               <Grid item xs="12" p={1}>
                 <Typography
                   sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
+                    ...styles.title,
+                    borderLeft:
+                      dir === "ltr" && `5px solid ${App_Second_Color}`,
+                    borderRight:
+                      dir === "rtl" && `5px solid ${App_Second_Color}`,
                   }}
                 >
-                  Owner Comment
+                  {dictionary.editOwnerSection.ownerComment[lang]}
                 </Typography>
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
-                  name="ownerComEng"
-                  label="Owner Comment English"
+                  name="ownerCommentEng"
+                  dir="ltr"
+                  label={dictionary.labels.ownerCommentEng[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -234,11 +283,11 @@ function Edit({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  autoFocus
+                  sx={{textTransform:"capitalize"}}
                   required
                   dir="rtl"
-                  name="ownerComArb"
-                  label="Owner Comment Arabic"
+                  name="ownerCommentArb"
+                  label={dictionary.labels.ownerCommentArb[lang]}
                   type="text"
                   fullWidth
                   multiline
@@ -260,7 +309,7 @@ function Edit({
           >
             <Grid item xs="2">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"
@@ -273,4 +322,4 @@ function Edit({
   );
 }
 
-export default Edit;
+export default EditOwner;
