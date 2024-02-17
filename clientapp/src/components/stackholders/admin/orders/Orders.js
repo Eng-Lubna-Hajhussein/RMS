@@ -1,72 +1,118 @@
-import { lstWebsiteNav } from "appHelper/appVariables";
+import React, { useContext, useEffect, useState } from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import {
   Box,
-  Button,
   Grid,
-  Icon,
-  TableFooter,
-  TablePagination,
-  TextField,
   Typography,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/OptionList/OptionList";
-import { MoreVert, TimeToLeave, Visibility } from "@mui/icons-material";
-import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import {
-  findSystemOrders,
-  findUserOrders,
-} from "appHelper/fetchapi/tblOrder/tblOrder";
-import moment from "moment";
+import { App_Primary_Color } from "appHelper/appColor";
+import { findSystemOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
 import { useParams } from "react-router-dom";
 import arrowImg from "assets/image/arrow-2.png";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+import OrdersTable from "./ordersTable/OrdersTable";
 
 const styles = {
-  dishName: {
-    fontSize: { lg: "16px !important", xs: "9px" },
-    fontWeight: "800 !important",
-    color: "#000",
-    fontFamily: "sans-serif",
+  container: {
+    marginY: "5px",
   },
-  dishDescription: {
-    fontSize: { lg: "18px !important", xs: "9px" },
-    fontWeight: "400 !important",
-    color: "#555",
-    fontFamily: "Epilogue",
-    lineHeight: { lg: "30px !important", xs: "20px" },
+  itemContainer: {
+    background: "#f4fcfc",
+    height: "140px",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    textTransform: "uppercase",
+    fontSize: "28px",
+    fontWeight: "800",
+    color: App_Primary_Color,
+    borderBottom: "3px solid #ffd40d",
+    width: "fit-content",
+  },
+  subtitle: {
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  arrowImg: {
+    transform: "rotate(180deg)",
+    height: "80px",
+    width: "100%",
+  },
+  table: {
+    minWidth: 650,
+    border: "1px solid #c4c4c4",
+  },
+  columnTableCell: {
+    border: "1px solid #c4c4c4",
+    background: App_Primary_Color,
+    color: "#fff",
+    fontSize: "15px",
+    fontWeight: 800,
+  },
+  rowTableCell: {
+    border: "1px solid #c4c4c4",
+  },
+  orderID: {
+    fontSize: "14px",
+    fontWeight: "800",
+  },
+  orderAddress: {
+    fontSize: "14px",
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  totalPrice: {
+    fontSize: "14px",
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  orderDate: {
+    fontSize: "14px",
+    fontWeight: "800",
+  },
+  orderTime: {
+    fontSize: "14px",
+    fontWeight: "800",
+  },
+  tableDetails: {
+    fontSize: "15px",
+    textTransform: "uppercase",
+  },
+  tablePagination: {
+    ".MuiTablePagination-toolbar": {
+      backgroundColor: "#f4fcfc",
+      textAlign: "center",
+    },
+    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
+      fontWeight: "800",
+    },
+    ".MuiTablePagination-input": {
+      fontWeight: "bold",
+      background: "#fff",
+      borderRadius: "10px",
+      border: "1px solid #000",
+    },
+  },
+  status: {
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "700",
+  },
+  tableContainer: {
+    marginBottom: "50px",
   },
 };
 
 function Orders() {
-  const { appState, appDispatch } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
   const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const [isLoading, setIsLoading] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   const instalData = async () => {
     setIsLoading(true);
@@ -144,7 +190,7 @@ function Orders() {
       />
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
+        <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item xs="10" container>
             <Grid
               item
@@ -152,303 +198,40 @@ function Orders() {
               px={1}
               pb={10}
               justifyContent={"center"}
-              sx={{
-                background: "#f4fcfc",
-                height: "140px",
-                marginY: "50px",
-                borderRadius: "20px",
-                padding: "20px",
-              }}
+              sx={styles.itemContainer}
             >
               <Grid container>
                 <Grid item container xs="5" px={2} justifyContent={"start"}>
                   <Grid item xs="12">
-                    <Typography
-                      sx={{
-                        textTransform: "uppercase",
-                        fontSize: "28px",
-                        fontWeight: "800",
-                        color: App_Primary_Color,
-                        borderBottom: "3px solid #ffd40d",
-                        width: "fit-content",
-                      }}
-                    >
+                    <Typography sx={styles.title}>
                       Restaurant Orders !
                     </Typography>
                   </Grid>
                   <Grid item xs="12">
-                    <Typography sx={{ fontWeight: "800" }}>{`( ${
+                    <Typography sx={styles.subtitle}>{`( ${
                       orders?.length || 0
                     } Orders ) `}</Typography>
                   </Grid>
                 </Grid>
                 <Grid item container xs="2" justifyContent={"start"} py={2}>
-                  <AnimationBox animationMode="reverse" easing={"ease-in"}
-                  forceTrigger={true} type="fadeOut"
-                  trigger="manual"
+                  <AnimationBox
+                    animationMode="reverse"
+                    easing={"ease-in"}
+                    forceTrigger={true}
+                    type="fadeOut"
+                    trigger="manual"
                   >
-                  <Box
-                    component={"img"}
-                    sx={{
-                      transform: "rotate(180deg)",
-                      height: "80px",
-                      width: "100%",
-                    }}
-                    src={arrowImg}
-                  />
+                    <Box
+                      component={"img"}
+                      sx={styles.arrowImg}
+                      src={arrowImg}
+                    />
                   </AnimationBox>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs="12" px={1}>
-              <Table
-                sx={{ minWidth: 650, border: "1px solid #c4c4c4" }}
-                aria-label="simple table"
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Order ID
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Address
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Total Price
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Order Date
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Order Time
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Order Details
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {(rowsPerPage > 0
-                    ? orders.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                    : orders
-                  )?.map((order) => (
-                    <TableRow>
-                      <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                          }}
-                        >
-                          #{order.bigOrderID}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                            textTransform: "capitalize",
-                          }}
-                        >
-                          {order?.jsnAddress?.jsnCity[lang] +
-                            ", " +
-                            order?.jsnAddress?.jsnCountry[lang]}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                            textTransform: "capitalize",
-                          }}
-                        >
-                          ${order?.strTotalPrice}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                          }}
-                        >
-                          {moment(new Date(Number(order?.dtmOrderDate))).format(
-                            "MMM DD,YYYY"
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                          }}
-                        >
-                          {moment(new Date(Number(order?.dtmOrderDate))).format(
-                            "hh:mm A"
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Button endIcon={<Visibility />}>
-                          <Typography
-                            sx={{
-                              fontSize: "15px",
-                              textTransform: "uppercase",
-                            }}
-                          >
-                            view
-                          </Typography>
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      rowsPerPageOptions={[5, 10, 25]}
-                      count={orders.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      SelectProps={{
-                        inputProps: {
-                          "aria-label": "rows per page",
-                        },
-                      }}
-                      onPageChange={handleChangePage}
-                      onRowsPerPageChange={handleChangeRowsPerPage}
-                      labelDisplayedRows={({ page }) => {
-                        // return `Page: ${page+1}`;
-                        return (
-                          <Typography sx={{ color: "#000" }}>
-                            Page: {page + 1}
-                          </Typography>
-                        );
-                      }}
-                      backIconButtonProps={{
-                        color: "#fff",
-                      }}
-                      nextIconButtonProps={{ color: "#fff" }}
-                      showFirstButton={true}
-                      showLastButton={true}
-                      labelRowsPerPage={
-                        <Typography sx={{ color: "#000" }}>Rows:</Typography>
-                      }
-                      sx={{
-                        ".MuiTablePagination-toolbar": {
-                          backgroundColor: "#f4fcfc",
-                          textAlign: "center",
-                        },
-                        ".MuiTablePagination-selectLabel, .MuiTablePagination-input":
-                          {
-                            fontWeight: "800",
-                          },
-                        ".MuiTablePagination-input": {
-                          fontWeight: "bold",
-                          background: "#fff",
-                          borderRadius: "10px",
-                          border: "1px solid #000",
-                        },
-                      }}
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
+            <Grid item xs="12" px={1} container sx={styles.tableContainer}>
+              <OrdersTable orders={orders} lang={lang} dir={dir} />
             </Grid>
           </Grid>
         </Grid>

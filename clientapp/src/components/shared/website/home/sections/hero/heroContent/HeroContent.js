@@ -84,6 +84,11 @@ const styles = {
     fontWeight: "600",
     textTransform: "capitalize",
   },
+  description: {
+    color: "#555",
+    fontWeight: "400",
+    fontSize: "14px",
+  },
 };
 
 function HeroContent({
@@ -109,7 +114,9 @@ function HeroContent({
           xs="12"
         >
           <Button variant="text" onClick={handleEditOpen}>
-            <Typography sx={styles.editNote}>{dictionary.heroSection.title[lang]}</Typography>
+            <Typography sx={styles.editNote}>
+              {dictionary.heroSection.title[lang]}
+            </Typography>
           </Button>
         </Grid>
       )}
@@ -203,13 +210,7 @@ function HeroContent({
                           </Typography>
                         </Grid>
                         <Grid item xs="12">
-                          <Typography
-                            sx={{
-                              color: "#555",
-                              fontWeight: "400",
-                              fontSize: "14px",
-                            }}
-                          >
+                          <Typography sx={styles.description}>
                             {
                               content.wsCategory.jsnCategoryInfo.jsnDescription[
                                 lang

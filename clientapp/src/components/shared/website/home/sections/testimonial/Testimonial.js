@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import ReviewCard from "components/sharedUI/ReviewCard/ReviewCard";
 import Carousel from "components/sharedUI/Carousel/Carousel";
 import { useMemo } from "react";
@@ -32,6 +32,8 @@ const styles = {
     top: "0",
     left: "300px",
     borderRadius: "30px",
+    width: "200px",
+    height: "200px",
   },
   img2: {
     position: "absolute",
@@ -39,6 +41,8 @@ const styles = {
     left: "80px",
     zIndex: "-1",
     borderRadius: "30px",
+    width: "280px",
+    height: "300px",
   },
   img3: {
     position: "absolute",
@@ -46,6 +50,8 @@ const styles = {
     left: "80px",
     left: "330px",
     borderRadius: "30px",
+    width: "280px",
+    height: "300px",
   },
 };
 
@@ -56,6 +62,11 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
       sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
     }));
   }, [lstSystemReviews]);
+  const images = [
+    { src: jsnTestimonialSection.strImg1Path, sx: styles.img1 },
+    { src: jsnTestimonialSection.strImg2Path, sx: styles.img2 },
+    { src: jsnTestimonialSection.strImg3Path, sx: styles.img3 },
+  ];
   return (
     <Grid
       container
@@ -94,30 +105,11 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
         alignItems={"center"}
         sx={styles.leftItemContainer}
       >
-        <Grid item xs="12">
-          <img
-            src={jsnTestimonialSection?.strImg1Path}
-            width={"200px"}
-            height={"200px"}
-            style={styles.img1}
-          />
-        </Grid>
-        <Grid item xs="12">
-          <img
-            src={jsnTestimonialSection?.strImg2Path}
-            width={"280px"}
-            style={styles.img2}
-            height={"300px"}
-          />
-        </Grid>
-        <Grid item xs="12">
-          <img
-            src={jsnTestimonialSection?.strImg3Path}
-            width={"280px"}
-            height={"300px"}
-            style={styles.img3}
-          />
-        </Grid>
+        {images.map(({ src, sx }, index) => (
+          <Grid item xs="12">
+            <Box component={"img"} src={src} sx={sx} />
+          </Grid>
+        ))}
       </Grid>
     </Grid>
   );

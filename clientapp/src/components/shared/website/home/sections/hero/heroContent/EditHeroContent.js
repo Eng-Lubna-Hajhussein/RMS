@@ -1,9 +1,5 @@
-import {
-  AnimationOutlined,
-  Close,
-  StyleOutlined,
-  Upload,
-} from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { AnimationOutlined, Close, StyleOutlined } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -13,22 +9,22 @@ import {
   Grid,
   Typography,
   Box,
-  Fab,
-  Divider,
   Button,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
+import { bgAnimationTypes } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimationBG from "components/sharedUI/AnimationBG/AnimationBG";
 import AnimationEditor from "components/sharedUI/AnimationEditor/AnimationEditor";
 import TextEditor from "components/sharedUI/TextEditor/TextEditor";
+import UploadButton001 from "components/sharedUI/UploadButton001/UploadButton001";
 import useUpload from "hooks/useUpload/useUpload";
-import React, { useEffect, useState } from "react";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
 const styles = {
   title: {
@@ -36,6 +32,42 @@ const styles = {
     px: "3px",
     textTransform: "capitalize",
   },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  inputLabel: {
+    textTransform: "capitalize",
+  },
+  select: {
+    background: "#fff",
+    borderRadius: "5px",
+    textTransform: "capitalize",
+  },
+  bgBox: {
+    backgroundSize: "100% 100%",
+    height: "280px",
+    borderRadius: "20px",
+    background: "red",
+  },
+  btnLabel: {
+    color: "#fff",
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  btn: {
+    height: "55px",
+    boxShadow: "none",
+  },
+  textField: {
+    textTransform: "capitalize",
+  },
+  dialogActions: { py: "0" },
 };
 
 function EditHeroContent({
@@ -49,13 +81,7 @@ function EditHeroContent({
   dir,
   onSave,
 }) {
-  const bgAnimationTypes = [
-    "squareTriangleCircleCross",
-    "square",
-    "cross",
-    "circle",
-    "triangle",
-  ];
+  console.log(content);
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
   const [slide, setSlide] = useState({ ...content });
   const [openTextEditor, setOpenTextEditor] = useState(false);
@@ -63,12 +89,15 @@ function EditHeroContent({
   const handleTextEditorOpen = () => {
     setOpenTextEditor(true);
   };
-  const handleTextEditorClose = () => setOpenTextEditor(false);
-
+  const handleTextEditorClose = () => {
+    setOpenTextEditor(false);
+  };
   const handleAnimationEditorOpen = () => {
     setOpenAnimationEditor(true);
   };
-  const handleAnimationEditorClose = () => setOpenAnimationEditor(false);
+  const handleAnimationEditorClose = () => {
+    setOpenAnimationEditor(false);
+  };
 
   const onImgChange = (e) => {
     setRequestFiles([...e.target.files]);
@@ -88,6 +117,54 @@ function EditHeroContent({
     slide[slide.onAnimationKey].strAnimationType = animationType;
     setSlide({ ...slide });
   };
+  const onChangeBgAnimation = (e) =>
+    setSlide({
+      ...slide,
+      strBgAnimationType: e.target.value,
+    });
+  const onClickTextEditor = (onStyleKey, defaultStyle) => {
+    setSlide({
+      ...slide,
+      onStyleKey: onStyleKey,
+      defaultStyle: defaultStyle,
+    });
+    handleTextEditorOpen();
+  };
+  const onClickAnimationEditor = (onAnimationKey, defaultStyle) => {
+    setSlide({
+      ...slide,
+      onAnimationKey: onAnimationKey,
+      defaultStyle: defaultStyle,
+    });
+    handleAnimationEditorOpen();
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const { titleEng, titleArb, subtitleEng, subtitleArb } = formJson;
+    const updatedSlides = JSON.parse(JSON.stringify(lstHeroSlides));
+    updatedSlides[content.index] = {
+      ...updatedSlides[content.index],
+      jsnTitle: {
+        eng: titleEng,
+        arb: titleArb,
+        style: slide.jsnTitle.style,
+        strAnimationType: slide.jsnTitle.strAnimationType,
+      },
+      jsnSubtitle: {
+        eng: subtitleEng,
+        arb: subtitleArb,
+        style: slide.jsnSubtitle.style,
+        strAnimationType: slide.jsnSubtitle.strAnimationType,
+      },
+      strBgAnimationType: slide.strBgAnimationType,
+      strImgPath: slide.strImgPath,
+      strVideoPath: slide.strVideoPath,
+    };
+    onSave(updatedSlides);
+    handleEditClose();
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -95,100 +172,36 @@ function EditHeroContent({
         onClose={handleEditClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const { titleEng, titleArb, subtitleEng, subtitleArb } = formJson;
-            const updatedSlides = JSON.parse(JSON.stringify(lstHeroSlides));
-            updatedSlides[content.index] = {
-              ...updatedSlides[content.index],
-              jsnTitle: {
-                eng: titleEng,
-                arb: titleArb,
-                style: slide.jsnTitle.style,
-                strAnimationType: slide.jsnTitle.strAnimationType,
-              },
-              jsnSubtitle: {
-                eng: subtitleEng,
-                arb: subtitleArb,
-                style: slide.jsnSubtitle.style,
-                strAnimationType: slide.jsnSubtitle.strAnimationType,
-              },
-              strBgAnimationType: slide.strBgAnimationType,
-              strImgPath: slide.strImgPath,
-              strVideoPath: slide.strVideoPath,
-            };
-            onSave(updatedSlides);
-            handleEditClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleEditClose} />
+            <Close sx={styles.closeIcon} onClick={handleEditClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editHeroSection.slideImg[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editHeroSection.slideImg[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="12" container>
                 <Grid item xs="6" p={1} container justifyContent={"start"}>
-                  <label htmlFor="upload-photo" style={{ width: "100%" }}>
-                    <input
-                      style={{ display: "none", width: "100%" }}
-                      id="upload-photo"
-                      name="upload-photo"
-                      type="file"
-                      onChange={onImgChange}
-                    />
-
-                    <Fab
-                      size="large"
-                      component="span"
-                      aria-label="add"
-                      variant="extended"
-                      sx={{
-                        borderRadius: "5px",
-                        background: App_Second_Color,
-                        ":hover": { background: App_Second_Color },
-                        width: "100%",
-                        boxShadow: "none",
-                        width: "100%",
-                        height: "55px",
-                      }}
-                    >
-                      <Upload />
-                      <Typography
-                        px={2}
-                        sx={{
-                          textTransform: "capitalize",
-                          color: "#fff",
-                          fontWeight: "800",
-                        }}
-                      >
-                        {dictionary.buttons.changeSlideImg[lang]}
-                      </Typography>
-                    </Fab>
-                  </label>
+                  <UploadButton001
+                    onChange={onImgChange}
+                    label={dictionary.buttons.changeSlideImg[lang]}
+                    fullWidth={true}
+                    variant={"square"}
+                  />
                 </Grid>
                 <Grid item xs="6" p={1} container justifyContent={"end"}>
                   <FormControl fullWidth>
-                    <InputLabel sx={{ textTransform: "capitalize" }}>
+                    <InputLabel sx={styles.inputLabel}>
                       {dictionary.labels.backgroundAnimation[lang]}
                     </InputLabel>
                     <Select
@@ -197,17 +210,8 @@ function EditHeroContent({
                       required
                       dir="ltr"
                       variant="outlined"
-                      onChange={(e) =>
-                        setSlide({
-                          ...slide,
-                          strBgAnimationType: e.target.value,
-                        })
-                      }
-                      sx={{
-                        background: "#fff",
-                        borderRadius: "5px",
-                        textTransform: "capitalize",
-                      }}
+                      onChange={onChangeBgAnimation}
+                      sx={styles.select}
                     >
                       <MenuItem value={"none"}>{"none"}</MenuItem>
                       {bgAnimationTypes.map((type, index) => (
@@ -224,55 +228,31 @@ function EditHeroContent({
                     height="240px"
                     width={"100%"}
                     src={slide.strImgPath}
-                    sx={{
-                      backgroundSize: "100% 100%",
-                      height: "280px",
-                      borderRadius: "20px",
-                      background: "red",
-                    }}
+                    sx={styles.bgBox}
                   />
                 </AnimationBG>
               </Grid>
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editHeroSection.title[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editHeroSection.title[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid container item xs="12">
                 <Grid item xs="6" p={1}>
                   <Button
                     color="secondary"
                     fullWidth
-                    sx={{ height: "55px", boxShadow: "none" }}
+                    sx={styles.btn}
                     variant="contained"
                     startIcon={<StyleOutlined />}
-                    onClick={() => {
-                      setSlide({
-                        ...slide,
-                        onStyleKey: "jsnTitle",
-                        defaultStyle: titleDefaultStyle,
-                      });
-                      handleTextEditorOpen();
-                    }}
+                    onClick={() =>
+                      onClickTextEditor("jsnTitle", titleDefaultStyle)
+                    }
                   >
-                    <Typography
-                      px={1}
-                      sx={{
-                        color: "#fff",
-                        fontWeight: "800",
-                        textTransform: "capitalize",
-                      }}
-                    >
+                    <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textEditor[lang]}
                     </Typography>
                   </Button>
@@ -281,26 +261,14 @@ function EditHeroContent({
                   <Button
                     color="secondary"
                     fullWidth
-                    sx={{ height: "55px", boxShadow: "none" }}
+                    sx={styles.btn}
                     variant="contained"
                     startIcon={<AnimationOutlined />}
-                    onClick={() => {
-                      setSlide({
-                        ...slide,
-                        onAnimationKey: "jsnTitle",
-                        defaultStyle: titleDefaultStyle,
-                      });
-                      handleAnimationEditorOpen();
-                    }}
+                    onClick={() =>
+                      onClickAnimationEditor("jsnTitle", titleDefaultStyle)
+                    }
                   >
-                    <Typography
-                      px={1}
-                      sx={{
-                        color: "#fff",
-                        fontWeight: "800",
-                        textTransform: "capitalize",
-                      }}
-                    >
+                    <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textAnimation[lang]}
                     </Typography>
                   </Button>
@@ -309,7 +277,7 @@ function EditHeroContent({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   name="titleEng"
                   label={dictionary.labels.titleEng[lang]}
@@ -325,7 +293,7 @@ function EditHeroContent({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="rtl"
                   name="titleArb"
@@ -341,43 +309,24 @@ function EditHeroContent({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editHeroSection.subtitle[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editHeroSection.subtitle[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid container item xs="12">
                 <Grid item xs="6" p={1}>
                   <Button
                     color="secondary"
                     fullWidth
-                    sx={{ height: "55px", boxShadow: "none" }}
+                    sx={styles.btn}
                     variant="contained"
                     startIcon={<StyleOutlined />}
-                    onClick={() => {
-                      setSlide({
-                        ...slide,
-                        onStyleKey: "jsnSubtitle",
-                        defaultStyle: subtitleDefaultStyle,
-                      });
-                      handleTextEditorOpen();
-                    }}
+                    onClick={() =>
+                      onClickTextEditor("jsnSubtitle", subtitleDefaultStyle)
+                    }
                   >
-                    <Typography
-                      px={1}
-                      sx={{
-                        color: "#fff",
-                        fontWeight: "800",
-                        textTransform: "capitalize",
-                      }}
-                    >
+                    <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textEditor[lang]}
                     </Typography>
                   </Button>
@@ -386,26 +335,17 @@ function EditHeroContent({
                   <Button
                     color="secondary"
                     fullWidth
-                    sx={{ height: "55px", boxShadow: "none" }}
+                    sx={styles.btn}
                     variant="contained"
                     startIcon={<AnimationOutlined />}
-                    onClick={() => {
-                      setSlide({
-                        ...slide,
-                        onAnimationKey: "jsnSubtitle",
-                        defaultStyle: subtitleDefaultStyle,
-                      });
-                      handleAnimationEditorOpen();
-                    }}
+                    onClick={() =>
+                      onClickAnimationEditor(
+                        "jsnSubtitle",
+                        subtitleDefaultStyle
+                      )
+                    }
                   >
-                    <Typography
-                      px={1}
-                      sx={{
-                        color: "#fff",
-                        fontWeight: "800",
-                        textTransform: "capitalize",
-                      }}
-                    >
+                    <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textAnimation[lang]}
                     </Typography>
                   </Button>
@@ -414,7 +354,7 @@ function EditHeroContent({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   name="subtitleEng"
                   label={dictionary.labels.subtitleEng[lang]}
@@ -430,7 +370,7 @@ function EditHeroContent({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="rtl"
                   name="subtitleArb"
@@ -446,7 +386,7 @@ function EditHeroContent({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}

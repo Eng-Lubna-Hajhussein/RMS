@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "contextapi/context/AppContext";
 import bgImg from "assets/image/patron.jpg";
@@ -12,23 +12,42 @@ import {
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Add, Upload } from "@mui/icons-material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Second_Color } from "appHelper/appColor";
 import { COUNTRIES, CITIES } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import useUpload from "hooks/useUpload/useUpload";
-import { formateDBStr, generateRandomID } from "appHelper/appFunctions";
-import { createSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
-import { signup } from "appHelper/fetchapi/tblUser/tblUser";
 import { ctrlSignUp } from "./controller/CtrlSignUp";
 import useMapLocation from "hooks/useMapLocation/useMapLocation";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
-const style = {};
+const styles = {
+  container: {
+    background: `url(${bgImg})`,
+    height: "fit-content",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    color: "#fff",
+    fontWeight: "800",
+    fontSize: "30px",
+  },
+  price: {
+    color: App_Second_Color,
+    fontWeight: "800",
+    fontSize: "30px",
+  },
+  textfield: {
+    background: "#fff",
+    borderRadius: "5px",
+  },
+};
 
 function SignupSystem() {
   const { appState, appDispatch } = useContext(AppContext);
   const { mapLocation } = useMapLocation();
   const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const navigate = useNavigate();
   const addressInitial = {
     countryIndex: 0,
@@ -75,50 +94,25 @@ function SignupSystem() {
           container
           justifyContent={"center"}
           xs="8"
-          sx={{
-            background: `url(${bgImg})`,
-            height: "fit-content",
-            marginY: "50px",
-            borderRadius: "20px",
-            padding: "20px",
-          }}
+          sx={styles.container}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid item xs="12" container justifyContent={"center"}>
-              <Typography
-                component={"h3"}
-                sx={{ color: "#fff", fontWeight: "800", fontSize: "30px" }}
-              >
+              <Typography component={"h3"} sx={styles.title}>
                 Register Your Restaurant With Only{" "}
-                <Typography
-                  sx={{
-                    color: App_Second_Color,
-                    fontWeight: "800",
-                    fontSize: "30px",
-                  }}
-                  component={"span"}
-                >
+                <Typography sx={styles.price} component={"span"}>
                   $50
                 </Typography>
               </Typography>
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Typography
-                  px={1}
-                  sx={{
-                    color: "#000",
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "800",
-                  }}
-                >
-                  Restaurant Info
-                </Typography>
+                <Title0001 title={"Restaurant Info"} dir={dir} />
               </Grid>
               <Grid item xs="12" container>
                 <Grid item xs="6" p={2}>
                   <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={styles.textfield}
                     variant="outlined"
                     fullWidth
                     type="text"
@@ -136,7 +130,7 @@ function SignupSystem() {
                 </Grid>
                 <Grid item xs="6" p={2}>
                   <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={styles.textfield}
                     variant="outlined"
                     fullWidth
                     type="text"
@@ -154,7 +148,7 @@ function SignupSystem() {
                 </Grid>
                 <Grid item xs="6" p={2}>
                   <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={styles.textfield}
                     variant="outlined"
                     fullWidth
                     type="text"
@@ -172,7 +166,7 @@ function SignupSystem() {
                 </Grid>
                 <Grid item xs="6" p={2}>
                   <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={styles.textfield}
                     variant="outlined"
                     fullWidth
                     type="text"
@@ -195,7 +189,7 @@ function SignupSystem() {
                       defaultValue={address.countryIndex}
                       required
                       onChange={onChangeCountry}
-                      sx={{ background: "#fff", borderRadius: "5px" }}
+                      sx={styles.textfield}
                     >
                       {COUNTRIES.map((country, index) => (
                         <MenuItem value={index}>{country[lang]}</MenuItem>
@@ -210,7 +204,7 @@ function SignupSystem() {
                       value={address.cityIndex}
                       required
                       onChange={onChangeCity}
-                      sx={{ background: "#fff", borderRadius: "5px" }}
+                      sx={styles.textfield}
                     >
                       {CITIES[COUNTRIES[address.countryIndex]["eng"]].map(
                         (city, index) => (
@@ -224,20 +218,11 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Typography
-                  px={1}
-                  sx={{
-                    color: "#000",
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "800",
-                  }}
-                >
-                  Registration Info
-                </Typography>
+                <Title0001 title={'Registration Info'} dir={dir} />
               </Grid>
               <Grid item xs="6" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="email"
@@ -257,7 +242,7 @@ function SignupSystem() {
               </Grid>
               <Grid item xs="6" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="password"
@@ -274,20 +259,11 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Typography
-                  px={1}
-                  sx={{
-                    color: "#000",
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "800",
-                  }}
-                >
-                  Payment Info
-                </Typography>
+                <Title0001 title={'Payment Info'} dir={dir} />
               </Grid>
               <Grid item xs="12" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="text"
@@ -301,7 +277,7 @@ function SignupSystem() {
               </Grid>
               <Grid item xs="6" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="text"
@@ -315,7 +291,7 @@ function SignupSystem() {
               </Grid>
               <Grid item xs="6" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="text"

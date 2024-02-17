@@ -53,6 +53,7 @@ function Checkout({ open, handleClose, lang, dir, onSave }) {
                jsnLocation:appState.userInfo.jsnLocation,
                dtmOrderDate:orderDate,
                jsnClientInfo:{
+                bigUserID:appState.userInfo.bigUserID,
                 strEmail:appState.userInfo.strEmail,
                 strImgPath:appState.userInfo.strImgPath,
                 jsnFullName:appState.userInfo.jsnFullName

@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import RestaurantMenu from "components/sharedUI/SystemMenu/SystemMenu";
+import SystemMenu from "components/sharedUI/SystemMenu/SystemMenu";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
@@ -53,8 +53,7 @@ function Menu({
         </Grid>
         <Grid item lg="3" xs={"6"} sx={styles.line} />
       </Grid>
-      {
-        <RestaurantMenu
+        <SystemMenu
           categories={categories}
           blnOnSaveCategory={true}
           lang={lang}
@@ -74,7 +73,6 @@ function Menu({
           adminEditMode={adminEditMode}
           loggedIn={loggedIn}
         />
-      }
     </Grid>
   );
 }

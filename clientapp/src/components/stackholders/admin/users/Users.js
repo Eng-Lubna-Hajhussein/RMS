@@ -1,58 +1,116 @@
-import {
-  lstWebsiteNav,
-  objAppActions,
-  objIDRole,
-  objRoleID,
-} from "appHelper/appVariables";
+import { objIDRole } from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import {
   Avatar,
   Box,
-  Button,
   Chip,
-  FormControl,
   Grid,
-  Icon,
-  InputLabel,
-  MenuItem,
-  Select,
   TableFooter,
   TablePagination,
-  TextField,
   Typography,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/OptionList/OptionList";
-import {
-  MoreVert,
-  TimeToLeave,
-  ViewAgenda,
-  Visibility,
-} from "@mui/icons-material";
-import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import {
-  findAvailableTables,
-  findTables,
-} from "appHelper/fetchapi/tblReservation/tblReservation";
-import bgImg from "assets/image/patron.jpg";
-import { useForm } from "react-hook-form";
-import moment from "moment";
+import { App_Primary_Color } from "appHelper/appColor";
 import { Link, useParams } from "react-router-dom";
-// import { ctrlTables } from "./controller/CtrlTables";
-// import EditTable from "./editTable/EditTable";
 import { findUsers } from "appHelper/fetchapi/tblUser/tblUser";
 import UserDetails from "./userDetails/UserDetails";
 import arrowImg from "assets/image/arrow-2.png";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+
+const styles = {
+  container: {
+    marginY: "5px",
+  },
+  itemContainer: {
+    background: "#f4fcfc",
+    height: "140px",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    textTransform: "uppercase",
+    fontSize: "28px",
+    fontWeight: "800",
+    color: App_Primary_Color,
+    borderBottom: "3px solid #ffd40d",
+    width: "fit-content",
+  },
+  usersNum: {
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  arrowImg: {
+    transform: "rotate(180deg)",
+    height: "80px",
+    width: "100%",
+  },
+  columnTablecell: {
+    border: "1px solid #c4c4c4",
+    background: App_Primary_Color,
+    color: "#fff",
+    fontSize: "15px",
+    fontWeight: 800,
+  },
+  rowTablecell: {
+    border: "1px solid #c4c4c4",
+  },
+  tableContainer: {
+    marginBottom: "50px",
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
+  username: {
+    fontSize: "14px",
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  userRole: {
+    fontSize: "14px",
+    fontWeight: "800",
+  },
+  userEmail: {
+    fontSize: "14px",
+    fontWeight: "800",
+  },
+  userAddress: {
+    fontSize: "14px",
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  status: {
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "700",
+  },
+  activity: {
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "700",
+  },
+  tablePagination: {
+    ".MuiTablePagination-toolbar": {
+      backgroundColor: "#f4fcfc",
+      textAlign: "center",
+    },
+    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
+      fontWeight: "800",
+    },
+    ".MuiTablePagination-input": {
+      fontWeight: "bold",
+      background: "#fff",
+      borderRadius: "10px",
+      border: "1px solid #000",
+    },
+  },
+};
 
 function Users() {
   const [page, setPage] = useState(0);
@@ -63,8 +121,6 @@ function Users() {
   const { systemID, systemName } = useParams();
   const [userOnAction, setUserOnAction] = useState();
   const [openUserDetails, setOpenUserDetails] = useState(false);
-
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
@@ -101,7 +157,7 @@ function Users() {
     {
       bigNavID: 8944146478,
       nav: { eng: "orders", arb: "تسوق" },
-      path:`/admin/orders/${systemName}/${systemID}`
+      path: `/admin/orders/${systemName}/${systemID}`,
     },
     {
       bigNavID: 7943146478,
@@ -112,7 +168,9 @@ function Users() {
     { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
+
   const [isLoading, setIsLoading] = useState(false);
+
   const instalData = async () => {
     setIsLoading(true);
     const systemUsers = await findUsers(appState.systemInfo.bigSystemID);
@@ -134,11 +192,7 @@ function Users() {
     instalData();
   }, []);
 
-  const actionItemNavList = [
-    { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "حذف" } },
-
-    { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
-  ];
+  const columns = ["Account", "Role", "Email", "Address", "Status", "Activity"];
 
   return (
     <React.Fragment>
@@ -158,65 +212,48 @@ function Users() {
       />
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
+        <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item xs="10" container>
-          <Grid
+            <Grid
               item
               xs="12"
               px={1}
               pb={10}
               justifyContent={"center"}
-              sx={{
-                background: "#f4fcfc",
-                height: "140px",
-                marginY: "50px",
-                borderRadius: "20px",
-                padding: "20px",
-              }}
+              sx={styles.itemContainer}
             >
-             <Grid container>
+              <Grid container>
                 <Grid item container xs="5" px={2} justifyContent={"start"}>
                   <Grid item xs="12">
-                    <Typography
-                      sx={{
-                        textTransform: "uppercase",
-                        fontSize: "28px",
-                        fontWeight: "800",
-                        color: App_Primary_Color,
-                        borderBottom: "3px solid #ffd40d",
-                        width: "fit-content",
-                      }}
-                    >
+                    <Typography sx={styles.title}>
                       Restaurant Users !
                     </Typography>
                   </Grid>
                   <Grid item xs="12">
-                    <Typography sx={{ fontWeight: "800" }}>{`( ${
+                    <Typography sx={styles.usersNum}>{`( ${
                       users?.length || 0
                     } Users ) `}</Typography>
                   </Grid>
                 </Grid>
                 <Grid item container xs="2" justifyContent={"start"} py={2}>
-                  <AnimationBox animationMode="reverse" easing={"ease-in"}
-                  forceTrigger={true} type="fadeOut"
-                  trigger="manual"
+                  <AnimationBox
+                    animationMode="reverse"
+                    easing={"ease-in"}
+                    forceTrigger={true}
+                    type="fadeOut"
+                    trigger="manual"
                   >
-                  <Box
-                    component={"img"}
-                    sx={{
-                      transform: "rotate(180deg)",
-                      height: "80px",
-                      width: "100%",
-                    }}
-                    src={arrowImg}
-                  />
+                    <Box
+                      component={"img"}
+                      sx={styles.arrowImg}
+                      src={arrowImg}
+                    />
                   </AnimationBox>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs="12" sx={{ marginBottom: "50px" }} px={1}>
+            <Grid item xs="12" sx={styles.tableContainer} px={1}>
               <Table
-                sx={{ minWidth: 650, border: "1px solid #c4c4c4" }}
                 aria-label="simple table"
                 initialState={{
                   pagination: {
@@ -226,78 +263,11 @@ function Users() {
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Account
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Role
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Email
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Address
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Status
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Activity
-                    </TableCell>
+                    {columns.map((column, index) => (
+                      <TableCell sx={styles.columnTablecell} align="center">
+                        {column}
+                      </TableCell>
+                    ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -310,18 +280,18 @@ function Users() {
                   )?.map((user, index) => (
                     <TableRow>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
                       >
                         <Grid
                           container
-                          sx={{ height: "fit-content" }}
+                          sx={styles.fitContentHeight}
                           alignItems={"center"}
                           alignContent={"center"}
                         >
-                          <Grid item px={1} sx={{ height: "fit-content" }}>
+                          <Grid item px={1} sx={styles.fitContentHeight}>
                             <Avatar
                               src={user?.strImgPath}
                               height="50px"
@@ -329,88 +299,67 @@ function Users() {
                             />
                           </Grid>
                           <Grid item>
-                          {appState.userInfo.bigUserID === user.bigUserID&&<Typography
-                          color={"primary"}
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                            textTransform: "capitalize",
-                          }}
-                        >
-                            Me (Owner)
-                        </Typography>}
-                        {!(appState.userInfo.bigUserID === user.bigUserID)&&<Link>
-                            <Typography
-                          color={"primary"}
-                          onClick={()=>{
-                            setUserOnAction(user);
-                            setOpenUserDetails(true);
-                        }}
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                            textTransform: "capitalize",
-                          }}
-                        >
-                            {user?.jsnFullName[lang]}
-                        </Typography> 
-                        </Link>}
+                            {appState.userInfo.bigUserID === user.bigUserID && (
+                              <Typography
+                                color={"primary"}
+                                sx={styles.username}
+                              >
+                                Me (Owner)
+                              </Typography>
+                            )}
+                            {!(
+                              appState.userInfo.bigUserID === user.bigUserID
+                            ) && (
+                              <Link>
+                                <Typography
+                                  color={"primary"}
+                                  onClick={() => {
+                                    setUserOnAction(user);
+                                    setOpenUserDetails(true);
+                                  }}
+                                  sx={styles.username}
+                                >
+                                  {user?.jsnFullName[lang]}
+                                </Typography>
+                              </Link>
+                            )}
                           </Grid>
                         </Grid>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
                       >
-                        <Typography
-                          color={"#000"}
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                          }}
-                        >
+                        <Typography color={"#000"} sx={styles.userRole}>
                           {objIDRole[user.bigUserRoleID]}
                         </Typography>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
                       >
-                        <Typography
-                          color={"#000"}
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                          }}
-                        >
+                        <Typography color={"#000"} sx={styles.userEmail}>
                           {user.strEmail}
                         </Typography>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
                       >
-                        <Typography
-                          color={"#000"}
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "800",
-                            textTransform: "capitalize",
-                          }}
-                        >
+                        <Typography color={"#000"} sx={styles.userAddress}>
                           {user.jsnAddress.jsnCity[lang] +
                             ", " +
                             user.jsnAddress.jsnCountry[lang]}
                         </Typography>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
@@ -419,13 +368,7 @@ function Users() {
                           <Chip
                             color={"error"}
                             label={
-                              <Typography
-                                sx={{
-                                  color: "#fff",
-                                  textTransform: "capitalize",
-                                  fontWeight: "700",
-                                }}
-                              >
+                              <Typography sx={styles.status}>
                                 {"Banned"}
                               </Typography>
                             }
@@ -435,7 +378,7 @@ function Users() {
                         )}
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
@@ -443,13 +386,7 @@ function Users() {
                         <Chip
                           color={user.blnIsActive ? "success" : "error"}
                           label={
-                            <Typography
-                              sx={{
-                                color: "#fff",
-                                textTransform: "capitalize",
-                                fontWeight: "700",
-                              }}
-                            >
+                            <Typography sx={styles.activity}>
                               {user.blnIsActive ? "Active" : "Deactivated"}
                             </Typography>
                           }
@@ -478,11 +415,7 @@ function Users() {
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
                       labelDisplayedRows={({ page }) => {
-                        return (
-                          <Typography sx={{ color: "#000" }}>
-                            Page: {page + 1}
-                          </Typography>
-                        );
+                        return <Typography>Page: {page + 1}</Typography>;
                       }}
                       backIconButtonProps={{
                         color: "#fff",
@@ -490,25 +423,8 @@ function Users() {
                       nextIconButtonProps={{ color: "#fff" }}
                       showFirstButton={true}
                       showLastButton={true}
-                      labelRowsPerPage={
-                        <Typography sx={{ color: "#000" }}>Rows:</Typography>
-                      }
-                      sx={{
-                        ".MuiTablePagination-toolbar": {
-                          backgroundColor: "#f4fcfc",
-                          textAlign: "center",
-                        },
-                        ".MuiTablePagination-selectLabel, .MuiTablePagination-input":
-                          {
-                            fontWeight: "800",
-                          },
-                        ".MuiTablePagination-input": {
-                          fontWeight: "bold",
-                          background: "#fff",
-                          borderRadius: "10px",
-                          border: "1px solid #000",
-                        },
-                      }}
+                      labelRowsPerPage={<Typography>Rows:</Typography>}
+                      sx={styles.tablePagination}
                     />
                   </TableRow>
                 </TableFooter>
@@ -518,12 +434,12 @@ function Users() {
         </Grid>
       )}
       <UserDetails
-      open={openUserDetails}
-      handleClose={()=>setOpenUserDetails(false)}
-      user={userOnAction}
-      users={users}
-      setUsers={setUsers}
-      lang={lang}
+        open={openUserDetails}
+        handleClose={() => setOpenUserDetails(false)}
+        user={userOnAction}
+        users={users}
+        setUsers={setUsers}
+        lang={lang}
       />
     </React.Fragment>
   );

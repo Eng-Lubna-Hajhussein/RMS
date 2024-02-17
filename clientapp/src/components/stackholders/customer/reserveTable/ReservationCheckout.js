@@ -47,6 +47,7 @@ import { reserveTable } from "appHelper/fetchapi/tblReservation/tblReservation";
                 bigTableID:table.bigTableID,
                 bigUserID:appState.userInfo.bigUserID,
                 jsnClientInfo:{
+                  bigUserID:appState.userInfo.bigUserID,
                   strEmail:appState.userInfo.strEmail,
                   strImgPath:appState.userInfo.strImgPath,
                   jsnFullName:appState.userInfo.jsnFullName

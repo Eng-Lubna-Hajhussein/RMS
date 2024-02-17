@@ -22,7 +22,7 @@ const styles = {
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
   line: {
     width: "100%",
@@ -30,6 +30,17 @@ const styles = {
     borderRadius: "26px",
     height: "12px",
   },
+  addBox: {
+    height: "54px",
+    width: "54px",
+    textAlign: "center",
+    borderRadius: "50%",
+    background: App_Second_Color,
+    cursor: "pointer",
+  },
+  fullHeight:{
+    height:"100%"
+  }
 };
 
 export default function Team({
@@ -74,7 +85,9 @@ export default function Team({
       >
         <Grid item lg="12" mb={4} container justifyContent={"center"}>
           <Grid item lg="12" container justifyContent={"center"}>
-            <Typography sx={styles.mainTitle}>{dictionary.teamSection.title[lang]}</Typography>
+            <Typography sx={styles.mainTitle}>
+              {dictionary.teamSection.title[lang]}
+            </Typography>
           </Grid>
           <Grid item lg="3" xs={"6"} sx={styles.line} />
         </Grid>
@@ -88,20 +101,10 @@ export default function Team({
             container
             justifyContent={"end"}
           >
-            <Box
-              sx={{
-                height: "54px",
-                width: "54px",
-                textAlign: "center",
-                borderRadius: "50%",
-                background: App_Second_Color,
-                cursor: "pointer",
-              }}
-              onClick={() => setAddOpen(true)}
-            >
+            <Box sx={styles.addBox} onClick={() => setAddOpen(true)}>
               <Grid
                 container
-                sx={{ height: "100%" }}
+                sx={styles.fullHeight}
                 justifyContent={"center"}
                 alignContent={"center"}
               >

@@ -1,93 +1,54 @@
-import { generateRandomID } from "appHelper/appFunctions";
-import { objRoleID } from "appHelper/appVariables";
-import {
-  createTable,
-  deleteTable,
-  freeTable,
-  updateTable,
-} from "appHelper/fetchapi/tblReservation/tblReservation";
-import { findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
-import { login } from "appHelper/fetchapi/tblUser/tblUser";
+import { objCategoriesType } from "appHelper/appVariables";
+import { bulkCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
 
-export const ctrlTables = {
+export const CtrlDeliveryAddress = {
   onSave: async ({
     appState,
-    isLoading,
     setIsLoading,
-    formData,
-    region
+    appDispatch,
+    isUpdated,
+    regions,
   }) => {
     try {
       setIsLoading(true);
-      
-      setIsLoading(false);
-    } catch (err) {
-      console.log({ err });
-    }
-  },
-  freeTable: async ({
-    isLoading,
-    setIsLoading,
-    tables,
-    setTables,
-    bigTableID,
-    index,
-  }) => {
-    try {
-      setIsLoading(true);
-      const updatedTable = await freeTable(bigTableID);
-      if (updatedTable) {
-        tables[index] = updatedTable;
-        setTables([...tables]);
+      if (!isUpdated.current) {
+        alert("no updates");
       }
-      setIsLoading(false);
-    } catch (err) {
-      console.log({ err });
-    }
-  },
-  deleteTable: async ({
-    isLoading,
-    setIsLoading,
-    tables,
-    setTables,
-    bigTableID,
-  }) => {
-    try {
-      setIsLoading(true);
-      const blnTableDeleted = await deleteTable(bigTableID);
-      if (blnTableDeleted) {
-        tables = tables.filter((table) => table.bigTableID !== bigTableID);
-        setTables([...tables]);
-      }
-      setIsLoading(false);
-    } catch (err) {
-      console.log({ err });
-    }
-  },
-  updateTable: async ({
-    appState,
-    isLoading,
-    setIsLoading,
-    formData,
-    tables,
-    setTables,
-    bigTableID,
-  }) => {
-    try {
-      setIsLoading(true);
-      const objInputTable = {
-        bigTableID: bigTableID,
-        intSeatsNumber: Number(formData.seatsNum),
-        strTablePrice: formData.pricePerHour,
-      };
-      const table = await updateTable(objInputTable);
-      if (table) {
-        const tableIndex = tables.findIndex(
-          (table) => table.bigTableID === bigTableID
+      if (isUpdated.current) {
+        const categoriesOnDeleteIDs = (
+          appState?.systemInfo?.systemDeliveryAddress || []
+        ).reduce((IDs, category) => {
+          const isCatOnDelete =
+            regions?.categories?.findIndex(
+              ({ bigID }) => `${category.bigID}` === `${bigID}`
+            ) === -1;
+          if (isCatOnDelete) {
+            IDs.push(category.bigID);
+          }
+          return IDs;
+        }, []);
+        const categoriesData = await bulkCategories(
+          regions.categories,
+          categoriesOnDeleteIDs
         );
-        tables[tableIndex] = table;
-        setTables([...tables]);
+        if (Array.isArray(categoriesData)) {
+          const systemDeliveryAddress = [];
+          categoriesData.forEach((category) => {
+            if (
+              category.bigCategoryTypeID === objCategoriesType.DeliveryAddress
+            ) {
+              systemDeliveryAddress.push({
+                ...category,
+                jsnName: JSON.parse(category?.jsnName || {}),
+              });
+            }
+          });
+          appState.systemInfo.systemDeliveryAddress = systemDeliveryAddress;
+          appDispatch({ ...appState });
+          isUpdated.current = false;
+        }
       }
+
       setIsLoading(false);
     } catch (err) {
       console.log({ err });

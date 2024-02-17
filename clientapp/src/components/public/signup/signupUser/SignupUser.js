@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "contextapi/context/AppContext";
-import bgImg from "assets/image/patron.jpg";
 import {
   Divider,
   FormControl,
@@ -11,33 +10,57 @@ import {
   Select,
   TextField,
   Typography,
+  Box
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Add, Upload } from "@mui/icons-material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import { COUNTRIES, CITIES } from "appHelper/appVariables";
+import { App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import useUpload from "hooks/useUpload/useUpload";
-import {
-  formateDBStr,
-  generateRandomID,
-  orderRegions,
-} from "appHelper/appFunctions";
-import {
-  createSystem,
-  findSystems,
-} from "appHelper/fetchapi/tblSystem/tblSystem";
-import { signup } from "appHelper/fetchapi/tblUser/tblUser";
+import { orderRegions } from "appHelper/appFunctions";
+import { findSystems } from "appHelper/fetchapi/tblSystem/tblSystem";
 import { ctrlSignUp } from "./controller/CtrlSignUp";
 import useMapLocation from "hooks/useMapLocation/useMapLocation";
 import { findDeliveryAddressCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
-const style = {};
+const styles = {
+  container: {
+    background: "#f3fbfb",
+    height: "fit-content",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  logo: {
+    width: "150px",
+  },
+  title: {
+    color: "#000",
+    textTransform: "capitalize",
+    fontWeight: "800",
+    fontSize: "30px",
+  },
+  regUsing: {
+    color: "#000",
+    fontWeight: "800",
+  },
+  inputLabel: {
+    textTransform: "capitalize",
+  },
+  select: {
+    background: "#fff",
+    borderRadius: "5px",
+  },
+  textfield: {
+    background: "#fff",
+    borderRadius: "5px",
+  },
+};
 
 function SignupUser() {
   const { appState, appDispatch } = useContext(AppContext);
   const { mapLocation } = useMapLocation();
   const { systemID, systemName } = useParams();
+  const dir = appState.clientInfo.strDir;
   const [isLoading, setIsLoading] = useState(false);
   const [systems, setSystems] = useState([]);
   const [regSystem, setRegSystem] = useState();
@@ -46,7 +69,7 @@ function SignupUser() {
   const addressInitial = {
     countryID: null,
     cityID: null,
-    townID:null
+    townID: null,
   };
   const [address, setAddress] = useState(addressInitial);
   const onChangeSystem = (event) => {
@@ -61,16 +84,26 @@ function SignupUser() {
   const onChangeCountry = (event) => {
     const countryID = event.target.value;
     address.countryID = countryID;
-    address.cityID = countryID? Object.keys(
-      regSystem?.deliveryAddress?.appRegionsID[countryID] || {}
-    )[0]:null;
-    address.townID=(countryID&&address.cityID)?regSystem?.deliveryAddress?.appRegionsID[countryID][address.cityID][0]:null;
+    address.cityID = countryID
+      ? Object.keys(
+          regSystem?.deliveryAddress?.appRegionsID[countryID] || {}
+        )[0]
+      : null;
+    address.townID =
+      countryID && address.cityID
+        ? regSystem?.deliveryAddress?.appRegionsID[countryID][address.cityID][0]
+        : null;
     setAddress({ ...address });
   };
   const onChangeCity = (event) => {
     const cityID = event.target.value;
     address.cityID = cityID;
-    address.townID=(address.countryID&&address.cityID)?regSystem?.deliveryAddress?.appRegionsID[address.countryID][address.cityID][0]:null;
+    address.townID =
+      address.countryID && address.cityID
+        ? regSystem?.deliveryAddress?.appRegionsID[address.countryID][
+            address.cityID
+          ][0]
+        : null;
     setAddress({ ...address });
   };
   const onChangeTown = (event) => {
@@ -78,10 +111,6 @@ function SignupUser() {
     address.townID = townID;
     setAddress({ ...address });
   };
-
-  useEffect(()=>{
-    console.log(address)
-  },[address])
   const instalData = async () => {
     setIsLoading(true);
     const systemsData = await findSystems();
@@ -107,14 +136,19 @@ function SignupUser() {
     const countryID = Object.keys(
       systemsInfo[0]?.deliveryAddress?.appRegionsID || {}
     )[0];
-    const cityID =countryID? Object.keys(
-      systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID] || {}
-    )[0]:null;
-    const townID =(countryID&&cityID)?systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID][cityID][0]:null;
+    const cityID = countryID
+      ? Object.keys(
+          systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID] || {}
+        )[0]
+      : null;
+    const townID =
+      countryID && cityID
+        ? systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID][cityID][0]
+        : null;
     setAddress({
-      countryID:countryID,
-      cityID:cityID,
-      townID:townID
+      countryID: countryID,
+      cityID: cityID,
+      townID: townID,
     });
     setSystems(systemsInfo);
     setIsLoading(false);
@@ -155,53 +189,41 @@ function SignupUser() {
             container
             justifyContent={"center"}
             xs="8"
-            sx={{
-              background: "#f3fbfb",
-              height: "fit-content",
-              marginY: "50px",
-              borderRadius: "20px",
-              padding: "20px",
-            }}
+            sx={styles.container}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
+              {(systemID&&appState?.systemInfo?.strLogoPath) && (
+                <Grid item xs="12" container justifyContent={"center"}>
+                  <Box
+                    component={"img"}
+                    sx={styles.logo}
+                    src={appState?.systemInfo?.strLogoPath}
+                  />
+                </Grid>
+              )}
               <Grid item xs="12" container justifyContent={"center"}>
-                <Typography
-                  component={"h3"}
-                  sx={{
-                    color: "#000",
-                    textTransform: "capitalize",
-                    fontWeight: "800",
-                    fontSize: "30px",
-                  }}
-                >
-                  {systemName} User Registration
+                <Typography component={"h3"} sx={styles.title}>
+                  User Registration
                 </Typography>
               </Grid>
               {!systemID && (
                 <Grid item xs="12" container>
                   <Grid item xs="12" p={2}>
-                    <Typography
-                      px={1}
-                      sx={{
-                        color: "#000",
-                        borderLeft: `5px solid ${App_Second_Color}`,
-                        fontWeight: "800",
-                      }}
-                    >
-                      Registered System Info
-                    </Typography>
+                    <Title0001 title={"Registered System Info"} dir={dir} />
                   </Grid>
                   {regSystem && (
                     <Grid item xs="12" container>
                       <Grid item xs="12" p={2}>
                         <FormControl fullWidth>
-                          <InputLabel>Restaurant</InputLabel>
+                          <InputLabel sx={styles.inputLabel}>
+                            Restaurant
+                          </InputLabel>
                           <Select
                             value={regSystem?.bigSystemID}
                             defaultValue={regSystem?.bigSystemID}
                             required
                             onChange={onChangeSystem}
-                            sx={{ background: "#fff", borderRadius: "5px" }}
+                            sx={styles.select}
                           >
                             {systems?.map((system, index) => (
                               <MenuItem value={system.bigSystemID}>
@@ -212,13 +234,7 @@ function SignupUser() {
                         </FormControl>
                       </Grid>
                       <Grid item xs="12" p={2}>
-                        <Typography
-                          px={1}
-                          sx={{
-                            color: "#000",
-                            fontWeight: "800",
-                          }}
-                        >
+                        <Typography px={1} sx={styles.regUsing}>
                           Register Using{" "}
                           <Link to={"/" + regSystem?.strSystemPathURL}>
                             {regSystem?.jsnSystemName[lang]}
@@ -235,21 +251,12 @@ function SignupUser() {
               )}
               <Grid item xs="12" container>
                 <Grid item xs="12" p={2}>
-                  <Typography
-                    px={1}
-                    sx={{
-                      color: "#000",
-                      borderLeft: `5px solid ${App_Second_Color}`,
-                      fontWeight: "800",
-                    }}
-                  >
-                    User Info
-                  </Typography>
+                  <Title0001 title={"User Info"} dir={dir} />
                 </Grid>
                 <Grid item xs="12" container>
                   <Grid item xs="6" p={2}>
                     <TextField
-                      sx={{ background: "#fff", borderRadius: "5px" }}
+                      sx={styles.textfield}
                       variant="outlined"
                       fullWidth
                       type="text"
@@ -265,7 +272,7 @@ function SignupUser() {
                   </Grid>
                   <Grid item xs="6" p={2}>
                     <TextField
-                      sx={{ background: "#fff", borderRadius: "5px" }}
+                      sx={styles.textfield}
                       variant="outlined"
                       fullWidth
                       type="text"
@@ -279,95 +286,92 @@ function SignupUser() {
                       }}
                     />
                   </Grid>
-                  {address.countryID&&<Grid item xs="4" p={2}>
-                    <FormControl fullWidth>
-                      <InputLabel>Country</InputLabel>
-                      <Select
-                        value={address.countryID}
-                        required
-                        onChange={onChangeCountry}
-                        sx={{ background: "#fff", borderRadius: "5px" }}
-                      >
-                        {Object.keys(
-                          regSystem?.deliveryAddress?.appRegionsID || {}
-                        ).map((countryID) => (
-                          <MenuItem value={countryID}>
-                            {
-                              regSystem?.deliveryAddress?.regionName[countryID][
-                                lang
-                              ]
-                            }
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>}
-                  {address.cityID&&<Grid item xs="4" p={2}>
-                    <FormControl fullWidth>
-                      <InputLabel>City</InputLabel>
-                      <Select
-                        value={address.cityID}
-                        required
-                        onChange={onChangeCity}
-                        sx={{ background: "#fff", borderRadius: "5px" }}
-                      >
-                        {Object.keys(
-                          regSystem?.deliveryAddress?.appRegionsID[
-                            address?.countryID
-                          ] || {}
-                        ).map((cityID) => (
-                          <MenuItem value={cityID}>
-                            {
-                              regSystem?.deliveryAddress?.regionName[cityID][
-                                lang
-                              ]
-                            }
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>}
-                  {address.townID&&<Grid item xs="4" p={2}>
-                    <FormControl fullWidth>
-                      <InputLabel>Town</InputLabel>
-                      <Select
-                        value={address.townID}
-                        required
-                        onChange={onChangeTown}
-                        sx={{ background: "#fff", borderRadius: "5px" }}
-                      >
-                        {regSystem?.deliveryAddress?.appRegionsID[
+                  {address.countryID && (
+                    <Grid item xs="4" p={2}>
+                      <FormControl fullWidth>
+                        <InputLabel>Country</InputLabel>
+                        <Select
+                          value={address.countryID}
+                          required
+                          onChange={onChangeCountry}
+                          sx={styles.select}
+                        >
+                          {Object.keys(
+                            regSystem?.deliveryAddress?.appRegionsID || {}
+                          ).map((countryID) => (
+                            <MenuItem value={countryID}>
+                              {
+                                regSystem?.deliveryAddress?.regionName[
+                                  countryID
+                                ][lang]
+                              }
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  )}
+                  {address.cityID && (
+                    <Grid item xs="4" p={2}>
+                      <FormControl fullWidth>
+                        <InputLabel>City</InputLabel>
+                        <Select
+                          value={address.cityID}
+                          required
+                          onChange={onChangeCity}
+                          sx={styles.select}
+                        >
+                          {Object.keys(
+                            regSystem?.deliveryAddress?.appRegionsID[
+                              address?.countryID
+                            ] || {}
+                          ).map((cityID) => (
+                            <MenuItem value={cityID}>
+                              {
+                                regSystem?.deliveryAddress?.regionName[cityID][
+                                  lang
+                                ]
+                              }
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  )}
+                  {address.townID && (
+                    <Grid item xs="4" p={2}>
+                      <FormControl fullWidth>
+                        <InputLabel>Town</InputLabel>
+                        <Select
+                          value={address.townID}
+                          required
+                          onChange={onChangeTown}
+                          sx={styles.select}
+                        >
+                          {regSystem?.deliveryAddress?.appRegionsID[
                             address?.countryID
                           ][address?.cityID].map((townID) => (
-                          <MenuItem value={townID}>
-                            {
-                              regSystem?.deliveryAddress?.regionName[townID][
-                                lang
-                              ]
-                            }
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>}
+                            <MenuItem value={townID}>
+                              {
+                                regSystem?.deliveryAddress?.regionName[townID][
+                                  lang
+                                ]
+                              }
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  )}
                 </Grid>
               </Grid>
               <Grid item xs="12" container>
                 <Grid item xs="12" p={2}>
-                  <Typography
-                    px={1}
-                    sx={{
-                      color: "#000",
-                      borderLeft: `5px solid ${App_Second_Color}`,
-                      fontWeight: "800",
-                    }}
-                  >
-                    Registration Info
-                  </Typography>
+                  <Title0001 title={"Registration Info"} dir={dir} />
                 </Grid>
                 <Grid item xs="6" p={2}>
                   <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={styles.textfield}
                     variant="outlined"
                     fullWidth
                     type="email"
@@ -387,7 +391,7 @@ function SignupUser() {
                 </Grid>
                 <Grid item xs="6" p={2}>
                   <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
+                    sx={styles.textfield}
                     variant="outlined"
                     fullWidth
                     type="password"

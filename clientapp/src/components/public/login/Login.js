@@ -4,24 +4,36 @@ import { Demo_jsnSystemInfo, lstWebsiteNav } from "appHelper/appVariables";
 import { AppContext } from "contextapi/context/AppContext";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { useForm } from "react-hook-form";
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { Grid, TextField, Typography } from "@mui/material";
+import { App_Second_Color } from "appHelper/appColor";
 import { ctrlLogin } from "./controller/CtrlLogin";
 import { useNavigate, useParams } from "react-router-dom";
+
+const styles = {
+  itemContainer: {
+    background: "#f3fbfb",
+    height: "fit-content",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    color: "#000",
+    textTransform: "capitalize",
+    fontWeight: "800",
+    fontSize: "30px",
+  },
+  textfield: {
+    background: "#fff",
+    borderRadius: "5px",
+  },
+};
 
 function Login() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const navigate = useNavigate();
-  const {systemName} = useParams();
+  const { systemName } = useParams();
 
   const {
     register,
@@ -55,27 +67,18 @@ function Login() {
           container
           justifyContent={"center"}
           xs="5"
-          sx={{
-            background: "#f3fbfb",
-            height: "fit-content",
-            marginY: "50px",
-            borderRadius: "20px",
-            padding: "20px",
-          }}
+          sx={styles.itemContainer}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid item xs="12" pb={3} container justifyContent={"center"}>
-              <Typography
-                component={"h3"}
-                sx={{ color: "#000",textTransform:"capitalize", fontWeight: "800", fontSize: "30px" }}
-              >
-              {systemName}  Login
+              <Typography component={"h3"} sx={styles.title}>
+                {systemName} Login
               </Typography>
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="email"
@@ -95,7 +98,7 @@ function Login() {
               </Grid>
               <Grid item xs="12" p={2}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textfield}
                   variant="outlined"
                   fullWidth
                   type="password"

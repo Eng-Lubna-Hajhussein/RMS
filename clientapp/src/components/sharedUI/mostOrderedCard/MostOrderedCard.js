@@ -98,7 +98,6 @@ function MostOrderedCard({ item, lang, dir }) {
           <Box
             sx={{
               ...styles.crossBox,
-
               border: item?.jsnCategoryInfo?.blnOnSale && "5px solid #f3274c",
             }}
           >

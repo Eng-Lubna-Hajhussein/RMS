@@ -1,38 +1,16 @@
-import {
-  CITIES,
-  COUNTRIES,
-  initialAppState,
-  lstWebsiteNav,
-  objAppActions,
-} from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import menuIcon from "assets/image/menu-icon.svg";
-
-import { Avatar, Box, Grid, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/OptionList/OptionList";
-import {
-  MoreVert,
-  TimeToLeave,
-  ViewAgenda,
-  Visibility,
-} from "@mui/icons-material";
-import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import {
-  findAvailableTables,
-  findTables,
-  findUserTables,
-} from "appHelper/fetchapi/tblReservation/tblReservation";
-import bgImg from "assets/image/patron.jpg";
-import { useForm } from "react-hook-form";
+import { App_Second_Color } from "appHelper/appColor";
+import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import moment from "moment";
-import { useNavigate, useParams } from "react-router-dom";
-import { findSystemOrders, findUserOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
+import { useParams } from "react-router-dom";
+import { findSystemOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
+import { Box, Grid, Typography } from "@mui/material";
+import Box001 from "components/sharedUI/Box001/Box001";
 
-const style = {
+const styles = {
   box: {
     width: "100%",
     background: "#f4fcfc !important",
@@ -59,19 +37,52 @@ const style = {
   logo: {
     width: "150px",
   },
+  container: {
+    height: "fit-content",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  systemName: {
+    color: "#000",
+    textTransform: "capitalize",
+    fontWeight: "800",
+    fontSize: "30px",
+  },
+  systemAddress: {
+    fontWeight: "700",
+    fontSize: "15px",
+    textTransform: "capitalize",
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
+  fullHeight: {
+    height: "100%",
+  },
+  subtitle: {
+    borderLeft: `5px solid ${App_Second_Color}`,
+    fontWeight: "600",
+    px: "3px",
+    textTransform: "capitalize",
+  },
+  locationIframe: {
+    borderRadius: "10px",
+  },
 };
 
 function Dashboard() {
-  const { appState, appDispatch } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const { systemID, systemName } = useParams();
-  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [tables, setTables] = useState([]);
 
   const instalData = async () => {
     setIsLoading(true);
-    const systemOrders = await findSystemOrders(appState.systemInfo.bigSystemID);
+    const systemOrders = await findSystemOrders(
+      appState.systemInfo.bigSystemID
+    );
     if (systemOrders?.length) {
       setOrders([...systemOrders]);
     }
@@ -87,17 +98,27 @@ function Dashboard() {
   }, []);
 
   const lastOrder = useMemo(() => {
+    if (!orders?.length) {
+      return "-";
+    }
     const ascOrders = orders.sort((a, b) => {
       return Number(b.dtmOrderDate) - Number(a.dtmOrderDate);
     });
-    return ascOrders[0];
+    return moment(new Date(Number(ascOrders[0]?.dtmOrderDate))).format(
+      "MMM DD,YYYY"
+    );
   }, [orders]);
 
   const lastReservation = useMemo(() => {
+    if (!tables?.length) {
+      return "-";
+    }
     const ascTables = tables.sort((a, b) => {
       return new Date(b.dtmReservationStart) - new Date(a.dtmReservationStart);
     });
-    return ascTables[0];
+    return moment(new Date(ascTables[0]?.dtmReservationStart)).format(
+      "MMM DD,YYYY"
+    );
   }, [tables]);
 
   const userNavList = [
@@ -135,6 +156,30 @@ function Dashboard() {
     { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
+
+  const statistics = [
+    {
+      title: "Last Order",
+      description: lastOrder,
+      img: menuIcon,
+    },
+    {
+      title: "Last Reservation",
+      description: lastReservation,
+      img: menuIcon,
+    },
+    {
+      title: "Total Orders",
+      description: orders?.length,
+      img: menuIcon,
+    },
+    {
+      title: "Total Tables",
+      description: tables?.length,
+      img: menuIcon,
+    },
+  ];
+
   const [isLoading, setIsLoading] = useState(false);
   return (
     <React.Fragment>
@@ -160,205 +205,46 @@ function Dashboard() {
             container
             justifyContent={"center"}
             xs="10"
-            sx={{
-              height: "fit-content",
-              marginY: "50px",
-              borderRadius: "20px",
-              padding: "20px",
-            }}
+            sx={styles.container}
           >
             <Grid item xs="12" pb={1} container justifyContent={"center"}>
-            <Box component={"img"} sx={style.logo} src={appState?.systemInfo?.strLogoPath} />
+              <Box
+                component={"img"}
+                sx={styles.logo}
+                src={appState?.systemInfo?.strLogoPath}
+              />
             </Grid>
             <Grid item xs="12" container justifyContent={"center"}>
-              <Typography
-                component={"h3"}
-                sx={{
-                  color: "#000",
-                  textTransform: "capitalize",
-                  fontWeight: "800",
-                  fontSize: "30px",
-                }}
-              >
+              <Typography component={"h3"} sx={styles.systemName}>
                 {appState?.systemInfo?.jsnSystemName[lang]}
               </Typography>
             </Grid>
             <Grid item xs="12" pb={3} container justifyContent={"center"}>
-              <Typography
-                sx={{
-                  fontWeight: "700",
-                  fontSize: "15px",
-                  textTransform: "capitalize",
-                }}
-              >
+              <Typography sx={styles.systemAddress}>
                 {appState?.systemInfo?.jsnSystemAddress?.jsnCity[lang] +
                   ", " +
-                  appState?.systemInfo?.jsnSystemAddress?.jsnCountry[lang]
-                  }
+                  appState?.systemInfo?.jsnSystemAddress?.jsnCountry[lang]}
               </Typography>
             </Grid>
             <Grid item xs="12" py={5} container justifyContent={"center"}>
-            <Grid
-                item
-                xs="6"
-                justifyContent={"center"}
-                alignContent={"center"}
-                sx={{ height: "fit-content" }}
-                px={2}
-                pb={3}
-              >
-                <Box sx={style.box}>
-                  <Grid
-                    container
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                    sx={{ height: "100%" }}
-                  >
-                    <Grid item xs="10">
-                      <Grid container>
-                        <Grid item xs="12">
-                          <Typography sx={style.title}>
-                            {"Last Order"}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs="12">
-                          <Typography sx={style.description}>
-                            {moment(
-                              new Date(Number(lastOrder?.dtmOrderDate))
-                            ).format("MMM DD,YYYY")}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs="2">
-                      <img src={menuIcon} style={style.icon} />
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs="6"
-                justifyContent={"center"}
-                alignContent={"center"}
-                sx={{ height: "fit-content" }}
-                px={2}
-                pb={3}
-              >
-                <Box sx={style.box}>
-                  <Grid
-                    container
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                    sx={{ height: "100%" }}
-                  >
-                    <Grid item xs="10">
-                      <Grid container>
-                        <Grid item xs="12">
-                          <Typography sx={style.title}>
-                            {"Last Reservation"}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs="12">
-                          <Typography sx={style.description}>
-                            {moment(
-                              new Date(lastReservation?.dtmReservationStart)
-                            ).format("MMM DD,YYYY")}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs="2">
-                      <img src={menuIcon} style={style.icon} />
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs="6"
-                justifyContent={"center"}
-                alignContent={"center"}
-                sx={{ height: "fit-content" }}
-                px={2}
-                pb={3}
-              >
-                <Box sx={style.box}>
-                  <Grid
-                    container
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                    sx={{ height: "100%" }}
-                  >
-                    <Grid item xs="10">
-                      <Grid container>
-                        <Grid item xs="12">
-                          <Typography sx={style.title}>
-                            {"Total Orders"}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs="12">
-                          <Typography sx={style.description}>
-                            {orders?.length}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs="2">
-                      <img src={menuIcon} style={style.icon} />
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs="6"
-                justifyContent={"center"}
-                alignContent={"center"}
-                sx={{ height: "fit-content" }}
-                px={2}
-                pb={3}
-              >
-                <Box sx={style.box}>
-                  <Grid
-                    container
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                    sx={{ height: "100%" }}
-                  >
-                    <Grid item xs="10">
-                      <Grid container>
-                        <Grid item xs="12">
-                          <Typography sx={style.title}>
-                            {"Total Tables"}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs="12">
-                          <Typography sx={style.description}>
-                            {tables.length}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs="2">
-                      <img src={menuIcon} style={style.icon} />
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-             
+              {statistics.map(({ title, description, img }, index) => (
+                <Grid
+                  item
+                  xs="6"
+                  key={index}
+                  justifyContent={"center"}
+                  alignContent={"center"}
+                  sx={styles.fitContentHeight}
+                  px={2}
+                  pb={3}
+                >
+                  <Box001 title={title} description={description} img={img} />
+                </Grid>
+              ))}
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={2}>
-                <Typography
-                  sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
-                  }}
-                >
-                  Location
-                </Typography>
+                <Typography sx={styles.subtitle}>Location</Typography>
               </Grid>
               <Grid item xs="12" container p={2}>
                 <iframe
@@ -366,8 +252,8 @@ function Dashboard() {
                   width="100%"
                   height="350"
                   frameborder="0"
-                  style={{ borderRadius: "10px" }}
-                ></iframe>
+                  style={styles.locationIframe}
+                />
               </Grid>
             </Grid>
           </Grid>

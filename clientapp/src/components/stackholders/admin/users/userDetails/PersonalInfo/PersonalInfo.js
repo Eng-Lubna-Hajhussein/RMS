@@ -1,7 +1,13 @@
-import { Grid, TextField, Typography } from "@mui/material";
-import { App_Second_Color } from "appHelper/appColor";
+import { Grid, TextField } from "@mui/material";
 import CopyToClipboardButton from "components/sharedUI/CopyToClipboardButton/CopyToClipboardButton";
 import { useParams } from "react-router-dom";
+
+const styles = {
+  username: {
+    cursor: "pointer",
+    textTransform: "capitalize",
+  },
+};
 
 function PersonalInfo({ user, lang }) {
   const { systemName, systemID } = useParams();
@@ -14,60 +20,68 @@ function PersonalInfo({ user, lang }) {
         />
       </Grid>
       <Grid item xs="12" py={1} px={3}>
-        <TextField aria-readonly fullWidth value={user.jsnFullName[lang]}
-          sx={{
-            cursor:"pointer"
-          }}
+        <TextField
+          aria-readonly
+          fullWidth
+          value={user.jsnFullName[lang]}
+          sx={styles.username}
           label={"User Full Name"}
-          variant='outlined'
+          variant="outlined"
           inputProps={{
-            style: { textTransform: 'capitalize' },
-            }}
-          />
+            style: { textTransform: "capitalize" },
+          }}
+        />
       </Grid>
       <Grid item xs="12" py={1} px={3}>
-        <TextField aria-readonly fullWidth value={user.strEmail}
-          sx={{
-            cursor:"pointer"
-          }}
+        <TextField
+          aria-readonly
+          fullWidth
+          value={user.strEmail}
           label={"User Email"}
-          variant='outlined'
-        
-          />
+          variant="outlined"
+        />
       </Grid>
       <Grid item xs="12" py={1} px={3}>
-        <TextField aria-readonly fullWidth value={user.jsnAddress.jsnCity[lang] +
-              ", " +
-              user.jsnAddress.jsnCountry[lang]}
-          sx={{
-            cursor:"pointer"
-          }}
+        <TextField
+          aria-readonly
+          fullWidth
+          value={
+            user.jsnAddress.jsnCity[lang] +
+            ", " +
+            user.jsnAddress.jsnCountry[lang]
+          }
           label={"User Address"}
-          variant='outlined'
+          variant="outlined"
           inputProps={{
-            style: { textTransform: 'capitalize' },
-            }}
-          />
+            style: { textTransform: "capitalize" },
+          }}
+        />
       </Grid>
       <Grid item xs="6" py={1} px={3}>
-        <TextField aria-readonly fullWidth value={user.dtmCreatedDate}
+        <TextField
+          aria-readonly
+          fullWidth
+          value={user.dtmCreatedDate}
           label={"Joined Date"}
-          variant='outlined'
+          variant="outlined"
           inputProps={{
-            style: { textTransform: 'capitalize' },
-            }}
-            type="date"
-          />
+            style: { textTransform: "capitalize" },
+          }}
+          type="date"
+        />
       </Grid>
       <Grid item xs="6" py={1} px={3}>
-        <TextField aria-readonly fullWidth value={user.dtmUpdatedDate}
+        <TextField
+          aria-readonly
+          fullWidth
+          value={user.dtmUpdatedDate}
           label={"Last Updated Date"}
-          variant='outlined'
+          variant="outlined"
           inputProps={{
-            style: { textTransform: 'capitalize' },
-            }}
-            type="date"
-          />
+            style: { textTransform: "capitalize" },
+          }}
+          type="date"
+        />
       </Grid>
     </Grid>
   );

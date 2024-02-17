@@ -12,6 +12,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
 const styles = {
   title: {
@@ -19,9 +20,21 @@ const styles = {
     px: "3px",
     textTransform: "capitalize",
   },
-  textfield:{
-    textTransform:"capitalize"
-  }
+  textfield: {
+    textTransform: "capitalize",
+  },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  dialogActions: {
+    py: "0",
+  },
 };
 
 function EditReservation({
@@ -32,6 +45,24 @@ function EditReservation({
   dir,
   onSave,
 }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const { titleEng, titleArb, descEng, descArb } = formJson;
+    onSave({
+      ...jsnReservation,
+      jsnTitle: {
+        eng: titleEng,
+        arb: titleArb,
+      },
+      jsnDescription: {
+        eng: descEng,
+        arb: descArb,
+      },
+    });
+    handleEditClose();
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -39,45 +70,23 @@ function EditReservation({
         onClose={handleEditClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const { titleEng, titleArb, descEng, descArb } = formJson;
-            onSave({
-              ...jsnReservation,
-              jsnTitle: {
-                eng: titleEng,
-                arb: titleArb,
-              },
-              jsnDescription: {
-                eng: descEng,
-                arb: descArb,
-              },
-            });
-            handleEditClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleEditClose} />
+            <Close sx={styles.closeIcon} onClick={handleEditClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:dir==='ltr'&&`5px solid ${App_Second_Color}`,
-                    borderRight:dir==='rtl'&&`5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editReservationSection.title[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editReservationSection.title[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
@@ -114,15 +123,10 @@ function EditReservation({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                   sx={{
-                    ...styles.title,
-                    borderLeft:dir==='ltr'&&`5px solid ${App_Second_Color}`,
-                    borderRight:dir==='rtl'&&`5px solid ${App_Second_Color}`,
-                  }}
-                >
-                   {dictionary.editReservationSection.description[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editReservationSection.description[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
@@ -159,7 +163,7 @@ function EditReservation({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}

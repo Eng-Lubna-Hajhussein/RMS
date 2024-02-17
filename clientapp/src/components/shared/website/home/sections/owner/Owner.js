@@ -1,5 +1,4 @@
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import ownerAvatar from "assets/image/owner-avatar.jpg";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import EditOwner from "./EditOwner";
 import { dictionary } from "appHelper/appDictionary";
@@ -46,6 +45,15 @@ const styles = {
   logo: {
     width: "150px",
   },
+  editBox: {
+    background: "#dad8d9",
+  },
+  editNote: {
+    color: "#000",
+    fontSize: "15px",
+    fontWeight: "600",
+    textTransform: "capitalize",
+  },
 };
 
 function Owner({
@@ -66,18 +74,11 @@ function Owner({
           item
           container
           justifyContent={"start"}
-          sx={{ background: "#dad8d9" }}
+          sx={styles.editBox}
           xs="12"
         >
           <Button variant="text" onClick={handleEditOpen}>
-            <Typography
-              sx={{
-                color: "#000",
-                fontSize: "15px",
-                fontWeight: "600",
-                textTransform: "capitalize",
-              }}
-            >
+            <Typography sx={styles.editNote}>
               {dictionary.ownerSection.title[lang]}
             </Typography>
           </Button>

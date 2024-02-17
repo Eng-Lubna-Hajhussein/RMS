@@ -10,33 +10,39 @@ import { AppRegistrationSharp, FoodBank } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 
 function Signup() {
-  const { appState, appDispatch } = useContext(AppContext);
-  const {systemID,systemName} = useParams();
+  const { appState } = useContext(AppContext);
+  const { systemID } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const tabsContent = [
     {
-      tabLabel:<Grid container justifyContent={'center'}>
-      <Grid item px={1}>
-        <FoodBank />
-      </Grid>
-      <Grid item>
-      <Typography sx={{textTransform:"capitalize"}}>Restaurant</Typography>
-      </Grid>
-    </Grid>,
-      content:<SignupSystem />
+      tabLabel: (
+        <Grid container justifyContent={"center"}>
+          <Grid item px={1}>
+            <FoodBank />
+          </Grid>
+          <Grid item>
+            <Typography sx={{ textTransform: "capitalize" }}>
+              Restaurant
+            </Typography>
+          </Grid>
+        </Grid>
+      ),
+      content: <SignupSystem />,
     },
     {
-      tabLabel:<Grid container justifyContent={'center'}>
-      <Grid item px={1}>
-        <AppRegistrationSharp />
-      </Grid>
-      <Grid item>
-      <Typography sx={{textTransform:"capitalize"}}>User</Typography>
-      </Grid>
-    </Grid>,
-      content:<SignupUser />
-    }
-  ]
+      tabLabel: (
+        <Grid container justifyContent={"center"}>
+          <Grid item px={1}>
+            <AppRegistrationSharp />
+          </Grid>
+          <Grid item>
+            <Typography sx={{ textTransform: "capitalize" }}>User</Typography>
+          </Grid>
+        </Grid>
+      ),
+      content: <SignupUser />,
+    },
+  ];
   return (
     <React.Fragment>
       <WebsiteHeader
@@ -46,8 +52,8 @@ function Signup() {
         jsnSystemContact={Demo_jsnSystemInfo.jsnSystemContact}
         editable={false}
       />
-      {!systemID&&<Tabs001 tabsContent={tabsContent} />}
-      {systemID&&<SignupUser />}
+      {!systemID && <Tabs001 tabsContent={tabsContent} />}
+      {systemID && <SignupUser />}
     </React.Fragment>
   );
 }

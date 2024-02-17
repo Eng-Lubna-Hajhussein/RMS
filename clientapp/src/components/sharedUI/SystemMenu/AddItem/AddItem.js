@@ -7,17 +7,18 @@ import {
   DialogActions,
   Grid,
   Typography,
-  Fab,
   InputLabel,
   Checkbox,
   FormGroup,
   FormControlLabel,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import UploadButton001 from "components/sharedUI/UploadButton001/UploadButton001";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -98,6 +99,41 @@ function AddItem({
     }
   }, [data]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const { nameEng, nameArb, descEng, descArb, salePrice, price } = formJson;
+    const bigID = generateRandomID(10);
+    const item = {
+      bigID: Number(bigID),
+      bigCategoryTypeID: objCategoriesType.Menu,
+      bigParentID: activeTabID,
+      bigSystemID: systemID,
+      jsnName: { eng: nameEng, arb: nameArb },
+      jsnCategoryInfo: {
+        strImgPath: img,
+        strPrice: price,
+        jsnDescription: {
+          eng: descEng,
+          arb: descArb,
+        },
+        strSalePrice: salePrice ? salePrice : "",
+        blnFeatured: !!onFeaturedInput?.current?.checked,
+        blnOnSale: !!onSaleInput?.current?.checked,
+        blnMostOrdered: !!onMostOrderedInput?.current?.checked,
+      },
+    };
+    console.log({ item });
+    setImg(null);
+    setOnSaleChecked(false);
+    onSave(item);
+    if (!!onWeeklySpecial?.current?.checked) {
+      addWS(item?.bigID);
+    }
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -105,41 +141,7 @@ function AddItem({
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const { nameEng, nameArb, descEng, descArb, salePrice, price } =
-              formJson;
-            const bigID = generateRandomID(10);
-            const item = {
-              bigID: Number(bigID),
-              bigCategoryTypeID: objCategoriesType.Menu,
-              bigParentID: activeTabID,
-              bigSystemID: systemID,
-              jsnName: { eng: nameEng, arb: nameArb },
-              jsnCategoryInfo: {
-                strImgPath: img,
-                strPrice: price,
-                jsnDescription: {
-                  eng: descEng,
-                  arb: descArb,
-                },
-                strSalePrice: salePrice ? salePrice : "",
-                blnFeatured: !!onFeaturedInput?.current?.checked,
-                blnOnSale: !!onSaleInput?.current?.checked,
-                blnMostOrdered: !!onMostOrderedInput?.current?.checked,
-              },
-            };
-            console.log({ item });
-            setImg(null);
-            setOnSaleChecked(false);
-            onSave(item);
-            if (!!onWeeklySpecial?.current?.checked) {
-              addWS(item?.bigID);
-            }
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
@@ -159,17 +161,10 @@ function AddItem({
           >
             <Grid item xs="6" container>
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.menuSection.dishImg[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.menuSection.dishImg[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid
                 item
@@ -191,27 +186,7 @@ function AddItem({
                     ...styles.dishImgContainerItem,
                   }}
                 >
-                  <label htmlFor="upload-photo">
-                    <input
-                      style={styles.displayNone}
-                      id="upload-photo"
-                      name="upload-photo"
-                      type="file"
-                      onChange={onImgChange}
-                    />
-
-                    <Fab
-                      size="large"
-                      component="span"
-                      aria-label="add"
-                      variant="extended"
-                      sx={{
-                        background: App_Second_Color,
-                      }}
-                    >
-                      <Upload />
-                    </Fab>
-                  </label>
+                  <UploadButton001 onChange={onImgChange} />
                 </Grid>
               </Grid>
             </Grid>
@@ -225,17 +200,10 @@ function AddItem({
               alignContent={"start"}
             >
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.menuSection.dishConfiguration[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.menuSection.dishConfiguration[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid
                 item
@@ -302,17 +270,10 @@ function AddItem({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.menuSection.dishName[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.menuSection.dishName[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
@@ -345,17 +306,10 @@ function AddItem({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.menuSection.dishDescription[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.menuSection.dishDescription[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
@@ -390,17 +344,10 @@ function AddItem({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.menuSection.dishPrice[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.menuSection.dishPrice[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField

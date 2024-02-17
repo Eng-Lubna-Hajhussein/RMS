@@ -1,52 +1,113 @@
-import { lstWebsiteNav, objAppActions } from "appHelper/appVariables";
+import { objAppActions } from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import {
-  Box,
   Button,
   Chip,
-  FormControl,
   Grid,
-  Icon,
-  InputLabel,
-  MenuItem,
-  Select,
   TableFooter,
   TablePagination,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/OptionList/OptionList";
-import {
-  MoreVert,
-  TimeToLeave,
-  ViewAgenda,
-  Visibility,
-} from "@mui/icons-material";
+import { MoreVert, Visibility } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import {
-  findAvailableTables,
-  findTables,
-} from "appHelper/fetchapi/tblReservation/tblReservation";
-import bgImg from "assets/image/patron.jpg";
+import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import { useForm } from "react-hook-form";
-import moment from "moment";
 import { useParams } from "react-router-dom";
 import { ctrlTables } from "./controller/CtrlTables";
 import EditTable from "./editTable/EditTable";
 
-function Tables() {
+const styles = {
+  container: {
+    marginY: "5px",
+  },
+  itemContainer: {
+    background: "#f4fcfc",
+    height: "250px",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    textTransform: "uppercase",
+    fontSize: "28px",
+    fontWeight: "800",
+    color: App_Primary_Color,
+    borderBottom: "3px solid #ffd40d",
+    width: "fit-content",
+  },
+  form: {
+    width: "100%",
+  },
+  textfield: {
+    background: "#fff",
+    borderRadius: "5px",
+    textTransform: "capitalize",
+  },
+  tableContainer: {
+    marginBottom: "50px",
+  },
+  columnTablecell: {
+    border: "1px solid #c4c4c4",
+    background: App_Primary_Color,
+    color: "#fff",
+    fontSize: "15px",
+    fontWeight: 800,
+  },
+  rowTablecell: {
+    border: "1px solid #c4c4c4",
+  },
+  tablePagination: {
+    ".MuiTablePagination-toolbar": {
+      backgroundColor: "#f4fcfc",
+      textAlign: "center",
+    },
+    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
+      fontWeight: "800",
+    },
+    ".MuiTablePagination-input": {
+      fontWeight: "bold",
+      background: "#fff",
+      borderRadius: "10px",
+      border: "1px solid #000",
+    },
+  },
+  fitContentHeight: {
+    height: "fit-content",
+  },
+  tableID: {
+    fontSize: "18px",
+    fontWeight: "800",
+  },
+  seatsNum: {
+    fontSize: "18px",
+    fontWeight: "800",
+  },
+  price: {
+    fontSize: "20px",
+    fontWeight: "800",
+  },
+  status: {
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "700",
+  },
+  viewBtnLabel: {
+    fontSize: "15px",
+    textTransform: "uppercase",
+  },
+};
 
+function Tables() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const [tables, setTables] = useState([]);
@@ -56,7 +117,6 @@ function Tables() {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tables.length) : 0;
 
@@ -93,7 +153,7 @@ function Tables() {
     {
       bigNavID: 8944146478,
       nav: { eng: "orders", arb: "تسوق" },
-      path:`/admin/orders/${systemName}/${systemID}`
+      path: `/admin/orders/${systemName}/${systemID}`,
     },
     {
       bigNavID: 7943146478,
@@ -101,9 +161,11 @@ function Tables() {
       path: `/admin/tables/${systemName}/${systemID}`,
     },
 
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" },
-    path: `/admin/users/${systemName}/${systemID}`,
-  },
+    {
+      bigNavID: 2344146478,
+      nav: { eng: "users", arb: "المنيو" },
+      path: `/admin/users/${systemName}/${systemID}`,
+    },
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
   const [isLoading, setIsLoading] = useState(false);
@@ -146,7 +208,14 @@ function Tables() {
     });
   };
 
-  
+  const columns = [
+    "Table ID",
+    " Seats Number",
+    "Price Per Hour",
+    "Status",
+    "Reservation Info",
+    "Actions",
+  ];
 
   return (
     <React.Fragment>
@@ -166,7 +235,7 @@ function Tables() {
       />
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
+        <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item xs="10" container>
             <Grid
               item
@@ -174,38 +243,18 @@ function Tables() {
               px={1}
               pb={10}
               justifyContent={"center"}
-              sx={{
-                background: "#f4fcfc",
-                height: "250px",
-                marginY: "50px",
-                borderRadius: "20px",
-                padding: "20px",
-              }}
+              sx={styles.itemContainer}
             >
               <Grid container>
                 <Grid item xs="12" container px={2} justifyContent={"start"}>
-                  <Typography
-                    sx={{
-                      textTransform: "uppercase",
-                      fontSize: "28px",
-                      fontWeight: "800",
-                      color: App_Primary_Color,
-                      borderBottom: "3px solid #ffd40d",
-                      width: "fit-content",
-                    }}
-                  >
-                    Add A TABLE !
-                  </Typography>
+                  <Typography sx={styles.title}>Add A TABLE !</Typography>
                 </Grid>
                 <Grid item xs="12" container justifyContent={"start"}>
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    style={{ width: "100%" }}
-                  >
+                  <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
                     <Grid item xs="12" container py={3}>
                       <Grid item xs="6" px={2}>
                         <TextField
-                          sx={{ background: "#fff", borderRadius: "5px" }}
+                          sx={styles.textfield}
                           variant="outlined"
                           fullWidth
                           type="number"
@@ -223,7 +272,7 @@ function Tables() {
                       </Grid>
                       <Grid item xs="6" px={2}>
                         <TextField
-                          sx={{ background: "#fff", borderRadius: "5px" }}
+                          sx={styles.textfield}
                           variant="outlined"
                           fullWidth
                           type="text"
@@ -251,9 +300,8 @@ function Tables() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs="12" sx={{ marginBottom: "50px" }} px={1}>
+            <Grid item xs="12" container sx={styles.tableContainer} px={1}>
               <Table
-                sx={{  border: "1px solid #c4c4c4" }}
                 aria-label="simple table"
                 initialState={{
                   pagination: {
@@ -263,78 +311,11 @@ function Tables() {
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Table ID
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Seats Number
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Price Per Hour
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      State
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Reservation Info
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: "1px solid #c4c4c4",
-                        background: App_Primary_Color,
-                        color: "#fff",
-                        fontSize: "15px",
-                        fontWeight: 800,
-                      }}
-                      align="center"
-                    >
-                      Actions
-                    </TableCell>
+                    {columns.map((column) => (
+                      <TableCell sx={styles.columnTablecell} align="center">
+                        {column}
+                      </TableCell>
+                    ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -347,7 +328,7 @@ function Tables() {
                   )?.map((table, index) => (
                     <TableRow>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
@@ -356,7 +337,7 @@ function Tables() {
                           container
                           alignContent={"center"}
                           alignItems={"center"}
-                          sx={{ height: "fit-content" }}
+                          sx={styles.fitContentHeight}
                         >
                           {table.blnTableAvailable && (
                             <Grid item xs="1">
@@ -381,7 +362,6 @@ function Tables() {
                                     ) {
                                       setTableOnAction(table);
                                       setOpenEditTable(true);
-                                      // ctrlTables.updateTable(table.bigTableID);
                                     }
                                   },
                                 }))}
@@ -391,50 +371,35 @@ function Tables() {
                             </Grid>
                           )}
                           <Grid item xs={table.blnTableAvailable ? "11" : "12"}>
-                            <Typography
-                              color={"#000"}
-                              sx={{
-                                fontSize: "18px",
-                                fontWeight: "800",
-                              }}
-                            >
+                            <Typography color={"#000"} sx={styles.tableID}>
                               #{table.bigTableID}
                             </Typography>
                           </Grid>
                         </Grid>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
                       >
-                        <Typography
-                          color={"#000"}
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: "800",
-                          }}
-                        >
+                        <Typography color={"#000"} sx={styles.seatsNum}>
                           {table.intSeatsNumber}
                         </Typography>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
                       >
-                        <Typography
-                          color={App_Primary_Color}
-                          sx={{ fontSize: "20px", fontWeight: "800" }}
-                        >
+                        <Typography color={App_Primary_Color} sx={styles.price}>
                           ${table.strTablePrice}
                         </Typography>
                       </TableCell>
 
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
@@ -442,13 +407,7 @@ function Tables() {
                         <Chip
                           color={table.blnTableAvailable ? "success" : "error"}
                           label={
-                            <Typography
-                              sx={{
-                                color: "#fff",
-                                textTransform: "capitalize",
-                                fontWeight: "700",
-                              }}
-                            >
+                            <Typography sx={styles.status}>
                               {table.blnTableAvailable
                                 ? "Available"
                                 : "Reserved"}
@@ -457,7 +416,7 @@ function Tables() {
                         />
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
@@ -466,18 +425,11 @@ function Tables() {
                           endIcon={<Visibility />}
                           disabled={table.blnTableAvailable}
                         >
-                          <Typography
-                            sx={{
-                              fontSize: "15px",
-                              textTransform: "uppercase",
-                            }}
-                          >
-                            view
-                          </Typography>
+                          <Typography sx={styles.viewBtnLabel}>view</Typography>
                         </Button>
                       </TableCell>
                       <TableCell
-                        sx={{ border: "1px solid #c4c4c4" }}
+                        sx={styles.rowTablecell}
                         align="center"
                         component="th"
                         scope="row"
@@ -521,9 +473,8 @@ function Tables() {
                       onPageChange={handleChangePage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
                       labelDisplayedRows={({ page }) => {
-                        // return `Page: ${page+1}`;
                         return (
-                          <Typography sx={{ color: "#000" }}>
+                          <Typography>
                             Page: {page + 1}
                           </Typography>
                         );
@@ -535,24 +486,9 @@ function Tables() {
                       showFirstButton={true}
                       showLastButton={true}
                       labelRowsPerPage={
-                        <Typography sx={{ color: "#000" }}>Rows:</Typography>
+                        <Typography>Rows:</Typography>
                       }
-                      sx={{
-                        ".MuiTablePagination-toolbar": {
-                          backgroundColor: "#f4fcfc",
-                          textAlign: "center",
-                        },
-                        ".MuiTablePagination-selectLabel, .MuiTablePagination-input":
-                          {
-                            fontWeight: "800",
-                          },
-                        ".MuiTablePagination-input": {
-                          fontWeight: "bold",
-                          background: "#fff",
-                          borderRadius: "10px",
-                          border: "1px solid #000",
-                        },
-                      }}
+                      sx={styles.tablePagination}
                     />
                   </TableRow>
                 </TableFooter>

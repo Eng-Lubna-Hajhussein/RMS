@@ -1,21 +1,16 @@
 import {
   Box,
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   Typography,
 } from "@mui/material";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import arrowImg from "assets/image/arrow-2.png";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { orderRegions } from "appHelper/appFunctions";
-import { Add, Delete, Edit } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AddCountry from "./addCountry/AddCountry";
 import AddCity from "./addCity/AddCity";
@@ -23,15 +18,53 @@ import AddTown from "./addTown/AddTown";
 import EditCountry from "./editCountry/EditCountry";
 import EditCity from "./editCity/EditCity";
 import EditTown from "./editTown/EditTown";
-import { objCategoriesType } from "appHelper/appVariables";
-import { bulkCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
+import { CtrlDeliveryAddress } from "./controller/CtrlDeliveryAddress";
+import Country from "./country.js/Country";
+import City from "./city/City";
+import Town from "./town/Town";
 
 const styles = {
-  addDish: {
-    padding: "20px !important",
+  container: {
+    marginY: "5px",
+  },
+  itemContainer: {
+    background: "#f4fcfc",
+    height: "140px",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    textTransform: "uppercase",
+    fontSize: "28px",
+    fontWeight: "800",
+    color: App_Primary_Color,
+    borderBottom: "3px solid #ffd40d",
+    width: "fit-content",
+  },
+  rowImg: {
+    transform: "rotate(180deg)",
+    height: "80px",
+    width: "100%",
+  },
+  inputLabel: {
+    textTransform: "capitalize",
+  },
+  select: {
+    background: "#fff",
+    borderRadius: "5px",
+    textTransform: "capitalize",
+  },
+  box: {
+    height: "54px",
+    width: "54px",
+    textAlign: "center",
     borderRadius: "50%",
-    backgroundColor: "#ffd40d !important",
+    background: App_Second_Color,
     cursor: "pointer",
+  },
+  fullHeight: {
+    height: "100%",
   },
 };
 
@@ -40,14 +73,7 @@ function DeliveryAddress() {
   const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const [isLoading, setIsLoading] = useState(false);
-  const isUpdated= useRef(false);
-
-  useEffect(() => {
-    console.log(appState?.systemInfo?.systemDeliveryAddress);
-    console.log(
-      orderRegions({ Regions: appState?.systemInfo?.systemDeliveryAddress })
-    );
-  }, []);
+  const isUpdated = useRef(false);
 
   const regionsInitial = useMemo(() => {
     return orderRegions({
@@ -73,7 +99,7 @@ function DeliveryAddress() {
     regions.regionName[country.bigID] = country.jsnName;
     regions.appRegionsID[country.bigID] = {};
     setRegions({ ...regions });
-    isUpdated.current=true;
+    isUpdated.current = true;
   };
 
   const editCountryHandler = (country) => {
@@ -84,7 +110,7 @@ function DeliveryAddress() {
       regions.categories[countryIndex] = country;
       regions.regionName[country.bigID] = country.jsnName;
       setRegions({ ...regions });
-      isUpdated.current=true;
+      isUpdated.current = true;
     }
   };
 
@@ -104,7 +130,7 @@ function DeliveryAddress() {
     setSelectedCity("none");
     setSelectedTown("none");
     setRegions({ ...regions });
-    isUpdated.current=true;
+    isUpdated.current = true;
   };
 
   const addCityHandler = (city) => {
@@ -112,7 +138,7 @@ function DeliveryAddress() {
     regions.regionName[city.bigID] = city.jsnName;
     regions.appRegionsID[selectedCountry][city.bigID] = [];
     setRegions({ ...regions });
-    isUpdated.current=true;
+    isUpdated.current = true;
   };
 
   const editCityHandler = (city) => {
@@ -123,7 +149,7 @@ function DeliveryAddress() {
       regions.categories[cityIndex] = city;
       regions.regionName[city.bigID] = city.jsnName;
       setRegions({ ...regions });
-      isUpdated.current=true;
+      isUpdated.current = true;
     }
   };
 
@@ -142,7 +168,7 @@ function DeliveryAddress() {
     setSelectedCity("none");
     setSelectedTown("none");
     setRegions({ ...regions });
-    isUpdated.current=true;
+    isUpdated.current = true;
   };
 
   const addTownHandler = (town) => {
@@ -150,7 +176,7 @@ function DeliveryAddress() {
     regions.regionName[town.bigID] = town.jsnName;
     regions.appRegionsID[selectedCountry][selectedCity].push(town.bigID);
     setRegions({ ...regions });
-    isUpdated.current=true;
+    isUpdated.current = true;
   };
 
   const editTownHandler = (town) => {
@@ -161,7 +187,7 @@ function DeliveryAddress() {
       regions.categories[townIndex] = town;
       regions.regionName[town.bigID] = town.jsnName;
       setRegions({ ...regions });
-      isUpdated.current=true;
+      isUpdated.current = true;
     }
   };
 
@@ -175,46 +201,33 @@ function DeliveryAddress() {
     ][selectedCity].filter((townID) => `${selectedTown}` !== `${townID}`);
     setSelectedTown("none");
     setRegions({ ...regions });
-    isUpdated.current=true;
+    isUpdated.current = true;
   };
 
-  const onSave = async()=>{
-    if (!isUpdated.current) {
-        alert("no updates")
-    }
-    if (isUpdated.current) {
-        const categoriesOnDeleteIDs = (
-          appState?.systemInfo?.systemDeliveryAddress || []
-        ).reduce((IDs, category) => {
-          const isCatOnDelete =
-            regions?.categories?.findIndex(
-              ({ bigID }) => `${category.bigID}` === `${bigID}`
-            ) === -1;
-          if (isCatOnDelete) {
-            IDs.push(category.bigID);
-          }
-          return IDs;
-        }, []);
-        const categoriesData = await bulkCategories(
-        regions.categories,
-        categoriesOnDeleteIDs
-        );
-        if (Array.isArray(categoriesData)) {
-          const systemDeliveryAddress = [];
-          categoriesData.forEach((category) => {
-            if (category.bigCategoryTypeID === objCategoriesType.DeliveryAddress) {
-              systemDeliveryAddress.push({
-                ...category,
-                jsnName: JSON.parse(category?.jsnName || {}),
-              });
-            }
-          });
-          appState.systemInfo.systemDeliveryAddress = systemDeliveryAddress;
-          appDispatch({ ...appState });
-          isUpdated.current=false;
-        }
-      }
-  }
+  const onChangeCountry = (e) => {
+    setSelectedCountry(e.target.value);
+    setSelectedCity("none");
+    setSelectedTown("none");
+  };
+
+  const onChangeCity = (e) => {
+    setSelectedCity(e.target.value);
+    setSelectedTown("none");
+  };
+
+  const onChangeTown = (e) => {
+    setSelectedTown(e.target.value);
+  };
+
+  const onSave = () => {
+    CtrlDeliveryAddress.onSave({
+      appState: appState,
+      appDispatch: appDispatch,
+      isUpdated: isUpdated,
+      setIsLoading: setIsLoading,
+      regions: regions,
+    });
+  };
 
   const userNavList = [
     { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
@@ -252,7 +265,7 @@ function DeliveryAddress() {
     { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
   ];
   return (
-    <>
+    <React.Fragment>
       <WebsiteHeader
         lang={appState.clientInfo.strLanguage}
         dir={appState.clientInfo.strDir}
@@ -269,40 +282,26 @@ function DeliveryAddress() {
       />
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"} sx={{ marginY: "5px" }}>
+        <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item xs="10" container>
             <Grid
               item
               xs="12"
               px={1}
               pb={10}
+              container
               justifyContent={"center"}
-              sx={{
-                background: "#f4fcfc",
-                height: "140px",
-                marginY: "50px",
-                borderRadius: "20px",
-                padding: "20px",
-              }}
+              sx={styles.itemContainer}
             >
               <Grid container>
-                <Grid item container xs="7" px={1} justifyContent={"start"}>
+                <Grid item container xs="7" justifyContent={"start"}>
                   <Grid item xs="12">
-                    <Typography
-                      sx={{
-                        textTransform: "uppercase",
-                        fontSize: "28px",
-                        fontWeight: "800",
-                        color: App_Primary_Color,
-                        borderBottom: "3px solid #ffd40d",
-                        width: "fit-content",
-                      }}
-                    >
+                    <Typography sx={styles.title}>
                       Restaurant Delivery Address !
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item container xs="2" justifyContent={"start"} py={2}>
+                <Grid item container xs="2" justifyContent={"start"} py={3}>
                   <AnimationBox
                     animationMode="reverse"
                     easing={"ease-in"}
@@ -310,323 +309,56 @@ function DeliveryAddress() {
                     type="fadeOut"
                     trigger="manual"
                   >
-                    <Box
-                      component={"img"}
-                      sx={{
-                        transform: "rotate(180deg)",
-                        height: "80px",
-                        width: "100%",
-                      }}
-                      src={arrowImg}
-                    />
+                    <Box component={"img"} sx={styles.rowImg} src={arrowImg} />
                   </AnimationBox>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs="12" container>
-              {/* countries */}
-              <Grid item xs="6" px={1}>
-                <FormControl fullWidth>
-                  <InputLabel>Delivery Address Countries</InputLabel>
-                  <Select
-                    value={selectedCountry}
-                    required
-                    label={"Delivery Address Countries"}
-                    onChange={(e) => {
-                      setSelectedCountry(e.target.value);
-                      setSelectedCity("none");
-                      setSelectedTown("none");
-                    }}
-                    sx={{ background: "#fff", borderRadius: "5px" }}
-                  >
-                    <MenuItem value="none">{"none"}</MenuItem>
-                    {Object.keys(regions.appRegionsID).map((countryID) => (
-                      <MenuItem value={countryID}>
-                        {regions.regionName[countryID][lang]}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs="2" px={1} container justifyContent={"end"}>
-                <Box
-                  sx={{
-                    height: "54px",
-                    width: "54px",
-                    textAlign: "center",
-                    borderRadius: "50%",
-                    background: App_Second_Color,
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setAddCountryOpen(true);
-                  }}
-                >
-                  <Grid
-                    container
-                    sx={{ height: "100%" }}
-                    justifyContent={"center"}
-                    alignContent={"center"}
-                  >
-                    <Add fontSize="medium" />
-                  </Grid>
-                </Box>
-              </Grid>
-              {!!selectedCountry && selectedCountry !== "none" && (
-                <Grid item xs="2" px={1} container justifyContent={"end"}>
-                  <Box
-                    sx={{
-                      height: "54px",
-                      width: "54px",
-                      textAlign: "center",
-                      borderRadius: "50%",
-                      background: App_Second_Color,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      setEditCountryOpen(true);
-                    }}
-                  >
-                    <Grid
-                      container
-                      sx={{ height: "100%" }}
-                      justifyContent={"center"}
-                      alignContent={"center"}
-                    >
-                      <Edit fontSize="medium" />
-                    </Grid>
-                  </Box>
-                </Grid>
-              )}
-              {!!selectedCountry && selectedCountry !== "none" && (
-                <Grid item xs="2" px={1} container justifyContent={"end"}>
-                  <Box
-                    sx={{
-                      height: "54px",
-                      width: "54px",
-                      textAlign: "center",
-                      borderRadius: "50%",
-                      background: App_Second_Color,
-                      cursor: "pointer",
-                    }}
-                    onClick={deleteCountryHandler}
-                  >
-                    <Grid
-                      container
-                      sx={{ height: "100%" }}
-                      justifyContent={"center"}
-                      alignContent={"center"}
-                    >
-                      <Delete fontSize="medium" />
-                    </Grid>
-                  </Box>
-                </Grid>
-              )}
-            </Grid>
+            <Country
+              onChange={onChangeCountry}
+              country={selectedCountry}
+              regions={regions}
+              lang={lang}
+              addCountryOpen={() => {
+                setAddCountryOpen(true);
+              }}
+              editCountryOpen={() => {
+                setEditCountryOpen(true);
+              }}
+              onDelete={deleteCountryHandler}
+            />
             {!!selectedCountry && selectedCountry !== "none" && (
-              <Grid item xs="12" container py={5}>
-                {/* cities */}
-                <Grid item xs="6" px={1}>
-                  <FormControl fullWidth>
-                    <InputLabel>Delivery Address Cities</InputLabel>
-                    <Select
-                      value={selectedCity}
-                      required
-                      label={"Delivery Address Cities"}
-                      onChange={(e) => {
-                        setSelectedCity(e.target.value);
-                        setSelectedTown("none");
-                      }}
-                      sx={{ background: "#fff", borderRadius: "5px" }}
-                    >
-                      <MenuItem value="none">{"none"}</MenuItem>
-                      {Object.keys(regions.appRegionsID[selectedCountry]).map(
-                        (cityID) => (
-                          <MenuItem value={cityID}>
-                            {regions.regionName[cityID][lang]}
-                          </MenuItem>
-                        )
-                      )}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs="2" px={1} container justifyContent={"end"}>
-                  <Box
-                    sx={{
-                      height: "54px",
-                      width: "54px",
-                      textAlign: "center",
-                      borderRadius: "50%",
-                      background: App_Second_Color,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      setAddCityOpen(true);
-                    }}
-                  >
-                    <Grid
-                      container
-                      sx={{ height: "100%" }}
-                      justifyContent={"center"}
-                      alignContent={"center"}
-                    >
-                      <Add fontSize="medium" />
-                    </Grid>
-                  </Box>
-                </Grid>
-                {!!selectedCity && selectedCity !== "none" && (
-                  <Grid item xs="2" px={1} container justifyContent={"end"}>
-                    <Box
-                      sx={{
-                        height: "54px",
-                        width: "54px",
-                        textAlign: "center",
-                        borderRadius: "50%",
-                        background: App_Second_Color,
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setEditCityOpen(true);
-                      }}
-                    >
-                      <Grid
-                        container
-                        sx={{ height: "100%" }}
-                        justifyContent={"center"}
-                        alignContent={"center"}
-                      >
-                        <Edit fontSize="medium" />
-                      </Grid>
-                    </Box>
-                  </Grid>
-                )}
-                {!!selectedCity && selectedCity !== "none" && (
-                  <Grid item xs="2" px={1} container justifyContent={"end"}>
-                    <Box
-                      sx={{
-                        height: "54px",
-                        width: "54px",
-                        textAlign: "center",
-                        borderRadius: "50%",
-                        background: App_Second_Color,
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Grid
-                        container
-                        sx={{ height: "100%" }}
-                        justifyContent={"center"}
-                        alignContent={"center"}
-                        onClick={deleteCityHandler}
-                      >
-                        <Delete fontSize="medium" />
-                      </Grid>
-                    </Box>
-                  </Grid>
-                )}
-              </Grid>
+              <City
+                onChange={onChangeCity}
+                country={selectedCountry}
+                city={selectedCity}
+                regions={regions}
+                lang={lang}
+                addCityOpen={() => {
+                  setAddCityOpen(true);
+                }}
+                editCityOpen={() => {
+                  setEditCityOpen(true);
+                }}
+                onDelete={deleteCityHandler}
+              />
             )}
             {!!(selectedCity && selectedCity !== "none") && (
-              <Grid item xs="12" container>
-                {/* towns */}
-                <Grid item xs="6" px={1}>
-                  <FormControl fullWidth>
-                    <InputLabel>Delivery Address Towns</InputLabel>
-                    <Select
-                      value={selectedTown}
-                      required
-                      label={"Delivery Address Cities"}
-                      onChange={(e) => {
-                        setSelectedTown(e.target.value);
-                      }}
-                      sx={{ background: "#fff", borderRadius: "5px" }}
-                    >
-                      <MenuItem value="none">{"none"}</MenuItem>
-                      {regions.appRegionsID[selectedCountry][selectedCity].map(
-                        (townID) => (
-                          <MenuItem value={townID}>
-                            {regions?.regionName[townID][lang]}
-                          </MenuItem>
-                        )
-                      )}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs="2" px={1} container justifyContent={"end"}>
-                  <Box
-                    sx={{
-                      height: "54px",
-                      width: "54px",
-                      textAlign: "center",
-                      borderRadius: "50%",
-                      background: App_Second_Color,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      setAddTownOpen(true);
-                    }}
-                  >
-                    <Grid
-                      container
-                      sx={{ height: "100%" }}
-                      justifyContent={"center"}
-                      alignContent={"center"}
-                    >
-                      <Add fontSize="medium" />
-                    </Grid>
-                  </Box>
-                </Grid>
-                {!!selectedTown && selectedTown !== "none" && (
-                  <Grid item xs="2" px={1} container justifyContent={"end"}>
-                    <Box
-                      sx={{
-                        height: "54px",
-                        width: "54px",
-                        textAlign: "center",
-                        borderRadius: "50%",
-                        background: App_Second_Color,
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setEditTownOpen(true);
-                      }}
-                    >
-                      <Grid
-                        container
-                        sx={{ height: "100%" }}
-                        justifyContent={"center"}
-                        alignContent={"center"}
-                      >
-                        <Edit fontSize="medium" />
-                      </Grid>
-                    </Box>
-                  </Grid>
-                )}
-                {!!selectedTown && selectedTown !== "none" && (
-                  <Grid item xs="2" px={1} container justifyContent={"end"}>
-                    <Box
-                      sx={{
-                        height: "54px",
-                        width: "54px",
-                        textAlign: "center",
-                        borderRadius: "50%",
-                        background: App_Second_Color,
-                        cursor: "pointer",
-                      }}
-                      onClick={deleteTownHandler}
-                    >
-                      <Grid
-                        container
-                        sx={{ height: "100%" }}
-                        justifyContent={"center"}
-                        alignContent={"center"}
-                      >
-                        <Delete fontSize="medium" />
-                      </Grid>
-                    </Box>
-                  </Grid>
-                )}
-              </Grid>
+              <Town
+                onChange={onChangeTown}
+                country={selectedCountry}
+                city={selectedCity}
+                town={selectedTown}
+                regions={regions}
+                lang={lang}
+                addTownOpen={() => {
+                  setAddTownOpen(true);
+                }}
+                editTownOpen={() => {
+                  setEditTownOpen(true);
+                }}
+                onDelete={deleteTownHandler}
+              />
             )}
             <Grid item xs="12" container justifyContent={"end"} py={8}>
               <AnimButton0001
@@ -702,7 +434,7 @@ function DeliveryAddress() {
         bigID={selectedTown}
         jsnName={regions?.regionName[selectedTown]}
       />
-    </>
+    </React.Fragment>
   );
 }
 

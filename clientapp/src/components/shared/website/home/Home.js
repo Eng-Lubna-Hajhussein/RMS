@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import Header from "./sections/header/Header";
-import "./Home.css";
 import Hero from "./sections/hero/Hero";
 import Owner from "./sections/owner/Owner";
 import Reservation from "./sections/reservation/Reservation";
@@ -12,8 +11,8 @@ import Team from "./sections/team/Team";
 import About from "./sections/about/About";
 import Follow from "./sections/follow/Follow";
 import Footer from "./sections/footer/Footer";
-import BtnProgressToTop from "components/sharedUI/BtnProgressToTop/BtnProgressToTop";
 import Loader001 from "components/sharedUI/Loader001/Loader001";
+import "./Home.css";
 
 function Home({
   systemInfo,

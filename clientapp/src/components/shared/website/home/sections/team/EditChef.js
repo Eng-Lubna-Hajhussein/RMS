@@ -1,10 +1,6 @@
+import React, { useEffect, useState } from "react";
 import {
-  AnimationOutlined,
   Close,
-  Favorite,
-  FavoriteBorder,
-  StyleOutlined,
-  Upload,
 } from "@mui/icons-material";
 import {
   Dialog,
@@ -13,32 +9,41 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
-  Box,
-  Fab,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
-import { generateRandomID } from "appHelper/appFunctions";
-import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import UploadButton001 from "components/sharedUI/UploadButton001/UploadButton001";
 import useUpload from "hooks/useUpload/useUpload";
-import React, { useEffect, useRef, useState } from "react";
 
 const styles = {
-  title: {
-    fontWeight: "600",
-    px: "3px",
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  heightFitContent: {
+    height: "fit-content",
+  },
+  chefImgContainer: {
+    height: "fit-content",
+    border: "4px dashed #ececec",
+    borderRadius: "10px",
+  },
+  chefImg: {
+    height: "180px",
+    backgroundSize: "100% 100%",
+  },
+  textField: {
     textTransform: "capitalize",
+  },
+  dialogActions: {
+    py: "0",
   },
 };
 
@@ -62,6 +67,35 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
     }
   }, [data]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const {
+      nameEng,
+      nameArb,
+      specializationEng,
+      specializationArb,
+      facebook,
+      instagram,
+      twitter,
+    } = formJson;
+    const chefObj = {
+      bigID: chef?.bigID,
+      jsnName: { eng: nameEng, arb: nameArb },
+      jsnSpecialization: {
+        eng: specializationEng,
+        arb: specializationArb,
+      },
+      strFacebookLink: facebook,
+      strInstagramLink: instagram,
+      strTwitterLink: twitter,
+      strImgPath: img,
+    };
+    onSave(chefObj);
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -69,64 +103,30 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const {
-              nameEng,
-              nameArb,
-              specializationEng,
-              specializationArb,
-              facebook,
-              instagram,
-              twitter,
-            } = formJson;
-            const chefObj = {
-              bigID: chef?.bigID,
-              jsnName: { eng: nameEng, arb: nameArb },
-              jsnSpecialization: {
-                eng: specializationEng,
-                arb: specializationArb,
-              },
-              strFacebookLink: facebook,
-              strInstagramLink: instagram,
-              strTwitterLink: twitter,
-              strImgPath: img,
-            };
-            onSave(chefObj);
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+            <Close sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid
             container
             py={1}
             justifyContent={"start"}
             alignContent={"start"}
             alignItems={"start"}
-            sx={{ height: "fit-content" }}
+            sx={styles.heightFitContent}
           >
             <Grid item xs="6" container>
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.teamSection.chefImg[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.teamSection.chefImg[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid
                 item
@@ -143,11 +143,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   p={1}
                   justifyContent={"center"}
                   alignContent={"center"}
-                  sx={{
-                    height: "fit-content",
-                    border: "4px dashed #ececec",
-                    borderRadius: "10px",
-                  }}
+                  sx={styles.chefImgContainer}
                 >
                   <Grid
                     item
@@ -156,56 +152,28 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                     justifyContent={"center"}
                     alignContent={"center"}
                     sx={{
-                      height: "180px",
                       background: `url(${img})`,
-                      backgroundSize: "100% 100%",
+                      ...styles.chefImg,
                     }}
                   >
-                    <label htmlFor="upload-photo">
-                      <input
-                        style={{ display: "none" }}
-                        id="upload-photo"
-                        name="upload-photo"
-                        type="file"
-                        onChange={onImgChange}
-                      />
-
-                      <Fab
-                        size="large"
-                        component="span"
-                        aria-label="add"
-                        variant="extended"
-                        sx={{
-                          background: App_Second_Color,
-                        }}
-                      >
-                        <Upload />
-                      </Fab>
-                    </label>
+                    <UploadButton001 onChange={onImgChange} />
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item container xs="6">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.teamSection.chefContact[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.teamSection.chefContact[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
                   required
                   name="facebook"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textField}
                   label={dictionary.labels.facebook[lang]}
                   dir="ltr"
                   type="url"
@@ -219,7 +187,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   color="warning"
                   required
                   name="twitter"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textField}
                   label={dictionary.labels.twitter[lang]}
                   dir="ltr"
                   type="url"
@@ -233,7 +201,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   color="warning"
                   required
                   name="instagram"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textField}
                   label={dictionary.labels.instagram[lang]}
                   dir="ltr"
                   type="url"
@@ -245,24 +213,17 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.teamSection.chefName[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.teamSection.chefName[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
                   required
                   name="nameEng"
-                  sx={{ textTransform: "capitalize" }}
+                  sx={styles.textField}
                   label={dictionary.labels.nameEng[lang]}
                   dir="ltr"
                   type="text"
@@ -278,7 +239,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   required
                   dir="rtl"
                   name="nameArb"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   label={dictionary.labels.nameArb[lang]}
                   type="text"
                   fullWidth
@@ -290,24 +251,17 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-              <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.teamSection.chefSpecialization[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.teamSection.chefSpecialization[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
                   required
                   name="specializationEng"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   label={dictionary.labels.specializationEng[lang]}
                   dir="ltr"
                   type="text"
@@ -324,7 +278,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   required
                   dir="rtl"
                   name="specializationArb"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   label={dictionary.labels.specializationArb[lang]}
                   type="text"
                   fullWidth
@@ -337,7 +291,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}

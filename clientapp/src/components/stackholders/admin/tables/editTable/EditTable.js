@@ -1,3 +1,4 @@
+import React from "react";
 import { Close } from "@mui/icons-material";
 import {
   Dialog,
@@ -6,18 +7,26 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import { generateRandomID } from "appHelper/appFunctions";
-import { createOrder } from "appHelper/fetchapi/tblOrder/tblOrder";
-import { reserveTable } from "appHelper/fetchapi/tblReservation/tblReservation";
+import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import { AppContext } from "contextapi/context/AppContext";
-import moment from "moment";
-import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { ctrlTables } from "../controller/CtrlTables";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+
+const styles = {
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  dialogActions: {
+    py: "0",
+  },
+};
 
 function EditTable({
   open,
@@ -30,13 +39,20 @@ function EditTable({
   lang,
   dir,
 }) {
-  const { appState, appDispatch } = useContext(AppContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log({ table });
-  }, [table]);
-
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    ctrlTables.updateTable({
+      bigTableID: table.bigTableID,
+      formData: formJson,
+      isLoading: isLoading,
+      setIsLoading: setIsLoading,
+      tables: tables,
+      setTables: setTables,
+    });
+    handleClose();
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -44,42 +60,20 @@ function EditTable({
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: async (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            // const { seatsNum, pricePerHour } = formJson;
-            ctrlTables.updateTable({
-              bigTableID: table.bigTableID,
-              formData: formJson,
-              isLoading:isLoading,
-              setIsLoading:setIsLoading,
-              tables:tables,
-              setTables:setTables
-            });
-            handleClose();
-          },
+          onSubmit: handelSubmit,
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+            <Close sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
-                  }}
-                >
-                  Edit Table Info
-                </Typography>
+                <Title0001 title={"Edit Table Info"} dir={dir} />
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
@@ -108,7 +102,7 @@ function EditTable({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}

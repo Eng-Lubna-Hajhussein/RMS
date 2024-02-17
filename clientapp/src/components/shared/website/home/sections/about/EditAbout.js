@@ -7,18 +7,13 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
 const styles = {
-  title: {
-    fontWeight: "600",
-    px: "3px",
-    textTransform: "capitalize",
-  },
   dialogTitle: {
     height: "fit-content",
   },
@@ -44,6 +39,24 @@ function EditAbout({
   dir,
   onSave,
 }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const { titleEng, titleArb, subtitleEng, subtitleArb } = formJson;
+    onSave({
+      ...jsnAboutSection,
+      jsnTitle: {
+        eng: titleEng,
+        arb: titleArb,
+      },
+      jsnSubtitle: {
+        eng: subtitleEng,
+        arb: subtitleArb,
+      },
+    });
+    handleEditClose();
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -51,24 +64,7 @@ function EditAbout({
         onClose={handleEditClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const { titleEng, titleArb, subtitleEng, subtitleArb } = formJson;
-            onSave({
-              ...jsnAboutSection,
-              jsnTitle: {
-                eng: titleEng,
-                arb: titleArb,
-              },
-              jsnSubtitle: {
-                eng: subtitleEng,
-                arb: subtitleArb,
-              },
-            });
-            handleEditClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
@@ -81,17 +77,7 @@ function EditAbout({
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editAboutSection.title[lang]}
-                </Typography>
+                <Title0001 title={dictionary.editAboutSection.title[lang]} dir={dir} />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
@@ -127,17 +113,7 @@ function EditAbout({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editAboutSection.subtitle[lang]}
-                </Typography>
+                <Title0001 title={dictionary.editAboutSection.subtitle[lang]} dir={dir} />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField

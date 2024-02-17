@@ -64,6 +64,18 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
     { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "تعديل" } },
   ];
 
+  const socials = [
+    {
+      icon:<FacebookSharp />,link:''
+    },
+    {
+      icon:<Twitter />,link:''
+    },
+    {
+      icon: <Instagram />,link:''
+    },
+  ]
+
   return (
     <>
       {editable && (
@@ -128,6 +140,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
               <Typography sx={styles.name}>{item.jsnName[lang]}</Typography>
             </Grid>
             <Grid item xs="12" container justifyContent={"center"}>
+              {socials.map(({icon,link},index)=>(
               <Grid item xs="3" container justifyContent={"center"}>
                 <Box sx={styles.social}>
                   <Grid
@@ -138,38 +151,11 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
                     alignContent={"center"}
                     sx={styles.fullHeight}
                   >
-                    <FacebookSharp />
+                    {icon}
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs="3" container justifyContent={"center"}>
-                <Box sx={styles.social}>
-                  <Grid
-                    container
-                    item
-                    xs="12"
-                    justifyContent={"center"}
-                    alignContent={"center"}
-                    sx={styles.fullHeight}
-                  >
-                    <Twitter />
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid item xs="3" container justifyContent={"center"}>
-                <Box sx={styles.social}>
-                  <Grid
-                    container
-                    item
-                    xs="12"
-                    justifyContent={"center"}
-                    alignContent={"center"}
-                    sx={styles.fullHeight}
-                  >
-                    <Instagram />
-                  </Grid>
-                </Box>
-              </Grid>
+              ))}
             </Grid>
           </Grid>
         </Box>

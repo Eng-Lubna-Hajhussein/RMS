@@ -6,11 +6,11 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
 const styles = {
   title: {
@@ -77,15 +77,7 @@ function EditUpperToolbar({
         <Grid container py={1} justifyContent={"center"}>
           <Grid item container xs="12">
             <Grid item xs="12" p={1}>
-              <Typography
-                sx={{
-                  ...styles.title,
-                  borderLeft: dir === "ltr" && `5px solid ${App_Second_Color}`,
-                  borderRight: dir === "rtl" && `5px solid ${App_Second_Color}`,
-                }}
-              >
-                {dictionary.editUpperHeaderSection.title[lang]}
-              </Typography>
+              <Title0001 title={dictionary.editUpperHeaderSection.title[lang]} dir={dir} />
             </Grid>
             <Grid item xs="6" p={1}>
               <TextField
@@ -118,15 +110,7 @@ function EditUpperToolbar({
           </Grid>
           <Grid item container xs="12">
             <Grid item xs="12" p={1}>
-              <Typography
-                sx={{
-                  ...styles.title,
-                  borderLeft: dir === "ltr" && `5px solid ${App_Second_Color}`,
-                  borderRight: dir === "rtl" && `5px solid ${App_Second_Color}`,
-                }}
-              >
-                {dictionary.editUpperHeaderSection.subtitle[lang]}
-              </Typography>
+              <Title0001 title={dictionary.editUpperHeaderSection.subtitle[lang]} dir={dir} />
             </Grid>
             <Grid item xs="12" p={1}>
               <TextField

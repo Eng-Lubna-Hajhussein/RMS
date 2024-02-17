@@ -1,33 +1,44 @@
 import { Close } from "@mui/icons-material";
-import { Dialog, DialogContent, DialogTitle, Grid, Typography } from "@mui/material";
-import { App_Second_Color } from "appHelper/appColor";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
 import { App_Localhost_Client_Url } from "appHelper/appVariables";
 import CopyToClipboardButton from "components/sharedUI/CopyToClipboardButton/CopyToClipboardButton";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 import { AppContext } from "contextapi/context/AppContext";
 import { useContext } from "react";
 
-function SharedLink({open,handleClose}) {
+const styles = {
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+};
+
+function SharedLink({ open, handleClose }) {
   const { appState } = useContext(AppContext);
+  const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-        <DialogTitle sx={{ height: "fit-content" }}>
-          <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
-          </Grid>
-        </DialogTitle>
-      <DialogContent >
+      <DialogTitle sx={styles.dialogTitle}>
+        <Grid container justifyContent={"end"}>
+          <Close sx={styles.closeIcon} onClick={handleClose} />
+        </Grid>
+      </DialogTitle>
+      <DialogContent>
         <Grid container py={1}>
-        <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
-                  }}
-                >
-                  Share Your Restaurant Website Link:
-                </Typography>
-              </Grid>
+          <Grid item xs="12" p={1}>
+            <Title0001
+              title={"Share Your Restaurant Website Link:"}
+              dir={dir}
+            />
+          </Grid>
           <Grid item xs="12" p={1}>
             <CopyToClipboardButton
               label="Your Restaurant Link"

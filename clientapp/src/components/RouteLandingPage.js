@@ -11,10 +11,8 @@ import {
 } from "appHelper/appVariables";
 import {
   findSystem,
-  updateSystem,
 } from "appHelper/fetchapi/tblSystem/tblSystem";
 import {
-  bulkCategories,
   findCategories,
 } from "appHelper/fetchapi/tblCategory/tblCategory";
 import { Typography } from "@mui/material";
@@ -104,27 +102,6 @@ function RouteLandingPage({ isDemo }) {
     setSystemInfo(JSON.parse(JSON.stringify(appState.systemInfo)));
   }, [appState, appState.systemInfo]);
 
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    { bigNavID: 3234146150, nav: { eng: "dashboard", arb: "داشبورد" } },
-    { bigNavID: 4324146478, nav: { eng: "orders", arb: "الطلبات" } },
-    { bigNavID: 5674146478, nav: { eng: "reservations", arb: "الحجوزات" } },
-    { bigNavID: 9864146478, nav: { eng: "messages", arb: "الرسائل" } },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
-
-  const onLogout = () => {
-    console.log("logout");
-  };
-  const userNavList = [
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    {
-      bigNavID: 1166046478,
-      nav: { eng: "logout", arb: "تسجيل الخروج" },
-      onClick: onLogout,
-    },
-  ];
-
   return (
     <React.Fragment>
       {isLoading && <Typography>loading</Typography>}
@@ -138,14 +115,15 @@ function RouteLandingPage({ isDemo }) {
           customerEditMode={false}
           navList={lstWebsiteNav}
           systemID={systemID}
+          websiteLogo={
+            isDemo?Demo_jsnSystemInfo.strLogoPath:systemInfo.strLogoPath
+          }
           systemPath={systemInfo?.strSystemPathURL}
-          ws={systemInfo?.bigWSCategoryID}
-          adminNavList={adminNavList}
+          ws={isDemo?Demo_jsnSystemInfo.bigWSCategoryID:systemInfo?.bigWSCategoryID}
           lang={appState.clientInfo.strLanguage}
           userImg={appState?.userInfo?.strImgPath}
           userName={JSON.parse(JSON.stringify(appState?.userInfo?.jsnFullName))}
           blnUserLogin={appState?.clientInfo?.blnUserLogin}
-          userNavList={userNavList}
           dir={appState.clientInfo.strDir}
         />
       )}

@@ -75,6 +75,21 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
       setOption(options[0].key);
     }
   }, [options]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const tabOp = tabsOptions.find(({ key }) => key === option);
+    const bigID = generateRandomID(10);
+    const tab = {
+      bigID: bigID,
+      bigCategoryTypeID: objCategoriesType.Menu,
+      bigSystemID: systemID,
+      jsnName: tabOp?.jsnName,
+      jsnCategoryInfo: objTabsAssets[option],
+      bigParentID: 0,
+    };
+    onSave(tab);
+    handleClose();
+  }
   return (
     <React.Fragment>
       <Dialog
@@ -82,21 +97,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const tabOp = tabsOptions.find(({ key }) => key === option);
-            const bigID = generateRandomID(10);
-            const tab = {
-              bigID: bigID,
-              bigCategoryTypeID: objCategoriesType.Menu,
-              bigSystemID: systemID,
-              jsnName: tabOp?.jsnName,
-              jsnCategoryInfo: objTabsAssets[option],
-              bigParentID: 0,
-            };
-            onSave(tab);
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="sm"
         fullWidth

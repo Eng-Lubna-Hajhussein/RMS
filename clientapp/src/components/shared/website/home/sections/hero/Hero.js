@@ -15,6 +15,7 @@ function Hero({ lang, dir, lstHeroSlides, wsCategory, editable, onSaveHero }) {
             jsnSubtitle: slide.jsnSubtitle,
             strVideoPath: slide.strVideoPath,
             strImgPath: slide.strImgPath,
+            strBgAnimationType: slide?.strBgAnimationType,
             wsCategory: wsCategory,
             index: index,
           }}

@@ -113,10 +113,6 @@ function RouteAdmin() {
       },
     });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
   const onSaveOwner = (ownerSectionUpdated) => {
     setSystemInfo({
@@ -137,10 +133,6 @@ function RouteAdmin() {
       },
     });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
   const onSaveAbout = (aboutSectionUpdated) => {
     setSystemInfo({
@@ -151,38 +143,22 @@ function RouteAdmin() {
       },
     });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
   const addMenuCategory = (category) => {
     systemInfo.systemMenu.push(category);
     setSystemInfo({ ...systemInfo, systemMenu: [...systemInfo?.systemMenu] });
     isMenuUpdated.current=true;
-    // if (!saveMode.includes("tblCategory")) {
-    //   saveMode.push("tblCategory");
-    //   setSaveMode([...saveMode]);
-    // }
   };
   const deleteMenuCategory = (bigID) => {
     if (bigID === systemInfo.bigWSCategoryID) {
       systemInfo.bigWSCategoryID = null;
       isMenuUpdated.current=true;
-      // if (!saveMode.includes("tblSystem")) {
-      //   saveMode.push("tblSystem");
-      //   setSaveMode([...saveMode]);
-      // }
     }
     systemInfo.systemMenu = systemInfo.systemMenu.filter(
       (category) => category.bigID !== bigID
     );
     setSystemInfo({ ...systemInfo });
     isMenuUpdated.current=true;
-    // if (!saveMode.includes("tblCategory")) {
-    //   saveMode.push("tblCategory");
-    //   setSaveMode([...saveMode]);
-    // }
   };
   const editMenuCategory = (category) => {
     const categoryIndex = systemInfo.systemMenu.findIndex(
@@ -191,39 +167,23 @@ function RouteAdmin() {
     systemInfo.systemMenu[categoryIndex] = category;
     setSystemInfo({ ...systemInfo });
     isMenuUpdated.current=true;
-    // if (!saveMode.includes("tblCategory")) {
-    //   saveMode.push("tblCategory");
-    //   setSaveMode([...saveMode]);
-    // }
   };
   const addWS = (categoryID) => {
     systemInfo.bigWSCategoryID = categoryID;
     setSystemInfo({ ...systemInfo });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
 
   const removeWS = () => {
     systemInfo.bigWSCategoryID = null;
     setSystemInfo({ ...systemInfo });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
 
   const addChef = (chef) => {
     systemInfo.lstSystemTeam.push(chef);
     setSystemInfo({ ...systemInfo });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
 
   const editChef = (chef) => {
@@ -233,10 +193,6 @@ function RouteAdmin() {
     systemInfo.lstSystemTeam[chefIndex] = chef;
     setSystemInfo({ ...systemInfo });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
 
   const deleteChef = (bigID) => {
@@ -245,10 +201,6 @@ function RouteAdmin() {
     );
     setSystemInfo({ ...systemInfo });
     isSystemUpdated.current=true;
-    // if (!saveMode.includes("tblSystem")) {
-    //   saveMode.push("tblSystem");
-    //   setSaveMode([...saveMode]);
-    // }
   };
 
   const onSave = async () => {
@@ -430,6 +382,8 @@ function RouteAdmin() {
       <UploadLogo
         open={uploadLogoOpen}
         handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
       />
       <SharedLink
       open={sharedLinkOpen}

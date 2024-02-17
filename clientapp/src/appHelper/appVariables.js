@@ -743,3 +743,11 @@ export const fontList = [
   "Courier New",
   "cursive",
 ];
+
+export const bgAnimationTypes = [
+  "squareTriangleCircleCross",
+  "square",
+  "cross",
+  "circle",
+  "triangle",
+];

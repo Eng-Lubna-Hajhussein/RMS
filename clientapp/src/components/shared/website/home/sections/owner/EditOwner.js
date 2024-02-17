@@ -1,9 +1,5 @@
-import {
-  AnimationOutlined,
-  Close,
-  StyleOutlined,
-  Upload,
-} from "@mui/icons-material";
+import React from "react";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -11,29 +7,32 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
-  Box,
-  Fab,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import AnimationBG from "components/sharedUI/AnimationBG/AnimationBG";
-import TextEditor from "components/sharedUI/TextEditor/TextEditor";
-import useUpload from "hooks/useUpload/useUpload";
-import React, { useEffect, useState } from "react";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
 const styles = {
   title: {
     fontWeight: "600",
     px: "3px",
     textTransform: "capitalize",
+  },
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon: {
+    cursor: "pointer",
+  },
+  dialogContent: {
+    py: "0",
+  },
+  textField: {
+    textTransform: "capitalize",
+  },
+  dialogActions: {
+    py: "0",
   },
 };
 
@@ -45,18 +44,41 @@ function EditOwner({
   dir,
   onSave,
 }) {
-  const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
-
-  const onImgChange = (e) => {
-    setRequestFiles([...e.target.files]);
-    setUserData({ intTotalFiles: [...e.target.files].length });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const {
+      titleEng,
+      titleArb,
+      subtitleEng,
+      subtitleArb,
+      ownerSpecializationEng,
+      ownerSpecializationArb,
+      ownerCommentEng,
+      ownerCommentArb,
+    } = formJson;
+    onSave({
+      ...jsnOwnerSection,
+      jsnTitle: {
+        eng: titleEng,
+        arb: titleArb,
+      },
+      jsnSubtitle: {
+        eng: subtitleEng,
+        arb: subtitleArb,
+      },
+      jsnOwnerComment: {
+        eng: ownerCommentEng,
+        arb: ownerCommentArb,
+      },
+      jsnOwnerSpecialization: {
+        eng: ownerSpecializationEng,
+        arb: ownerSpecializationArb,
+      },
+    });
+    handleEditClose();
   };
-
-  useEffect(() => {
-    if (!!data && data[0]?.strFileFullPath) {
-    }
-  }, [data]);
-
   return (
     <React.Fragment>
       <Dialog
@@ -64,69 +86,28 @@ function EditOwner({
         onClose={handleEditClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const {
-              titleEng,
-              titleArb,
-              subtitleEng,
-              subtitleArb,
-              ownerSpecializationEng,
-              ownerSpecializationArb,
-              ownerCommentEng,
-              ownerCommentArb,
-            } = formJson;
-            onSave({
-              ...jsnOwnerSection,
-              jsnTitle: {
-                eng: titleEng,
-                arb: titleArb,
-              },
-              jsnSubtitle: {
-                eng: subtitleEng,
-                arb: subtitleArb,
-              },
-              jsnOwnerComment: {
-                eng: ownerCommentEng,
-                arb: ownerCommentArb,
-              },
-              jsnOwnerSpecialization: {
-                eng: ownerSpecializationEng,
-                arb: ownerSpecializationArb,
-              },
-            });
-            handleEditClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleEditClose} />
+            <Close sx={styles.closeIcon} onClick={handleEditClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editOwnerSection.title[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editOwnerSection.title[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   name="titleEng"
                   dir="ltr"
@@ -142,7 +123,7 @@ function EditOwner({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="rtl"
                   name="titleArb"
@@ -158,22 +139,15 @@ function EditOwner({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editOwnerSection.subtitle[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editOwnerSection.subtitle[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   name="subtitleEng"
                   dir="ltr"
@@ -189,7 +163,7 @@ function EditOwner({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="rtl"
                   name="subtitleArb"
@@ -205,22 +179,15 @@ function EditOwner({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editOwnerSection.ownerSpecialization[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editOwnerSection.ownerSpecialization[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="ltr"
                   name="ownerSpecializationEng"
@@ -236,7 +203,7 @@ function EditOwner({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="rtl"
                   name="ownerSpecializationArb"
@@ -252,22 +219,15 @@ function EditOwner({
             </Grid>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    ...styles.title,
-                    borderLeft:
-                      dir === "ltr" && `5px solid ${App_Second_Color}`,
-                    borderRight:
-                      dir === "rtl" && `5px solid ${App_Second_Color}`,
-                  }}
-                >
-                  {dictionary.editOwnerSection.ownerComment[lang]}
-                </Typography>
+                <Title0001
+                  title={dictionary.editOwnerSection.ownerComment[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   name="ownerCommentEng"
                   dir="ltr"
@@ -283,7 +243,7 @@ function EditOwner({
               <Grid item xs="6" p={1}>
                 <TextField
                   color="warning"
-                  sx={{textTransform:"capitalize"}}
+                  sx={styles.textField}
                   required
                   dir="rtl"
                   name="ownerCommentArb"
@@ -299,7 +259,7 @@ function EditOwner({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}
