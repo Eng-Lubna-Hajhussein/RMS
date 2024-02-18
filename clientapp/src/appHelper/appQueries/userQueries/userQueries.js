@@ -182,3 +182,16 @@ export const findUsersQuery = (bigSystemID) => {
       }
     }`;
 };
+
+export const findUserPublicQuery= (bigUserID)=>{
+  return `query{
+    findUser(bigUserID:${bigUserID}){
+      bigUserID
+      bigUserRoleID
+      strImgPath
+      jsnFullName
+      jsnLocation
+      jsnAddress
+    }
+  }`
+}

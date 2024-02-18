@@ -13,7 +13,7 @@ import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/OptionList/OptionList";
 import { MoreVert } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import Checkout from "../checkout/Checkout";
+import Checkout from "./checkout/Checkout";
 import { useParams } from "react-router-dom";
 
 const styles = {

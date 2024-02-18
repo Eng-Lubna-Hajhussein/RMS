@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
+import { AppContext } from "contextapi/context/AppContext";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {
@@ -11,7 +13,8 @@ import {
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import arrowImg from "assets/image/arrow-2.png";
 
 const styles = {
   reviewBox: {
@@ -20,11 +23,11 @@ const styles = {
     border: `3px solid ${App_Second_Color}`,
     borderRadius: "10px",
   },
-  fitContentHeight: {
-    height: "fit-content",
-  },
   fullHeight: {
     height: "100%",
+  },
+  heightFitContent: {
+    height: "fit-content",
   },
   username: {
     fontSize: "14px",
@@ -60,11 +63,17 @@ const styles = {
   },
 };
 
-function SystemReviews({ reviews, lang, dir }) {
+function ProductReviews({ product, lang, dir }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - reviews.length) : 0;
+    page > 0
+      ? Math.max(
+          0,
+          (1 + page) * rowsPerPage -
+            product?.jsnCategoryInfo?.lstReviews?.length
+        )
+      : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -77,8 +86,11 @@ function SystemReviews({ reviews, lang, dir }) {
   return (
     <Grid item xs="12" container>
       {(rowsPerPage > 0
-        ? reviews.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        : reviews
+        ? product?.jsnCategoryInfo?.lstReviews?.slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage
+          )
+        : product?.jsnCategoryInfo?.lstReviews
       )?.map((review, index) => (
         <Grid item xs="12" container py={1}>
           <Box sx={styles.reviewBox}>
@@ -87,11 +99,11 @@ function SystemReviews({ reviews, lang, dir }) {
                 <Grid item xs="8">
                   <Grid
                     container
-                    sx={styles.fitContentHeight}
+                    sx={styles.heightFitContent}
                     alignItems={"center"}
                     alignContent={"center"}
                   >
-                    <Grid item xs={1} sx={styles.fitContentHeight}>
+                    <Grid item xs={1} sx={styles.heightFitContent}>
                       <Avatar
                         src={review?.strImgPath}
                         height="50px"
@@ -134,11 +146,11 @@ function SystemReviews({ reviews, lang, dir }) {
           <TableCell colSpan={6} />
         </TableRow>
       )}
-      {!!reviews.length && (
+      {!!product?.jsnCategoryInfo?.lstReviews?.length && (
         <Grid item xs="12" container justifyContent={"center"}>
           <TablePagination
             rowsPerPageOptions={[3, 5, 10, 25]}
-            count={reviews.length}
+            count={product?.jsnCategoryInfo?.lstReviews?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             SelectProps={{
@@ -166,4 +178,4 @@ function SystemReviews({ reviews, lang, dir }) {
   );
 }
 
-export default SystemReviews;
+export default ProductReviews;

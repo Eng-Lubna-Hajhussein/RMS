@@ -16,6 +16,13 @@ module.exports = {
       throw err;
     }
   },
+  findUser: async (_, { bigUserID }) => {
+    try {
+      return await tblUser.findOne({ where: { bigUserID: bigUserID } });
+    } catch (err) {
+      throw err;
+    }
+  },
   login: async (_, user) => {
     try {
       const loggedUser = await tblUser.findOne({

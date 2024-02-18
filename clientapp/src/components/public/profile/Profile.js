@@ -6,11 +6,11 @@ import { Grid, Typography } from "@mui/material";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlProfile } from "./controller/CtrlProfile";
+import { ctrlRouteCustomer } from "components/stackholders/customer/controller/CtrlRouteCustomer";
+import { Demo_jsnSystemInfo, lstWebsiteNav, objRoleID } from "appHelper/appVariables";
 import Activities from "./activities/Activities";
-import Location from "./location/Location";
 import PersonalInfo from "./personalInfo/PersonalInfo";
-import UploadPicture from "components/shared/uploadPicture/UploadPicture";
-import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
+import Location from "./location/Location";
 
 const styles = {
   container: {
@@ -24,15 +24,49 @@ const styles = {
 function Profile() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
-  const { systemID, systemName } = useParams();
+  const { systemID, systemName ,userID} = useParams();
   const [uploadPictureOpen, setUploadPicture] = useState(false);
   const navigate = useNavigate();
+  const [userInfo,setUserInfo] = useState();
   const [orders, setOrders] = useState([]);
   const [tables, setTables] = useState([]);
+  const loggedIn = appState?.clientInfo?.blnUserLogin;
+  const isAdmin = appState?.userInfo?.bigUserRoleID === objRoleID.Admin;
+  const isCustomer = appState?.userInfo?.bigUserRoleID === objRoleID.Customer;
 
+  
   const handleUploadPictureOpen = () => {
     setUploadPicture(true);
   };
+
+  const userNavList = useMemo(()=>{
+    if(isAdmin){
+      
+    }
+    if(isCustomer){
+      return ctrlRouteCustomer.generateUserNavList({
+        appState:appState,
+        appDispatch:appDispatch,
+        systemName:systemName,
+        systemID:systemID,
+        handleUploadPictureOpen:handleUploadPictureOpen
+      })
+    }
+    return null;
+  },[]);
+
+  const navList = useMemo(()=>{
+    if(isAdmin){
+      
+    }
+    if(isCustomer){
+      return ctrlRouteCustomer.generateWebsiteNavList({
+         systemID:systemID,
+         systemName:systemName
+      })
+    }
+    return lstWebsiteNav;
+  },[])
 
   useEffect(() => {
     if (!appState.clientInfo.blnUserLogin) {
@@ -46,6 +80,9 @@ function Profile() {
       setIsLoading: setIsLoading,
       setOrders: setOrders,
       setTables: setTables,
+      setUserInfo:setUserInfo,
+      bigUserID:Number(userID),
+      bigSystemID:Number(systemID)
     });
   }, []);
 
@@ -96,17 +133,17 @@ function Profile() {
     },
   ];
 
-  const userNavList = ctrlRouteCustomer.generateUserNavList({
-    appState: appState,
-    appDispatch: appDispatch,
-    handleUploadPictureOpen: handleUploadPictureOpen,
-    systemID: systemID,
-    systemName: systemName,
-  });
-  const navList = ctrlRouteCustomer.generateWebsiteNavList({
-    systemID: systemID,
-    systemName: systemName,
-  });
+  // const userNavList = ctrlRouteCustomer.generateUserNavList({
+  //   appState: appState,
+  //   appDispatch: appDispatch,
+  //   handleUploadPictureOpen: handleUploadPictureOpen,
+  //   systemID: systemID,
+  //   systemName: systemName,
+  // });
+  // const navList = ctrlRouteCustomer.generateWebsiteNavList({
+  //   systemID: systemID,
+  //   systemName: systemName,
+  // });
   const [isLoading, setIsLoading] = useState(false);
   return (
     <React.Fragment>
@@ -133,16 +170,12 @@ function Profile() {
             xs="10"
             sx={styles.container}
           >
-            <PersonalInfo appState={appState} lang={lang} />
+            <PersonalInfo userInfo={userInfo} lang={lang} />
             <Activities activities={activities} />
-            <Location appState={appState} />
+            <Location userInfo={userInfo} />
           </Grid>
         </Grid>
       )}
-      <UploadPicture
-        open={uploadPictureOpen}
-        handleClose={() => setUploadPicture(false)}
-      />
     </React.Fragment>
   );
 }

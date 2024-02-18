@@ -30,6 +30,13 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: UserResolvers.findUsers,
     },
+    findUser: {
+      type: UserType,
+      args: {
+        bigUserID: { type: GraphQLBigInt },
+      },
+      resolve: UserResolvers.findUser,
+    },
     login: {
       type: UserType,
       args: {

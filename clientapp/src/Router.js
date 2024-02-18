@@ -23,6 +23,8 @@ import CustomerSettings from 'components/stackholders/customer/settings/Settings
 import CustomerProfile from "components/stackholders/customer/profile/Profile";
 import SystemReviews from 'components/stackholders/admin/reviews/Reviews';
 import DeliveryAddress from "components/stackholders/admin/deliveryAddress/DeliveryAddress";
+import Profile from "components/public/profile/Profile";
+import Product from "components/public/product/Product";
 
 function Router() {
   return (
@@ -30,6 +32,8 @@ function Router() {
       <Route path="/" element={<RouteLandingPage isDemo={true} />} />
       <Route path="/:systemName/:systemID" element={<RouteLandingPage />} />
       <Route path="/customer/product/:productID/:systemName/:systemID" element={<ProductReviewCustomer />} />
+      <Route path="/profile/:userID/:systemName/:systemID" element={<Profile />} />
+      <Route path="/product/:productID/:systemName/:systemID" element={<Product />} />
       <Route path="/signup/:systemName/:systemID" element={<Signup />} />
       <Route path="/login/:systemName/:systemID" element={<Login />} />
       <Route path="/admin/:systemName/:systemID" element={<RouteAdmin />} />
@@ -38,8 +42,6 @@ function Router() {
       <Route path="/admin/reviews/:systemName/:systemID" element={<SystemReviews />} />
       <Route path="/admin/deliveryAddress/:systemName/:systemID" element={<DeliveryAddress />} />
       <Route path="/admin/settings/:systemName/:systemID" element={<AdminSettings />} />
-      {/* <Route path="/admin/dashboard/:systemName/:systemID" element={<AdminSettings />} /> */}
-
       <Route path="/customer/:systemName/:systemID" element={<RouteCustomer />} />
       <Route path="/admin/dashboard/:systemName/:systemID" element={<SystemDashboard />} />
       <Route path="/admin/product/:productID/:systemName/:systemID" element={<SystemProductReviews />} />
