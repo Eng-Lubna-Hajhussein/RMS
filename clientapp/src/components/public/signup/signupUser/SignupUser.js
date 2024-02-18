@@ -59,7 +59,7 @@ const styles = {
 function SignupUser() {
   const { appState, appDispatch } = useContext(AppContext);
   const { mapLocation } = useMapLocation();
-  const { systemID, systemName } = useParams();
+  const { systemID } = useParams();
   const dir = appState.clientInfo.strDir;
   const [isLoading, setIsLoading] = useState(false);
   const [systems, setSystems] = useState([]);

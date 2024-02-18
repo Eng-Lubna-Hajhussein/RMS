@@ -85,7 +85,7 @@ export default function NavList({
           onClose={handleClose}
         >
           {navList.map(({ nav, onClick,path }, index) => (
-            <Link to={path}>
+            <Link to={path} key={index}>
               <MenuItem
                 onClick={() => {
                   if (onClick) {

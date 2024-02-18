@@ -74,18 +74,18 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
       alignContent={"flex-start"}
       alignItems={"flex-start"}
     >
-      <Grid item container lg="6" xs="12">
-        <Grid item xs="12">
+      <Grid item container lg={6} xs={12}>
+        <Grid item xs={12}>
           <Typography sx={styles.title}>
             {jsnTestimonialSection?.jsnTitle[lang]}
           </Typography>
         </Grid>
-        <Grid item xs="12">
+        <Grid item xs={12}>
           <Typography sx={styles.subtitle}>
             {jsnTestimonialSection?.jsnSubtitle[lang]}
           </Typography>
         </Grid>
-        <Grid item container pt={3} lg="10" xs="12">
+        <Grid item container pt={3} lg={10} xs={12}>
           <Carousel
             slides={slides}
             activeSlides={1}

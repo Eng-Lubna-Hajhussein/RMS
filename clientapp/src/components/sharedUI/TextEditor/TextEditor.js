@@ -274,7 +274,7 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
               mt={5}
               p={2}
             >
-              <Grid item xs="12">
+              <Grid item xs={12}>
                 <Typography
                   sx={{
                     ...objText.defaultStyle,

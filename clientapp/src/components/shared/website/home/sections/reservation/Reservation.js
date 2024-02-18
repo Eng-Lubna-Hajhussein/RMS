@@ -46,7 +46,7 @@ function Reservation({
             container
             justifyContent={"start"}
             sx={styles.editBox}
-            xs="12"
+            xs={12}
           >
             <Button variant="text" onClick={handleEditOpen}>
               <Typography sx={styles.editNote}>
@@ -55,11 +55,11 @@ function Reservation({
             </Button>
           </Grid>
         )}
-        <Grid container item xs="12" sx={styles.containerItem}>
+        <Grid container item xs={12} sx={styles.containerItem}>
           {Array(3)
             .fill(1)
             .map((_, index) => (
-              <Grid item lg="4" sx={index % 2 !== 0 && styles.midCard} px={1}>
+              <Grid item lg={4} sx={index % 2 !== 0 && styles.midCard} px={1}>
                 <AnimCard0001
                   title={jsnReservation.jsnTitle[lang]}
                   description={jsnReservation.jsnDescription[lang]}

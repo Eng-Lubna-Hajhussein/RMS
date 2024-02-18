@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  Rating,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Rating, Typography } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import arrowImg from "assets/image/arrow-2.png";
 
@@ -40,7 +35,7 @@ const styles = {
     marginY: "50px",
   },
   box: {
-    height: "430px",
+    height: "310px",
     width: "100%",
     border: `4px solid ${App_Second_Color}`,
     borderRadius: "20px",
@@ -49,9 +44,9 @@ const styles = {
     height: "100%",
   },
   productImg: {
-    height: "300px",
+    height: "200px",
     width: "250px",
-    padding: "50px 30px",
+    padding: "40px 20px",
     background: App_Primary_Color,
     borderRadius: "20px",
     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;",
@@ -62,7 +57,7 @@ const styles = {
   },
   productDetailsBox: {
     background: "#f4fcfc",
-    height: "345px",
+    height: "230px",
     marginY: "50px",
     borderRadius: "20px",
     padding: "20px",
@@ -174,9 +169,6 @@ function ProductDetails({ product, lang, dir }) {
                   </Typography>
                 )}
               </Grid>
-            </Grid>
-            <Grid item xs="12" container p={2}>
-              <Box component={"img"} sx={styles.arrowImg} src={arrowImg} />
             </Grid>
           </Grid>
         </Grid>

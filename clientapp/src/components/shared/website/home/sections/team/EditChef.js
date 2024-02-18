@@ -121,8 +121,8 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             alignItems={"start"}
             sx={styles.heightFitContent}
           >
-            <Grid item xs="6" container>
-              <Grid item xs="12" p={1}>
+            <Grid item xs={6} container>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.teamSection.chefImg[lang]}
                   dir={dir}
@@ -130,7 +130,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
               </Grid>
               <Grid
                 item
-                xs="12"
+                xs={12}
                 p={1}
                 container
                 justifyContent={"center"}
@@ -139,7 +139,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                 <Grid
                   item
                   container
-                  xs="12"
+                  xs={12}
                   p={1}
                   justifyContent={"center"}
                   alignContent={"center"}
@@ -147,7 +147,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                 >
                   <Grid
                     item
-                    xs="8"
+                    xs={8}
                     container
                     justifyContent={"center"}
                     alignContent={"center"}
@@ -161,14 +161,14 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item container xs="6">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={6}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.teamSection.chefContact[lang]}
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs="12" p={1}>
+              <Grid item xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -182,7 +182,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="12" p={1}>
+              <Grid item xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -196,7 +196,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="12" p={1}>
+              <Grid item xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -211,14 +211,14 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                 />
               </Grid>
             </Grid>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.teamSection.chefName[lang]}
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -233,7 +233,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   multiline
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -249,14 +249,14 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                 />
               </Grid>
             </Grid>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.teamSection.chefSpecialization[lang]}
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -272,7 +272,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -299,7 +299,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="2">
+            <Grid item xs={2}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

@@ -77,11 +77,11 @@ export default function AnimCard0001({ title, description, bgImg, label }) {
         background: `url(${bgImg})`,
       }}
     >
-      <Grid item xs={"12"} sx={styles.frontCard} justify={"center"}>
+      <Grid item xs={12} sx={styles.frontCard} justify={"center"}>
         <Grid container alignItems={"flex-end"} sx={styles.fullHeight}>
           <Grid
             item
-            xs="12"
+            xs={12}
             sx={styles.frontBtn}
             container
             alignContent={"center"}
@@ -93,18 +93,18 @@ export default function AnimCard0001({ title, description, bgImg, label }) {
       </Grid>
       <Grid
         item
-        xs={"12"}
+        xs={12}
         container
         justifyItems={"center"}
         className="back-card"
       >
-        <Grid item xs={"12"}>
+        <Grid item xs={12}>
           <Typography sx={styles.title}>{title}</Typography>
         </Grid>
-        <Grid item xs={"12"}>
+        <Grid item xs={12}>
           <Typography sx={styles.description}>{description}</Typography>
         </Grid>
-        <Grid item xs="12">
+        <Grid item xs={12}>
           <Button variant="contained" sx={styles.btn}>
             <Typography sx={styles.label}>{label}</Typography>
           </Button>

@@ -57,10 +57,10 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
         subheader={
           <ListSubheader component="div" sx={styles.listSubheader}>
             <Grid container>
-              <Grid item xs="8">
+              <Grid item xs={8}>
                 <Box component={"img"} sx={styles.logo} src={logoIcon} />
               </Grid>
-              <Grid item xs="4" container justifyContent={"end"}>
+              <Grid item xs={4} container justifyContent={"end"}>
                 <Close fontSize="large" onClick={() => setOpenDrawer(false)} />
               </Grid>
             </Grid>
@@ -68,8 +68,8 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
         }
         sx={styles.list}
       >
-        {lstWebsiteNav.map(({ bigNavID, nav, navList }) => (
-          <>
+        {lstWebsiteNav.map(({ bigNavID, nav, navList },index) => (
+          <React.Fragment key={index}>
             {!navList?.length && (
               <ListItem button>
                 <ListItemText
@@ -109,8 +109,8 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
                   timeout="auto"
                   unmountOnExit
                 >
-                  {navList?.map(({ nav }) => (
-                    <List component="div" disablePadding>
+                  {navList?.map(({ nav },index) => (
+                    <List component="div" key={index} disablePadding>
                       <ListItem button>
                         <ListItemText
                           primary={
@@ -125,7 +125,7 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
                 </Collapse>
               </>
             )}
-          </>
+          </React.Fragment>
         ))}
         <ListItem button sx={styles.paddingY40}>
           <Typography className="animated-btn-001">

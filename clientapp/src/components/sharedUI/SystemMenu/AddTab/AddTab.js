@@ -111,8 +111,8 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}></Grid>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1} container>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1} container>
                 <FormControl fullWidth>
                   <InputLabel sx={styles.inputLabel}>
                     {dictionary.menuSection.menuCategory[lang]}
@@ -135,11 +135,11 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             </Grid>
           </Grid>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="6" p={1} container>
+            <Grid item container xs={12}>
+              <Grid item xs={6} p={1} container>
                 <Grid
                   item
-                  xs="12"
+                  xs={12}
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
@@ -154,10 +154,10 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs="6" p={1} container>
+              <Grid item xs={6} p={1} container>
                 <Grid
                   item
-                  xs="12"
+                  xs={12}
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
@@ -182,7 +182,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="4">
+            <Grid item xs={4}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

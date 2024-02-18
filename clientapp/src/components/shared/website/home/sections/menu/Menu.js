@@ -45,13 +45,13 @@ function Menu({
 }) {
   return (
     <Grid container sx={styles.container}>
-      <Grid item lg="12" mb={4} container justifyContent={"center"}>
-        <Grid item lg="12" container justifyContent={"center"}>
+      <Grid item lg={12} mb={4} container justifyContent={"center"}>
+        <Grid item lg={12} container justifyContent={"center"}>
           <Typography sx={styles.mainTitle}>
             {dictionary.menuSection.title[lang]}
           </Typography>
         </Grid>
-        <Grid item lg="3" xs={"6"} sx={styles.line} />
+        <Grid item lg={3} xs={6} sx={styles.line} />
       </Grid>
         <SystemMenu
           categories={categories}

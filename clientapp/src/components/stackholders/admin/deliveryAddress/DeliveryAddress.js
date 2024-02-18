@@ -1,12 +1,8 @@
-import {
-  Box,
-  Grid,
-  Typography,
-} from "@mui/material";
+import React, { useContext, useMemo, useRef, useState } from "react";
+import { Box, Grid, Typography } from "@mui/material";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import arrowImg from "assets/image/arrow-2.png";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
@@ -28,11 +24,11 @@ const styles = {
     marginY: "5px",
   },
   itemContainer: {
-    background: "#f4fcfc",
-    height: "140px",
-    marginY: "50px",
+    height: "fit-content",
+    marginY: "5px",
     borderRadius: "20px",
     padding: "20px",
+    marginBottom:"70px"
   },
   title: {
     textTransform: "uppercase",
@@ -294,23 +290,10 @@ function DeliveryAddress() {
               sx={styles.itemContainer}
             >
               <Grid container>
-                <Grid item container xs="7" justifyContent={"start"}>
-                  <Grid item xs="12">
-                    <Typography sx={styles.title}>
+                <Grid item container xs="12" justifyContent={"center"}>
+                <Typography sx={styles.title}>
                       Restaurant Delivery Address !
                     </Typography>
-                  </Grid>
-                </Grid>
-                <Grid item container xs="2" justifyContent={"start"} py={3}>
-                  <AnimationBox
-                    animationMode="reverse"
-                    easing={"ease-in"}
-                    forceTrigger={true}
-                    type="fadeOut"
-                    trigger="manual"
-                  >
-                    <Box component={"img"} sx={styles.rowImg} src={arrowImg} />
-                  </AnimationBox>
                 </Grid>
               </Grid>
             </Grid>

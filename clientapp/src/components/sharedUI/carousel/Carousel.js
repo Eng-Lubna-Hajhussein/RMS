@@ -42,17 +42,18 @@ export const Carousel = ({
 
   return (
     <Grid container mx={0} className="carousel-container">
-      <Grid item container xs="12">
+      <Grid item container xs={12}>
         {slides.map((slide, index) => {
           return (
             <div
               className={activeSlide === index ? "slide" : "slide slide-hidden"}
+              key={index}
             >
               <AnimationBG type={slide?.bgAnimation || "none"}>
                 <Grid
                   container
                   item
-                  xs="12"
+                  xs={12}
                   sx={{
                     ...slide.sxStyle,
                     ":before": slide?.image && {
@@ -65,15 +66,15 @@ export const Carousel = ({
                   {activeSlides === 1 && slide?.slideContent}
                   {activeSlides === 2 && index === 0 && (
                     <>
-                      <Grid item container xs={"12"} lg="6">
+                      <Grid item container xs={12} lg={6}>
                         {slide?.slideContent}
                       </Grid>
                       {slides[index + 1] && (
                         <Grid
                           item
                           container
-                          xs={"12"}
-                          lg="6"
+                          xs={12}
+                          lg={6}
                           sx={styles.lgDisplay}
                         >
                           {slides[index + 1]?.slideContent}
@@ -84,12 +85,12 @@ export const Carousel = ({
                   {activeSlides === 2 && index !== 0 && (
                     <>
                       {slides[index * activeSlides]?.slideContent && (
-                        <Grid item lg="6" sx={styles.lgDisplay}>
+                        <Grid item lg={6} sx={styles.lgDisplay}>
                           {slides[index * activeSlides]?.slideContent}
                         </Grid>
                       )}
                       {slides[index * activeSlides + 1]?.slideContent && (
-                        <Grid item lg="6" sx={styles.lgDisplay}>
+                        <Grid item lg={6} sx={styles.lgDisplay}>
                           {slides[index * activeSlides + 1]?.slideContent}
                         </Grid>
                       )}
@@ -97,15 +98,15 @@ export const Carousel = ({
                   )}
                   {activeSlides === 3 && index === 0 && (
                     <>
-                      <Grid item container xs={"12"} lg="4">
+                      <Grid item container xs={12} lg={4}>
                         {slide?.slideContent}
                       </Grid>
                       {slides[index + 1] && (
                         <Grid
                           item
                           container
-                          xs={"12"}
-                          lg="4"
+                          xs={12}
+                          lg={4}
                           sx={styles.lgDisplay}
                         >
                           {slides[index + 1]?.slideContent}
@@ -115,8 +116,8 @@ export const Carousel = ({
                         <Grid
                           item
                           container
-                          xs={"12"}
-                          lg="4"
+                          xs={12}
+                          lg={4}
                           sx={styles.lgDisplay}
                         >
                           {slides[index + 2]?.slideContent}
@@ -127,17 +128,17 @@ export const Carousel = ({
                   {activeSlides === 3 && index !== 0 && (
                     <>
                       {slides[index * activeSlides]?.slideContent && (
-                        <Grid item xs={"4"} lg="4" sx={styles.lgDisplay}>
+                        <Grid item xs={4} lg={4} sx={styles.lgDisplay}>
                           {slides[index * activeSlides]?.slideContent}
                         </Grid>
                       )}
                       {slides[index * activeSlides + 1]?.slideContent && (
-                        <Grid item xs={"4"} lg="4" sx={styles.lgDisplay}>
+                        <Grid item xs={4} lg={4} sx={styles.lgDisplay}>
                           {slides[index * activeSlides + 1]?.slideContent}
                         </Grid>
                       )}
                       {slides[index * activeSlides + 2]?.slideContent && (
-                        <Grid item xs={"4"} lg="4" sx={styles.lgDisplay}>
+                        <Grid item xs={4} lg={4} sx={styles.lgDisplay}>
                           {index === 0
                             ? slides[index + 2]?.slideContent
                             : slides[index * activeSlides + 2]?.slideContent}
@@ -155,7 +156,7 @@ export const Carousel = ({
         <Grid
           item
           container
-          xs="12"
+          xs={12}
           justifyContent={justify}
           display={styles.lg}
           sx={inset && styles.insetIndicators}
@@ -188,7 +189,7 @@ export const Carousel = ({
         <Grid
           item
           container
-          xs="12"
+          xs={12}
           justifyContent={justify}
           display={{ lg: "none", xs: "flex" }}
           sx={inset && styles.insetIndicators}

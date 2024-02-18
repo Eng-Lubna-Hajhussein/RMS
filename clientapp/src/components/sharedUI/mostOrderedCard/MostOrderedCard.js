@@ -57,14 +57,14 @@ const styles = {
 function MostOrderedCard({ item, lang, dir }) {
   return (
     <Grid container item>
-      <Grid item xs="12" container px={2}>
+      <Grid item xs={12} container px={2}>
         <Paper sx={styles.paper}>
           <Grid container item sx={styles.fullHeight} alignItems={"flex-start"}>
             <Grid item xs={7} container>
-              <Grid item lg="12">
+              <Grid item lg={12}>
                 <Typography sx={styles.title}>{item?.jsnName[lang]}</Typography>
               </Grid>
-              <Grid item lg={"12"}>
+              <Grid item lg={12}>
                 <Typography sx={styles.subtitle}>
                   {item?.jsnCategoryInfo?.jsnDescription[lang]}
                 </Typography>
@@ -75,7 +75,7 @@ function MostOrderedCard({ item, lang, dir }) {
               container
               sx={styles.fullHeight}
               alignContent={"center"}
-              xs={"5"}
+              xs={5}
             >
               <Box
                 src={item?.jsnCategoryInfo?.strImgPath}
@@ -88,7 +88,7 @@ function MostOrderedCard({ item, lang, dir }) {
         </Paper>
         <Grid
           item
-          lg="12"
+          lg={12}
           sx={{
             ...styles.crossBoxGrid,
             marginLeft: dir === "ltr" && "30px",
@@ -107,9 +107,9 @@ function MostOrderedCard({ item, lang, dir }) {
               alignItems={"center"}
               alignSelf={"center"}
             >
-              <Grid item xs={"12"}>
+              <Grid item xs={12}>
                 <Grid container>
-                  <Grid item lg="12" container justifyContent={"center"} px={1}>
+                  <Grid item lg={12} container justifyContent={"center"} px={1}>
                     <Typography
                       sx={{
                         ...styles.price,
@@ -132,7 +132,7 @@ function MostOrderedCard({ item, lang, dir }) {
                     </Typography>
                   </Grid>
                   {item?.jsnCategoryInfo?.blnOnSale && (
-                    <Grid item lg="12" container justifyContent={"center"}>
+                    <Grid item lg={12} container justifyContent={"center"}>
                       <Typography
                         component={"caption"}
                         sx={{ ...styles.price }}
@@ -141,7 +141,7 @@ function MostOrderedCard({ item, lang, dir }) {
                       </Typography>
                     </Grid>
                   )}
-                  <Grid item lg={"12"} container justifyContent={"center"}>
+                  <Grid item lg={12} container justifyContent={"center"}>
                     <Typography sx={styles.perPerson}>
                       {dictionary.typography.perPerson[lang]}
                     </Typography>

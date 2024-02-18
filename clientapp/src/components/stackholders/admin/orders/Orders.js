@@ -15,7 +15,7 @@ import OrdersTable from "./ordersTable/OrdersTable";
 
 const styles = {
   container: {
-    marginY: "5px",
+    marginY: "50px",
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -100,9 +100,6 @@ const styles = {
     color: "#fff",
     textTransform: "capitalize",
     fontWeight: "700",
-  },
-  tableContainer: {
-    marginBottom: "50px",
   },
 };
 
@@ -192,7 +189,7 @@ function Orders() {
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item xs="10" container>
-            <Grid
+            {/* <Grid
               item
               xs="12"
               px={1}
@@ -229,7 +226,7 @@ function Orders() {
                   </AnimationBox>
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid> */}
             <Grid item xs="12" px={1} container sx={styles.tableContainer}>
               <OrdersTable orders={orders} lang={lang} dir={dir} />
             </Grid>

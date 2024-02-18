@@ -42,13 +42,13 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
       justifyContent={"center"}
       sx={styles.container}
     >
-      <Grid item lg="12" mb={4} container justifyContent={"center"}>
-        <Grid item lg="12" container justifyContent={"center"}>
+      <Grid item lg={12} mb={4} container justifyContent={"center"}>
+        <Grid item lg={12} container justifyContent={"center"}>
           <Typography sx={styles.mainTitle}>{dictionary.mostOrderedSection.title[lang]}</Typography>
         </Grid>
-        <Grid item lg="3" xs={"6"} sx={styles.line} />
+        <Grid item lg={3} xs={6} sx={styles.line} />
       </Grid>
-      <Grid item container lg={"12"} xs={"12"}>
+      <Grid item container lg={12} xs={12}>
         <Carousel
           slides={slides}
           activeSlides={2}

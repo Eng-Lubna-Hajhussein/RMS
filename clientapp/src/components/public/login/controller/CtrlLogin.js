@@ -41,6 +41,7 @@ export const ctrlLogin = {
             jsnFullName: JSON.parse(loggedUser.jsnFullName),
             strEmail: loggedUser.strEmail,
             jsnLocation: JSON.parse(loggedUser.jsnLocation),
+            strImgPath:loggedUser.strImgPath,
             blnIsDeleted:loggedUser.blnIsDeleted,
             blnIsActive:loggedUser.blnIsActive,
             dtmCreatedDate:loggedUser.dtmCreatedDate,

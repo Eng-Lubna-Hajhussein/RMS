@@ -66,7 +66,7 @@ function UploadPicture({ open, handleClose }) {
             ctrlUploadPicture.handelSubmit({
               appDispatch: appDispatch,
               appState: appState,
-              img:img
+              img: img,
             });
             handleClose();
           },
@@ -87,8 +87,8 @@ function UploadPicture({ open, handleClose }) {
             alignItems={"start"}
             sx={{ height: "fit-content" }}
           >
-            <Grid item xs="12" container justifyContent={"center"}>
-              <Grid item xs="12" py={2}>
+            <Grid item xs={12} container justifyContent={"center"}>
+              <Grid item xs={12} py={2}>
                 <Typography
                   sx={{
                     borderLeft: `5px solid ${App_Second_Color}`,
@@ -101,7 +101,7 @@ function UploadPicture({ open, handleClose }) {
               </Grid>
               <Grid
                 item
-                xs="12"
+                xs={12}
                 p={1}
                 container
                 justifyContent={"center"}
@@ -115,7 +115,7 @@ function UploadPicture({ open, handleClose }) {
               >
                 <Grid
                   item
-                  xs="12"
+                  xs={12}
                   container
                   justifyContent={"center"}
                   sx={{ position: "absolute", top: "40%", bottom: "60%" }}
@@ -143,7 +143,7 @@ function UploadPicture({ open, handleClose }) {
                     </Fab>
                   </label>
                 </Grid>
-                <Grid item xs="12" container justifyContent={"center"}>
+                <Grid item xs={12} container justifyContent={"center"}>
                   <Avatar src={img} sx={{ height: "200px", width: "200px" }} />
                 </Grid>
               </Grid>
@@ -158,7 +158,7 @@ function UploadPicture({ open, handleClose }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="4">
+            <Grid item xs={4}>
               <AnimButton0001
                 label={"save"}
                 color={App_Primary_Color}

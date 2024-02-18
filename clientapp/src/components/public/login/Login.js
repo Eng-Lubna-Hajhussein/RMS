@@ -4,7 +4,7 @@ import { Demo_jsnSystemInfo, lstWebsiteNav } from "appHelper/appVariables";
 import { AppContext } from "contextapi/context/AppContext";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { useForm } from "react-hook-form";
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField, Typography, Box } from "@mui/material";
 import { App_Second_Color } from "appHelper/appColor";
 import { ctrlLogin } from "./controller/CtrlLogin";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,13 +27,16 @@ const styles = {
     background: "#fff",
     borderRadius: "5px",
   },
+  logo: {
+    width: "150px",
+  },
 };
 
 function Login() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const navigate = useNavigate();
-  const { systemName } = useParams();
+  const { systemID } = useParams();
 
   const {
     register,
@@ -70,9 +73,18 @@ function Login() {
           sx={styles.itemContainer}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
+          {(systemID&&appState?.systemInfo?.strLogoPath) && (
+                <Grid item xs="12" container justifyContent={"center"}>
+                  <Box
+                    component={"img"}
+                    sx={styles.logo}
+                    src={appState?.systemInfo?.strLogoPath}
+                  />
+                </Grid>
+              )}
             <Grid item xs="12" pb={3} container justifyContent={"center"}>
               <Typography component={"h3"} sx={styles.title}>
-                {systemName} Login
+                Login
               </Typography>
             </Grid>
             <Grid item xs="12" container>

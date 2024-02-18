@@ -55,7 +55,7 @@ const AnimationEditor = ({
       <DialogContent sx={styles.dialogContent}>
         <div className="animation-editor-container">
           <Grid container py={1} justifyContent={"center"}>
-            <Grid container xs="12">
+            <Grid container xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Background Animation</InputLabel>
                 <Select
@@ -81,7 +81,7 @@ const AnimationEditor = ({
             </Grid>
             <Grid
               container
-              xs="12"
+              xs={12}
               sx={{
                 ...styles.viewBoxContainer,
                 background:
@@ -90,7 +90,7 @@ const AnimationEditor = ({
               mt={5}
               p={2}
             >
-              <Grid item xs="12">
+              <Grid item xs={12}>
                 <AnimationBox
                   animationMode="loop"
                   easing={"linear"}

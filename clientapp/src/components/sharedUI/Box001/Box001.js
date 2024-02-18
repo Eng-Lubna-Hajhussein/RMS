@@ -60,21 +60,21 @@ function Box001({title,description,img}){
       justifyContent={"center"}
       sx={styles.fullHeight}
     >
-      <Grid item xs="10">
+      <Grid item xs={10}>
         <Grid container>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography sx={styles.title}>
               {title}
             </Typography>
           </Grid>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography sx={styles.description}>
               {description}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs="2">
+      <Grid item xs={2}>
         <img src={img} style={styles.icon} />
       </Grid>
     </Grid>

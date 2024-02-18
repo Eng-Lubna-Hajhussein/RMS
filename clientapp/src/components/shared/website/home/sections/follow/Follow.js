@@ -48,15 +48,15 @@ export default function Follow({ lang }) {
         container
         alignContent={"center"}
         alignItems={"center"}
-        xs="12"
+        xs={12}
         sx={styles.containerItem}
       >
-        <Grid item xs="12" container justifyContent={"center"}>
+        <Grid item xs={12} container justifyContent={"center"}>
           <Box sx={styles.box}>
             <Grid
               container
               item
-              xs="12"
+              xs={12}
               sx={styles.fullHeight}
               justifyContent={"center"}
               alignContent={"center"}
@@ -65,12 +65,12 @@ export default function Follow({ lang }) {
             </Grid>
           </Box>
         </Grid>
-        <Grid item xs="12" container justifyContent={"center"}>
+        <Grid item xs={12} container justifyContent={"center"}>
           <Typography sx={styles.title}>
             {dictionary.followSection.title[lang]}
           </Typography>
         </Grid>
-        <Grid item xs="12" container justifyContent={"center"}>
+        <Grid item xs={12} container justifyContent={"center"}>
           <Typography sx={styles.subTitle}>
             {dictionary.followSection.subtitle[lang]}
           </Typography>

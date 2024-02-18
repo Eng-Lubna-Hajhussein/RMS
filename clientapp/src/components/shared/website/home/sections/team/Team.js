@@ -83,18 +83,18 @@ export default function Team({
         alignContent={"start"}
         sx={styles.container}
       >
-        <Grid item lg="12" mb={4} container justifyContent={"center"}>
-          <Grid item lg="12" container justifyContent={"center"}>
+        <Grid item lg={12} mb={4} container justifyContent={"center"}>
+          <Grid item lg={12} container justifyContent={"center"}>
             <Typography sx={styles.mainTitle}>
               {dictionary.teamSection.title[lang]}
             </Typography>
           </Grid>
-          <Grid item lg="3" xs={"6"} sx={styles.line} />
+          <Grid item lg={3} xs={6} sx={styles.line} />
         </Grid>
         {editable && (
           <Grid
             item
-            lg="12"
+            lg={12}
             px={3}
             pb={5}
             pt={0}
@@ -113,7 +113,7 @@ export default function Team({
             </Box>
           </Grid>
         )}
-        <Grid container item xs="12">
+        <Grid container item xs={12}>
           <Carousel
             slides={slides}
             activeSlides={3}

@@ -65,7 +65,7 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
             container
             justifyContent={"start"}
             sx={styles.editBox}
-            xs="12"
+            xs={12}
           >
             <Button variant="text" onClick={handleEditOpen}>
               <Typography sx={styles.editNote}>
@@ -74,27 +74,27 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
             </Button>
           </Grid>
         )}
-        <Grid item container sx={styles.containerItem} xs="12">
-          <Grid item container lg="6" xs="12" sx={styles.leftItemContainer}>
-            <Grid item xs="12">
+        <Grid item container sx={styles.containerItem} xs={12}>
+          <Grid item container lg={6} xs={12} sx={styles.leftItemContainer}>
+            <Grid item xs={12}>
               <Typography sx={styles.title}>
                 {jsnAboutSection.jsnTitle[lang]}
               </Typography>
             </Grid>
-            <Grid item xs="12">
+            <Grid item xs={12}>
               <Typography sx={styles.subtitle}>
                 {jsnAboutSection.jsnSubtitle[lang]}
               </Typography>
             </Grid>
-            <Grid item xs="12" container>
-              <Grid item lg="5" xs="6" px={2}>
+            <Grid item xs={12} container>
+              <Grid item lg={5} xs={6} px={2}>
                 <Button0001
                   startIcon={googlePlayIcon}
                   label={dictionary.buttons.googlePlay[lang]}
                   style={styles.appStoreBtn}
                 />
               </Grid>
-              <Grid item lg="5" xs="6" px={2}>
+              <Grid item lg={5} xs={6} px={2}>
                 <Button0001
                   startIcon={appleIcon}
                   label={dictionary.buttons.appStore[lang]}
@@ -103,7 +103,7 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container lg="6" xs="12">
+          <Grid item container lg={6} xs={12}>
             <Box
               component={"img"}
               src={jsnAboutSection.strImgPath}

@@ -63,7 +63,7 @@ function LowerToolbar({
   return (
     <Toolbar sx={styles.lowerToolBar}>
       <Grid container alignItems={"center"}>
-        <Grid item lg="1" xs="2">
+        <Grid item lg={1} xs={2}>
           <Badge
             badgeContent={lang === "eng" ? "ar" : "en"}
             sx={styles.langBadge}
@@ -75,7 +75,7 @@ function LowerToolbar({
             />
           </Badge>
         </Grid>
-        <Grid item container justifyContent={"center"} lg="2" xs="5">
+        <Grid item container justifyContent={"center"} lg={2} xs={5}>
           {adminNavList && (
             <NavList
               nav={<Box component={"img"} sx={styles.logo} src={websiteLogo} />}
@@ -91,11 +91,11 @@ function LowerToolbar({
           item
           container
           justifyContent={"center"}
-          lg={"6"}
+          lg={6}
           sx={styles.navListContainer}
         >
-          {navList.map(({ nav, navList, path }) => (
-            <Grid item xs="2">
+          {navList.map(({ nav, navList, path },index) => (
+            <Grid item xs={2} key={index}>
               <NavList
                 nav={nav[lang]}
                 path={path}
@@ -108,15 +108,15 @@ function LowerToolbar({
         <Grid
           item
           container
-          lg="3"
-          xs="4"
+          lg={3}
+          xs={4}
           alignItems={"center"}
           justifySelf={"flex-end"}
           justifyContent={"flex-end"}
           justifyItems={"flex-end"}
         >
           {customerEditMode && (
-            <Grid item lg="2">
+            <Grid item lg={2}>
               <Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
                 <ShoppingBagOutlined
                   fontSize="large"
@@ -125,14 +125,14 @@ function LowerToolbar({
               </Badge>
             </Grid>
           )}
-          <Grid item lg="8" sx={styles.reverseBtnContainer}>
+          <Grid item lg={8} sx={styles.reverseBtnContainer}>
             <AnimButton0001
               label={dictionary.buttons.reverseTableBtn[lang]}
               fullWidth={true}
               color={App_Primary_Color}
             />
           </Grid>
-          <Grid item xs="2" container sx={styles.menuIconContainer}>
+          <Grid item xs={2} container sx={styles.menuIconContainer}>
             <IconButton
               size="large"
               edge="start"

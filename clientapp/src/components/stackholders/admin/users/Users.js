@@ -25,7 +25,7 @@ import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   container: {
-    marginY: "5px",
+    marginY: "50px",
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -214,44 +214,6 @@ function Users() {
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item xs="10" container>
-            <Grid
-              item
-              xs="12"
-              px={1}
-              pb={10}
-              justifyContent={"center"}
-              sx={styles.itemContainer}
-            >
-              <Grid container>
-                <Grid item container xs="5" px={2} justifyContent={"start"}>
-                  <Grid item xs="12">
-                    <Typography sx={styles.title}>
-                      Restaurant Users !
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="12">
-                    <Typography sx={styles.usersNum}>{`( ${
-                      users?.length || 0
-                    } Users ) `}</Typography>
-                  </Grid>
-                </Grid>
-                <Grid item container xs="2" justifyContent={"start"} py={2}>
-                  <AnimationBox
-                    animationMode="reverse"
-                    easing={"ease-in"}
-                    forceTrigger={true}
-                    type="fadeOut"
-                    trigger="manual"
-                  >
-                    <Box
-                      component={"img"}
-                      sx={styles.arrowImg}
-                      src={arrowImg}
-                    />
-                  </AnimationBox>
-                </Grid>
-              </Grid>
-            </Grid>
             <Grid item xs="12" sx={styles.tableContainer} px={1}>
               <Table
                 aria-label="simple table"

@@ -17,13 +17,13 @@ function Button0001({ style, startIcon, label }) {
   return (
     <Button fullWidth variant="contained" sx={{ ...style }}>
       <Grid container justifyContent={"center"} justifyItems={"center"}>
-        <Grid item xs="3" container alignContent={"center"}>
+        <Grid item xs={3} container alignContent={"center"}>
           <Box component={"img"} src={startIcon} sx={styles.startIcon} />
         </Grid>
-        <Grid item container xs="8">
+        <Grid item container xs={8}>
           <Grid
             item
-            xs="12"
+            xs={12}
             container
             justifyContent={"center"}
             alignItems={"center"}

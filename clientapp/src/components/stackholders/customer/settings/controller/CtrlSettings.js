@@ -5,6 +5,7 @@ import {
 } from "appHelper/appVariables";
 import { customerDeleteAccount, customerUpdateSettings } from "appHelper/fetchapi/tblUser/tblUser";
 import moment from "moment";
+import { ctrlRouteCustomer } from "../../controller/CtrlRouteCustomer";
 
 export const ctrlSittings = {
   handelSubmit: async ({
@@ -65,13 +66,15 @@ export const ctrlSittings = {
     setIsLoading,
     systemName,
     systemID,
-    onLogout
   }) => {
     try {
       setIsLoading(true);
       const deletedAccount = await customerDeleteAccount(appState.userInfo.bigUserID)
       if(deletedAccount?.blnIsDeleted){
-        onLogout();
+        ctrlRouteCustomer.onLogout({
+          appState:appState,
+          appDispatch:appDispatch
+        });
       }
       setIsLoading(false);
     } catch (err) {

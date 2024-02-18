@@ -75,11 +75,11 @@ function EditAbout({
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001 title={dictionary.editAboutSection.title[lang]} dir={dir} />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -94,7 +94,7 @@ function EditAbout({
                   defaultValue={jsnAboutSection.jsnTitle["eng"]}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -111,11 +111,11 @@ function EditAbout({
                 />
               </Grid>
             </Grid>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001 title={dictionary.editAboutSection.subtitle[lang]} dir={dir} />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -130,7 +130,7 @@ function EditAbout({
                   defaultValue={jsnAboutSection.jsnSubtitle["eng"]}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -157,7 +157,7 @@ function EditAbout({
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="2">
+            <Grid item xs={2}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

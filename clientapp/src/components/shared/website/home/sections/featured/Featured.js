@@ -44,17 +44,17 @@ export default function Featured({ lang, dir, lstFeatured }) {
       alignItems={"center"}
       alignSelf={"center"}
     >
-      <Grid item lg="12" mb={4} container justifyContent={"center"}>
-        <Grid item lg="12" container justifyContent={"center"}>
+      <Grid item lg={12} mb={4} container justifyContent={"center"}>
+        <Grid item lg={12} container justifyContent={"center"}>
           <Typography sx={styles.mainTitle}>
             {dictionary.featuredSection.title[lang]}
           </Typography>
         </Grid>
-        <Grid item lg="3" xs={"6"} pt={0} sx={styles.line} />
+        <Grid item lg={3} xs={6} pt={0} sx={styles.line} />
       </Grid>
-      <Grid item lg="12" xs={"12"} alignSelf={"flex-end"}>
+      <Grid item lg={12} xs={12} alignSelf={"flex-end"}>
         <Grid container alignItems={"flex-end"} alignSelf={"flex-end"}>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Carousel
               slides={slides}
               activeSlides={3}

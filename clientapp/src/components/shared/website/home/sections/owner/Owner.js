@@ -75,7 +75,7 @@ function Owner({
           container
           justifyContent={"start"}
           sx={styles.editBox}
-          xs="12"
+          xs={12}
         >
           <Button variant="text" onClick={handleEditOpen}>
             <Typography sx={styles.editNote}>
@@ -88,17 +88,17 @@ function Owner({
         <Grid
           item
           container
-          lg="6"
-          xs="12"
+          lg={6}
+          xs={12}
           pr={dir === "ltr" && 2}
           pl={dir === "rtl" && 2}
         >
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography sx={styles.title}>
               {jsnOwnerSection.jsnTitle[lang]}
             </Typography>
           </Grid>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography component={"h2"} sx={styles.subtitle}>
               {jsnOwnerSection.jsnSubtitle[lang]}
             </Typography>
@@ -107,33 +107,33 @@ function Owner({
         <Grid
           item
           container
-          lg="6"
-          xs="12"
+          lg={6}
+          xs={12}
           pl={dir === "ltr" && 2}
           pr={dir === "rtl" && 2}
         >
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography sx={styles.ownerComment}>
               {jsnOwnerSection.jsnOwnerComment[lang]}
             </Typography>
           </Grid>
-          <Grid item container xs="12" alignContent={"center"}>
-            <Grid item xs="12">
+          <Grid item container xs={12} alignContent={"center"}>
+            <Grid item xs={12}>
               <Box component={"img"} sx={styles.logo} src={websiteLogo} />
             </Grid>
             <Grid
               item
               container
-              xs="12"
+              xs={12}
               sx={styles.heightFitContent}
               alignSelf={"center"}
             >
-              <Grid item xs="12">
+              <Grid item xs={12}>
                 <Typography sx={styles.name}>
                   {jsnOwnerSection.jsnOwnerName[lang]}
                 </Typography>
               </Grid>
-              <Grid item xs="12">
+              <Grid item xs={12}>
                 <Typography sx={styles.specialization}>
                   {jsnOwnerSection.jsnOwnerSpecialization[lang]}
                 </Typography>

@@ -27,7 +27,7 @@ function SystemContact({ lang, contact }) {
           <Icon>{icons[contact.type]}</Icon>
         </Box>
       </Grid>
-      <Grid item container xs="8" alignSelf={"center"}>
+      <Grid item container xs={8} alignSelf={"center"}>
         <Grid item>
           <Typography
             component={"p"}

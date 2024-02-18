@@ -51,11 +51,11 @@ function ReviewCard({ review, lang, dir }) {
       <Grid
         item
         container
-        xs="12"
+        xs={12}
         sx={styles.fullHeight}
         alignContent={"flex-start"}
       >
-        <Grid item xs="12" sx={styles.reviewContainer}>
+        <Grid item xs={12} sx={styles.reviewContainer}>
           <Typography sx={styles.review}>
             {review?.jsnComment[lang]
               ? review?.jsnComment[lang]
@@ -66,24 +66,24 @@ function ReviewCard({ review, lang, dir }) {
         </Grid>
         <Grid
           item
-          xs="12"
+          xs={12}
           pt={2}
           container
           alignContent={"center"}
           alignItems={"center"}
         >
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography sx={styles.username}>
               {review?.jsnUserName[lang]}
             </Typography>
           </Grid>
-          <Grid item xs="12" container alignContent={"center"}>
+          <Grid item xs={12} container alignContent={"center"}>
             <Rating value={review?.intRating} />
           </Grid>
         </Grid>
         <Grid
           item
-          xs="12"
+          xs={12}
           container
           alignContent={"end"}
           alignItems={"end"}

@@ -81,7 +81,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
       {editable && (
         <Grid
           item
-          lg="12"
+          lg={12}
           px={2}
           sx={styles.optionListContainer}
           container
@@ -106,7 +106,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
           />
         </Grid>
       )}
-      <Grid item xs="12" sx={styles.imgContainer}>
+      <Grid item xs={12} sx={styles.imgContainer}>
         <Box
           component={"img"}
           src={item.strImgPath}
@@ -116,7 +116,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
       </Grid>
       <Grid
         item
-        xs="12"
+        xs={12}
         container
         justifyContent={"center"}
         sx={styles.contentContainer}
@@ -125,28 +125,28 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
           <Grid
             container
             item
-            xs="12"
+            xs={12}
             alignItems={"center"}
             justifyContent={"center"}
             alignContent={"center"}
             sx={styles.fullHeight}
           >
-            <Grid item xs="12" container justifyContent={"center"}>
+            <Grid item xs={12} container justifyContent={"center"}>
               <Typography sx={styles.specialization}>
                 {item.jsnSpecialization[lang]}
               </Typography>
             </Grid>
-            <Grid item xs="12" container justifyContent={"center"}>
+            <Grid item xs={12} container justifyContent={"center"}>
               <Typography sx={styles.name}>{item.jsnName[lang]}</Typography>
             </Grid>
-            <Grid item xs="12" container justifyContent={"center"}>
+            <Grid item xs={12} container justifyContent={"center"}>
               {socials.map(({icon,link},index)=>(
               <Grid item xs="3" container justifyContent={"center"}>
                 <Box sx={styles.social}>
                   <Grid
                     container
                     item
-                    xs="12"
+                    xs={12}
                     justifyContent={"center"}
                     alignContent={"center"}
                     sx={styles.fullHeight}

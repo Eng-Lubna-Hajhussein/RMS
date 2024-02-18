@@ -244,13 +244,13 @@ export default function RestaurantMenu({
   return (
     <React.Fragment>
       <Grid container className="menu" justifyContent={"center"}>
-        <Grid item container xs="12" justifyContent={"center"}>
+        <Grid item container xs={12} justifyContent={"center"}>
           {objTabs?.tabs?.map((tab, index) => (
-            <Grid item container lg="2" xs={"4"} py={3} px={2}>
+            <Grid item container lg={2} xs={4} py={3} px={2}>
               <Grid
                 container
                 item
-                xs="12"
+                xs={12}
                 justifyItems={"center"}
                 className={
                   `${tab?.bigID}` === `${objTabs?.activeTab?.bigID}`
@@ -261,7 +261,7 @@ export default function RestaurantMenu({
                 {adminEditMode && (
                   <Grid
                     item
-                    lg="12"
+                    lg={12}
                     px={2}
                     sx={styles.tabOptionListContainer}
                     container
@@ -285,7 +285,7 @@ export default function RestaurantMenu({
                 )}
                 <Grid
                   item
-                  lg="12"
+                  lg={12}
                   sx={styles.lgDisplay}
                   className="icon-container"
                 >
@@ -306,7 +306,7 @@ export default function RestaurantMenu({
                     }}
                   />
                 </Grid>
-                <Grid item xs={"12"} justify={"center"}>
+                <Grid item xs={12} justify={"center"}>
                   <Typography sx={styles.tabName} className="title">
                     {tab.jsnName[lang]}
                   </Typography>
@@ -315,11 +315,11 @@ export default function RestaurantMenu({
             </Grid>
           ))}
           {adminEditMode && tabsOptions?.length > objTabs?.tabs?.length && (
-            <Grid item container lg={"2"} xs={"4"} py={3} px={2}>
+            <Grid item container lg={2} xs={4} py={3} px={2}>
               <Grid
                 container
                 item
-                xs="12"
+                xs={12}
                 alignItems={"center"}
                 justifyContent={"center"}
                 sx={styles.addTabIcon}
@@ -334,8 +334,8 @@ export default function RestaurantMenu({
           <Grid
             item
             container
-            lg="10"
-            xs="12"
+            lg={10}
+            xs={12}
             alignItems={"center"}
             alignContent={"center"}
             sx={styles.menuContainer}
@@ -344,7 +344,7 @@ export default function RestaurantMenu({
           >
             <Grid
               item
-              lg={"5"}
+              lg={5}
               justifySelf={"center"}
               alignSelf={"center"}
               alignContent={"center"}
@@ -362,12 +362,12 @@ export default function RestaurantMenu({
                 sx={styles.menuImgCat}
               />
             </Grid>
-            <Grid item lg="9" xs={"12"} justifySelf={"end"}>
+            <Grid item lg="9" xs={12} justifySelf={"end"}>
               <Paper elevation={0} outline={0} sx={styles.menuPaper}>
                 <Grid
                   container
                   item
-                  xs="12"
+                  xs={12}
                   alignItems={"center"}
                   alignSelf={"center"}
                   sx={{
@@ -378,8 +378,8 @@ export default function RestaurantMenu({
                 >
                   <Grid
                     item
-                    lg={"0"}
-                    xs={"12"}
+                    lg={0}
+                    xs={12}
                     container
                     justifyContent={"center"}
                     sx={styles.xsDisplay}
@@ -393,20 +393,20 @@ export default function RestaurantMenu({
                       sx={styles.menuImgCat}
                     />
                   </Grid>
-                  <Grid item lg="11" xs={"12"} px-0>
+                  <Grid item lg={11} xs={12} px-0>
                     <Grid
                       container
                       justify={"start"}
                       sx={{ height: "100%" }}
                       alignItems={"center"}
                     >
-                      <Grid item xs={adminEditMode ? "10" : "12"}>
+                      <Grid item xs={adminEditMode ?10 : 12}>
                         <Typography sx={styles.menuTitle}>
                           {objTabs.activeTab.jsnName[lang]}
                         </Typography>
                       </Grid>
                       {adminEditMode && (
-                        <Grid item xs={"2"}>
+                        <Grid item xs={2}>
                           <Box sx={styles.addItemBox} onClick={() => setAddItemOpen(true)}>
                             <Grid
                               container
@@ -423,15 +423,14 @@ export default function RestaurantMenu({
                         (item, index, tabsContent) => (
                           <Grid
                             item
-                            xs="12"
-                            px-0
+                            xs={12}
                             container
                             alignContent={"start"}
                           >
                             {adminEditMode && (
                               <Grid
                                 item
-                                xs="1"
+                                xs={1}
                                 container
                                 justify={"start"}
                                 alignItems={"center"}
@@ -469,7 +468,7 @@ export default function RestaurantMenu({
                             <Grid
                               container
                               item
-                              xs={adminEditMode ? "11" : "12"}
+                              xs={adminEditMode ? 11 : 12}
                               justify={"start"}
                               alignItems={"center"}
                               alignSelf={"flex-start"}
@@ -482,7 +481,7 @@ export default function RestaurantMenu({
                             >
                               <Grid
                                 item
-                                xs="1"
+                                xs={1}
                                 container
                                 alignContent={"center"}
                                 sx={{ height: "fit-content" }}
@@ -493,7 +492,7 @@ export default function RestaurantMenu({
                                   sx={styles.catImg}
                                 />
                               </Grid>
-                              <Grid item xs={adminEditMode ? "8" : "6"} px={1}>
+                              <Grid item xs={adminEditMode ? 8 : 6} px={1}>
                                 {customerEditMode && (
                                   <Link
                                     to={`/customer/product/${item.bigID}/${systemName}/${systemID}`}
@@ -521,7 +520,7 @@ export default function RestaurantMenu({
                               <Grid
                                 item
                                 container
-                                xs={"3"}
+                                xs={3}
                                 justifySelf={"flex-end"}
                                 justifyContent={"end"}
                                 justifyItems={"flex-end"}
@@ -533,7 +532,7 @@ export default function RestaurantMenu({
                               {customerEditMode && (
                                 <Grid
                                   item
-                                  xs="2"
+                                  xs={2}
                                   px={1}
                                   container
                                   justifyContent={"end"}
@@ -553,7 +552,7 @@ export default function RestaurantMenu({
                                   </Badge>
                                 </Grid>
                               )}
-                              <Grid item xs={"9"} p-0 m-0>
+                              <Grid item xs={9}>
                                 <Typography sx={styles.dishDescription}>
                                   {item.jsnCategoryInfo.jsnDescription[lang]}
                                 </Typography>
@@ -574,20 +573,20 @@ export default function RestaurantMenu({
         <Grid
           item
           container
-          lg="10"
-          xs="12"
+          lg={10}
+          xs={12}
           alignItems={"center"}
           alignContent={"center"}
           sx={styles.menuContainer}
           justifyContent={"end"}
           pt={5}
         >
-          <Grid item lg="9" xs={"12"} justifySelf={"end"}>
+          <Grid item lg={9} xs={12} justifySelf={"end"}>
             <Paper elevation={0} outline={0} sx={styles.menuPaper}>
               <Grid
                 container
                 item
-                xs="12"
+                xs={12}
                 alignItems={"center"}
                 alignSelf={"center"}
                 sx={{
@@ -596,9 +595,9 @@ export default function RestaurantMenu({
                   paddingRight: { lg: dir === "rtl" && "180px", xs: "25px" },
                 }}
               >
-                <Grid item lg="11" xs={"12"} px-0>
+                <Grid item lg={11} xs={12}>
                   <Grid container justify={"start"}>
-                    <Grid item xs={adminEditMode ? "10" : "12"}>
+                    <Grid item xs={adminEditMode ? 10 : 12}>
                       <Typography sx={styles.menuTitle}>{"NONE"}</Typography>
                     </Grid>
                   </Grid>

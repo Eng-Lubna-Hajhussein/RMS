@@ -84,7 +84,7 @@ function UpperToolbar({
           container
           justifyContent={"start"}
           sx={styles.editBox}
-          xs="12"
+          xs={12}
         >
           <Button variant="text" onClick={handleEditOpen}>
             <Typography sx={styles.editNote}>
@@ -95,20 +95,20 @@ function UpperToolbar({
       )}
       <Toolbar sx={styles.upperToolbar}>
         <Grid container direction={"row"} alignItems={"center"}>
-          <Grid container item xs="3" spacing={"3"} justifyContent={"start"}>
+          <Grid container item xs={3} spacing={"3"} justifyContent={"start"}>
             <SystemContact
               contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
               lang={lang}
             />
           </Grid>
-          <Grid container item xs="3" spacing={"3"}>
+          <Grid container item xs={3} spacing={"3"}>
             <SystemContact
               contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
               lang={lang}
             />
           </Grid>
-          <Grid container item xs="3" justifyContent={"center"} spacing={"3"}>
-            <Grid item xs="3">
+          <Grid container item xs={3} justifyContent={"center"} spacing={"3"}>
+            <Grid item xs={3}>
               <SystemSocial
                 social={{
                   type: "strFacebook",
@@ -117,7 +117,7 @@ function UpperToolbar({
                 lang={lang}
               />
             </Grid>
-            <Grid item xs="3">
+            <Grid item xs={3}>
               <SystemSocial
                 social={{
                   type: "strInstagram",
@@ -126,7 +126,7 @@ function UpperToolbar({
                 lang={lang}
               />
             </Grid>
-            <Grid item xs="3">
+            <Grid item xs={3}>
               <SystemSocial
                 social={{
                   type: "strYoutube",
@@ -139,11 +139,11 @@ function UpperToolbar({
           <Grid
             container
             item
-            xs={"3"}
+            xs={3}
             spacing={"3"}
             justifyContent={"flex-end"}
           >
-            <Grid item container xs="12" justifyContent={"flex-end"}>
+            <Grid item container xs={12} justifyContent={"flex-end"}>
               <Grid item px={1}>
                 {!blnUserLogin && (
                   <Box sx={styles.regIconBox}>

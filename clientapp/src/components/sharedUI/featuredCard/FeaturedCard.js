@@ -99,7 +99,7 @@ function FeaturedCard({ item, lang }) {
       >
         <Grid
           item
-          xs="12"
+          xs={12}
           container
           justifyContent={"center"}
           alignItems={"center"}
@@ -109,7 +109,7 @@ function FeaturedCard({ item, lang }) {
           {item?.jsnCategoryInfo?.blnOnSale && (
             <Box sx={styles.saleBox}>
               <Grid container sx={styles.fullHeight} alignItems={"center"}>
-                <Grid item xs="12" justify={"center"}>
+                <Grid item xs={12} justify={"center"}>
                   <Typography sx={styles.saleTitle}>Sale</Typography>
                 </Grid>
               </Grid>
@@ -118,7 +118,7 @@ function FeaturedCard({ item, lang }) {
           <Grid container>
             <Grid
               item
-              xs="12"
+              xs={12}
               container
               sx={styles.fitContentHeight}
               alignContent={"center"}
@@ -132,26 +132,26 @@ function FeaturedCard({ item, lang }) {
                 style={styles.itemImg}
               />
             </Grid>
-            <Grid item xs="12">
+            <Grid item xs={12}>
               <Grid container px={5}>
-                <Grid item xs="12">
+                <Grid item xs={12}>
                   <Typography sx={styles.itemName}>
                     {item?.jsnName[lang]}
                   </Typography>
                 </Grid>
-                <Grid item xs="12">
+                <Grid item xs={12}>
                   <Typography sx={styles.description}>
                     {item?.jsnCategoryInfo?.jsnDescription[lang]}
                   </Typography>
                 </Grid>
-                <Grid item xs="12">
+                <Grid item xs={12}>
                   <Grid
                     container
                     alignContent={"center"}
                     alignItems={"center"}
                     sx={styles.fitContentHeight}
                   >
-                    <Grid item xs="12" container>
+                    <Grid item xs={12} container>
                       <Grid item>
                         <Typography sx={styles.dollarSign}>$</Typography>
                       </Grid>
@@ -175,7 +175,7 @@ function FeaturedCard({ item, lang }) {
                         )}
                       </Grid>
                     </Grid>
-                    <Grid item xs="12" container justifyContent={"end"}>
+                    <Grid item xs={12} container justifyContent={"end"}>
                       <img src={shoppingIcon} style={styles.shoppingIcon} />
                     </Grid>
                   </Grid>

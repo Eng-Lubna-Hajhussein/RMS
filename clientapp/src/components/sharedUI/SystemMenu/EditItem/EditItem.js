@@ -160,8 +160,8 @@ function EditItem({
             alignItems={"start"}
             sx={styles.fitContentHeight}
           >
-            <Grid item xs="6" container>
-              <Grid item xs="12" p={1}>
+            <Grid item xs={6}container>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.menuSection.dishImg[lang]}
                   dir={dir}
@@ -169,7 +169,7 @@ function EditItem({
               </Grid>
               <Grid
                 item
-                xs="12"
+                xs={12}
                 p={1}
                 container
                 justifyContent={"center"}
@@ -178,7 +178,7 @@ function EditItem({
               >
                 <Grid
                   item
-                  xs="8"
+                  xs={8}
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
@@ -193,14 +193,14 @@ function EditItem({
             </Grid>
             <Grid
               item
-              xs="6"
+              xs={6}
               p={1}
               px={4}
               container
               justifyContent={"start"}
               alignContent={"start"}
             >
-              <Grid item xs="12" p={1}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.menuSection.dishConfiguration[lang]}
                   dir={dir}
@@ -208,7 +208,7 @@ function EditItem({
               </Grid>
               <Grid
                 item
-                xs="12"
+                xs={12}
                 px={0}
                 py={1}
                 container
@@ -272,7 +272,7 @@ function EditItem({
                 </FormGroup>
               </Grid>
               {onSaleChecked === true && (
-                <Grid item xs="12" p={1}>
+                <Grid item xs={12} p={1}>
                   <TextField
                     color="warning"
                     required={onSaleChecked}
@@ -290,14 +290,14 @@ function EditItem({
                 </Grid>
               )}
             </Grid>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.menuSection.dishName[lang]}
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   defaultValue={categoryOnAction?.jsnName["eng"]}
@@ -312,7 +312,7 @@ function EditItem({
                   multiline
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -328,14 +328,14 @@ function EditItem({
                 />
               </Grid>
             </Grid>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.menuSection.dishDescription[lang]}
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -353,7 +353,7 @@ function EditItem({
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -372,14 +372,14 @@ function EditItem({
                 />
               </Grid>
             </Grid>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.menuSection.dishPrice[lang]}
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -402,7 +402,7 @@ function EditItem({
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="2">
+            <Grid item xs={2}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

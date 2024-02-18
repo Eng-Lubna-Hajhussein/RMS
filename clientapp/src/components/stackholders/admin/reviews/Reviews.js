@@ -1,11 +1,7 @@
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useMemo } from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { App_Primary_Color } from "appHelper/appColor";
 import { useParams } from "react-router-dom";
 import arrowImg from "assets/image/arrow-2.png";
@@ -14,7 +10,7 @@ import ReviewsTable from "./reviewsTable/ReviewsTable";
 
 const styles = {
   container: {
-    marginY: "5px",
+    marginY: "50px",
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -105,47 +101,6 @@ function Reviews() {
       />
       <Grid container justifyContent={"center"} sx={styles.container}>
         <Grid item xs="10" container>
-          <Grid item xs="12">
-            <Grid
-              item
-              xs="12"
-              px={1}
-              pb={10}
-              justifyContent={"center"}
-              container
-              sx={styles.itemContainer}
-            >
-              <Grid container>
-                <Grid item container xs="5" px={2} justifyContent={"start"}>
-                  <Grid item xs="12">
-                    <Typography sx={styles.title}>
-                      Restaurant Reviews !
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="12">
-                    <Typography sx={styles.reviewsNum}>{`( ${
-                      reviews?.length || 0
-                    } Reviews ) `}</Typography>
-                  </Grid>
-                </Grid>
-                <Grid item container xs="2" justifyContent={"start"} py={2}>
-                  <AnimationBox
-                    animationMode="reverse"
-                    easing={"ease-in"}
-                    forceTrigger={true}
-                    type="fadeOut"
-                    trigger="manual"
-                  >
-                    <Box
-                      component={"img"}
-                      sx={styles.arrowImg}
-                      src={arrowImg}
-                    />
-                  </AnimationBox>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
           <ReviewsTable reviews={reviews} lang={lang} dir={dir} />
         </Grid>
       </Grid>

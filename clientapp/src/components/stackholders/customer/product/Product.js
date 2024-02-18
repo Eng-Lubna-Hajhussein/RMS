@@ -588,7 +588,6 @@ function Product() {
                     }
                     sx={{
                       ".MuiTablePagination-toolbar": {
-                        // backgroundColor: "#f4fcfc",
                         textAlign: "center",
                         border: `4px solid ${App_Primary_Color}`,
                         borderRadius: "10px",
