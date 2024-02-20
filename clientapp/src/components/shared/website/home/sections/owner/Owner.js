@@ -5,7 +5,7 @@ import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: "100px",
+    marginY: {lg:"100px",xs:"20px"},
     paddingX: { lg: "60px", xs: "15px" },
   },
   title: {

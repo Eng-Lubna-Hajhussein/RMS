@@ -1,9 +1,34 @@
-import { TimeToLeave } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
+import { formateTime } from "appHelper/appFunctions";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-export default function OrderTimer({ deliveryTime, order, formateTime }) {
+const styles = {
+  container: {
+    height: "60px",
+    border: `3px solid ${App_Primary_Color}`,
+    borderRadius: "10px",
+  },
+  hours: {
+    fontSize: "20px",
+    fontWeight: "800",
+  },
+  colons: {
+    fontSize: "20px",
+    fontWeight: "800",
+    color: "#fff",
+  },
+  minutes: {
+    fontSize: "20px",
+    fontWeight: "600",
+  },
+  seconds: {
+    fontSize: "20px",
+    fontWeight: "400",
+  },
+};
+
+export default function DeliveryTimer({ deliveryTime, order }) {
   const initialCountDown = useMemo(() => {
     const orderDate = new Date(order.dtmOrderDate);
     const now = new Date();
@@ -12,7 +37,12 @@ export default function OrderTimer({ deliveryTime, order, formateTime }) {
       orderDate.getSeconds() +
       (now.getMinutes() - orderDate.getMinutes()) * 60 +
       (now.getHours() - orderDate.getHours()) * 3600;
-    return deliveryTime * 60 - diff;
+    console.log({ orderDate });
+    console.log({ now });
+    if (diff >= deliveryTime) {
+      return 0;
+    }
+    return deliveryTime - diff;
   }, []);
   const [countDown, setCountDown] = useState(initialCountDown);
   const time = formateTime(countDown);
@@ -35,34 +65,24 @@ export default function OrderTimer({ deliveryTime, order, formateTime }) {
       <Grid
         container
         justifyContent={"center"}
-        alignContent={'center'}
-        alignItems={'center'}
-        sx={{height:"60px",border:`3px solid ${App_Primary_Color}`,borderRadius:"10px"}}
+        alignContent={"center"}
+        alignItems={"center"}
+        sx={styles.container}
       >
         <Grid item px={1}>
-          <Typography
-          sx={{fontSize:"20px",fontWeight:"800"}}>
-            {time.h|'00'}</Typography>
+          <Typography sx={styles.hours}>{time.h || "00"}</Typography>
         </Grid>
         <Grid item px={1}>
-          <Typography
-          sx={{fontSize:"20px",fontWeight:"800",color:"#fff"}}>
-            :</Typography>
+          <Typography sx={styles.colons}>:</Typography>
         </Grid>
         <Grid item px={1}>
-          <Typography
-          sx={{fontSize:"20px",fontWeight:"600"}}>
-            {time.m||'00'}</Typography>
+          <Typography sx={styles.minutes}>{time.m || "00"}</Typography>
         </Grid>
         <Grid item px={1}>
-          <Typography
-          sx={{fontSize:"20px",fontWeight:"800",color:"#fff"}}>
-            :</Typography>
+          <Typography sx={styles.colons}>:</Typography>
         </Grid>
         <Grid item px={1}>
-          <Typography
-          sx={{fontSize:"20px",fontWeight:"400"}}>
-            {time.s||'00'}</Typography>
+          <Typography sx={styles.seconds}>{time.s || "00"}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>

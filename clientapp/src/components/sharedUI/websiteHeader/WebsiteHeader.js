@@ -54,13 +54,28 @@ function WebsiteHeader({
           adminNavList={adminNavList}
           customerEditMode={customerEditMode}
           websiteLogo={websiteLogo}
+          dir={dir}
+          userName={userName}
+          blnUserLogin={blnUserLogin}
+          userNavList={userNavList}
+          userImg={userImg}
         />
       </AppBar>
       <DrawerNav
         openDrawer={openDrawer}
+        navList={navList}
         setOpenDrawer={setOpenDrawer}
         lang={lang}
         editable={editable}
+        jsnSystemContact={jsnSystemContact}
+        onSaveUpperHeader={onSaveUpperHeader}
+        userImg={userImg}
+        dir={dir}
+        userName={userName}
+        blnUserLogin={blnUserLogin}
+        userNavList={userNavList}
+        systemPath={systemPath}
+        websiteLogo={websiteLogo}
       />
     </React.Fragment>
   );

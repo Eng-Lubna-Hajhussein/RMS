@@ -46,6 +46,7 @@ function Home({
   addChef,
   editChef,
   deleteChef,
+  jsnSystemLocation,
   lang,
   dir,
 }) {
@@ -78,7 +79,7 @@ function Home({
         navList={navList}
         userName={userName}
         customerEditMode={customerEditMode}
-        intCartProduct={customerEditMode&&userCart?.lstProduct?.length}
+        intCartProduct={customerEditMode && userCart?.lstProduct?.length}
         blnUserLogin={blnUserLogin}
         userNavList={userNavList}
         systemPath={systemPath}
@@ -138,14 +139,17 @@ function Home({
         editChef={editChef}
         deleteChef={deleteChef}
       />
-      {systemInfo?.lstSystemReviews?.length&&<Testimonial
-        lang={lang}
-        dir={dir}
-        lstSystemReviews={systemInfo.lstSystemReviews}
-        jsnTestimonialSection={
-          systemInfo.jsnSystemSections.jsnTestimonialSection
-        }
-      />}
+
+      {systemInfo?.lstSystemReviews?.length && (
+        <Testimonial
+          lang={lang}
+          dir={dir}
+          lstSystemReviews={systemInfo.lstSystemReviews}
+          jsnTestimonialSection={
+            systemInfo.jsnSystemSections.jsnTestimonialSection
+          }
+        />
+      )}
       <About
         lang={lang}
         dir={dir}
@@ -154,7 +158,13 @@ function Home({
         editable={editable}
       />
       <Follow lang={lang} />
-      <Footer lang={lang} />
+      <Footer
+        jsnSystemLocation={jsnSystemLocation}
+        lang={lang}
+        jsnSystemContact={systemInfo.jsnSystemContact}
+        dir={dir}
+        websiteLogo={websiteLogo}
+      />
       <Loader001 status={"loaded"} />
     </React.Fragment>
   );

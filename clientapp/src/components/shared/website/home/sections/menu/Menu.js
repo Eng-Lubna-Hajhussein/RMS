@@ -5,10 +5,10 @@ import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: "100px",
+    marginY: { lg: "100px", xs: "20px" },
   },
   mainTitle: {
-    fontSize: "50px !important",
+    fontSize: { lg: "50px !important", xs: "30px" },
     color: "#000 !important",
     fontWeight: "700 !important",
     lineHeight: "1.2 !important",
@@ -21,6 +21,9 @@ const styles = {
     background: "#ffd40d",
     borderRadius: "26px",
     height: "12px",
+  },
+  titleContainer: {
+    marginBottom: { lg: "10px", xs: "2px" },
   },
 };
 
@@ -45,7 +48,13 @@ function Menu({
 }) {
   return (
     <Grid container sx={styles.container}>
-      <Grid item lg={12} mb={4} container justifyContent={"center"}>
+      <Grid
+        item
+        lg={12}
+        sx={styles.titleContainer}
+        container
+        justifyContent={"center"}
+      >
         <Grid item lg={12} container justifyContent={"center"}>
           <Typography sx={styles.mainTitle}>
             {dictionary.menuSection.title[lang]}
@@ -53,26 +62,26 @@ function Menu({
         </Grid>
         <Grid item lg={3} xs={6} sx={styles.line} />
       </Grid>
-        <SystemMenu
-          categories={categories}
-          blnOnSaveCategory={true}
-          lang={lang}
-          dir={dir}
-          funAddCategory={addMenuCategory}
-          funDeleteCategory={deleteMenuCategory}
-          funEditCategory={editMenuCategory}
-          systemID={systemID}
-          ws={ws}
-          addWS={addWS}
-          userCart={userCart}
-          addOrderProduct={addOrderProduct}
-          removeOrderProduct={removeOrderProduct}
-          removeWS={removeWS}
-          editable={editable}
-          customerEditMode={customerEditMode}
-          adminEditMode={adminEditMode}
-          loggedIn={loggedIn}
-        />
+      <SystemMenu
+        categories={categories}
+        blnOnSaveCategory={true}
+        lang={lang}
+        dir={dir}
+        funAddCategory={addMenuCategory}
+        funDeleteCategory={deleteMenuCategory}
+        funEditCategory={editMenuCategory}
+        systemID={systemID}
+        ws={ws}
+        addWS={addWS}
+        userCart={userCart}
+        addOrderProduct={addOrderProduct}
+        removeOrderProduct={removeOrderProduct}
+        removeWS={removeWS}
+        editable={editable}
+        customerEditMode={customerEditMode}
+        adminEditMode={adminEditMode}
+        loggedIn={loggedIn}
+      />
     </Grid>
   );
 }

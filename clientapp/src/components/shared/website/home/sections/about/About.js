@@ -8,7 +8,8 @@ import EditAbout from "./EditAbout";
 
 const styles = {
   container: {
-    marginY: "100px",
+    marginY: { lg: "100px", xs: "20px" },
+    paddingX: { lg: "60px", xs: "10px" },
     background: "#f5f8fd",
   },
   containerItem: {
@@ -50,6 +51,9 @@ const styles = {
   editBox: {
     background: "#dad8d9",
   },
+  downloadContainer: {
+    marginTop: { xs: "20px" },
+  },
 };
 
 function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
@@ -86,15 +90,21 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
                 {jsnAboutSection.jsnSubtitle[lang]}
               </Typography>
             </Grid>
-            <Grid item xs={12} container>
-              <Grid item lg={5} xs={6} px={2}>
+            <Grid
+              item
+              xs={12}
+              container
+              spacing={4}
+              py={2}
+            >
+              <Grid item lg={5} xs={6}>
                 <Button0001
                   startIcon={googlePlayIcon}
                   label={dictionary.buttons.googlePlay[lang]}
                   style={styles.appStoreBtn}
                 />
               </Grid>
-              <Grid item lg={5} xs={6} px={2}>
+              <Grid item lg={5} xs={6}>
                 <Button0001
                   startIcon={appleIcon}
                   label={dictionary.buttons.appStore[lang]}

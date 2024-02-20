@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, Grid, Typography } from "@mui/material";
-import { objIDRole, objRoleID } from "appHelper/appVariables";
+import { objIDRole } from "appHelper/appVariables";
 import { App_Primary_Color } from "appHelper/appColor";
 
 const styles = {

@@ -65,6 +65,10 @@ function Tables() {
     });
   };
 
+  useEffect(()=>{
+    console.log({tables})
+  },[tables])
+
   return (
     <React.Fragment>
       <WebsiteHeader

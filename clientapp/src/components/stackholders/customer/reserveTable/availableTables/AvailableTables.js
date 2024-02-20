@@ -134,7 +134,7 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[3, 5, 10, 25]}
               count={tables.length}
               rowsPerPage={rowsPerPage}
               page={page}

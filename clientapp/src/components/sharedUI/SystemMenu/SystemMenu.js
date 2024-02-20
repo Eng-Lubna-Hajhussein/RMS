@@ -39,7 +39,7 @@ const styles = {
     width: "100%",
     borderRadius: "20px !important",
     paddingY: "50px",
-    paddingLeft: { xs: "15px !important" },
+    overflowY: "auto",
   },
   shoppingBadge: {
     "& .MuiBadge-badge": {
@@ -52,25 +52,26 @@ const styles = {
     width: "100%",
     textAlign: "center",
     fontWeight: "800 !important",
+    fontSize: { xs: "12px", lg: "15px" },
   },
   menuImgCat: {
     zIndex: "111",
   },
   dishName: {
-    fontSize: { lg: "16px !important", xs: "9px" },
+    fontSize: { lg: "16px !important", xs: "10px" },
     fontWeight: "800 !important",
     color: "#000",
     fontFamily: "sans-serif",
   },
   dishDescription: {
-    fontSize: { lg: "18px !important", xs: "9px" },
+    fontSize: { lg: "18px !important", xs: "10px" },
     fontWeight: "400 !important",
     color: "#555",
     fontFamily: "Epilogue",
     lineHeight: { lg: "30px !important", xs: "20px" },
   },
   dishPrice: {
-    fontSize: { lg: "22px !important", xs: "10px" },
+    fontSize: { lg: "22px !important", xs: "12px" },
     fontWeight: "800 !important",
     color: "#f3274c",
     fontFamily: "sans-serif",
@@ -82,6 +83,8 @@ const styles = {
   menuContainer: {
     position: "relative",
     minHeight: "600px",
+    height: "600px",
+    maxHeight: "600px",
   },
   addTabIcon: {
     background: "transparent",
@@ -103,7 +106,7 @@ const styles = {
   tabImg: {
     position: "absolute",
     height: "100%",
-    top: "70px",
+    top: "50px",
     display: { lg: "flex", xs: "none" },
   },
   fullHeight: {
@@ -119,6 +122,9 @@ const styles = {
     borderRadius: "50%",
     background: App_Second_Color,
     cursor: "pointer",
+  },
+  tab: {
+    paddingTop: { xs: "20px", lg: "30px" },
   },
 };
 
@@ -246,7 +252,15 @@ export default function RestaurantMenu({
       <Grid container className="menu" justifyContent={"center"}>
         <Grid item container xs={12} justifyContent={"center"}>
           {objTabs?.tabs?.map((tab, index) => (
-            <Grid item container lg={2} xs={4} py={3} px={2}>
+            <Grid
+              item
+              container
+              lg={2}
+              xs={4}
+              sx={styles.tab}
+              // py={3}
+              px={2}
+            >
               <Grid
                 container
                 item
@@ -337,10 +351,10 @@ export default function RestaurantMenu({
             lg={10}
             xs={12}
             alignItems={"center"}
-            alignContent={"center"}
+            // alignContent={"center"}
             sx={styles.menuContainer}
             justifyContent={"end"}
-            pt={5}
+            px={2}
           >
             <Grid
               item
@@ -358,7 +372,7 @@ export default function RestaurantMenu({
                 component={"img"}
                 src={objTabs?.activeTab?.jsnCategoryInfo?.strImgPath}
                 width={"100%"}
-                height={"80%"}
+                height={"500px"}
                 sx={styles.menuImgCat}
               />
             </Grid>
@@ -372,8 +386,8 @@ export default function RestaurantMenu({
                   alignSelf={"center"}
                   sx={{
                     ...styles.fullHeight,
-                    paddingLeft: { lg: dir === "ltr" && "180px", xs: "25px" },
-                    paddingRight: { lg: dir === "rtl" && "180px", xs: "25px" },
+                    paddingLeft: { lg: dir === "ltr" && "180px", xs: "10px" },
+                    paddingRight: { lg: dir === "rtl" && "180px", xs: "10px" },
                   }}
                 >
                   <Grid
@@ -400,14 +414,17 @@ export default function RestaurantMenu({
                       sx={{ height: "100%" }}
                       alignItems={"center"}
                     >
-                      <Grid item xs={adminEditMode ?10 : 12}>
+                      <Grid item xs={adminEditMode ? 10 : 12}>
                         <Typography sx={styles.menuTitle}>
                           {objTabs.activeTab.jsnName[lang]}
                         </Typography>
                       </Grid>
                       {adminEditMode && (
                         <Grid item xs={2}>
-                          <Box sx={styles.addItemBox} onClick={() => setAddItemOpen(true)}>
+                          <Box
+                            sx={styles.addItemBox}
+                            onClick={() => setAddItemOpen(true)}
+                          >
                             <Grid
                               container
                               sx={styles.fullHeight}
@@ -421,12 +438,7 @@ export default function RestaurantMenu({
                       )}
                       {objTabs?.tabsContent[objTabs.activeTab.bigID]?.map(
                         (item, index, tabsContent) => (
-                          <Grid
-                            item
-                            xs={12}
-                            container
-                            alignContent={"start"}
-                          >
+                          <Grid item xs={12} container alignContent={"start"}>
                             {adminEditMode && (
                               <Grid
                                 item
@@ -579,7 +591,7 @@ export default function RestaurantMenu({
           alignContent={"center"}
           sx={styles.menuContainer}
           justifyContent={"end"}
-          pt={5}
+          // pt={5}
         >
           <Grid item lg={9} xs={12} justifySelf={"end"}>
             <Paper elevation={0} outline={0} sx={styles.menuPaper}>

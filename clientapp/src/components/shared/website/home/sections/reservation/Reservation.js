@@ -6,10 +6,10 @@ import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: "100px",
+    marginY: {lg:"100px",xs:"20px"},
   },
   containerItem: {
-    paddingX: "60px",
+    paddingX: {lg:"60px",xs:"5px"},
   },
   midCard: {
     paddingTop: { lg: "200px !important", xs: "0px" },
@@ -23,6 +23,9 @@ const styles = {
   editBox: {
     background: "#dad8d9",
   },
+  cardContainer:{
+    marginY:{xs:"10px"}
+  }
 };
 
 function Reservation({
@@ -35,6 +38,10 @@ function Reservation({
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
+
+  const reservationBgImgs = [jsnReservation.strImg1Path,jsnReservation.strImg2Path,
+    jsnReservation.strImg3Path,  
+    ]
 
   return (
     <React.Fragment>
@@ -56,14 +63,13 @@ function Reservation({
           </Grid>
         )}
         <Grid container item xs={12} sx={styles.containerItem}>
-          {Array(3)
-            .fill(1)
-            .map((_, index) => (
-              <Grid item lg={4} sx={index % 2 !== 0 && styles.midCard} px={1}>
+          {
+            reservationBgImgs.map((img, index) => (
+              <Grid item lg={4}  xs={12} sx={index % 2 !== 0 && styles.midCard} p={2}>
                 <AnimCard0001
                   title={jsnReservation.jsnTitle[lang]}
                   description={jsnReservation.jsnDescription[lang]}
-                  bgImg={jsnReservation.strImg2Path}
+                  bgImg={img}
                   label={dictionary.buttons.reverseTableBtn[lang]}
                 />
               </Grid>

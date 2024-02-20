@@ -89,6 +89,9 @@ const styles = {
     fontWeight: "400",
     fontSize: "14px",
   },
+  videoBtn: {
+    paddingTop: { xs: "30px" },
+  },
 };
 
 function HeroContent({
@@ -129,7 +132,7 @@ function HeroContent({
         item
         xs={12}
       >
-        <Grid container item xs={editable ? 11 :12}>
+        <Grid container item xs={editable ? 11 : 12}>
           <Grid item xs={12} sx={styles.py20} justify={"start"}>
             <AnimationBox
               animationMode="loop"
@@ -166,15 +169,15 @@ function HeroContent({
               </Typography>
             </AnimationBox>
           </Grid>
-          <Grid item lg={8}sx={styles.py20} xs={12}>
-            <Grid container px={2} justify={"start"} alignItems={"flex-start"}>
+          <Grid item lg={8} sx={styles.py20} xs={12}>
+            <Grid container  px={2} justify={"start"} alignItems={"flex-start"}>
               <Grid item lg={4} xs={12}>
                 <AnimButton0001
                   label={dictionary.buttons.seeOurMenuBtn[lang]}
                   color={App_Primary_Color}
                 />
               </Grid>
-              <Grid item lg={4} xs={12}>
+              <Grid item lg={4} xs={12} sx={styles.videoBtn}>
                 <AnimButton0002
                   img={videoIcon}
                   src={"https://www.youtube.com/"}

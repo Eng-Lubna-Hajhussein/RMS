@@ -1,6 +1,4 @@
-import {
-  Close,
-} from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -8,21 +6,48 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import { generateRandomID } from "appHelper/appFunctions";
-import { createOrder } from "appHelper/fetchapi/tblOrder/tblOrder";
+import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { AppContext } from "contextapi/context/AppContext";
-import moment from "moment";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ctrlCart } from "../controller/CtrlCart";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 
-function Checkout({ open, handleClose, lang, dir, onSave }) {
+const styles = {
+  dialogTitle: {
+    height: "fit-content",
+  },
+  closeIcon:{
+    cursor: "pointer"
+  },
+  dialogContent: {
+    py: "0" 
+  },
+  dialogActions: {
+    py: "0" 
+  },
+};
+
+function Checkout({ open, handleClose, lang, dir }) {
   const { appState, appDispatch } = useContext(AppContext);
   const navigate = useNavigate();
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    const { cardNumber, cvv, cardName } = formJson;
+    ctrlCart.checkout({
+      appState: appState,
+      cardNumber: cardNumber,
+      cvv: cvv,
+      cardName: cardName,
+      appDispatch: appDispatch,
+      navigate: navigate,
+    });
+    handleClose();
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -30,78 +55,20 @@ function Checkout({ open, handleClose, lang, dir, onSave }) {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: async(event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const {cardNumber,cvv,cardName} = formJson;
-            const totalPrice = appState?.userInfo?.userCart?.lstProduct.reduce(
-              (total, { strPrice, intQuantity }) => {
-                return total + Number(strPrice) * intQuantity;
-              },
-              0
-            );
-            const bigOrderID = Number(generateRandomID(10));          
-            const orderDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-            const objInputOrder = {
-               bigOrderID:bigOrderID,
-               bigSystemID:appState.systemInfo.bigSystemID,
-               bigUserID:appState.userInfo.bigUserID,
-               lstProduct:appState.userInfo.userCart.lstProduct,
-               strTotalPrice:`${totalPrice}`,
-               jsnAddress:appState.userInfo.jsnAddress,
-               jsnLocation:appState.userInfo.jsnLocation,
-               dtmOrderDate:orderDate,
-               jsnClientInfo:{
-                bigUserID:appState.userInfo.bigUserID,
-                strEmail:appState.userInfo.strEmail,
-                strImgPath:appState.userInfo.strImgPath,
-                jsnFullName:appState.userInfo.jsnFullName
-               },
-               jsnClientPayment:{
-                strCardNumber: cardNumber,
-                strCVV: cvv,
-                strNameOnCard: cardName,
-               },
-               blnDelivered:false
-            }
-            const order = await createOrder(objInputOrder);
-            if(order.bigOrderID){
-              appState.userInfo.userCart = {
-                lstProduct:[],
-                strTotalPrice:""
-              }
-              appState.userInfo.userOrder = {
-                ...objInputOrder
-              }
-              appDispatch({...appState});
-              if(appState.userInfo.userOrder.bigOrderID){
-                navigate(`/customer/dashboard/order/${appState.systemInfo.strSystemPathURL}`);
-              }
-            }
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
         maxWidth="md"
       >
-        <DialogTitle sx={{ height: "fit-content" }}>
+        <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
-            <Close sx={{ cursor: "pointer" }} onClick={handleClose} />
+            <Close sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
-        <DialogContent sx={{ py: "0" }}>
+        <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Typography
-                  sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
-                  }}
-                >
-                  Checkout
-                </Typography>
+                <Title0001 title={'Checkout'} dir={dir} />
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
@@ -112,6 +79,9 @@ function Checkout({ open, handleClose, lang, dir, onSave }) {
                   type="text"
                   fullWidth
                   variant="outlined"
+                  defaultValue={
+                    appState?.userInfo?.jsnClientPayment?.strCardNumber
+                  }
                 />
               </Grid>
               <Grid item xs="6" p={1}>
@@ -122,6 +92,7 @@ function Checkout({ open, handleClose, lang, dir, onSave }) {
                   label="CVV Code"
                   type="text"
                   fullWidth
+                  defaultValue={appState?.userInfo?.jsnClientPayment?.strCVV}
                   variant="outlined"
                 />
               </Grid>
@@ -134,12 +105,15 @@ function Checkout({ open, handleClose, lang, dir, onSave }) {
                   type="text"
                   fullWidth
                   variant="outlined"
+                  defaultValue={
+                    appState?.userInfo?.jsnClientPayment?.strNameOnCard
+                  }
                 />
               </Grid>
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ py: "0" }}>
+        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}

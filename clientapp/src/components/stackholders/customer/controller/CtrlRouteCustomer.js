@@ -45,9 +45,7 @@ export const ctrlRouteCustomer = {
         strTotalPrice: JSON.parse(userOrder.strTotalPrice),
         jsnAddress: JSON.parse(userOrder.jsnAddress),
         jsnLocation: JSON.parse(userOrder.jsnLocation),
-        dtmOrderDate: moment
-          .utc(new Date(Number(userOrder.dtmOrderDate)))
-          .format("YYYY-MM-DD HH:mm:ss"),
+        dtmOrderDate:userOrder.dtmOrderDate,
         jsnClientInfo: JSON.parse(userOrder.jsnClientInfo),
         jsnClientPayment: JSON.parse(userOrder.jsnClientPayment),
         blnDelivered: userOrder.blnDelivered,

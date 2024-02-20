@@ -12,11 +12,11 @@ import { dictionary } from "appHelper/appDictionary";
 const styles = {
   container: {
     height: "fit-content",
-    paddingX: { lg: "60px", xs: "15px" },
-    marginY: "100px",
+    marginY: { lg: "100px", xs: "20px" },
+    paddingX: { lg: "60px", xs: "10px" },
   },
   mainTitle: {
-    fontSize: "50px !important",
+    fontSize: { lg: "50px !important", xs: "30px" },
     color: "#000 !important",
     fontWeight: "700 !important",
     lineHeight: "1.2 !important",
@@ -38,9 +38,9 @@ const styles = {
     background: App_Second_Color,
     cursor: "pointer",
   },
-  fullHeight:{
-    height:"100%"
-  }
+  fullHeight: {
+    height: "100%",
+  },
 };
 
 export default function Team({
@@ -113,10 +113,21 @@ export default function Team({
             </Box>
           </Grid>
         )}
-        <Grid container item xs={12}>
+        <Grid container item xs={12} display={{ lg: "flex", xs: "none" }}>
           <Carousel
             slides={slides}
             activeSlides={3}
+            justify={"center"}
+            activeColor={"#f3274c"}
+            inactiveColor={"#b5b5b5"}
+            lang={lang}
+            dir={dir}
+          />
+        </Grid>
+        <Grid container item xs={12} display={{ lg: "none", xs: "flex" }}>
+          <Carousel
+            slides={slides}
+            activeSlides={1}
             justify={"center"}
             activeColor={"#f3274c"}
             inactiveColor={"#b5b5b5"}

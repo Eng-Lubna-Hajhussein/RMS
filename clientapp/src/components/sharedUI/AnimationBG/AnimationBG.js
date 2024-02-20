@@ -150,22 +150,22 @@ const styles = {
   },
   spanTwentyNine: {
     top: "29.009193054136876%",
-    left: "93.90625%",
+    left: "70.90625%",
     animationDelay: "-1.05s",
   },
   spanThirty: {
     top: "52.093973442288046%",
-    left: "68.90625%",
+    left: "30.90625%",
     animationDelay: "-0.7s",
   },
   spanThirtyOne: {
-    top: "81.51174668028601%",
+    top: "15.51174668028601%",
     left: "83.59375%",
     animationDelay: "-0.35s",
   },
   spanThirtyTwo: {
     top: "11.542390194075587%",
-    left: "91.51041666666667%",
+    left: "80.51041666666667%",
     animationDelay: "-0.1s",
   },
 };
@@ -175,48 +175,271 @@ const generateTypeJSX = (children, type) => {
     <div className="backwrap gradient">
       <div className="back-shapes">
         {children}
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanOne} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanTwo} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanThree} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanFour} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanFive} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanSix} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanSeven} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanEight} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanNine} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanTen} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanEleven} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanTwelve} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanThirteen} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanFourteen} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanFifteen} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanSixteen} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanSeventeen} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanEighteen} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanNineteen} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanTwenty} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanTwentyOne} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanTwentyTwo} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanTwentyThree} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanTwentyFour} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanTwentyFive} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanTwentySix} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanTwentySeven} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanTwentyEight} />
-        <span className={type==='squareTriangleCircleCross'?'floating square':`floating ${type}`} style={styles.spanTwentyNine} />
-        <span className={type==='squareTriangleCircleCross'?'floating triangle':`floating ${type}`} style={styles.spanThirty} />
-        <span className={type==='squareTriangleCircleCross'?'floating circle':`floating ${type}`} style={styles.spanThirtyOne} />
-        <span className={type==='squareTriangleCircleCross'?'floating cross':`floating ${type}`} style={styles.spanThirtyTwo} />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanOne}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanTwo}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanThree}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanFour}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanFive}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanSix}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanSeven}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanEight}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanNine}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanTen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanEleven}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanTwelve}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanThirteen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanFourteen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanFifteen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanSixteen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanSeventeen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanEighteen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanNineteen}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanTwenty}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyOne}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyTwo}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyThree}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyFour}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyFive}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentySix}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentySeven}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyEight}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating square"
+              : `floating ${type}`
+          }
+          style={styles.spanTwentyNine}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating triangle"
+              : `floating ${type}`
+          }
+          style={styles.spanThirty}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating circle"
+              : `floating ${type}`
+          }
+          style={styles.spanThirtyOne}
+        />
+        <span
+          className={
+            type === "squareTriangleCircleCross"
+              ? "floating cross"
+              : `floating ${type}`
+          }
+          style={styles.spanThirtyTwo}
+        />
       </div>
     </div>
   );
 };
 
-
 const AnimationBG = ({ children, type }) => {
   return (
     <React.Fragment>
-      {type!=='none'&&generateTypeJSX(children,type)}
+      {type !== "none" && generateTypeJSX(children, type)}
       {type === "none" && children}
     </React.Fragment>
   );

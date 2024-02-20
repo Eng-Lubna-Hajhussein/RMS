@@ -2,6 +2,7 @@ import { icons } from "appHelper/appVariables";
 import { dictionary } from "appHelper/appDictionary";
 import React from "react";
 import { Box, Grid, Icon, Typography } from "@mui/material";
+import { App_Primary_Color } from "appHelper/appColor";
 
 const styles = {
   contactIconBox: {
@@ -9,7 +10,7 @@ const styles = {
     padding: "2px",
     width: "34px",
     textAlign: "center",
-    background: "#f3274c",
+    // background: "#f3274c",
     borderRadius: "50%",
   },
   contactTypography: {
@@ -19,36 +20,36 @@ const styles = {
   },
 };
 
-function SystemContact({ lang, contact }) {
+function SystemContact({ lang, contact,color=App_Primary_Color }) {
   return (
-    <React.Fragment>
-      <Grid item>
-        <Box sx={styles.contactIconBox}>
+    <Grid container item xs='12' alignContent={'center'} alignItems={'center'} spacing={2}>
+      <Grid item >
+        <Box sx={{...styles.contactIconBox,
+        background:color
+        }}>
           <Icon>{icons[contact.type]}</Icon>
         </Box>
       </Grid>
-      <Grid item container xs={8} alignSelf={"center"}>
         <Grid item>
           <Typography
-            component={"p"}
+            component={"span"}
             sx={styles.contactTypography}
             color={"#000"}
           >
-            {dictionary.contact[contact.type][lang]} :&nbsp;
+            {dictionary.contact[contact.type][lang]} :
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item >
           <Typography
             dir="ltr"
-            component={"p"}
+            component={"span"}
             sx={styles.contactTypography}
             color={"#000"}
           >
-            &nbsp;{contact.value}
+            {contact.value}
           </Typography>
         </Grid>
-      </Grid>
-    </React.Fragment>
+    </Grid>
   );
 }
 

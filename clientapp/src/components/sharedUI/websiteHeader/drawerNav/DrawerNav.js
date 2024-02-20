@@ -9,15 +9,27 @@ import {
   Typography,
   Box,
   Grid,
+  Avatar,
+  Icon,
+  Divider,
 } from "@mui/material";
-import { ExpandLess, ExpandMore, Close } from "@mui/icons-material";
+import {
+  ExpandLess,
+  ExpandMore,
+  Close,
+  HowToRegOutlined,
+} from "@mui/icons-material";
 import { lstWebsiteNav } from "appHelper/appVariables";
 import { dictionary } from "appHelper/appDictionary";
 import logoIcon from "assets/image/logo.png";
+import { Link, useParams } from "react-router-dom";
+import NavList from "components/sharedUI/NavList/NavList";
+import SystemContact from "../UpperToolbar/SystemContact/SystemContact";
+import SystemSocial from "../UpperToolbar/SystemSocial/SystemSocial";
 
 const styles = {
   listSubheader: {
-    borderBottom: "1px solid #000",
+    borderBottom: "1px solid #e4e4e4",
     width: "100%",
     height: "fit-content",
   },
@@ -39,17 +51,34 @@ const styles = {
     color: "#555",
   },
   paddingY40: {
-    paddingY: "40px",
+    paddingY: "20px",
   },
 };
 
-function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
+function DrawerNav({
+  openDrawer,
+  navList,
+  setOpenDrawer,
+  lang,
+  editable,
+  jsnSystemContact,
+  onSaveUpperHeader,
+  userImg,
+  dir,
+  userName,
+  blnUserLogin,
+  userNavList,
+  systemPath,
+  websiteLogo,
+}) {
   const [nestedListOpen, setNestedListOpen] = useState(false);
+  const { systemID, systemName } = useParams();
 
   return (
     <Drawer
       anchor="left"
       open={openDrawer}
+      sx={{ zIndex: "10000" }}
       onClose={() => setOpenDrawer(false)}
     >
       <List
@@ -58,7 +87,7 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
           <ListSubheader component="div" sx={styles.listSubheader}>
             <Grid container>
               <Grid item xs={8}>
-                <Box component={"img"} sx={styles.logo} src={logoIcon} />
+                <Box component={"img"} sx={styles.logo} src={websiteLogo} />
               </Grid>
               <Grid item xs={4} container justifyContent={"end"}>
                 <Close fontSize="large" onClick={() => setOpenDrawer(false)} />
@@ -68,7 +97,7 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
         }
         sx={styles.list}
       >
-        {lstWebsiteNav.map(({ bigNavID, nav, navList },index) => (
+        {navList.map(({ bigNavID, nav, navList }, index) => (
           <React.Fragment key={index}>
             {!navList?.length && (
               <ListItem button>
@@ -109,7 +138,7 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
                   timeout="auto"
                   unmountOnExit
                 >
-                  {navList?.map(({ nav },index) => (
+                  {navList?.map(({ nav }, index) => (
                     <List component="div" key={index} disablePadding>
                       <ListItem button>
                         <ListItemText
@@ -127,10 +156,61 @@ function DrawerNav({ openDrawer, setOpenDrawer, lang }) {
             )}
           </React.Fragment>
         ))}
-        <ListItem button sx={styles.paddingY40}>
+        <ListItem button sx={{ ...styles.paddingY40 }}>
           <Typography className="animated-btn-001">
             {dictionary.buttons.reverseTableBtn[lang]}
           </Typography>
+        </ListItem>
+        <Divider sx={{ paddingBottom: "10px" }} />
+        <ListItem button>
+          <Grid container item xs={12} justifyContent={"start"}>
+            <SystemContact
+            color={"#e4e4e4"}
+              contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
+              lang={lang}
+            />
+          </Grid>
+        </ListItem>
+        <ListItem button>
+          <Grid container item xs={12}>
+            <SystemContact
+             color={"#e4e4e4"}
+              contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
+              lang={lang}
+            />
+          </Grid>
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <Grid container item xs={12} justifyContent={"center"}>
+            <Grid item xs={3}>
+              <SystemSocial
+                social={{
+                  type: "strFacebook",
+                  path: jsnSystemContact.strFacebook,
+                }}
+                lang={lang}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <SystemSocial
+                social={{
+                  type: "strInstagram",
+                  path: jsnSystemContact.strInstagram,
+                }}
+                lang={lang}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <SystemSocial
+                social={{
+                  type: "strYoutube",
+                  path: jsnSystemContact.strYoutube,
+                }}
+                lang={lang}
+              />
+            </Grid>
+          </Grid>
         </ListItem>
       </List>
     </Drawer>

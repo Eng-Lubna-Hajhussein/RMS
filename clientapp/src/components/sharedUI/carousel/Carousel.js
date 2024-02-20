@@ -7,7 +7,7 @@ const styles = {
   container: {
     backgroundPosition: "center",
     backgroundSize: "cover",
-    
+
     height: { lg: "600px", xs: "700px" },
     width: "100%",
     content: '""',
@@ -23,6 +23,10 @@ const styles = {
   insetIndicators: {
     marginTop: "-80px",
     paddingX: { lg: "60px !important", xs: "15px" },
+  },
+  outsetIndicators: {
+    marginTop: "10px",
+    background: "red",
   },
 };
 
@@ -158,7 +162,7 @@ export const Carousel = ({
           container
           xs={12}
           justifyContent={justify}
-          display={styles.lg}
+          display={{ lg: "flex", xs: "none" }}
           sx={inset && styles.insetIndicators}
           className="indicators"
           py={!inset && 3}
@@ -194,6 +198,7 @@ export const Carousel = ({
           display={{ lg: "none", xs: "flex" }}
           sx={inset && styles.insetIndicators}
           className="indicators"
+          py={!inset && 2}
         >
           {Array(indicators)
             .fill(1)

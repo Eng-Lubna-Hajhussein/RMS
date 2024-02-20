@@ -53,3 +53,25 @@ export const getBotMsg = (userMsg) => {
       }
   })
 }
+
+export const calculateZDirection = (lat1, long1, lat2, long2) => {
+  let p1 = Math.pow(Math.pow(lat1, 2) + Math.pow(long1, 2), 0.5);
+  let p2 = Math.pow(Math.pow(lat2, 2) + Math.pow(long2, 2), 0.5);
+  return (Math.abs(p2 - p1) * 157) / (70 / 60);
+};
+
+export const formateTime = (seconds) => {
+  let h = Math.floor(seconds / 3600);
+  let m = Math.floor((seconds - h * 3600) / 60);
+  let s = Math.floor(seconds - (h * 3600 + m * 60));
+  if (h < 10) {
+    h = "0" + h;
+  }
+  if (m < 10) {
+    m = "0" + m;
+  }
+  if (s < 10) {
+    s = "0" + s;
+  }
+  return {h:h,m:m,s:s};
+};

@@ -103,6 +103,7 @@ function RouteAdmin() {
 
   const onSaveUpperHeader = (contacts) => {
     setSystemInfo({ ...systemInfo, jsnSystemContact: contacts });
+    isSystemUpdated.current=true;
   };
   const onSaveHero = (heroSectionUpdated) => {
     setSystemInfo({

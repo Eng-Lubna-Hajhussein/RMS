@@ -37,7 +37,7 @@ const styles = {
     width: "30px",
   },
   reviewContainer: {
-    height: "150px",
+    height: {lg:"150px",xs:"50px"},
     overflow: "auto",
   },
   lgDisplay: {

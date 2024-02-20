@@ -32,7 +32,7 @@ function PersonalInfo({ appState, lang }) {
       </Grid>
       <Grid item xs="12" pb={3} container justifyContent={"center"}>
         <Typography sx={styles.address}>
-            {`${appState?.userInfo?.jsnAddress?.jsnCity[lang]} (${appState?.userInfo?.jsnAddress?.jsnTown[lang]}), ${appState?.userInfo?.jsnAddress?.jsnCountry[lang]}`}
+            {`${appState?.userInfo?.jsnAddress?.jsnCity[lang]}${appState?.userInfo?.jsnAddress?.jsnTown?` (${appState?.userInfo?.jsnAddress?.jsnTown[lang]})`:""}, ${appState?.userInfo?.jsnAddress?.jsnCountry[lang]}`}
         </Typography>
       </Grid>
     </Grid>

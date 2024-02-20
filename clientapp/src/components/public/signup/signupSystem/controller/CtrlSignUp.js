@@ -3,6 +3,7 @@ import {
   CITIES,
   COUNTRIES,
   Demo_jsnSystemInfo,
+  Demo_objSystemLocation,
   objRoleID,
 } from "appHelper/appVariables";
 import { createSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
@@ -28,8 +29,7 @@ export const ctrlSignUp = {
       };
       const jsnSystemLocation = await mapLocation.getLocation();
       //#region demo customize system location for testing
-      jsnSystemLocation.lat = jsnSystemLocation.lat * 2;
-      jsnSystemLocation.long = jsnSystemLocation.long * 2;
+      const demoTestingSystemLocation = Demo_objSystemLocation;
       //#endregion
       const jsnSystemName = {
         eng: formData.restaurantNameEng,
@@ -45,7 +45,7 @@ export const ctrlSignUp = {
         jsnSystemAddress: jsnSystemAddress,
         jsnSystemName: jsnSystemName,
         strSystemPathURL: strSystemPathURL,
-        jsnSystemLocation: jsnSystemLocation,
+        jsnSystemLocation: demoTestingSystemLocation,
         jsnSystemContact: Demo_jsnSystemInfo.jsnSystemContact,
         lstSystemTeam: Demo_jsnSystemInfo.lstSystemTeam,
         jsnSystemSections: {...Demo_jsnSystemInfo.jsnSystemSections,

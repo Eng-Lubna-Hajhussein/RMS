@@ -47,8 +47,8 @@ export const ctrlReserveTable = {
           strCVV: cvv,
           strNameOnCard: cardName,
         },
-        dtmReservationStart: dtmReservationStart,
-        dtmReservationEnd: dtmReservationEnd,
+        dtmReservationStart: new Date(dtmReservationStart).toISOString(),
+        dtmReservationEnd: new Date(dtmReservationEnd).toISOString(),
         blnTableAvailable: false,
       };
       const reservedTable = await reserveTable(objInput);

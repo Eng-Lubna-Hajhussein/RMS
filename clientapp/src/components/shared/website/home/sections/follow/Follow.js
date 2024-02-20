@@ -5,7 +5,8 @@ import bgImg from "assets/image/follow.jpg";
 
 const styles = {
   container: {
-    marginY: "100px",
+    marginY: { lg: "100px", xs: "20px" },
+    paddingX: { lg: "60px", xs: "10px" },
     background: `url(${bgImg})`,
     backgroundSize: "100% 100%",
     height: "500px",
@@ -24,13 +25,13 @@ const styles = {
     color: "#fff",
   },
   title: {
-    fontSize: "40px",
+    fontSize: { lg: "40px", xs: "20px" },
     color: "#000",
     fontWeight: "800",
     textTransform: "capitalize",
   },
   subTitle: {
-    fontSize: "16px",
+    fontSize: { lg: "16px", xs: "12px" },
     color: "#555",
     fontWeight: "400",
     textTransform: "capitalize",

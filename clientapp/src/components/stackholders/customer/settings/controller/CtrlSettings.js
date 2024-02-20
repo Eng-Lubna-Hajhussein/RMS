@@ -40,7 +40,7 @@ export const ctrlSittings = {
         jsnFullName: jsnFullName,
         jsnClientPayment: jsnClientPayment,
         jsnAddress: jsnAddress,
-        dtmUpdatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        dtmUpdatedDate: new Date().toISOString()//moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
       };
       const updatedUser = await customerUpdateSettings(objInputUser);
       if(updatedUser){

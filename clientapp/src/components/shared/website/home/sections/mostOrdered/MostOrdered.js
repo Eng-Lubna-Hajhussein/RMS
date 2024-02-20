@@ -7,23 +7,26 @@ import { dictionary } from "appHelper/appDictionary";
 const styles = {
   container: {
     height: "fit-content",
-    marginY: "100px",
-    paddingX: { lg: "60px", xs: "15px" },
+    marginY: { lg: "100px", xs: "20px" },
+    paddingX: { lg: "60px", xs: "10px" },
   },
   mainTitle: {
-    fontSize: "50px !important",
+    fontSize: { lg: "50px !important", xs: "30px" },
     color: "#000 !important",
     fontWeight: "700 !important",
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
   line: {
     width: "100%",
     background: "#ffd40d",
     borderRadius: "26px",
     height: "12px",
+  },
+  titleContainer: {
+    marginBottom: { lg: "50px", xs: "20px" },
   },
 };
 
@@ -42,9 +45,17 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
       justifyContent={"center"}
       sx={styles.container}
     >
-      <Grid item lg={12} mb={4} container justifyContent={"center"}>
+      <Grid
+        item
+        lg={12}
+        sx={styles.titleContainer}
+        container
+        justifyContent={"center"}
+      >
         <Grid item lg={12} container justifyContent={"center"}>
-          <Typography sx={styles.mainTitle}>{dictionary.mostOrderedSection.title[lang]}</Typography>
+          <Typography sx={styles.mainTitle}>
+            {dictionary.mostOrderedSection.title[lang]}
+          </Typography>
         </Grid>
         <Grid item lg={3} xs={6} sx={styles.line} />
       </Grid>

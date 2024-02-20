@@ -5,6 +5,7 @@ import useLanguage from "hooks/useLanguage/useLanguage";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Demo_jsnSystemInfo,
+  Demo_objSystemLocation,
   lstWebsiteNav,
   objCategoriesType,
   objRoleID,
@@ -118,6 +119,7 @@ function RouteLandingPage({ isDemo }) {
           websiteLogo={
             isDemo?Demo_jsnSystemInfo.strLogoPath:systemInfo.strLogoPath
           }
+          jsnSystemLocation={Demo_objSystemLocation}
           systemPath={systemInfo?.strSystemPathURL}
           ws={isDemo?Demo_jsnSystemInfo.bigWSCategoryID:systemInfo?.bigWSCategoryID}
           lang={appState.clientInfo.strLanguage}

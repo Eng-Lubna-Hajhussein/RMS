@@ -50,27 +50,32 @@ function RouteCustomer() {
   }, [appState.clientInfo.blnUserLogin]);
 
   const addOrderProduct = (product) => {
-    const productPrice = product.jsnCategoryInfo.blnOnSale
-      ? product.jsnCategoryInfo.strSalePrice
-      : product.jsnCategoryInfo.strPrice;
-    const productIndex = appState.userInfo.userCart.lstProduct.findIndex(
-      ({ bigID }) => `${product.bigID}` === `${bigID}`
-    );
-    if (productIndex === -1) {
-      appState.userInfo.userCart.lstProduct.push({
-        bigID: product.bigID,
-        intQuantity: 1,
-        strPrice: productPrice,
-      });
-      appDispatch({ ...appState });
+    if(appState?.userInfo?.userOrder?.bigOrderID){
+      alert('you have an order on the way already!');
       return;
+    }else {
+      const productPrice = product.jsnCategoryInfo.blnOnSale
+        ? product.jsnCategoryInfo.strSalePrice
+        : product.jsnCategoryInfo.strPrice;
+      const productIndex = appState.userInfo.userCart.lstProduct.findIndex(
+        ({ bigID }) => `${product.bigID}` === `${bigID}`
+      );
+      if (productIndex === -1) {
+        appState.userInfo.userCart.lstProduct.push({
+          bigID: product.bigID,
+          intQuantity: 1,
+          strPrice: productPrice,
+        });
+        appDispatch({ ...appState });
+        return;
+      }
+      appState.userInfo.userCart.lstProduct[productIndex] = {
+        ...appState.userInfo.userCart.lstProduct[productIndex],
+        intQuantity:
+          appState.userInfo.userCart.lstProduct[productIndex]?.intQuantity + 1,
+      };
+      appDispatch({ ...appState });
     }
-    appState.userInfo.userCart.lstProduct[productIndex] = {
-      ...appState.userInfo.userCart.lstProduct[productIndex],
-      intQuantity:
-        appState.userInfo.userCart.lstProduct[productIndex]?.intQuantity + 1,
-    };
-    appDispatch({ ...appState });
   }
 
   const handleUploadPictureOpen = () => {
@@ -97,6 +102,7 @@ function RouteCustomer() {
           editable={false}
           navList={navList}
           adminEditMode={false}
+          jsnSystemLocation={appState?.systemInfo?.jsnSystemLocation}
           customerEditMode={true}
           userCart={appState?.userInfo?.userCart}
           addOrderProduct={addOrderProduct}

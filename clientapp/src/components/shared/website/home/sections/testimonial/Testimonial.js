@@ -6,8 +6,8 @@ import { useMemo } from "react";
 const styles = {
   container: {
     height: "fit-content",
-    marginY: "100px",
-    paddingX: { lg: "60px", xs: "15px" },
+    marginY: { lg: "100px", xs: "20px" },
+    paddingX: { lg: "60px", xs: "10px" },
   },
   title: {
     textTransform: "uppercase",
@@ -85,14 +85,15 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
             {jsnTestimonialSection?.jsnSubtitle[lang]}
           </Typography>
         </Grid>
-        <Grid item container pt={3} lg={10} xs={12}>
+        <Grid item container pt={3} lg={10} xs={12} >
           <Carousel
             slides={slides}
             activeSlides={1}
-            justify={"start"}
+            justify={"center"}
             activeColor={"#f3274c"}
             inactiveColor={"#b5b5b5"}
             lang={lang}
+            
             dir={dir}
           />
         </Grid>

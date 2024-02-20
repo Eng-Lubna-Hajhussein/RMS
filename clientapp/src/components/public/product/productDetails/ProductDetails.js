@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Grid, Rating, Typography } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import arrowImg from "assets/image/arrow-2.png";
 
 const styles = {
   saleBox: {

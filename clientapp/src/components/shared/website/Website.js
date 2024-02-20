@@ -36,6 +36,7 @@ function Website({
   systemPath,
   lang,
   dir,
+  jsnSystemLocation
 }) {
   return (
     <>
@@ -50,6 +51,7 @@ function Website({
       onSaveAbout={onSaveAbout}
       systemID={systemID}
       websiteLogo={websiteLogo}
+      jsnSystemLocation={jsnSystemLocation}
       navList={navList}
       userCart={userCart}
       addOrderProduct={addOrderProduct}

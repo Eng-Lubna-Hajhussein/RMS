@@ -28,8 +28,8 @@ const UserType = new GraphQLObjectType({
     jsnAddress: { type: GraphQLJSON },
     blnIsDeleted: { type: GraphQLBoolean },
     blnIsActive: { type: GraphQLBoolean },
-    dtmCreatedDate: { type: GraphQLString },
-    dtmUpdatedDate: { type: GraphQLString },
+    dtmCreatedDate: { type: GraphQLDateTime },
+    dtmUpdatedDate: { type: GraphQLDateTime },
     jsnClientPayment: { type: GraphQLJSON },
   }),
 });
@@ -52,8 +52,8 @@ const SystemType = new GraphQLObjectType({
     lstContactUs: { type: GraphQLJSON },
     blnIsDeleted: { type: GraphQLBoolean },
     blnIsActive: { type: GraphQLBoolean },
-    dtmCreatedDate: { type: GraphQLDate },
-    dtmUpdatedDate: { type: GraphQLDate },
+    dtmCreatedDate: { type: GraphQLDateTime },
+    dtmUpdatedDate: { type: GraphQLDateTime },
   }),
 });
 
@@ -85,7 +85,7 @@ const OrderType = new GraphQLObjectType({
     strTotalPrice: { type: GraphQLString },
     jsnAddress: { type: GraphQLJSON },
     jsnLocation: { type: GraphQLJSON },
-    dtmOrderDate: { type: GraphQLString },
+    dtmOrderDate: { type: GraphQLDateTime },
     jsnClientInfo: { type: GraphQLJSON },
     jsnClientPayment: { type: GraphQLJSON },
     blnDelivered: { type: GraphQLBoolean },

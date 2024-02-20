@@ -6,7 +6,7 @@ const styles = {
     width: { lg: "40px", xs: "20px" },
   },
   label: {
-    fontSize: { lg: "16px", xs: "6px" },
+    fontSize: { lg: "16px", xs: "9px" },
     textTransform: "capitalize",
     color: "#fff",
     fontWeight: "800",
