@@ -7,6 +7,7 @@ const styles = {
     fontWeight: "600",
     px: "3px",
     textTransform: "capitalize",
+    // fontSize:{lg:"16px",xs:"12px"}
   },
 };
 

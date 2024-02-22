@@ -88,7 +88,7 @@ function EditReservation({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textfield}
@@ -104,7 +104,7 @@ function EditReservation({
                   defaultValue={jsnReservation.jsnTitle["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textfield}
@@ -128,7 +128,7 @@ function EditReservation({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textfield}
@@ -144,7 +144,7 @@ function EditReservation({
                   defaultValue={jsnReservation.jsnDescription["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textfield}
@@ -171,7 +171,7 @@ function EditReservation({
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={2}>
+            <Grid item xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

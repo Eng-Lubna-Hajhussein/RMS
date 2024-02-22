@@ -91,7 +91,7 @@ export const dictionary = {
   },
   upperHeaderSection: {
     title: {
-      eng: "edit upper header info",
+      eng: "edit contact info",
       arb: "تعديل معلومات قسم العنوان العلوي",
     },
   },

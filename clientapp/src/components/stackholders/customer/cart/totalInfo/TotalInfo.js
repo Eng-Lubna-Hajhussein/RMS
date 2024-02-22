@@ -6,46 +6,46 @@ import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 
 const styles = {
   paper: {
-    height: "500px",
+    height: "fit-content",
     boxShadow: "none",
     border: `4px solid ${App_Second_Color}`,
     borderRadius: "20px",
-    padding: "50px",
+    padding: { lg: "45px", xs: "15px" },
   },
   fullHeight: {
     height: "100%",
   },
   cartTotals: {
-    fontSize: "25px",
+    fontSize: { lg: "25px", xs: "20px" },
     fontWeight: "800",
   },
   subPaper: {
-    height: "250px",
+    height: { lg: "250px", xs: "200px" },
     boxShadow: "none",
     border: `4px solid #e4e4e4`,
     borderRadius: "20px",
   },
   container: {
-    paddingX: "50px",
+    paddingX: { lg: "50px", xs: "10px" },
   },
   font: {
-    fontSize: "15px",
+    fontSize: { lg: "15px", xs: "14px" },
     fontWeight: "800",
   },
   totalPaper: {
-    height: "80px",
+    height: { lg: "80px", xs: "60px" },
     width: "100%",
     boxShadow: "none",
     background: "#f4fcfc",
     borderRadius: "20px",
-    paddingX: "20px",
+    paddingX: {lg:"20px",xs:"10px"},
   },
   fitContentHeight: {
     height: "fit-content",
   },
   totalContainer: {
     height: "100%",
-    paddingX: "20px",
+    paddingX: {lg:"20px",xs:"10px"},
   },
 };
 
@@ -99,9 +99,15 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs="12" p={1} py={3} container justifyContent={"end"}>
+        <Grid item xs="12" p={1} pt={3} container justifyContent={"end"}>
           <AnimButton0001
-            label={"proceed to checkout"}
+            label={<Typography
+            sx={{
+              fontSize:{xs:"16px"}
+            }}
+            >
+              proceed to checkout
+            </Typography>}
             color={App_Primary_Color}
             onClick={handleCheckoutOpen}
           />

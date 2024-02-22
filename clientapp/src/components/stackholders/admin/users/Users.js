@@ -22,10 +22,11 @@ import { findUsers } from "appHelper/fetchapi/tblUser/tblUser";
 import UserDetails from "./userDetails/UserDetails";
 import arrowImg from "assets/image/arrow-2.png";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+import UsersInfo from "./usersInfo/UsersInfo";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -113,14 +114,15 @@ const styles = {
 };
 
 function Users() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const [users, setUsers] = useState([]);
   const { systemID, systemName } = useParams();
   const [userOnAction, setUserOnAction] = useState();
   const [openUserDetails, setOpenUserDetails] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
@@ -132,6 +134,11 @@ function Users() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleUserDetails = (user)=>{
+      setUserOnAction(user);
+      setOpenUserDetails(true);
+  }
 
   const userNavList = [
     { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
@@ -181,12 +188,16 @@ function Users() {
         jsnLocation: JSON.parse(user?.jsnLocation),
         jsnAddress: JSON.parse(user?.jsnAddress),
         jsnClientPayment: JSON.parse(user?.jsnClientPayment),
+
       }));
       setUsers([...parsedUsers]);
     }
-    // console.log({ systemUsers });
     setIsLoading(false);
   };
+
+  useEffect(()=>{
+    console.log({users})
+  },[users])
 
   useEffect(() => {
     instalData();
@@ -213,8 +224,15 @@ function Users() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
-            <Grid item xs="12" sx={styles.tableContainer} px={1}>
+          <Grid item lg="10" xs='12' px={2} container>
+            <UsersInfo
+            dir={dir}
+            handleUserDetails={handleUserDetails}
+            lang={lang}
+            users={users}
+            appState={appState}
+            />
+            {/* <Grid item xs="12" sx={styles.tableContainer} px={1}>
               <Table
                 aria-label="simple table"
                 initialState={{
@@ -391,7 +409,7 @@ function Users() {
                   </TableRow>
                 </TableFooter>
               </Table>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       )}

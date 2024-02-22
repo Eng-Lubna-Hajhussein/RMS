@@ -22,15 +22,15 @@ const styles = {
   container: {
     background: "#f3fbfb",
     height: "fit-content",
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: "20px",
+    padding: {lg:"20px",xs:"5px"},
   },
   title: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: {lg:"30px",xs:"20px"},
   },
   inputLabel: {
     textTransform: "capitalize",
@@ -165,16 +165,17 @@ function Settings() {
       />
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"}>
+        <Grid container px={2} justifyContent={"center"}>
           <Grid
             item
             container
             justifyContent={"center"}
-            xs="10"
+            lg="10"
+            xs="12"
             sx={styles.container}
           >
             <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-              <Grid item xs="12" pb={3} container justifyContent={"center"}>
+              <Grid item xs="12" p={2} container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
                   Settings
                 </Typography>
@@ -184,7 +185,7 @@ function Settings() {
                   <Title0001 title={"address"} dir={dir} />
                 </Grid>
                 <Grid item xs="12" container>
-                  <Grid item xs="6" p={2}>
+                  <Grid item lg="6" xs='12' p={2}>
                     <FormControl fullWidth>
                       <InputLabel sx={styles.inputLabel}>Country</InputLabel>
                       <Select
@@ -199,7 +200,7 @@ function Settings() {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs="6" p={2}>
+                  <Grid item lg="6" xs='12' p={2}>
                     <FormControl fullWidth>
                       <InputLabel sx={styles.inputLabel}>City</InputLabel>
                       <Select
@@ -242,7 +243,7 @@ function Settings() {
                       }}
                     />
                   </Grid>
-                  <Grid item xs="6" p={2}>
+                  <Grid item lg="6" xs='12' p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
@@ -259,7 +260,7 @@ function Settings() {
                       }}
                     />
                   </Grid>
-                  <Grid item xs="6" p={2}>
+                  <Grid item lg="6" xs='12' p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"

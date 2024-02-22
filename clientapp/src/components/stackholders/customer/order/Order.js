@@ -7,13 +7,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { calculateZDirection } from "appHelper/appFunctions";
 import Products from "./products/Products";
 import DeliveryTime from "./deliveryTime/DeliveryTime";
-import TotalInfo from "./totalInfo/TotallInfo";
+import TotalInfo from "./totalInfo/TotalInfo";
 import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: {lg:"50px",xs:"20px"},
+  },
+  orderInfo: {
+    marginTop: {lg:"40px",xs:"10px"},
   },
 };
 
@@ -105,7 +108,7 @@ function Order() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
+          <Grid item lg="10" xs="12" px={2} container>
             <Grid item xs="12" px={1}>
               <Products
                 orderedCategories={orderedCategories}
@@ -114,8 +117,8 @@ function Order() {
                 appState={appState}
               />
             </Grid>
-            <Grid item xs="12" container sx={{ marginTop: "40px" }}>
-              <Grid item xs="4" px={1}>
+            <Grid item xs="12" container spacing={3} sx={styles.orderInfo}>
+              <Grid item lg="4" xs={12} px={1}>
                 <DeliveryTime
                   deliveryTime={deliveryTime}
                   dir={dir}
@@ -125,7 +128,7 @@ function Order() {
                   appState={appState}
                 />
               </Grid>
-              <Grid item xs="8" px={1}>
+              <Grid item lg="8" xs={12} px={1}>
                 <TotalInfo dir={dir} lang={lang} totalPrice={totalPrice} />
               </Grid>
             </Grid>

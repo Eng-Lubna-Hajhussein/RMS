@@ -12,8 +12,7 @@ import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 
 const styles = {
   container: {
-    marginY: "5px",
-    marginBottom: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
 };
 
@@ -92,7 +91,7 @@ function ReserveTable() {
       {isLoading && <Typography>loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
+          <Grid item lg="10" xs="12" px={2} container>
             <Reservation
               dir={dir}
               endDate={endDate}

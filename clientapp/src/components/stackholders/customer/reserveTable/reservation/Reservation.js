@@ -59,7 +59,7 @@ function Reservation({
   lang,
   dir,
 }) {
-    const allowedReservationHours = [1, 2, 3, 4, 5, 6];
+  const allowedReservationHours = [1, 2, 3, 4, 5, 6];
   return (
     <Grid
       item
@@ -69,8 +69,8 @@ function Reservation({
       justifyContent={"center"}
       sx={{
         background: "#f4fcfc",
-        height: "250px",
-        marginY: "50px",
+        height: "fit-content",
+        marginBottom: { lg: "50px", xs: "20px" },
         borderRadius: "20px",
         padding: "20px",
       }}
@@ -80,7 +80,7 @@ function Reservation({
           <Typography
             sx={{
               textTransform: "uppercase",
-              fontSize: "28px",
+              fontSize: { lg: "28px", xs: "14px" },
               fontWeight: "800",
               color: App_Primary_Color,
               borderBottom: "3px solid #ffd40d",
@@ -90,7 +90,7 @@ function Reservation({
             RESERVE A TABLE !
           </Typography>
         </Grid>
-        <Grid item xs="6" container p={2}>
+        <Grid item lg="6" xs="12" container mt={2} p={2}>
           <FormControl fullWidth>
             <InputLabel>Reservation Time</InputLabel>
             <Select
@@ -118,9 +118,9 @@ function Reservation({
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs="6" container p={2}></Grid>
-        <Grid item xs="6" container>
-          <Grid item xs="6" p={2}>
+        <Grid item lg="6" display={{lg:"flex",xs:"none"}} container p={2}/>
+        <Grid item lg="6" xs="12" container>
+          <Grid item lg="6" xs="12" p={2}>
             <TextField
               sx={{ background: "#fff", borderRadius: "5px" }}
               variant="outlined"
@@ -132,7 +132,7 @@ function Reservation({
               value={moment(new Date()).format("YYYY-MM-DD")}
             />
           </Grid>
-          <Grid item xs="6" p={2}>
+          <Grid item lg="6" xs="12" p={2}>
             <TextField
               sx={{ background: "#fff", borderRadius: "5px" }}
               variant="outlined"
@@ -145,8 +145,8 @@ function Reservation({
             />
           </Grid>
         </Grid>
-        <Grid item xs="6" container>
-          <Grid item xs="6" p={2}>
+        <Grid item lg="6" xs="12" container>
+          <Grid item lg="6" xs="12" p={2}>
             <TextField
               sx={{ background: "#fff", borderRadius: "5px" }}
               variant="outlined"
@@ -163,7 +163,7 @@ function Reservation({
               ).format("YYYY-MM-DD")}
             />
           </Grid>
-          <Grid item xs="6" p={2}>
+          <Grid item lg="6" xs="12" p={2}>
             <TextField
               sx={{ background: "#fff", borderRadius: "5px" }}
               variant="outlined"

@@ -21,12 +21,12 @@ const styles = {
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: "14px !important",
+    fontSize: {lg:"14px",xs:"10px"},
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: "25px !important",
+    fontSize: {lg:"25px",xs:"14px"},
     fontWeight: "800 !important",
   },
   icon: {
@@ -39,19 +39,19 @@ const styles = {
   },
   container: {
     height: "fit-content",
-    marginY: "50px",
-    borderRadius: "20px",
-    padding: "20px",
+    paddingY: { lg: "50px", xs: "10px" },
+    // borderRadius: "20px",
+    // padding:{lg: "20px",xs:"10px"},
   },
   systemName: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: { lg: "30px", xs: "15px" },
   },
   systemAddress: {
     fontWeight: "700",
-    fontSize: "15px",
+    fontSize: { lg: "15px", xs: "10px" },
     textTransform: "capitalize",
   },
   fitContentHeight: {
@@ -102,9 +102,9 @@ function Dashboard() {
       return "-";
     }
     const ascOrders = orders.sort((a, b) => {
-      return Number(b.dtmOrderDate) - Number(a.dtmOrderDate);
+      return (b.dtmOrderDate) - (a.dtmOrderDate);
     });
-    return moment(new Date(Number(ascOrders[0]?.dtmOrderDate))).format(
+    return moment(new Date((ascOrders[0]?.dtmOrderDate))).format(
       "MMM DD,YYYY"
     );
   }, [orders]);
@@ -204,7 +204,9 @@ function Dashboard() {
             item
             container
             justifyContent={"center"}
-            xs="10"
+            lg="10"
+            xs="12"
+            px={2}
             sx={styles.container}
           >
             <Grid item xs="12" pb={1} container justifyContent={"center"}>
@@ -226,26 +228,27 @@ function Dashboard() {
                   appState?.systemInfo?.jsnSystemAddress?.jsnCountry[lang]}
               </Typography>
             </Grid>
-            <Grid item xs="12" py={5} container justifyContent={"center"}>
+            <Grid item xs="12" sx={{...styles.fitContentHeight,
+                    paddingY:{lg:"50px",xs:"10px"}
+                  }} container justifyContent={"center"}>
               {statistics.map(({ title, description, img }, index) => (
                 <Grid
                   item
-                  xs="6"
+                  lg="6"
+                  xs={12}
                   key={index}
                   justifyContent={"center"}
                   alignContent={"center"}
                   sx={styles.fitContentHeight}
-                  px={2}
-                  pb={3}
+          px={2}
+          pb={3}
+                  
                 >
                   <Box001 title={title} description={description} img={img} />
                 </Grid>
               ))}
             </Grid>
             <Grid item container xs="12">
-              <Grid item xs="12" p={2}>
-                <Typography sx={styles.subtitle}>Location</Typography>
-              </Grid>
               <Grid item xs="12" container p={2}>
                 <iframe
                   src={`https://maps.google.com/maps?q=${appState?.systemInfo?.jsnSystemLocation?.lat}, ${appState?.systemInfo?.jsnSystemLocation?.long}&z=15&output=embed`}

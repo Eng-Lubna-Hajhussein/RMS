@@ -9,7 +9,7 @@
 #chat-circle {
   position: fixed;
   bottom: 20px;
-  z-index: 9999;
+  z-index: 150;
   left: 20px;
   background: #ffd40d;
   width: 70px;
@@ -42,7 +42,7 @@
 
 .chat-box {
   display: none;
-  z-index: 99999;
+  z-index: 150;
   background: #efefef;
   position: fixed;
   left: 20px;

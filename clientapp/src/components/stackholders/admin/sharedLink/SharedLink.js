@@ -35,7 +35,7 @@ function SharedLink({ open, handleClose }) {
         <Grid container py={1}>
           <Grid item xs="12" p={1}>
             <Title0001
-              title={"Share Your Restaurant Website Link:"}
+              title={"Share Your Website Link:"}
               dir={dir}
             />
           </Grid>

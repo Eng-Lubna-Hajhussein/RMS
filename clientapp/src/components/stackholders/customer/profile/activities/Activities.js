@@ -3,23 +3,19 @@ import {Grid } from "@mui/material";
 import Box001 from "components/sharedUI/Box001/Box001";
 
 const style = {
-  box: {
-    width: "100%",
-    background: "#f4fcfc !important",
-    height: "100px",
-    borderRadius: "20px",
-    paddingX: "20px",
+  container: {
+    paddingY:{lg:"50px",xs:"10px"}
   },
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: "14px !important",
+    fontSize: {lg:"14px",xs:"10px"},
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: "25px !important",
-    fontWeight: "800 !important",
+    fontSize: {lg:"25px",xs:"14px"},
+    fontWeight: "800",
   },
   icon: {
     padding: "18px",
@@ -30,11 +26,12 @@ const style = {
 
 function Activities({activities}) {
   return (
-    <Grid item xs="12" py={5} container justifyContent={"center"}>
+    <Grid item xs="12" sx={style.container} container justifyContent={"center"}>
       {activities.map(({ title, description, img }, index) => (
         <Grid
           item
-          xs="6"
+          lg="6"
+          xs='12'
           justifyContent={"center"}
           alignContent={"center"}
           sx={style.fitContentHeight}

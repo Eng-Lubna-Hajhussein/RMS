@@ -47,7 +47,7 @@ function CustomerReview({
   handleEdit,
   handleDelete,
   lang,
-  dir
+  dir,
 }) {
   return (
     <Grid item xs="12">
@@ -55,88 +55,100 @@ function CustomerReview({
         item
         xs="12"
         px={1}
+        container
         pb={10}
         justifyContent={"center"}
         sx={{
           background: "#f4fcfc",
-          height: "380px",
-          marginY: "50px",
+          height: "fit-content",
           borderRadius: "20px",
-          padding: "20px",
+          marginBottom: { lg: "50px", xs: "20px" },
+          paddingX: { lg: "20px", xs: "10px" },
+          paddingY: "20px",
         }}
+        alignContent={"center"}
+        alignItems={"center"}
+        alignSelf={"center"}
       >
-        <Grid container>
-          <Grid item xs="12" container px={2} justifyContent={"start"}>
-            <Typography
-              sx={{
-                textTransform: "uppercase",
-                fontSize: "28px",
-                fontWeight: "800",
-                color: App_Primary_Color,
-                borderBottom: "3px solid #ffd40d",
-                width: "fit-content",
-              }}
-            >
-              Your Review !
-            </Typography>
-          </Grid>
-          <Grid item xs="12" container justifyContent={"start"}>
-            <Grid item xs="12" container py={3}>
-              <Grid item xs="6" pb={2} px={2}>
-                <Rating value={intRating} onChange={handleRatingChange} />
+        <Grid item xs="12" container px={2} justifyContent={"start"}>
+          <Typography
+            sx={{
+              textTransform: "uppercase",
+              fontSize: { lg: "28px", xs: "18px" },
+              fontWeight: "800",
+              color: App_Primary_Color,
+              borderBottom: "3px solid #ffd40d",
+              width: "fit-content",
+            }}
+          >
+            Your Review !
+          </Typography>
+        </Grid>
+        <Grid item xs="12" container justifyContent={"start"}>
+          <Grid item xs="12" container pt={3}>
+            <Grid item lg="6" xs="12" pb={2} px={2}>
+              <Rating value={intRating} onChange={handleRatingChange} />
+            </Grid>
+            <Grid item xs="12" container>
+              <Grid item lg={6} xs={12} px={2} sx={{ paddingY: "10px" }}>
+                <TextField
+                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  variant="outlined"
+                  fullWidth
+                  type="text"
+                  multiline
+                  rows={4}
+                  inputRef={reviewTextEng}
+                  defaultValue={userReview?.jsnComment["eng"]}
+                  label="Review English"
+                />
               </Grid>
-              <Grid item xs="12" container>
-                <Grid item xs="6" px={2}>
-                  <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
-                    variant="outlined"
-                    fullWidth
-                    type="text"
-                    multiline
-                    rows={4}
-                    inputRef={reviewTextEng}
-                    defaultValue={userReview?.jsnComment["eng"]}
-                    label="Review English"
-                  />
-                </Grid>
-                <Grid item xs="6" px={2}>
-                  <TextField
-                    sx={{ background: "#fff", borderRadius: "5px" }}
-                    variant="outlined"
-                    fullWidth
-                    type="text"
-                    multiline
-                    rows={4}
-                    defaultValue={userReview?.jsnComment["arb"]}
-                    dir="rtl"
-                    inputRef={reviewTextArb}
-                    label="Review Arabic"
-                  />
-                </Grid>
+              <Grid item lg={6} xs={12} px={2} sx={{ paddingY: "10px" }}>
+                <TextField
+                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  variant="outlined"
+                  fullWidth
+                  type="text"
+                  multiline
+                  rows={4}
+                  defaultValue={userReview?.jsnComment["arb"]}
+                  dir="rtl"
+                  inputRef={reviewTextArb}
+                  label="Review Arabic"
+                />
               </Grid>
-              <Grid item xs="12" container justifyContent={"end"} p={2}>
-                {!userReview && (
+            </Grid>
+            <Grid item xs="12" container justifyContent={"end"} px={2} pt={2}>
+              {!userReview && (
+                <Grid item lg="2" xs="6">
                   <AnimButton0001
                     onClick={handleAdd}
-                    label={"Add Review"}
+                    label={"Add"}
+                    fullWidth={true}
                     color={App_Primary_Color}
                   />
-                )}
-                {userReview && (
+                </Grid>
+              )}
+              {userReview && (
+                <Grid item lg="2" xs="6">
                   <AnimButton0001
                     onClick={handleDelete}
-                    label={"Delete Review"}
+                    label={"Delete"}
+                    fullWidth={true}
                     color={App_Second_Color}
                   />
-                )}
-                {userReview && (
+                </Grid>
+              )}
+              {userReview && (
+                <Grid item lg="2" xs="6">
                   <AnimButton0001
                     onClick={handleEdit}
-                    label={"Edit Review"}
+                    label={"Edit"}
+                    fullWidth={true}
                     color={App_Primary_Color}
                   />
-                )}
-              </Grid>
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </Grid>

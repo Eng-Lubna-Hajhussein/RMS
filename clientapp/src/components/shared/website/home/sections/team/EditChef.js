@@ -121,7 +121,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             alignItems={"start"}
             sx={styles.heightFitContent}
           >
-            <Grid item xs={6} container>
+            <Grid item lg={6} xs={12} container>
               <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.teamSection.chefImg[lang]}
@@ -161,7 +161,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item container xs={6}>
+            <Grid item container lg={6} xs={12}>
               <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.teamSection.chefContact[lang]}
@@ -218,7 +218,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -233,7 +233,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   multiline
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -256,7 +256,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -272,7 +272,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -299,7 +299,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={2}>
+            <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

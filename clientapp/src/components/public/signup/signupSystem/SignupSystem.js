@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "contextapi/context/AppContext";
 import bgImg from "assets/image/patron.jpg";
 import {
+  Box,
   FormControl,
   Grid,
   InputLabel,
@@ -13,33 +14,43 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { App_Second_Color } from "appHelper/appColor";
-import { COUNTRIES, CITIES } from "appHelper/appVariables";
+import {
+  COUNTRIES,
+  CITIES,
+  Demo_jsnSystemInfo,
+  lstWebsiteNav,
+} from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { ctrlSignUp } from "./controller/CtrlSignUp";
 import useMapLocation from "hooks/useMapLocation/useMapLocation";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
+import logo from "assets/image/logo-white.png";
 
 const styles = {
   container: {
     background: `url(${bgImg})`,
     height: "fit-content",
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: "20px",
+    padding: { lg: "30px", xs: "15px" },
   },
   title: {
-    color: "#fff",
+    color: App_Second_Color,
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: { lg: "30px", xs: "20px" },
   },
   price: {
     color: App_Second_Color,
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: { lg: "30px", xs: "14px" },
   },
   textfield: {
     background: "#fff",
     borderRadius: "5px",
+  },
+  logo: {
+    width: "150px",
   },
 };
 
@@ -88,21 +99,22 @@ function SignupSystem() {
 
   return (
     <React.Fragment>
-      <Grid container justifyContent={"center"}>
+      <Grid container px={2} justifyContent={"center"}>
         <Grid
           item
           container
           justifyContent={"center"}
-          xs="8"
+          lg="8"
+          xs="12"
           sx={styles.container}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid item xs="12" container justifyContent={"center"}>
+              <Box component={"img"} sx={styles.logo} src={logo} />
+            </Grid>
+            <Grid item xs="12" container justifyContent={"center"}>
               <Typography component={"h3"} sx={styles.title}>
-                Register Your Restaurant With Only{" "}
-                <Typography sx={styles.price} component={"span"}>
-                  $50
-                </Typography>
+                Restaurant Registration{" "}
               </Typography>
             </Grid>
             <Grid item xs="12" container>
@@ -110,7 +122,7 @@ function SignupSystem() {
                 <Title0001 title={"Restaurant Info"} dir={dir} />
               </Grid>
               <Grid item xs="12" container>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs="12" p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -128,7 +140,7 @@ function SignupSystem() {
                     }}
                   />
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs="12" p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -146,7 +158,7 @@ function SignupSystem() {
                     }}
                   />
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs="12" p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -164,7 +176,7 @@ function SignupSystem() {
                     }}
                   />
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs="12" p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -182,7 +194,7 @@ function SignupSystem() {
                     }}
                   />
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs="12" p={2}>
                   <FormControl fullWidth>
                     <InputLabel>Country</InputLabel>
                     <Select
@@ -197,7 +209,7 @@ function SignupSystem() {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs="12" p={2}>
                   <FormControl fullWidth>
                     <InputLabel>City</InputLabel>
                     <Select
@@ -218,9 +230,9 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Title0001 title={'Registration Info'} dir={dir} />
+                <Title0001 title={"Registration Info"} dir={dir} />
               </Grid>
-              <Grid item xs="6" p={2}>
+              <Grid item lg="6" xs="12" p={2}>
                 <TextField
                   sx={styles.textfield}
                   variant="outlined"
@@ -240,7 +252,7 @@ function SignupSystem() {
                   }}
                 />
               </Grid>
-              <Grid item xs="6" p={2}>
+              <Grid item lg="6" xs="12" p={2}>
                 <TextField
                   sx={styles.textfield}
                   variant="outlined"
@@ -259,7 +271,7 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Title0001 title={'Payment Info'} dir={dir} />
+                <Title0001 title={"Payment Info"} dir={dir} />
               </Grid>
               <Grid item xs="12" p={2}>
                 <TextField
@@ -275,7 +287,7 @@ function SignupSystem() {
                   }}
                 />
               </Grid>
-              <Grid item xs="6" p={2}>
+              <Grid item lg="6" xs="12" p={2}>
                 <TextField
                   sx={styles.textfield}
                   variant="outlined"
@@ -289,7 +301,7 @@ function SignupSystem() {
                   }}
                 />
               </Grid>
-              <Grid item xs="6" p={2}>
+              <Grid item lg="6" xs="12" p={2}>
                 <TextField
                   sx={styles.textfield}
                   variant="outlined"
@@ -308,7 +320,7 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container justifyContent={"end"} p={2}>
               <AnimButton0001
-                label={"Register $50"}
+                label={"Register With only $50"}
                 color={App_Second_Color}
                 type="submit"
               />

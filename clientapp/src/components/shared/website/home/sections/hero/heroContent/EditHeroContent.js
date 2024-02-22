@@ -53,7 +53,7 @@ const styles = {
     backgroundSize: "100% 100%",
     height: "280px",
     borderRadius: "20px",
-    background: "red",
+    width: { lg: "820px !important", xs: "100%" },
   },
   btnLabel: {
     color: "#fff",
@@ -190,7 +190,14 @@ function EditHeroContent({
                 />
               </Grid>
               <Grid item xs={12} container>
-                <Grid item xs={6} p={1} container justifyContent={"start"}>
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
+                  p={1}
+                  container
+                  justifyContent={"start"}
+                >
                   <UploadButton001
                     onChange={onImgChange}
                     label={dictionary.buttons.changeSlideImg[lang]}
@@ -198,7 +205,14 @@ function EditHeroContent({
                     variant={"square"}
                   />
                 </Grid>
-                <Grid item xs={6} p={1} container justifyContent={"end"}>
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
+                  p={1}
+                  container
+                  justifyContent={"end"}
+                >
                   <FormControl fullWidth>
                     <InputLabel sx={styles.inputLabel}>
                       {dictionary.labels.backgroundAnimation[lang]}
@@ -214,7 +228,9 @@ function EditHeroContent({
                     >
                       <MenuItem value={"none"}>{"none"}</MenuItem>
                       {bgAnimationTypes.map((type, index) => (
-                        <MenuItem key={index} value={type}>{type}</MenuItem>
+                        <MenuItem key={index} value={type}>
+                          {type}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -224,8 +240,6 @@ function EditHeroContent({
                 <AnimationBG type={slide?.strBgAnimationType || "none"}>
                   <Box
                     component={"img"}
-                    height="240px"
-                    width={"100%"}
                     src={slide.strImgPath}
                     sx={styles.bgBox}
                   />
@@ -240,7 +254,7 @@ function EditHeroContent({
                 />
               </Grid>
               <Grid container item xs={12}>
-                <Grid item xs={6} p={1}>
+                <Grid item xs={12} lg={6} p={1}>
                   <Button
                     color="secondary"
                     fullWidth
@@ -256,7 +270,7 @@ function EditHeroContent({
                     </Typography>
                   </Button>
                 </Grid>
-                <Grid item xs={6} p={1}>
+                <Grid item xs={12} lg={6} p={1}>
                   <Button
                     color="secondary"
                     fullWidth
@@ -273,7 +287,7 @@ function EditHeroContent({
                   </Button>
                 </Grid>
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item xs={12} lg={6} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -289,7 +303,7 @@ function EditHeroContent({
                   defaultValue={slide.jsnTitle["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item xs={12} lg={6} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -314,7 +328,7 @@ function EditHeroContent({
                 />
               </Grid>
               <Grid container item xs={12}>
-                <Grid item xs={6} p={1}>
+                <Grid item xs={12} lg={6} p={1}>
                   <Button
                     color="secondary"
                     fullWidth
@@ -330,7 +344,7 @@ function EditHeroContent({
                     </Typography>
                   </Button>
                 </Grid>
-                <Grid item xs={6} p={1}>
+                <Grid item xs={12} lg={6} p={1}>
                   <Button
                     color="secondary"
                     fullWidth
@@ -350,7 +364,7 @@ function EditHeroContent({
                   </Button>
                 </Grid>
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item xs={12} lg={6} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -366,7 +380,7 @@ function EditHeroContent({
                   defaultValue={slide.jsnSubtitle["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item xs={12} lg={6} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -393,7 +407,7 @@ function EditHeroContent({
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={2}>
+            <Grid item lg={2} xs="6">
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

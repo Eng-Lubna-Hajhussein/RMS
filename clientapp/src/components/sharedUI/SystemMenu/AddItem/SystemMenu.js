@@ -35,7 +35,7 @@ const styles = {
   menuPaper: {
     // height: "fit-content !important",
     minHeight: "500px",
-    height: "500px",
+    height:"500px",
     background: "#f3fbfb",
     width: "100%",
     borderRadius: "20px",
@@ -90,13 +90,10 @@ const styles = {
   addTabIcon: {
     background: "transparent",
     width: "100%",
+    height: "166px !important",
     border: "2px dashed #e4e4e4",
     borderRadius: "10px",
     cursor: "pointer",
-    height: {
-      xs: "90px !important",
-      lg: "166px !important",
-    },
   },
   tabOptionListContainer: {
     marginBottom: "-50px",
@@ -342,14 +339,7 @@ export default function RestaurantMenu({
             </Grid>
           ))}
           {adminEditMode && tabsOptions?.length > objTabs?.tabs?.length && (
-            <Grid
-              item
-              container
-              lg={2}
-              xs={4}
-              sx={{ paddingTop: { lg: "30px", xs: "20px" } }}
-              px={2}
-            >
+            <Grid item container lg={2} xs={4} py={3} px={2}>
               <Grid
                 container
                 item

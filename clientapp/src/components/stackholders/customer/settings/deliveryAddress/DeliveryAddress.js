@@ -21,7 +21,7 @@ function DeliveryAddress({
       </Grid>
       <Grid item xs={12} container>
         {address.countryID && (
-          <Grid item xs={4} p={2}>
+          <Grid item lg={4} xs='12' p={2}>
             <Country
               address={address}
               deliveryAddress={deliveryAddress}
@@ -32,7 +32,7 @@ function DeliveryAddress({
           </Grid>
         )}
         {address.cityID && (
-          <Grid item xs={4} p={2}>
+          <Grid item lg={4} xs='12' p={2}>
             <City
               address={address}
               deliveryAddress={deliveryAddress}
@@ -43,7 +43,7 @@ function DeliveryAddress({
           </Grid>
         )}
         {address.townID && (
-          <Grid item xs={4} p={2}>
+          <Grid item lg={4} xs='12' p={2}>
             <Town
               address={address}
               deliveryAddress={deliveryAddress}

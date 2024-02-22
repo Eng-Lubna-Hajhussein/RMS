@@ -9,32 +9,39 @@ import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 
 const styles = {
+  container: {
+    overflowX: "auto",
+    marginRight: "auto",
+    marginLeft: "auto",
+  },
   columnTablecell: {
     border: "1px solid #c4c4c4",
     background: App_Primary_Color,
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
+    minWidth: { xs: "150px" },
+    width: { xs: "150px" },
   },
   rowTablecell: {
     border: "1px solid #c4c4c4",
   },
   tableID: {
-    fontSize: "18px",
-    fontWeight: "800",
+    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "600" },
   },
   seatsNum: {
-    fontSize: "18px",
-    fontWeight: "800",
+    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "600" },
   },
   price: {
-    fontSize: "20px",
-    fontWeight: "800",
+    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "600" },
   },
   tablePagination: {
+    border: "1px solid #c4c4c4",
     ".MuiTablePagination-toolbar": {
       backgroundColor: "#f4fcfc",
-      textAlign: "center",
     },
     ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
       fontWeight: "800",
@@ -44,6 +51,10 @@ const styles = {
       background: "#fff",
       borderRadius: "10px",
       border: "1px solid #000",
+      fontSize: {
+        lg: "16px",
+        xs: "14px",
+      },
     },
   },
 };
@@ -64,13 +75,20 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
   };
   const columns = ["Table ID", "Seats Number", "Price Per Hour", "Actions"];
   return (
-    <Grid item xs="12" px={1}>
+    <Grid item xs="12" container sx={styles.container} px={1}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             {columns.map((column) => (
               <TableCell sx={styles.columnTablecell} align="center">
-                {column}
+                <Typography
+                  sx={{
+                    fontSize: { lg: "15px", xs: "12px" },
+                    fontWeight: { lg: "800", xs: "800" },
+                  }}
+                >
+                  {column}
+                </Typography>
               </TableCell>
             ))}
           </TableRow>
@@ -146,7 +164,19 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelDisplayedRows={({ page }) => {
-                return <Typography>Page: {page + 1}</Typography>;
+                return (
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        lg: "16px",
+                        xs: "14px",
+                      },
+                      fontWeight: "600",
+                    }}
+                  >
+                    Page: {page + 1}
+                  </Typography>
+                );
               }}
               backIconButtonProps={{
                 color: "#fff",
@@ -154,7 +184,19 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
               nextIconButtonProps={{ color: "#fff" }}
               showFirstButton={true}
               showLastButton={true}
-              labelRowsPerPage={<Typography>Rows:</Typography>}
+              labelRowsPerPage={
+                <Typography
+                  sx={{
+                    fontSize: {
+                      lg: "16px",
+                      xs: "14px",
+                    },
+                    fontWeight: "600",
+                  }}
+                >
+                  Rows:
+                </Typography>
+              }
               sx={styles.tablePagination}
             />
           </TableRow>

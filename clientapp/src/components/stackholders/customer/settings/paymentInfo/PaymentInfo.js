@@ -35,7 +35,7 @@ function PaymentInfo({ register, trigger, appState, errors, lang, dir }) {
             }}
           />
         </Grid>
-        <Grid item xs={6} p={2}>
+        <Grid item lg={6} xs={12} p={2}>
           <TextField
             sx={styles.textfield}
             variant="outlined"
@@ -50,7 +50,7 @@ function PaymentInfo({ register, trigger, appState, errors, lang, dir }) {
             }}
           />
         </Grid>
-        <Grid item xs={6} p={2}>
+        <Grid item lg={6} xs={12} p={2}>
           <TextField
             sx={styles.textfield}
             variant="outlined"

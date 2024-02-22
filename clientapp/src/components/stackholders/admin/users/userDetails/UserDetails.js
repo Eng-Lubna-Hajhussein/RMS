@@ -35,6 +35,9 @@ const styles = {
   },
   dialogContent: {
     py: "0",
+    overflowX: "auto",
+    marginRight: "auto",
+    marginLeft: "auto",
   },
   fitContentHeight: {
     height: "fit-content",
@@ -143,10 +146,11 @@ function UserDetails({
 
   return (
     <React.Fragment>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+      <Dialog open={open} onClose={handleClose}
+      fullWidth maxWidth="md">
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1}>
-            <Grid item xs="12" px={3} container mx={0}>
+            <Grid item xs="12"  sx={{paddingX:{lg:"30px",xs:"0px"}}} container mx={0}>
               <Grid
                 container
                 item
@@ -276,7 +280,9 @@ function UserDetails({
                 <Close sx={styles.closeIcon} onClick={handleClose} />
               </Grid>
             </Grid>
-            <Grid item xs="12" px={3} mx={0}>
+            <Grid item xs="12" 
+            sx={{paddingX:{lg:"30px",xs:"0px"}}}
+            mx={0}>
               <Divider sx={styles.divider} />
             </Grid>
             <Grid item xs="12" container>

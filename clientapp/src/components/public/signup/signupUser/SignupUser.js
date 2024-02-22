@@ -10,7 +10,7 @@ import {
   Select,
   TextField,
   Typography,
-  Box
+  Box,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { App_Second_Color } from "appHelper/appColor";
@@ -21,14 +21,16 @@ import { ctrlSignUp } from "./controller/CtrlSignUp";
 import useMapLocation from "hooks/useMapLocation/useMapLocation";
 import { findDeliveryAddressCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import { Demo_jsnSystemInfo, lstWebsiteNav } from "appHelper/appVariables";
+import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 
 const styles = {
   container: {
     background: "#f3fbfb",
     height: "fit-content",
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: "20px",
+    padding: { lg: "30px", xs: "15px" },
   },
   logo: {
     width: "150px",
@@ -37,11 +39,12 @@ const styles = {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: { lg: "30px", xs: "20px" },
   },
   regUsing: {
     color: "#000",
     fontWeight: "800",
+    fontSize: { lg: "17px", xs: "13px" },
   },
   inputLabel: {
     textTransform: "capitalize",
@@ -111,51 +114,67 @@ function SignupUser() {
     address.townID = townID;
     setAddress({ ...address });
   };
-  const instalData = async () => {
-    setIsLoading(true);
-    const systemsData = await findSystems();
-    const systemsInfo = [];
-    for (let i = 0; i < systemsData?.length; i++) {
-      const system = systemsData[i];
-      const jsnDeliveryAddress = await findDeliveryAddressCategories(
-        system.bigSystemID
-      );
-      const deliveryAddress = orderRegions({
-        Regions: jsnDeliveryAddress?.map((region) => ({
-          ...region,
-          jsnName: JSON.parse(region?.jsnName || {}),
-        })),
-      });
-      systemsInfo.push({
-        ...system,
-        jsnSystemName: JSON.parse(system?.jsnSystemName),
-        deliveryAddress: deliveryAddress,
-      });
-    }
-    setRegSystem(systemsInfo[0]);
-    const countryID = Object.keys(
-      systemsInfo[0]?.deliveryAddress?.appRegionsID || {}
-    )[0];
-    const cityID = countryID
-      ? Object.keys(
-          systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID] || {}
-        )[0]
-      : null;
-    const townID =
-      countryID && cityID
-        ? systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID][cityID][0]
-        : null;
-    setAddress({
-      countryID: countryID,
-      cityID: cityID,
-      townID: townID,
-    });
-    setSystems(systemsInfo);
-    setIsLoading(false);
-  };
+  // const instalData = async () => {
+  //   setIsLoading(true);
+  //   const systemsData = await findSystems();
+  //   const systemsInfo = [];
+  //   for (let i = 0; i < systemsData?.length; i++) {
+  //     const system = systemsData[i];
+  //     const jsnDeliveryAddress = await findDeliveryAddressCategories(
+  //       system.bigSystemID
+  //     );
+  //     const deliveryAddress = orderRegions({
+  //       Regions: jsnDeliveryAddress?.map((region) => ({
+  //         ...region,
+  //         jsnName: JSON.parse(region?.jsnName || {}),
+  //       })),
+  //     });
+  //     systemsInfo.push({
+  //       ...system,
+  //       jsnSystemName: JSON.parse(system?.jsnSystemName),
+  //       deliveryAddress: deliveryAddress,
+  //     });
+  //   }
+  //   setRegSystem(systemsInfo[0]);
+  //   const countryID = Object.keys(
+  //     systemsInfo[0]?.deliveryAddress?.appRegionsID || {}
+  //   )[0];
+  //   const cityID = countryID
+  //     ? Object.keys(
+  //         systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID] || {}
+  //       )[0]
+  //     : null;
+  //   const townID =
+  //     countryID && cityID
+  //       ? systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID][cityID][0]
+  //       : null;
+  //   setAddress({
+  //     countryID: countryID,
+  //     cityID: cityID,
+  //     townID: townID,
+  //   });
+  //   setSystems(systemsInfo);
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
-    instalData();
+    if (systemID) {
+      ctrlSignUp.installRegSystemData({
+        setAddress: setAddress,
+        setIsLoading: setIsLoading,
+        setRegSystem: setRegSystem,
+        systemID: systemID,
+        setAddress: setAddress,
+      });
+    } else {
+      ctrlSignUp.installSystemsData({
+        setIsLoading: setIsLoading,
+        setRegSystem: setRegSystem,
+        setSystems: setSystems,
+        setAddress: setAddress,
+      });
+    }
+    // instalData();
   }, []);
 
   const {
@@ -181,26 +200,39 @@ function SignupUser() {
 
   return (
     <React.Fragment>
+      {systemID && (
+        <WebsiteHeader
+          lang={appState.clientInfo.strLanguage}
+          dir={appState.clientInfo.strDir}
+          jsnSystemContact={regSystem?.jsnSystemContact || {}}
+          navList={lstWebsiteNav}
+          websiteLogo={regSystem?.strLogoPath}
+          blnUserLogin={false}
+        />
+      )}
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"}>
+        <Grid container px={2} justifyContent={"center"}>
           <Grid
             item
             container
             justifyContent={"center"}
-            xs="8"
+            lg="8"
+            xs="12"
             sx={styles.container}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
-              {(systemID&&appState?.systemInfo?.strLogoPath) && (
-                <Grid item xs="12" container justifyContent={"center"}>
-                  <Box
-                    component={"img"}
-                    sx={styles.logo}
-                    src={appState?.systemInfo?.strLogoPath}
-                  />
-                </Grid>
-              )}
+              <Grid item xs="12" container justifyContent={"center"}>
+                <Box
+                  component={"img"}
+                  sx={styles.logo}
+                  src={
+                    systemID
+                      ? regSystem?.strLogoPath
+                      : Demo_jsnSystemInfo?.strLogoPath
+                  }
+                />
+              </Grid>
               <Grid item xs="12" container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
                   User Registration
@@ -254,7 +286,7 @@ function SignupUser() {
                   <Title0001 title={"User Info"} dir={dir} />
                 </Grid>
                 <Grid item xs="12" container>
-                  <Grid item xs="6" p={2}>
+                  <Grid item lg="6" xs='12' p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
@@ -270,7 +302,7 @@ function SignupUser() {
                       }}
                     />
                   </Grid>
-                  <Grid item xs="6" p={2}>
+                  <Grid item lg="6" xs='12' p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
@@ -287,7 +319,7 @@ function SignupUser() {
                     />
                   </Grid>
                   {address.countryID && (
-                    <Grid item xs="4" p={2}>
+                    <Grid item lg="4" xs='12' p={2}>
                       <FormControl fullWidth>
                         <InputLabel>Country</InputLabel>
                         <Select
@@ -312,7 +344,7 @@ function SignupUser() {
                     </Grid>
                   )}
                   {address.cityID && (
-                    <Grid item xs="4" p={2}>
+                    <Grid item lg="4" xs='12' p={2}>
                       <FormControl fullWidth>
                         <InputLabel>City</InputLabel>
                         <Select
@@ -339,7 +371,7 @@ function SignupUser() {
                     </Grid>
                   )}
                   {address.townID && (
-                    <Grid item xs="4" p={2}>
+                    <Grid item lg="4" xs='12' p={2}>
                       <FormControl fullWidth>
                         <InputLabel>Town</InputLabel>
                         <Select
@@ -369,7 +401,7 @@ function SignupUser() {
                 <Grid item xs="12" p={2}>
                   <Title0001 title={"Registration Info"} dir={dir} />
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs='12' p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -389,7 +421,7 @@ function SignupUser() {
                     }}
                   />
                 </Grid>
-                <Grid item xs="6" p={2}>
+                <Grid item lg="6" xs='12' p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"

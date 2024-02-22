@@ -19,15 +19,15 @@ const styles = {
   container: {
     background: "#f3fbfb",
     height: "fit-content",
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: "20px",
+    padding: {lg:"20px",xs:"5px"},
   },
   title: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: {lg:"30px",xs:"20px"},
   },
   fullWidth: {
     width: "100%",
@@ -160,16 +160,17 @@ function Settings() {
       />
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
-        <Grid container justifyContent={"center"}>
+        <Grid container px={2} justifyContent={"center"}>
           <Grid
             item
             container
             justifyContent={"center"}
-            xs={10}
+            lg="10"
+            xs="12"
             sx={styles.container}
           >
             <form onSubmit={handleSubmit(onSubmit)} style={styles.fullWidth}>
-              <Grid item xs={12} pb={3} container justifyContent={"center"}>
+              <Grid item xs={12} p={2} container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
                   Settings
                 </Typography>

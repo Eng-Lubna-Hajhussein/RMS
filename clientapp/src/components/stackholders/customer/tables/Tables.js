@@ -10,7 +10,7 @@ import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
 };
 
@@ -87,7 +87,7 @@ function Tables() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
+          <Grid item lg="10" xs="12" px={2} container>
             <Grid item xs="12" px={1}>
               <TablesInfo
                 handleCancelTable={handleCancelTable}

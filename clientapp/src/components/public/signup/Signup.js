@@ -21,7 +21,7 @@ function Signup() {
             <FoodBank />
           </Grid>
           <Grid item>
-            <Typography sx={{ textTransform: "capitalize" }}>
+            <Typography sx={{ textTransform: "capitalize"}}>
               Restaurant
             </Typography>
           </Grid>
@@ -45,13 +45,14 @@ function Signup() {
   ];
   return (
     <React.Fragment>
-      <WebsiteHeader
+     {!systemID&&<WebsiteHeader
         lang={appState.clientInfo.strLanguage}
         dir={appState.clientInfo.strDir}
         navList={lstWebsiteNav}
         jsnSystemContact={Demo_jsnSystemInfo.jsnSystemContact}
+        websiteLogo={Demo_jsnSystemInfo?.strLogoPath}
         editable={false}
-      />
+      />}
       {!systemID && <Tabs001 tabsContent={tabsContent} />}
       {systemID && <SignupUser />}
     </React.Fragment>

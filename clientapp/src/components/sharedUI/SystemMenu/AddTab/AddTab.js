@@ -136,7 +136,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
           </Grid>
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs={12}>
-              <Grid item xs={6} p={1} container>
+              <Grid item lg={6} xs={12} p={1} container>
                 <Grid
                   item
                   xs={12}
@@ -154,7 +154,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs={6} p={1} container>
+              <Grid item lg={6} xs={12} p={1} container>
                 <Grid
                   item
                   xs={12}
@@ -182,7 +182,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={4}>
+            <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

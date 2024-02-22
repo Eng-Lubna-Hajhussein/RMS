@@ -3,18 +3,18 @@ import { Avatar, Grid, Typography } from "@mui/material";
 
 const styles = {
   avatar: {
-    height: "200px",
-    width: "200px",
+    height: { lg: "200px", xs: "150px" },
+    width: { lg: "200px", xs: "150px" },
   },
   fullName: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: "30px",
+    fontSize: { lg: "30px", xs: "15px" },
   },
   address: {
     fontWeight: "700",
-    fontSize: "15px",
+    fontSize: { lg: "15px", xs: "10px" },
     textTransform: "capitalize",
   },
 };
@@ -32,7 +32,11 @@ function PersonalInfo({ appState, lang }) {
       </Grid>
       <Grid item xs="12" pb={3} container justifyContent={"center"}>
         <Typography sx={styles.address}>
-            {`${appState?.userInfo?.jsnAddress?.jsnCity[lang]}${appState?.userInfo?.jsnAddress?.jsnTown?` (${appState?.userInfo?.jsnAddress?.jsnTown[lang]})`:""}, ${appState?.userInfo?.jsnAddress?.jsnCountry[lang]}`}
+          {`${appState?.userInfo?.jsnAddress?.jsnCity[lang]}${
+            appState?.userInfo?.jsnAddress?.jsnTown
+              ? ` (${appState?.userInfo?.jsnAddress?.jsnTown[lang]})`
+              : ""
+          }, ${appState?.userInfo?.jsnAddress?.jsnCountry[lang]}`}
         </Typography>
       </Grid>
     </Grid>

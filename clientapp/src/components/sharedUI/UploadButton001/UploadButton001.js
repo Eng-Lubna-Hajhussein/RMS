@@ -15,6 +15,7 @@ const styles = {
     textTransform: "capitalize",
     color: "#fff",
     fontWeight: "800",
+    fontSize: { lg: "16px", xs: "13px" },
   },
 };
 

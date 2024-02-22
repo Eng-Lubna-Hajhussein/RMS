@@ -14,16 +14,14 @@ import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
 
 const styles = {
   container: {
-    height: "fit-content",
-    marginY: "50px",
-    borderRadius: "20px",
-    padding: "20px",
+    marginY: { lg: "50px", xs: "20px" },
   },
 };
 
 function Profile() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const { systemID, systemName } = useParams();
   const [uploadPictureOpen, setUploadPicture] = useState(false);
   const navigate = useNavigate();
@@ -54,11 +52,9 @@ function Profile() {
       return "-";
     }
     const ascOrders = orders.sort((a, b) => {
-      return Number(b.dtmOrderDate) - Number(a.dtmOrderDate);
+      return b.dtmOrderDate - a.dtmOrderDate;
     });
-    return moment(new Date(Number(ascOrders[0]?.dtmOrderDate))).format(
-      "MMM DD,YYYY"
-    );
+    return moment(new Date(ascOrders[0]?.dtmOrderDate)).format("MMM DD,YYYY");
   }, [orders]);
 
   const lastReservation = useMemo(() => {
@@ -130,7 +126,9 @@ function Profile() {
             item
             container
             justifyContent={"center"}
-            xs="10"
+            lg="10"
+            xs="12"
+            px={2}
             sx={styles.container}
           >
             <PersonalInfo appState={appState} lang={lang} />

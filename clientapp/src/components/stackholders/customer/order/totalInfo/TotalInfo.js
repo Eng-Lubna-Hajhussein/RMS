@@ -9,42 +9,42 @@ const styles = {
     boxShadow: "none",
     border: `4px solid ${App_Second_Color}`,
     borderRadius: "20px",
-    padding: "45px",
+    padding: { lg: "45px", xs: "15px" },
   },
   fullHeight: {
     height: "100%",
   },
   orderTotals: {
-    fontSize: "25px",
+    fontSize: { lg: "25px", xs: "20px" },
     fontWeight: "800",
   },
   subPaper: {
-    height: "250px",
+    height: { lg: "250px", xs: "200px" },
     boxShadow: "none",
     border: `4px solid #e4e4e4`,
     borderRadius: "20px",
   },
   container: {
-    paddingX: "50px",
+    paddingX: { lg: "50px", xs: "10px" },
   },
   font: {
-    fontSize: "15px",
+    fontSize: { lg: "15px", xs: "14px" },
     fontWeight: "800",
   },
   totalPaper: {
-    height: "80px",
+    height: { lg: "80px", xs: "60px" },
     width: "100%",
     boxShadow: "none",
     background: "#f4fcfc",
     borderRadius: "20px",
-    paddingX: "20px",
+    paddingX: {lg:"20px",xs:"10px"},
   },
   fitContentHeight: {
     height: "fit-content",
   },
   totalContainer: {
     height: "100%",
-    paddingX: "20px",
+    paddingX: {lg:"20px",xs:"10px"},
   },
 };
 

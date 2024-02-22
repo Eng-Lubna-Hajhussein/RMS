@@ -17,7 +17,7 @@ function PersonalInfo({ register, trigger, appState, errors, lang, dir }) {
         <Title0001 title={"full name"} dir={dir} />
       </Grid>
       <Grid item xs={12} container>
-        <Grid item xs={6} p={2}>
+        <Grid item lg={6} xs='12' p={2}>
           <TextField
             sx={styles.textfield}
             variant="outlined"
@@ -34,7 +34,7 @@ function PersonalInfo({ register, trigger, appState, errors, lang, dir }) {
             defaultValue={appState?.userInfo?.jsnFullName["eng"]}
           />
         </Grid>
-        <Grid item xs={6} p={2}>
+        <Grid item lg={6} xs='12' p={2}>
           <TextField
             sx={styles.textfield}
             variant="outlined"

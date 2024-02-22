@@ -32,6 +32,15 @@ export default function DeliveryTimer({ deliveryTime, order }) {
   const initialCountDown = useMemo(() => {
     const orderDate = new Date(order.dtmOrderDate);
     const now = new Date();
+    if(now.getFullYear()!==orderDate.getFullYear()){
+      return 0;
+    }
+    if(now.getMonth()!==orderDate.getMonth()){
+      return 0;
+    }
+    if(now.getDate()!==orderDate.getDate()){
+      return 0;
+    }
     const diff =
       now.getSeconds() -
       orderDate.getSeconds() +
@@ -39,6 +48,8 @@ export default function DeliveryTimer({ deliveryTime, order }) {
       (now.getHours() - orderDate.getHours()) * 3600;
     console.log({ orderDate });
     console.log({ now });
+    console.log({ deliveryTime });
+    console.log({ diff });
     if (diff >= deliveryTime) {
       return 0;
     }

@@ -160,7 +160,7 @@ function EditItem({
             alignItems={"start"}
             sx={styles.fitContentHeight}
           >
-            <Grid item xs={6}container>
+            <Grid item lg={6} xs={12} container>
               <Grid item xs={12} p={1}>
                 <Title0001
                   title={dictionary.menuSection.dishImg[lang]}
@@ -171,6 +171,7 @@ function EditItem({
                 item
                 xs={12}
                 p={1}
+                m={1}
                 container
                 justifyContent={"center"}
                 alignContent={"center"}
@@ -193,9 +194,12 @@ function EditItem({
             </Grid>
             <Grid
               item
-              xs={6}
-              p={1}
-              px={4}
+              lg={6}
+              xs={12}
+              sx={{
+                paddingY: { xs: "10px", lg: "2px" },
+                paddingX: { xs: "0px", lg: "10px" },
+              }}
               container
               justifyContent={"start"}
               alignContent={"start"}
@@ -297,7 +301,7 @@ function EditItem({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   defaultValue={categoryOnAction?.jsnName["eng"]}
@@ -312,7 +316,7 @@ function EditItem({
                   multiline
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -335,7 +339,7 @@ function EditItem({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -353,7 +357,7 @@ function EditItem({
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -379,7 +383,7 @@ function EditItem({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -402,7 +406,7 @@ function EditItem({
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={2}>
+            <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

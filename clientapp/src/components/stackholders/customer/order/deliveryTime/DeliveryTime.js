@@ -28,11 +28,11 @@ import { calculateZDirection } from "appHelper/appFunctions";
 
 const styles = {
   paper: {
-    height: "300px",
+    height: { lg: "300px", xs: "fit-content" },
     width: "100%",
     background: App_Second_Color,
     borderRadius: "20px",
-    padding: "50px",
+    padding: { lg: "50px", xs: "15px" },
     boxShadow: "none",
   },
   fullHeight: {
@@ -42,7 +42,7 @@ const styles = {
     height: "fit-content",
   },
   title: {
-    fontSize: "25px",
+    fontSize: { lg: "25px", xs: "20px" },
     fontWeight: "800",
     textTransform: "capitalize",
   },
@@ -76,7 +76,6 @@ function DeliveryTime({
           container
           alignContent={"center"}
           justifyContent={"center"}
-
         >
           <Grid item px={1}>
             <TimeToLeave fontSize="large" />

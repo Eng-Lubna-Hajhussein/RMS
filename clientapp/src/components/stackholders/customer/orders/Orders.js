@@ -10,7 +10,7 @@ import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
 };
 
@@ -73,7 +73,7 @@ function Orders() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
+          <Grid item lg="10" xs="12" px={2} container>
             <Grid item xs="12" px={1}>
               <OrdersInfo orders={orders} dir={dir} lang={lang} />
             </Grid>

@@ -19,12 +19,12 @@ const style = {
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: "14px !important",
+    fontSize: { lg: "14px", xs: "10px" },
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: "25px !important",
+    fontSize: { lg: "25px", xs: "14px" },
     fontWeight: "800 !important",
   },
   icon: {
@@ -86,11 +86,9 @@ function Activities({ user, lang }) {
       return "-";
     }
     const ascOrders = orders.sort((a, b) => {
-      return Number(b.dtmOrderDate) - Number(a.dtmOrderDate);
+      return b.dtmOrderDate - a.dtmOrderDate;
     });
-    return moment(new Date(Number(ascOrders[0]?.dtmOrderDate))).format(
-      "MMM DD,YYYY"
-    );
+    return moment(new Date(ascOrders[0]?.dtmOrderDate)).format("MMM DD,YYYY");
   }, [orders]);
 
   const lastReservation = useMemo(() => {
@@ -138,7 +136,8 @@ function Activities({ user, lang }) {
             {activities.map(({ title, description, img }, index) => (
               <Grid
                 item
-                xs="6"
+                lg="6"
+                xs="12"
                 justifyContent={"center"}
                 alignContent={"center"}
                 sx={style.fitContentHeight}

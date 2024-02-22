@@ -90,7 +90,7 @@
   width: 94%;
   height: 40px;
   left: 3.5px;
-  bottom: -19px;
+  bottom: -20px;
   clip-path: polygon(49% 50%, 100% 50%, 50% 100%, 0% 50%);
 }
 
@@ -110,5 +110,11 @@
   }
   100% {
     transform: rotate(45deg);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .menu .nav-link.active:before {
+    content: none;
   }
 }

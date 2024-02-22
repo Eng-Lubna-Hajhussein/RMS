@@ -3,6 +3,21 @@ import { findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
 import { login } from "appHelper/fetchapi/tblUser/tblUser";
 
 export const ctrlLogin = {
+  installData:async ({systemID,setSystemInfo,setIsLoading}) => {
+    try{
+      setIsLoading(true);
+      const system = await findSystem(systemID);
+      if(system){
+        const jsnSystemContact = JSON.parse(system.jsnSystemContact||{});
+        const strLogoPath = system?.strLogoPath;
+        setSystemInfo({jsnSystemContact:jsnSystemContact,strLogoPath:strLogoPath});
+      }
+      setIsLoading(false)
+    }catch(err){
+      console.log(err)
+      setIsLoading(false)
+    }
+  },
   handelSubmit: async ({
     appState,
     appDispatch,

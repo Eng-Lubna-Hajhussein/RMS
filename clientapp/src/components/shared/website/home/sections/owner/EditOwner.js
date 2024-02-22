@@ -104,7 +104,7 @@ function EditOwner({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -120,7 +120,7 @@ function EditOwner({
                   defaultValue={jsnOwnerSection.jsnTitle["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -144,7 +144,7 @@ function EditOwner({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -160,7 +160,7 @@ function EditOwner({
                   defaultValue={jsnOwnerSection.jsnSubtitle["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -184,7 +184,7 @@ function EditOwner({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -200,7 +200,7 @@ function EditOwner({
                   defaultValue={jsnOwnerSection.jsnOwnerSpecialization["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -224,7 +224,7 @@ function EditOwner({
                   dir={dir}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -240,7 +240,7 @@ function EditOwner({
                   defaultValue={jsnOwnerSection.jsnOwnerComment["eng"]}
                 />
               </Grid>
-              <Grid item xs={6} p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   sx={styles.textField}
@@ -267,7 +267,7 @@ function EditOwner({
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={2}>
+            <Grid item xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

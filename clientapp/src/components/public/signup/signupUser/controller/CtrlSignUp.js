@@ -1,9 +1,99 @@
-import { formateDBStr, generateRandomID } from "appHelper/appFunctions";
+import { formateDBStr, generateRandomID, orderRegions } from "appHelper/appFunctions";
 import { CITIES, COUNTRIES, Demo_jsnSystemInfo, objRoleID } from "appHelper/appVariables";
-import { createSystem, findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
+import { findDeliveryAddressCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
+import { createSystem, findSystem, findSystems } from "appHelper/fetchapi/tblSystem/tblSystem";
 import { signup } from "appHelper/fetchapi/tblUser/tblUser";
 
 export const ctrlSignUp = {
+  installSystemsData:async ({setSystems,setAddress,setRegSystem,setIsLoading}) => {
+    setIsLoading(true);
+    const systemsData = await findSystems();
+    const systemsInfo = [];
+    for (let i = 0; i < systemsData?.length; i++) {
+      const system = systemsData[i];
+      const jsnDeliveryAddress = await findDeliveryAddressCategories(
+        system.bigSystemID
+      );
+      const deliveryAddress = orderRegions({
+        Regions: jsnDeliveryAddress?.map((region) => ({
+          ...region,
+          jsnName: JSON.parse(region?.jsnName || {}),
+        })),
+      });
+      systemsInfo.push({
+        ...system,
+        jsnSystemName: JSON.parse(system?.jsnSystemName),
+        deliveryAddress: deliveryAddress,
+      });
+    }
+    setRegSystem(systemsInfo[0]);
+    const countryID = Object.keys(
+      systemsInfo[0]?.deliveryAddress?.appRegionsID || {}
+    )[0];
+    const cityID = countryID
+      ? Object.keys(
+          systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID] || {}
+        )[0]
+      : null;
+    const townID =
+      countryID && cityID
+        ? systemsInfo[0]?.deliveryAddress?.appRegionsID[countryID][cityID][0]
+        : null;
+    setAddress({
+      countryID: countryID,
+      cityID: cityID,
+      townID: townID,
+    });
+    setSystems(systemsInfo);
+    setIsLoading(false);
+  },
+  installRegSystemData:async({systemID,setRegSystem,setIsLoading,setAddress})=>{
+    try{
+      setIsLoading(true);
+      const system = await findSystem(systemID);
+      if(system){
+        const jsnDeliveryAddress = await findDeliveryAddressCategories(
+          system.bigSystemID
+        );
+        const deliveryAddress = orderRegions({
+          Regions: jsnDeliveryAddress?.map((region) => ({
+            ...region,
+            jsnName: JSON.parse(region?.jsnName || {}),
+          })),
+        });
+        const jsnSystemContact = JSON.parse(system.jsnSystemContact||{});
+        const strLogoPath = system?.strLogoPath;
+        const regSystemData = {
+          jsnSystemContact:jsnSystemContact,
+          strLogoPath:strLogoPath,
+          deliveryAddress:deliveryAddress
+        }
+        setRegSystem({...regSystemData
+        })
+        const countryID = Object.keys(
+          regSystemData?.deliveryAddress?.appRegionsID || {}
+        )[0];
+        const cityID = countryID
+          ? Object.keys(
+              regSystemData?.deliveryAddress?.appRegionsID[countryID] || {}
+            )[0]
+          : null;
+        const townID =
+          countryID && cityID
+            ? regSystemData?.deliveryAddress?.appRegionsID[countryID][cityID][0]
+            : null;
+        setAddress({
+          countryID: countryID,
+          cityID: cityID,
+          townID: townID,
+        });
+      }
+      setIsLoading(false)
+    }catch(err){
+      console.log(err)
+      setIsLoading(false)
+    }
+  },
   handelSubmit: async ({
     appState,
     appDispatch,

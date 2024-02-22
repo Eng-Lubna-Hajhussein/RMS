@@ -6,6 +6,7 @@ import {
   TextField,
   DialogActions,
   Grid,
+  Typography,
 } from "@mui/material";
 import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
@@ -19,14 +20,14 @@ const styles = {
   dialogTitle: {
     height: "fit-content",
   },
-  closeIcon:{
-    cursor: "pointer"
+  closeIcon: {
+    cursor: "pointer",
   },
   dialogContent: {
-    py: "0" 
+    py: "0",
   },
   dialogActions: {
-    py: "0" 
+    py: "0",
   },
 };
 
@@ -68,7 +69,7 @@ function Checkout({ open, handleClose, lang, dir }) {
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Title0001 title={'Checkout'} dir={dir} />
+                <Title0001 title={"Checkout"} dir={dir} />
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
@@ -84,7 +85,7 @@ function Checkout({ open, handleClose, lang, dir }) {
                   }
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item lg="6" xs="12" p={1}>
                 <TextField
                   color="warning"
                   required
@@ -96,7 +97,7 @@ function Checkout({ open, handleClose, lang, dir }) {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item lg="6" xs="12" p={1}>
                 <TextField
                   color="warning"
                   required
@@ -117,13 +118,20 @@ function Checkout({ open, handleClose, lang, dir }) {
           <Grid
             container
             p={2}
-            px={5}
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="2">
+            <Grid item lg="2" xs="6">
               <AnimButton0001
-                label={"Checkout"}
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "16px" },
+                    }}
+                  >
+                    checkout
+                  </Typography>
+                }
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"

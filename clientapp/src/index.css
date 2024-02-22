@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
 }
+iframe#webpack-dev-server-client-overlay{display:none!important}
+
 
 ::-webkit-scrollbar-thumb {
     background-color: #f90;
