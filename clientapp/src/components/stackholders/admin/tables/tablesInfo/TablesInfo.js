@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import { objAppActions } from "appHelper/appVariables";
+import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
+import { AppContext } from "contextapi/context/AppContext";
+import React, { useContext, useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Grid, TableFooter, TablePagination, Typography } from "@mui/material";
+import {
+  Button,
+  Chip,
+  Grid,
+  TableFooter,
+  TablePagination,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import OptionList from "components/sharedUI/OptionList/OptionList";
+import { MoreVert, Visibility } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
-  container: {
+  tableContainer: {
     overflowX: "auto",
     marginRight: "auto",
     marginLeft: "auto",
@@ -26,18 +42,6 @@ const styles = {
   },
   rowTablecell: {
     border: "1px solid #c4c4c4",
-  },
-  tableID: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
-  },
-  seatsNum: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
-  },
-  price: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
   },
   tablePagination: {
     border: "1px solid #c4c4c4",
@@ -62,11 +66,49 @@ const styles = {
       },
     },
   },
+  fitContentHeight: {
+    height: "fit-content",
+  },
+  tableID: {
+    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "600" },
+  },
+  seatsNum: {
+    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "600" },
+  },
+  price: {
+    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "600" },
+  },
+  status: {
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "700",
+    fontSize: { lg: "17px", xs: "12px" },
+  },
+  viewBtnLabel: {
+    fontSize: "15px",
+    textTransform: "uppercase",
+  },
 };
 
-function AvailableTables({ tables, handleReverseTable, lang, dir }) {
+function TablesInfo({
+  handleFreeTable,
+  lang,
+  dir,
+  tables,
+  appState,
+  handleDeleteTable,
+  handleEditTable,
+}) {
+  const actionItemNavList = [
+    { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "حذف" } },
+
+    { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
+  ];
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tables.length) : 0;
 
@@ -78,16 +120,20 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  // const columns = ["Table ID", "Seats Number", "Price Per Hour", "Actions"];
   const columns = [
     {eng:"Table ID",arb:"معرف الطاولة"},
     {eng:"Seats Number",arb:"عدد المقاعد"},
     {eng:"Price Per Hour",arb:"السعر لكل ساعة"},
+    {eng:"Status",arb:"الحالة"},
+    {eng:"Reservation Info",arb:"معلومات الحجز"},
     {eng:"Actions",arb:"الاجراءات"},
   ];
+
   return (
-    <Grid item xs="12" container sx={styles.container} px={1}>
-      <Table aria-label="simple table">
+    <Grid item xs="12" container sx={styles.tableContainer} px={1}>
+      <Table
+        aria-label="simple table"
+      >
         <TableHead>
           <TableRow>
             {columns.map((column) => (
@@ -109,7 +155,7 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
           {(rowsPerPage > 0
             ? tables.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : tables
-          )?.map((table) => (
+          )?.map((table, index) => (
             <TableRow>
               <TableCell
                 sx={styles.rowTablecell}
@@ -117,9 +163,38 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
                 component="th"
                 scope="row"
               >
-                <Typography color={"#000"} sx={styles.tableID}>
-                  #{table.bigTableID}
-                </Typography>
+                <Grid
+                  container
+                  alignContent={"center"}
+                  alignItems={"center"}
+                  sx={styles.fitContentHeight}
+                >
+                  {table.blnTableAvailable && (
+                    <Grid item xs="1">
+                      <OptionList
+                        nav={""}
+                        navList={actionItemNavList.map((nav) => ({
+                          ...nav,
+                          onClick: () => {
+                            if (objAppActions["Delete"] === nav.bigNavID) {
+                              handleDeleteTable(table);
+                            }
+                            if (objAppActions["Edit"] === nav.bigNavID) {
+                              handleEditTable(table);
+                            }
+                          },
+                        }))}
+                        endIcon={<MoreVert />}
+                        lang={appState.clientInfo.strLanguage}
+                      />
+                    </Grid>
+                  )}
+                  <Grid item xs={table.blnTableAvailable ? "11" : "12"}>
+                    <Typography color={"#000"} sx={styles.tableID}>
+                      #{table.bigTableID}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </TableCell>
               <TableCell
                 sx={styles.rowTablecell}
@@ -141,16 +216,52 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
                   ${table.strTablePrice}
                 </Typography>
               </TableCell>
+
               <TableCell
                 sx={styles.rowTablecell}
                 align="center"
                 component="th"
                 scope="row"
               >
+                <Chip
+                  color={table.blnTableAvailable ? "success" : "error"}
+                  label={
+                    <Typography sx={styles.status}>
+                      {table.blnTableAvailable ? dictionary.tables.available[lang] : dictionary.tables.reserved[lang]}
+                    </Typography>
+                  }
+                />
+              </TableCell>
+              <TableCell
+                sx={styles.rowTablecell}
+                align="center"
+                component="th"
+                scope="row"
+              >
+                <Button
+                  endIcon={<Visibility />}
+                  disabled={table.blnTableAvailable}
+                >
+                  <Typography sx={styles.viewBtnLabel} px={1}>
+                    {dictionary.buttons.view[lang]}
+                  </Typography>
+                </Button>
+              </TableCell>
+              <TableCell
+                sx={{
+                  ...styles.rowTablecell,
+                  minWidth: { xs: "180px", lg: "200px" },
+                  width: { xs: "180px", lg: "200px" },
+                }}
+                align="center"
+                component="th"
+                scope="row"
+              >
                 <AnimButton0001
-                  label={dictionary.buttons.reserve[lang]}
+                  label={dictionary.buttons.freeTable[lang]}
                   color={App_Second_Color}
-                  onClick={() => handleReverseTable(table)}
+                  disabled={table.blnTableAvailable}
+                  onClick={() => handleFreeTable(table,index)}
                 />
               </TableCell>
             </TableRow>
@@ -164,7 +275,7 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[3, 5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25]}
               count={tables.length}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -212,6 +323,7 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
                 >
                   {dictionary.tablePagination.rows[lang]}:
                 </Typography>
+              
               }
               sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
                 marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
@@ -227,4 +339,4 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
   );
 }
 
-export default AvailableTables;
+export default TablesInfo;

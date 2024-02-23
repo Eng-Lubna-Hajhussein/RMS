@@ -79,6 +79,7 @@ export default function DeliveryTimer({ deliveryTime, order }) {
         alignContent={"center"}
         alignItems={"center"}
         sx={styles.container}
+        dir="ltr"
       >
         <Grid item px={1}>
           <Typography sx={styles.hours}>{time.h || "00"}</Typography>

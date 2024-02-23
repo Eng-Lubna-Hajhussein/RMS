@@ -1,21 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import {
-  Box,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { App_Primary_Color } from "appHelper/appColor";
 import { findSystemOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
-import { useParams } from "react-router-dom";
-import arrowImg from "assets/image/arrow-2.png";
-import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+import { useNavigate, useParams } from "react-router-dom";
 import OrdersTable from "./ordersTable/OrdersTable";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -104,12 +102,16 @@ const styles = {
 };
 
 function Orders() {
-  const { appState } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
   const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const dir = appState.clientInfo.strDir;
   const [isLoading, setIsLoading] = useState(false);
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
 
   const instalData = async () => {
     setIsLoading(true);
@@ -129,41 +131,42 @@ function Orders() {
     setIsLoading(false);
   };
 
-  const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
 
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
 
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
 
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
 
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
 
   useEffect(() => {
     instalData();
@@ -188,51 +191,27 @@ function Orders() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
-            {/* <Grid
-              item
-              xs="12"
-              px={1}
-              pb={10}
-              justifyContent={"center"}
-              sx={styles.itemContainer}
-            >
-              <Grid container>
-                <Grid item container xs="5" px={2} justifyContent={"start"}>
-                  <Grid item xs="12">
-                    <Typography sx={styles.title}>
-                      Restaurant Orders !
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="12">
-                    <Typography sx={styles.subtitle}>{`( ${
-                      orders?.length || 0
-                    } Orders ) `}</Typography>
-                  </Grid>
-                </Grid>
-                <Grid item container xs="2" justifyContent={"start"} py={2}>
-                  <AnimationBox
-                    animationMode="reverse"
-                    easing={"ease-in"}
-                    forceTrigger={true}
-                    type="fadeOut"
-                    trigger="manual"
-                  >
-                    <Box
-                      component={"img"}
-                      sx={styles.arrowImg}
-                      src={arrowImg}
-                    />
-                  </AnimationBox>
-                </Grid>
-              </Grid>
-            </Grid> */}
-            <Grid item xs="12" px={1} container sx={styles.tableContainer}>
+          <Grid item lg="10" xs="12" px={2} container>
+            <Grid item xs="12" px={1} container>
               <OrdersTable orders={orders} lang={lang} dir={dir} />
             </Grid>
           </Grid>
         </Grid>
       )}
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
+      />
     </React.Fragment>
   );
 }

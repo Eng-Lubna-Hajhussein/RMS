@@ -10,7 +10,7 @@ import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   container: {
-    height: { lg: "600px", xs: "700px" },
+    height: { lg: "600px", xs: "900px" },
     paddingX: { lg: "60px", xs: "15px" },
   },
   title: {
@@ -33,7 +33,7 @@ const styles = {
   },
   box: {
     border: "3px solid #ffd40d",
-    padding: "20px 30px",
+    padding: { lg: "20px 30px", xs: "15px 10px" },
     borderRadius: "30px",
     backgroundColor: "#000000d4",
     width: "100%",
@@ -53,7 +53,7 @@ const styles = {
   },
   boxTitle: {
     color: "#fff",
-    fontSize: "28px",
+    fontSize: { lg: "28px", xs: "20px" },
     fontWeight: "700",
     lineHeight: "1.2",
     fontFamily: "sans-serif",
@@ -62,14 +62,14 @@ const styles = {
   },
   dollarSign: {
     color: "#f3274c",
-    fontSize: "28px",
+    fontSize: { lg: "28px", xs: "20px" },
     display: "inline-block",
   },
   boxSubtitle: {
     color: "#fff",
     fontWeight: "700",
     lineHeight: "1.2",
-    fontSize: "18px",
+    fontSize: { lg: "18px", xs: "14px" },
     textTransform: "capitalize",
   },
   py20: {
@@ -88,9 +88,11 @@ const styles = {
     color: "#555",
     fontWeight: "400",
     fontSize: "14px",
+    height: { xs: "40px !important", lg: "fit-content" },
+    overflowY: { xs: "auto", lg: "hidden" },
   },
   videoBtn: {
-    paddingTop: { xs: "30px" },
+    paddingTop: { xs: "30px", lg: "0px" },
   },
 };
 
@@ -170,7 +172,7 @@ function HeroContent({
             </AnimationBox>
           </Grid>
           <Grid item lg={8} sx={styles.py20} xs={12}>
-            <Grid container  px={2} justify={"start"} alignItems={"flex-start"}>
+            <Grid container px={2} justify={"start"} alignItems={"flex-start"}>
               <Grid item lg={4} xs={12}>
                 <AnimButton0001
                   label={dictionary.buttons.seeOurMenuBtn[lang]}
@@ -187,7 +189,14 @@ function HeroContent({
             </Grid>
           </Grid>
           {content?.wsCategory && (
-            <Grid item lg={4}>
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                paddingY: { xs: "40px", lg: "0px" },
+              }}
+            >
               <Grid container justify={"end"}>
                 <Grid item lg={12} xs={12} alignSelf={"flex-start"}>
                   <Box
@@ -198,12 +207,18 @@ function HeroContent({
                     textColor="default"
                     sx={styles.box}
                   >
-                    <span style={styles.boxCaption}>Weekly Special</span>
-                    <Grid container justify={"center"}>
+                    <span style={styles.boxCaption}>
+                      {dictionary.heroSection.weeklySpecial[lang]}
+                    </span>
+                    <Grid
+                      container
+                      justifyContent={"center"}
+                      alignContent={"start"}
+                    >
                       <Grid item xs={8} container justify={"start"}>
                         <Grid item xs={12} justify={"start"}>
-                          <Typography sx={styles.boxTitle}>
-                            <Typography sx={styles.dollarSign}>$</Typography>
+                          <Typography dir='ltr' sx={styles.boxTitle}>
+                            <Typography dir='ltr' sx={styles.dollarSign}>$</Typography>
                             {content.wsCategory.jsnCategoryInfo.strPrice}
                           </Typography>
                         </Grid>
@@ -222,11 +237,13 @@ function HeroContent({
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                          <Rating
-                            name="read-only"
-                            value={content.wsCategory.intRating}
-                            readOnly
-                          />
+                          {content?.wsCategory?.intRating && (
+                            <Rating
+                              name="read-only"
+                              value={content.wsCategory.intRating}
+                              readOnly
+                            />
+                          )}
                         </Grid>
                       </Grid>
                       <Grid
@@ -239,8 +256,10 @@ function HeroContent({
                         <Box
                           component={"img"}
                           src={content.wsCategory.jsnCategoryInfo.strImgPath}
-                          height={"150px"}
-                          width={"150px"}
+                          sx={{
+                            height: { lg: "130px", xs: "100px" },
+                            width: { lg: "130px", xs: "100px" },
+                          }}
                         />
                       </Grid>
                     </Grid>

@@ -2,6 +2,7 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import { Grid, Typography } from "@mui/material";
 import { App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   paper: {
@@ -17,6 +18,7 @@ const styles = {
   orderTotals: {
     fontSize: { lg: "25px", xs: "20px" },
     fontWeight: "800",
+    textTransform:"capitalize"
   },
   subPaper: {
     height: { lg: "250px", xs: "200px" },
@@ -53,7 +55,7 @@ function TotalInfo({ totalPrice, lang, dir }) {
     <Paper sx={styles.paper}>
       <Grid container sx={styles.fullHeight} alignContent={"start"}>
         <Grid item xs="12" px={1} pb={2} pt={0} container alignSelf={"start"}>
-          <Typography sx={styles.orderTotals}>Order Totals</Typography>
+          <Typography sx={styles.orderTotals}> {dictionary.order.title[lang]}</Typography>
         </Grid>
         <Grid item xs="12">
           <Paper sx={styles.subPaper}>
@@ -61,7 +63,7 @@ function TotalInfo({ totalPrice, lang, dir }) {
               <Grid container item xs="12" sx={styles.container}>
                 <Grid item xs="12" py={1} container>
                   <Grid item xs="6" container justifyContent={"start"}>
-                    <Typography sx={styles.font}>Sub total:</Typography>
+                    <Typography sx={styles.font}>{dictionary.order.subtotal[lang]}:</Typography>
                   </Grid>
                   <Grid item xs="6" container justifyContent={"flex-end"}>
                     <Typography sx={styles.font}>${totalPrice}</Typography>
@@ -69,10 +71,10 @@ function TotalInfo({ totalPrice, lang, dir }) {
                 </Grid>
                 <Grid item xs="12" py={1} container>
                   <Grid item xs="6" container justifyContent={"start"}>
-                    <Typography sx={styles.font}>Shipping:</Typography>
+                    <Typography sx={styles.font}>{dictionary.order.shipping[lang]}:</Typography>
                   </Grid>
                   <Grid item xs="6" container justifyContent={"flex-end"}>
-                    <Typography sx={styles.font}>free</Typography>
+                    <Typography sx={styles.font}>{dictionary.order.free[lang]}</Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -91,7 +93,7 @@ function TotalInfo({ totalPrice, lang, dir }) {
                     alignContent={"center"}
                   >
                     <Grid item xs="6" container justifyContent={"start"}>
-                      <Typography sx={styles.font}>Total:</Typography>
+                      <Typography sx={styles.font}>{dictionary.order.total[lang]}:</Typography>
                     </Grid>
                     <Grid item xs="6" container justifyContent={"flex-end"}>
                       <Typography sx={styles.font}>${totalPrice}</Typography>

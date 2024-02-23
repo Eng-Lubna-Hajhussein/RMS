@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import { Button, Grid, Typography } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { PersonPinCircle } from "@mui/icons-material";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   locationIframe: {
@@ -67,7 +68,7 @@ function DeliveryInfo({ appState, lang, dir }) {
         <Grid item xs="12" p={1}>
           <Button sx={styles.upgradeBtn} fullWidth>
             <Typography color={"#fff"} sx={styles.upgradeBtnLabel}>
-              Upgrade Delivery
+              {dictionary.buttons.upgradeDelivery[lang]}
             </Typography>
           </Button>
         </Grid>

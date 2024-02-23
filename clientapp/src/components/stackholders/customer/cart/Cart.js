@@ -12,10 +12,10 @@ import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 
 const styles = {
   container: {
-    marginY: {lg:"50px",xs:"20px"},
+    marginY: { lg: "50px", xs: "20px" },
   },
   cartInfo: {
-    marginTop: {lg:"40px",xs:"10px"},
+    marginTop: { lg: "40px", xs: "10px" },
   },
 };
 
@@ -133,11 +133,20 @@ function Cart() {
               appState={appState}
             />
           </Grid>
-          <Grid item xs="12" spacing={3} container sx={styles.cartInfo}>
-            <Grid item lg="4" xs="12" px={1}>
+          <Grid
+            item
+            xs="12"
+            container
+            sx={styles.cartInfo}
+          >
+            <Grid item lg="4" xs="12"
+            sx={{paddingY:{lg:"0px",xs:"20px"}}}
+            px={1}>
               <DeliveryInfo appState={appState} lang={lang} dir={dir} />
             </Grid>
-            <Grid item lg="8" xs="12" px={1}>
+            <Grid item lg="8"
+            sx={{paddingY:{lg:"0px",xs:"20px"}}}
+            xs="12" px={1}>
               <TotalInfo
                 dir={dir}
                 handleCheckoutOpen={handleCheckoutOpen}
@@ -152,6 +161,7 @@ function Cart() {
         open={openCheckout}
         handleClose={() => setOpenCheckout(false)}
         dir={dir}
+        lang={lang}
       />
       <UploadPicture
         open={uploadPictureOpen}

@@ -90,21 +90,15 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
                 {jsnAboutSection.jsnSubtitle[lang]}
               </Typography>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              spacing={4}
-              py={2}
-            >
-              <Grid item lg={5} xs={6}>
+            <Grid item xs={12} container py={2}>
+              <Grid item lg={5} px={1} xs={6}>
                 <Button0001
                   startIcon={googlePlayIcon}
                   label={dictionary.buttons.googlePlay[lang]}
                   style={styles.appStoreBtn}
                 />
               </Grid>
-              <Grid item lg={5} xs={6}>
+              <Grid item lg={5} px={1} xs={6}>
                 <Button0001
                   startIcon={appleIcon}
                   label={dictionary.buttons.appStore[lang]}

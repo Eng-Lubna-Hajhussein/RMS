@@ -17,6 +17,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/OptionList/OptionList";
 import { MoreVert } from "@mui/icons-material";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -134,7 +135,12 @@ const styles = {
         lg: "16px",
         xs: "14px",
       },
+      ".MuiTablePagination-actions": {
+        marginLeft: { xs: "5px", lg: "15px" },
+        marginRight: { xs: "5px", lg: "15px" },
+      },
     },
+
   },
 };
 
@@ -165,7 +171,12 @@ function Products({
   const actionItemNavList = [
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
   ];
-  const columns = ["Product", "Quantity", "Total"];
+  // const columns = ["Product", "Quantity", "Total"];
+  const columns = [
+    {eng:"product",arb:"الطلب"},
+    {eng:"quantity",arb:"الكمية"},
+    {eng:"total",arb:"المجموع"}
+  ]
   return (
     <Grid item xs="12" container sx={styles.container}>
       <Table aria-label="simple table">
@@ -177,9 +188,10 @@ function Products({
                   sx={{
                     fontSize: { lg: "20px", xs: "12px" },
                     fontWeight: { lg: "800", xs: "800" },
+                    textTransform: "capitalize",
                   }}
                 >
-                {column}
+                {column[lang]}
                 </Typography>
               </TableCell>
             ))}
@@ -201,7 +213,7 @@ function Products({
                     minWidth: { xs: "350px", lg: "600px" },
                     width: { xs: "350px", lg: "600px" },
                   }}
-                  align="left"
+                  align={dir==='ltr'?"left":'right'}
                   component="th"
                   scope="row"
                 >
@@ -298,17 +310,17 @@ function Products({
               </TableRow>
             ))}
           <TableRow sx={styles.actionsRow}>
-            <TableCell colSpan={2} align="left" component="th" scope="row">
+            <TableCell colSpan={2} align={dir==='ltr'?"left":'right'} component="th" scope="row">
               <Button sx={styles.menuBtn}>
                 <Typography color={"#fff"} sx={styles.menuBtnLabel}>
-                  Back To Menu
+                 {dictionary.buttons.backToMenu[lang]}
                 </Typography>
               </Button>
             </TableCell>
-            <TableCell colSpan={3} align="right" component="th" scope="row">
+            <TableCell colSpan={3} align={dir==='ltr'?"right":'left'} component="th" scope="row">
               <Button sx={styles.discardBtn} onClick={handleCartDiscard}>
                 <Typography color={"#fff"} sx={styles.discardBtnLabel}>
-                  Discard
+                  {dictionary.buttons.discard[lang]}
                 </Typography>
               </Button>
             </TableCell>
@@ -329,16 +341,18 @@ function Products({
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelDisplayedRows={({ page }) => {
-                return <Typography
+                return  <Typography
+                dir={dir}
                 sx={{
                   fontSize: {
                     lg: "16px",
                     xs: "14px",
                   },
                   fontWeight: "600",
+                  textTransform: "capitalize",
                 }}
               >
-                Page: {page + 1}
+                {dictionary.tablePagination.page[lang]}: {page + 1}
               </Typography>;
               }}
               backIconButtonProps={{
@@ -348,17 +362,22 @@ function Products({
               showFirstButton={true}
               showLastButton={true}
               labelRowsPerPage={<Typography
+                dir={dir}
                 sx={{
                   fontSize: {
                     lg: "16px",
                     xs: "14px",
                   },
                   fontWeight: "600",
+                  textTransform: "capitalize",
                 }}
               >
-                Rows:
+                {dictionary.tablePagination.rows[lang]}:
               </Typography>}
-              sx={styles.tablePagination}
+              sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+                marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
+                marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
+              },}}
             />
           </TableRow>
         </TableFooter>

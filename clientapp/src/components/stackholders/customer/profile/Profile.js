@@ -11,6 +11,7 @@ import Location from "./location/Location";
 import PersonalInfo from "./personalInfo/PersonalInfo";
 import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -71,22 +72,22 @@ function Profile() {
 
   const activities = [
     {
-      title: "Last Order",
+      title: dictionary.users.lastOrderDate[lang],
       description: lastOrder,
       img: menuIcon,
     },
     {
-      title: "Last Reservation",
+      title: dictionary.users.lastReservationDate[lang],
       description: lastReservation,
       img: menuIcon,
     },
     {
-      title: "Total Orders",
+      title: dictionary.users.totalOrders[lang],
       description: orders?.length,
       img: menuIcon,
     },
     {
-      title: "Total Reservations",
+      title: dictionary.users.totalReservations[lang],
       description: tables?.length,
       img: menuIcon,
     },

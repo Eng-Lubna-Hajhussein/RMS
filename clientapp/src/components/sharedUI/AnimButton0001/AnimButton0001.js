@@ -5,6 +5,11 @@ const styles = {
   inner: {
     fontWeight: "800",
     width: "100%",
+    fontSize:{lg:"16px",xs:"14px"},
+    padding:{lg:"18px 20px",xs:"12px 15px"},
+    // ":before":{
+    //   height: {lg:"72px",xs:"80px"}
+    // }
   },
 };
 
@@ -30,6 +35,7 @@ function AnimButton0001({
           backgroundColor: color,
           ":before": {
             borderColor: color,
+            height: {lg:"72px",xs:"58px"}
           },
         }}
       >

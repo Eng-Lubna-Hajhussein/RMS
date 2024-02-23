@@ -8,6 +8,7 @@ import SignupUser from "./signupUser/SignupUser";
 import { Grid, Typography } from "@mui/material";
 import { AppRegistrationSharp, FoodBank } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
+import { dictionary } from "appHelper/appDictionary";
 
 function Signup() {
   const { appState } = useContext(AppContext);
@@ -22,7 +23,7 @@ function Signup() {
           </Grid>
           <Grid item>
             <Typography sx={{ textTransform: "capitalize"}}>
-              Restaurant
+              {dictionary.signup.restaurant[lang]}
             </Typography>
           </Grid>
         </Grid>
@@ -36,11 +37,25 @@ function Signup() {
             <AppRegistrationSharp />
           </Grid>
           <Grid item>
-            <Typography sx={{ textTransform: "capitalize" }}>User</Typography>
+            <Typography sx={{ textTransform: "capitalize" }}>
+            {dictionary.signup.user[lang]}
+            </Typography>
           </Grid>
         </Grid>
       ),
       content: <SignupUser />,
+    },
+  ];
+  const userNavList = [
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "login", arb: "تسجيل الدخول" },
+      path:  "/login",
+    },
+    {
+      bigNavID: 2344146478,
+      nav: { eng: "register", arb: "تسجيل حساب" },
+      path: "/signup",
     },
   ];
   return (
@@ -51,6 +66,7 @@ function Signup() {
         navList={lstWebsiteNav}
         jsnSystemContact={Demo_jsnSystemInfo.jsnSystemContact}
         websiteLogo={Demo_jsnSystemInfo?.strLogoPath}
+        userNavList={userNavList}
         editable={false}
       />}
       {!systemID && <Tabs001 tabsContent={tabsContent} />}

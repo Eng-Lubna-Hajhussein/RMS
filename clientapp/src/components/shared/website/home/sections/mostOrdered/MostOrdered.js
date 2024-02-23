@@ -59,7 +59,7 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
         </Grid>
         <Grid item lg={3} xs={6} sx={styles.line} />
       </Grid>
-      <Grid item container lg={12} xs={12}>
+      <Grid item xs={12} display={{ lg: "flex", xs: "none" }}>
         <Carousel
           slides={slides}
           activeSlides={2}
@@ -70,6 +70,17 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
           dir={dir}
         />
       </Grid>
+        <Grid item xs={12} display={{ lg: "none", xs: "flex" }}>
+        <Carousel
+          slides={slides}
+          activeSlides={1}
+          justify={"center"}
+          activeColor={"#f3274c"}
+          inactiveColor={"#b5b5b5"}
+          lang={lang}
+          dir={dir}
+        />
+        </Grid>
     </Grid>
   );
 }

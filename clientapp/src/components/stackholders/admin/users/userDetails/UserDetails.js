@@ -27,6 +27,7 @@ import Location from "./Location/Location";
 import Review from "./Review/Review";
 import Activities from "./Activities/Activities";
 import { CtrlUsers } from "../controller/CtrlUsers";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   tabLabel: {
@@ -97,11 +98,13 @@ function UserDetails({
             <LiveHelp fontSize="small" />
           </Grid>
           <Grid item>
-            <Typography sx={styles.tabLabel}>Personal Info</Typography>
+            <Typography sx={styles.tabLabel}>
+              {dictionary.users.personalInfo[lang]}
+            </Typography>
           </Grid>
         </Grid>
       ),
-      content: <PersonalInfo user={user} lang={lang} />,
+      content: <PersonalInfo user={user} lang={lang} dir={dir} />,
     },
     {
       tabLabel: (
@@ -110,7 +113,9 @@ function UserDetails({
             <Checklist fontSize="small" />
           </Grid>
           <Grid item>
-            <Typography sx={styles.tabLabel}>Activities</Typography>
+            <Typography sx={styles.tabLabel}>
+              {dictionary.users.activities[lang]}
+            </Typography>
           </Grid>
         </Grid>
       ),
@@ -123,7 +128,9 @@ function UserDetails({
             <Reviews fontSize="small" />
           </Grid>
           <Grid item>
-            <Typography sx={styles.tabLabel}>Review</Typography>
+            <Typography sx={styles.tabLabel}>
+              {dictionary.users.review[lang]}
+            </Typography>
           </Grid>
         </Grid>
       ),
@@ -136,7 +143,9 @@ function UserDetails({
             <LocationOn fontSize="small" />
           </Grid>
           <Grid item>
-            <Typography sx={styles.tabLabel}>Location</Typography>
+            <Typography sx={styles.tabLabel}>
+              {dictionary.users.location[lang]}
+            </Typography>
           </Grid>
         </Grid>
       ),
@@ -146,11 +155,16 @@ function UserDetails({
 
   return (
     <React.Fragment>
-      <Dialog open={open} onClose={handleClose}
-      fullWidth maxWidth="md">
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1}>
-            <Grid item xs="12"  sx={{paddingX:{lg:"30px",xs:"0px"}}} container mx={0}>
+            <Grid
+              item
+              xs="12"
+              sx={{ paddingX: { lg: "30px", xs: "0px" } }}
+              container
+              mx={0}
+            >
               <Grid
                 container
                 item
@@ -163,7 +177,8 @@ function UserDetails({
               >
                 <Grid
                   item
-                  pr={1}
+                  pr={dir === "ltr" ? 1 : 0}
+                  pl={dir === "rtl" ? 1 : 0}
                   alignContent={"start"}
                   alignItems={"start"}
                   sx={styles.fitContentHeight}
@@ -191,7 +206,11 @@ function UserDetails({
                       </Typography>
                     </Grid>
                     <Grid item xs="12" container>
-                      <Grid item pr={2}>
+                      <Grid
+                        item
+                        pr={dir === "ltr" ? 2 : 0}
+                        pl={dir === "rtl" ? 2 : 0}
+                      >
                         {user?.blnIsDeleted && (
                           <Tooltip title="unban user">
                             <Block
@@ -229,7 +248,11 @@ function UserDetails({
                           </Tooltip>
                         )}
                       </Grid>
-                      <Grid item pr={2}>
+                      <Grid
+                        item
+                        pr={dir === "ltr" ? 2 : 0}
+                        pl={dir === "rtl" ? 2 : 0}
+                      >
                         {user?.blnIsActive && (
                           <Tooltip title="deactivate user">
                             <AccountCircle
@@ -267,7 +290,11 @@ function UserDetails({
                           </Tooltip>
                         )}
                       </Grid>
-                      <Grid item pr={2}>
+                      <Grid
+                        item
+                        pr={dir === "ltr" ? 2 : 0}
+                        pl={dir === "rtl" ? 2 : 0}
+                      >
                         <Tooltip title="message user">
                           <Message fontSize="small" sx={styles.messageIcon} />
                         </Tooltip>
@@ -280,9 +307,12 @@ function UserDetails({
                 <Close sx={styles.closeIcon} onClick={handleClose} />
               </Grid>
             </Grid>
-            <Grid item xs="12" 
-            sx={{paddingX:{lg:"30px",xs:"0px"}}}
-            mx={0}>
+            <Grid
+              item
+              xs="12"
+              sx={{ paddingX: { lg: "30px", xs: "0px" } }}
+              mx={0}
+            >
               <Divider sx={styles.divider} />
             </Grid>
             <Grid item xs="12" container>

@@ -1,10 +1,8 @@
-import React, { useContext, useMemo, useRef, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
-import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Grid, Typography } from "@mui/material";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import { useParams } from "react-router-dom";
-import arrowImg from "assets/image/arrow-2.png";
+import { useNavigate, useParams } from "react-router-dom";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { orderRegions } from "appHelper/appFunctions";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
@@ -18,21 +16,26 @@ import { CtrlDeliveryAddress } from "./controller/CtrlDeliveryAddress";
 import Country from "./country.js/Country";
 import City from "./city/City";
 import Town from "./town/Town";
+import { dictionary } from "appHelper/appDictionary";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: "5px",
+    marginY: { lg: "50px", xs: "20px" },
   },
   itemContainer: {
     height: "fit-content",
     marginY: "5px",
     borderRadius: "20px",
-    padding: "20px",
-    marginBottom:"70px"
+    padding: { lg: "20px", xs: "10px" },
+    marginBottom: { lg: "70px", xs: "40px" },
   },
   title: {
-    textTransform: "uppercase",
-    fontSize: "28px",
+    textTransform: "capitalize",
+    fontSize: { lg: "28px", xs: "16px" },
     fontWeight: "800",
     color: App_Primary_Color,
     borderBottom: "3px solid #ffd40d",
@@ -70,6 +73,10 @@ function DeliveryAddress() {
   const lang = appState.clientInfo.strLanguage;
   const [isLoading, setIsLoading] = useState(false);
   const isUpdated = useRef(false);
+  const navigate = useNavigate();
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
 
   const regionsInitial = useMemo(() => {
     return orderRegions({
@@ -225,41 +232,42 @@ function DeliveryAddress() {
     });
   };
 
-  const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
 
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
 
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
 
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
 
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
   return (
     <React.Fragment>
       <WebsiteHeader
@@ -283,17 +291,17 @@ function DeliveryAddress() {
             <Grid
               item
               xs="12"
-              px={1}
-              pb={10}
+              lg="10"
+              px={2}
               container
               justifyContent={"center"}
               sx={styles.itemContainer}
             >
               <Grid container>
-                <Grid item container xs="12" justifyContent={"center"}>
-                <Typography sx={styles.title}>
-                      Restaurant Delivery Address !
-                    </Typography>
+                <Grid item container xs="12" justifyContent={"start"}>
+                  <Typography sx={styles.title}>
+                    {dictionary.systemDeliveryAddress.title[lang]} !
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -343,9 +351,17 @@ function DeliveryAddress() {
                 onDelete={deleteTownHandler}
               />
             )}
-            <Grid item xs="12" container justifyContent={"end"} py={8}>
+            <Grid
+              item
+              xs="12"
+              container
+              justifyContent={"end"}
+              sx={{
+                paddingY: { lg: "80px", xs: "20px" },
+              }}
+            >
               <AnimButton0001
-                label={"Save Changes"}
+                label={dictionary.buttons.saveChanges[lang]}
                 color={App_Primary_Color}
                 onClick={onSave}
               />
@@ -416,6 +432,20 @@ function DeliveryAddress() {
         bigParentID={selectedCity}
         bigID={selectedTown}
         jsnName={regions?.regionName[selectedTown]}
+      />
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
       />
     </React.Fragment>
   );

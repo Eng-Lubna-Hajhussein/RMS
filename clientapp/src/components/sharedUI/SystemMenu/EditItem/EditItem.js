@@ -88,6 +88,7 @@ function EditItem({
   const onFeaturedInput = useRef();
   const onMostOrderedInput = useRef();
   const onWeeklySpecial = useRef();
+  const isWsChanged = useRef();
   const [onSaleChecked, setOnSaleChecked] = useState(
     !!categoryOnAction?.jsnCategoryInfo?.blnOnSale
   );
@@ -126,10 +127,13 @@ function EditItem({
       },
     };
     onSave(item);
-    if (!!onWeeklySpecial?.current?.checked) {
+    console.log(isWsChanged.current);
+    if (!!onWeeklySpecial?.current?.checked && isWsChanged.current) {
+      console.log("addWS");
       addWS(item.bigID);
     }
-    if (!onWeeklySpecial?.current?.checked) {
+    if (!onWeeklySpecial?.current?.checked && isWsChanged.current) {
+      console.log("removeWS");
       removeWS();
     }
     handleClose();
@@ -235,6 +239,7 @@ function EditItem({
                       />
                     }
                     sx={styles.formControlLabel}
+                    onChange={(e) => (isWsChanged.current = true)}
                     label={dictionary.menuSection.weeklySpecialMeal[lang]}
                     inputRef={onWeeklySpecial}
                   />

@@ -32,21 +32,18 @@ import bgImg from "assets/image/patron.jpg";
 import { useForm } from "react-hook-form";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
-  dishName: {
-    fontSize: { lg: "16px !important", xs: "9px" },
-    fontWeight: "800 !important",
-    color: "#000",
-    fontFamily: "sans-serif",
+  inputLabel:{
+    textTransform:"capitalize"
   },
-  dishDescription: {
-    fontSize: { lg: "18px !important", xs: "9px" },
-    fontWeight: "400 !important",
-    color: "#555",
-    fontFamily: "Epilogue",
-    lineHeight: { lg: "30px !important", xs: "20px" },
+  select:{
+    textTransform:"capitalize"
   },
+  textField:{
+    background: "#fff", borderRadius: "5px",textTransform:"capitalize"
+  }
 };
 
 function Reservation({
@@ -87,12 +84,14 @@ function Reservation({
               width: "fit-content",
             }}
           >
-            RESERVE A TABLE !
+            {dictionary.reservationForm.title[lang]} !
           </Typography>
         </Grid>
         <Grid item lg="6" xs="12" container mt={2} p={2}>
           <FormControl fullWidth>
-            <InputLabel>Reservation Time</InputLabel>
+            <InputLabel sx={styles.inputLabel}>{
+              dictionary.labels.reservationTime[lang]
+            }</InputLabel>
             <Select
               defaultValue={reservationHours}
               required
@@ -109,8 +108,8 @@ function Reservation({
                       textTransform: "capitalize",
                     }}
                   >
-                    {`reserve for ${hoursNum} ${
-                      hoursNum === 1 ? "hour" : "hours"
+                    {`${dictionary.reservationForm.reserveFor[lang]} ${hoursNum} ${
+                      hoursNum === 1 ? dictionary.reservationForm.hour[lang] : dictionary.reservationForm.hours[lang]
                     }`}
                   </Typography>
                 </MenuItem>
@@ -122,24 +121,24 @@ function Reservation({
         <Grid item lg="6" xs="12" container>
           <Grid item lg="6" xs="12" p={2}>
             <TextField
-              sx={{ background: "#fff", borderRadius: "5px" }}
+              sx={styles.textField}
               variant="outlined"
               fullWidth
               type="date"
               disabled
               inputRef={startDate}
-              label="Start Date"
+              label={dictionary.labels.startDate[lang]}
               value={moment(new Date()).format("YYYY-MM-DD")}
             />
           </Grid>
           <Grid item lg="6" xs="12" p={2}>
             <TextField
-              sx={{ background: "#fff", borderRadius: "5px" }}
+              sx={styles.textField}
               variant="outlined"
               fullWidth
               type="time"
               inputRef={startTime}
-              label="Start Time"
+              label={dictionary.labels.startTime[lang]}
               disabled
               value={moment(new Date()).format("HH:mm")}
             />
@@ -148,14 +147,14 @@ function Reservation({
         <Grid item lg="6" xs="12" container>
           <Grid item lg="6" xs="12" p={2}>
             <TextField
-              sx={{ background: "#fff", borderRadius: "5px" }}
+              sx={styles.textField}
               variant="outlined"
               fullWidth
               type="date"
               disabled
               inputRef={endDate}
               autoFocus
-              label="End Date"
+              label={dictionary.labels.endDate[lang]}
               value={moment(
                 new Date(
                   new Date().setHours(new Date().getHours() + reservationHours)
@@ -165,14 +164,14 @@ function Reservation({
           </Grid>
           <Grid item lg="6" xs="12" p={2}>
             <TextField
-              sx={{ background: "#fff", borderRadius: "5px" }}
+              sx={styles.textField}
               variant="outlined"
               fullWidth
               type="time"
               disabled
               autoFocus
               inputRef={endTime}
-              label="End Time"
+              label={dictionary.labels.endTime[lang]}
               value={moment(
                 new Date(
                   new Date().setHours(new Date().getHours() + reservationHours)

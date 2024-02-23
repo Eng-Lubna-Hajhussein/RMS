@@ -165,7 +165,7 @@ function UpperToolbar({
                       sx={styles.regTypography}
                       color={"#000000"}
                     >
-                      login
+                      {dictionary.shared.login[lang]}
                     </Typography>
                   </Link>
                 </Grid>
@@ -182,7 +182,7 @@ function UpperToolbar({
                       sx={styles.regTypography}
                       color={"#000000"}
                     >
-                      / register
+                      / {dictionary.shared.register[lang]}
                     </Typography>
                   </Link>
                 </Grid>

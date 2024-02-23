@@ -8,6 +8,7 @@ import {
   Grid,
 } from "@mui/material";
 import { App_Primary_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
@@ -27,6 +28,9 @@ const styles = {
   },
   dialogActions: {
     py: "0",
+  },
+  textField: {
+    textTransform: "capitalize",
   },
 };
 
@@ -71,25 +75,28 @@ function AddCity({ open, handleClose, bigParentID, lang, dir, onSave }) {
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Title0001 title={"Add City"} dir={dir} />
+                <Title0001 title={dictionary.systemDeliveryAddress.addCity[lang]} dir={dir} />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs='12' lg="6" p={1}>
                 <TextField
                   color="warning"
                   required
+                  sx={styles.textField}
                   name="nameEng"
-                  label="City Name English"
+                  dir="ltr"
+                  label={dictionary.labels.cityNameEng[lang]}
                   type="text"
                   fullWidth
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs='12' lg="6" p={1}>
                 <TextField
                   color="warning"
                   required
+                  sx={styles.textField}
                   name="nameArb"
-                  label="City Name Arabic"
+                  label={dictionary.labels.cityNameArb[lang]}
                   type="text"
                   dir="rtl"
                   fullWidth
@@ -103,13 +110,13 @@ function AddCity({ open, handleClose, bigParentID, lang, dir, onSave }) {
           <Grid
             container
             p={2}
-            px={5}
+            // px={5}
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="3">
+            <Grid item xs='5' lg="3">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"

@@ -117,8 +117,9 @@ function Order() {
                 appState={appState}
               />
             </Grid>
-            <Grid item xs="12" container spacing={3} sx={styles.orderInfo}>
-              <Grid item lg="4" xs={12} px={1}>
+            <Grid item xs="12" container 
+             sx={styles.orderInfo}>
+              <Grid item lg="4" sx={{paddingY:{lg:"0px",xs:"20px"}}} xs={12} px={1}>
                 <DeliveryTime
                   deliveryTime={deliveryTime}
                   dir={dir}
@@ -128,7 +129,7 @@ function Order() {
                   appState={appState}
                 />
               </Grid>
-              <Grid item lg="8" xs={12} px={1}>
+              <Grid item lg="8" sx={{paddingY:{lg:"0px",xs:"20px"}}} xs={12} px={1}>
                 <TotalInfo dir={dir} lang={lang} totalPrice={totalPrice} />
               </Grid>
             </Grid>

@@ -15,6 +15,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { Visibility } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -56,10 +57,11 @@ const styles = {
     color: "#fff",
     textTransform: "capitalize",
     fontWeight: "700",
+    fontSize: { lg: "17px", xs: "12px" },
   },
-  view: {
-    fontSize: { lg: "15px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+  viewBtnLabel: {
+    fontSize: "15px",
+    textTransform: "uppercase",
   },
   tablePagination: {
     border: "1px solid #c4c4c4",
@@ -77,6 +79,10 @@ const styles = {
       fontSize: {
         lg: "16px",
         xs: "14px",
+      },
+      ".MuiTablePagination-actions": {
+        marginLeft: { xs: "5px", lg: "15px" },
+        marginRight: { xs: "5px", lg: "15px" },
       },
     },
   },
@@ -97,12 +103,12 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
     setPage(0);
   };
   const columns = [
-    "Table ID",
-    "Seats Number",
-    "Price Per Hour",
-    "status",
-    "Reservation Info",
-    "Actions",
+    {eng:"Table ID",arb:"معرف الطاولة"},
+    {eng:"Seats Number",arb:"عدد المقاعد"},
+    {eng:"Price Per Hour",arb:"السعر لكل ساعة"},
+    {eng:"Status",arb:"الحالة"},
+    {eng:"Reservation Info",arb:"معلومات الحجز"},
+    {eng:"Actions",arb:"الاجراءات"},
   ];
   return (
     <Grid item xs="12" container sx={styles.container}>
@@ -122,9 +128,10 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
                   sx={{
                     fontSize: { lg: "15px", xs: "12px" },
                     fontWeight: { lg: "800", xs: "800" },
+                    textTransform:"capitalize"
                   }}
                 >
-                  {column}
+                  {column[lang]}
                 </Typography>
               </TableCell>
             ))}
@@ -186,8 +193,8 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
                   color={table.blnTableAvailable ? "success" : "error"}
                   label={
                     <Typography sx={styles.status}>
-                      {table.blnTableAvailable ? "Available" : "Reserved"}
-                    </Typography>
+                    {table.blnTableAvailable ? dictionary.tables.available[lang] : dictionary.tables.reserved[lang]}
+                  </Typography>
                   }
                 />
               </TableCell>
@@ -201,7 +208,9 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
                   endIcon={<Visibility />}
                   disabled={table.blnTableAvailable}
                 >
-                  <Typography sx={styles.view}>view</Typography>
+                  <Typography sx={styles.viewBtnLabel} px={1}>
+                    {dictionary.buttons.view[lang]}
+                  </Typography>
                 </Button>
               </TableCell>
               <TableCell
@@ -211,7 +220,7 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
                 scope="row"
               >
                 <AnimButton0001
-                  label={"cancel"}
+                  label={dictionary.buttons.cancelReservation[lang]}
                   color={App_Second_Color}
                   disabled={table.blnTableAvailable}
                   onClick={() => {
@@ -244,16 +253,18 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
               labelDisplayedRows={({ page }) => {
                 return (
                   <Typography
-                    sx={{
-                      fontSize: {
-                        lg: "16px",
-                        xs: "14px",
-                      },
-                      fontWeight: "600",
-                    }}
-                  >
-                    Page: {page + 1}
-                  </Typography>
+                  dir={dir}
+                  sx={{
+                    fontSize: {
+                      lg: "16px",
+                      xs: "14px",
+                    },
+                    fontWeight: "600",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {dictionary.tablePagination.page[lang]}: {page + 1}
+                </Typography>
                 );
               }}
               backIconButtonProps={{
@@ -264,18 +275,26 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
               showLastButton={true}
               labelRowsPerPage={
                 <Typography
+                  dir={dir}
                   sx={{
                     fontSize: {
                       lg: "16px",
                       xs: "14px",
                     },
                     fontWeight: "600",
+                    textTransform: "capitalize",
                   }}
                 >
-                  Rows:
+                  {dictionary.tablePagination.rows[lang]}:
                 </Typography>
+              
               }
-              sx={styles.tablePagination}
+              sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+                marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
+                marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
+              },
+
+            }}
             />
           </TableRow>
         </TableFooter>

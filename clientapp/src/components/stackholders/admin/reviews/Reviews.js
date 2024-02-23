@@ -1,16 +1,18 @@
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useMemo } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import {  Grid } from "@mui/material";
 import { App_Primary_Color } from "appHelper/appColor";
-import { useParams } from "react-router-dom";
-import arrowImg from "assets/image/arrow-2.png";
-import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+import { useNavigate, useParams } from "react-router-dom";
 import ReviewsTable from "./reviewsTable/ReviewsTable";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -39,49 +41,54 @@ const styles = {
 };
 
 function Reviews() {
-  const { appState } = useContext(AppContext);
+  const { appState,appDispatch } = useContext(AppContext);
   const { systemID, systemName } = useParams();
   const lang = appState.clientInfo.strLanguage;
   const dir = appState.clientInfo.strDir;
+  const navigate = useNavigate();
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
   const reviews = useMemo(() => {
     return appState?.systemInfo?.lstSystemReviews || [];
   });
 
-  const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
 
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
 
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
 
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
 
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
 
   return (
     <React.Fragment>
@@ -100,10 +107,24 @@ function Reviews() {
         blnUserLogin={appState.clientInfo.blnUserLogin}
       />
       <Grid container justifyContent={"center"} sx={styles.container}>
-        <Grid item xs="10" container>
+        <Grid item lg="10" xs="12" px={2} container>
           <ReviewsTable reviews={reviews} lang={lang} dir={dir} />
         </Grid>
       </Grid>
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
+      />
     </React.Fragment>
   );
 }

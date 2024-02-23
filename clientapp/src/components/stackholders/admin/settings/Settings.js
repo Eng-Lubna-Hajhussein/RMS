@@ -17,6 +17,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlSittings } from "./controller/CtrlSettings";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import { dictionary } from "appHelper/appDictionary";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
@@ -24,13 +29,13 @@ const styles = {
     height: "fit-content",
     marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: {lg:"20px",xs:"5px"},
+    padding: { lg: "20px", xs: "5px" },
   },
   title: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: {lg:"30px",xs:"20px"},
+    fontSize: { lg: "30px", xs: "20px" },
   },
   inputLabel: {
     textTransform: "capitalize",
@@ -75,7 +80,12 @@ function Settings() {
       cityIndex: cityIndex,
     };
   }, []);
+  const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState(addressInitial);
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
+
   const onChangeCountry = (event) => {
     const index = event.target.value;
     address.countryIndex = index;
@@ -106,46 +116,42 @@ function Settings() {
     });
   };
 
-  const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
 
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
 
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
 
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
 
-    {
-      bigNavID: 2344146478,
-      nav: { eng: "users", arb: "المنيو" },
-      path: `/admin/users/${systemName}/${systemID}`,
-    },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
-  const [isLoading, setIsLoading] = useState(false);
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
 
   return (
     <React.Fragment>
@@ -177,20 +183,26 @@ function Settings() {
             <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
               <Grid item xs="12" p={2} container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
-                  Settings
+                  {dictionary.systemSettings.settings[lang]}
                 </Typography>
               </Grid>
               <Grid item container xs="12">
                 <Grid item xs="12" p={2}>
-                  <Title0001 title={"address"} dir={dir} />
+                  <Title0001
+                    title={dictionary.systemSettings.address[lang]}
+                    dir={dir}
+                  />
                 </Grid>
                 <Grid item xs="12" container>
-                  <Grid item lg="6" xs='12' p={2}>
+                  <Grid item lg="6" xs="12" p={2}>
                     <FormControl fullWidth>
-                      <InputLabel sx={styles.inputLabel}>Country</InputLabel>
+                      <InputLabel sx={styles.inputLabel}>
+                        {dictionary.labels.country[lang]}
+                      </InputLabel>
                       <Select
                         defaultValue={address?.countryIndex}
                         required
+                        label={dictionary.labels.country[lang]}
                         onChange={onChangeCountry}
                         sx={styles.select}
                       >
@@ -200,13 +212,16 @@ function Settings() {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item lg="6" xs='12' p={2}>
+                  <Grid item lg="6" xs="12" p={2}>
                     <FormControl fullWidth>
-                      <InputLabel sx={styles.inputLabel}>City</InputLabel>
+                      <InputLabel sx={styles.inputLabel}>
+                        {dictionary.labels.city[lang]}
+                      </InputLabel>
                       <Select
                         value={address?.cityIndex}
                         required
                         onChange={onChangeCity}
+                        label={dictionary.labels.city[lang]}
                         sx={styles.select}
                       >
                         {CITIES[COUNTRIES[address?.countryIndex]["eng"]].map(
@@ -221,7 +236,10 @@ function Settings() {
               </Grid>
               <Grid item container xs="12">
                 <Grid item xs="12" p={2}>
-                  <Title0001 title={"Payment Info"} dir={dir} />
+                  <Title0001
+                    title={dictionary.systemSettings.paymentInfo[lang]}
+                    dir={dir}
+                  />
                 </Grid>
                 <Grid item xs="12" container>
                   <Grid item xs="12" p={2}>
@@ -230,7 +248,7 @@ function Settings() {
                       variant="outlined"
                       fullWidth
                       type="text"
-                      label="Card Number"
+                      label={dictionary.labels.cardNumber[lang]}
                       defaultValue={
                         appState?.userInfo?.jsnClientPayment?.strCardNumber
                       }
@@ -243,13 +261,13 @@ function Settings() {
                       }}
                     />
                   </Grid>
-                  <Grid item lg="6" xs='12' p={2}>
+                  <Grid item lg="6" xs="12" p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
                       fullWidth
                       type="text"
-                      label="CVV Code"
+                      label={dictionary.labels.cvv[lang]}
                       defaultValue={
                         appState?.userInfo?.jsnClientPayment?.strCVV
                       }
@@ -260,13 +278,13 @@ function Settings() {
                       }}
                     />
                   </Grid>
-                  <Grid item lg="6" xs='12' p={2}>
+                  <Grid item lg="6" xs="12" p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
                       fullWidth
                       type="text"
-                      label="Name On Card"
+                      label={dictionary.labels.nameOnCard[lang]}
                       defaultValue={
                         appState?.userInfo?.jsnClientPayment?.strNameOnCard
                       }
@@ -281,7 +299,10 @@ function Settings() {
               </Grid>
               <Grid item container xs="12">
                 <Grid item xs="12" p={2}>
-                  <Title0001 title={"Location"} dir={dir} />
+                  <Title0001
+                    title={dictionary.systemSettings.location[lang]}
+                    dir={dir}
+                  />
                 </Grid>
                 <Grid item xs="12" container p={2}>
                   <iframe
@@ -295,7 +316,7 @@ function Settings() {
               </Grid>
               <Grid item xs="12" container justifyContent={"end"} p={2}>
                 <AnimButton0001
-                  label={"Save Changes"}
+                  label={dictionary.buttons.saveChanges[lang]}
                   color={App_Second_Color}
                   type="submit"
                 />
@@ -304,6 +325,20 @@ function Settings() {
           </Grid>
         </Grid>
       )}
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
+      />
     </React.Fragment>
   );
 }

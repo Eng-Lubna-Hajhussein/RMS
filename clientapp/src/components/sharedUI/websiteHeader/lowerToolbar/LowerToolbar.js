@@ -172,12 +172,6 @@ function LowerToolbar({
             )}
             { (
               <Grid item lg={2} xs={8} display={{lg:"none",xs:"flex"}} container justifyContent={"start"}>
-                {/* <Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
-                  <ShoppingBagOutlined
-                    fontSize="large"
-                    sx={styles.shoppingIcon}
-                  />
-                </Badge> */}
                 <Grid
                   item
                   container
@@ -187,11 +181,6 @@ function LowerToolbar({
                 >
                   <Grid item px={1}>
                     {!blnUserLogin && (
-                      // <Box sx={styles.regIconBox}>
-                      //   <Icon>
-                      //     <HowToRegOutlined sx={styles.regIcon} />
-                      //   </Icon>
-                      // </Box>
                       <NavList
                         nav={
                           <Box sx={styles.regIconBox}>
@@ -200,10 +189,7 @@ function LowerToolbar({
                         </Icon>
                       </Box>
                         }
-                        navList={[
-                          { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
-                          { bigNavID: 2344146478, nav: { eng: "menus", arb: "المنيو" } },
-                        ]}
+                        navList={userNavList}
                         lang={lang}
                       />
                     )}
@@ -229,7 +215,7 @@ function LowerToolbar({
 
             <Grid item lg={8} sx={styles.reverseBtnContainer}>
               <AnimButton0001
-                label={dictionary.buttons.reverseTableBtn[lang]}
+                label={editable?dictionary.buttons.addTableBtn[lang]: dictionary.buttons.reverseTableBtn[lang]}
                 fullWidth={true}
                 color={App_Primary_Color}
               />

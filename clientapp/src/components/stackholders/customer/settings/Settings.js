@@ -14,6 +14,7 @@ import DeliveryAddress from "./deliveryAddress/DeliveryAddress";
 import PersonalInfo from "./personalInfo/PersonalInfo";
 import PaymentInfo from "./paymentInfo/PaymentInfo";
 import Location from "./location/Location";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -172,7 +173,7 @@ function Settings() {
             <form onSubmit={handleSubmit(onSubmit)} style={styles.fullWidth}>
               <Grid item xs={12} p={2} container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
-                  Settings
+                {dictionary.customerSettings.settings[lang]}
                 </Typography>
               </Grid>
               <PersonalInfo
@@ -204,7 +205,7 @@ function Settings() {
 
               <Grid item xs={12} container justifyContent={"end"} p={2}>
                 <AnimButton0001
-                  label={"Save Changes"}
+                  label={dictionary.buttons.saveChanges[lang]}
                   color={App_Second_Color}
                   type="submit"
                 />
@@ -220,7 +221,7 @@ function Settings() {
                 onClick={handleDeleteAccount}
               >
                 <Typography color={"#fff"} sx={styles.deleteBtnLabel}>
-                  Delete Account
+                 {dictionary.buttons.deleteAccount[lang]}
                 </Typography>
               </Button>
             </Grid>

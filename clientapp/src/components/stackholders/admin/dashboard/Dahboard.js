@@ -5,10 +5,16 @@ import menuIcon from "assets/image/menu-icon.svg";
 import { App_Second_Color } from "appHelper/appColor";
 import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import moment from "moment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { findSystemOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
 import { Box, Grid, Typography } from "@mui/material";
 import Box001 from "components/sharedUI/Box001/Box001";
+import { dictionary } from "appHelper/appDictionary";
+import { ctrlDashboard } from "./controller/CtrlDashboard";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   box: {
@@ -21,12 +27,12 @@ const styles = {
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: {lg:"14px",xs:"10px"},
+    fontSize: { lg: "14px", xs: "14px" },
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: {lg:"25px",xs:"14px"},
+    fontSize: { lg: "25px", xs: "14px" },
     fontWeight: "800 !important",
   },
   icon: {
@@ -47,7 +53,7 @@ const styles = {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: { lg: "30px", xs: "15px" },
+    fontSize: { lg: "30px", xs: "20px" },
   },
   systemAddress: {
     fontWeight: "700",
@@ -72,29 +78,24 @@ const styles = {
 };
 
 function Dashboard() {
-  const { appState } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const { systemID, systemName } = useParams();
   const [orders, setOrders] = useState([]);
   const [tables, setTables] = useState([]);
-
-  const instalData = async () => {
-    setIsLoading(true);
-    const systemOrders = await findSystemOrders(
-      appState.systemInfo.bigSystemID
-    );
-    if (systemOrders?.length) {
-      setOrders([...systemOrders]);
-    }
-    const systemTables = await findTables(appState.systemInfo.bigSystemID);
-    if (systemTables?.length) {
-      setTables([...systemTables]);
-    }
-    setIsLoading(false);
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
 
   useEffect(() => {
-    instalData();
+    ctrlDashboard.installData({
+      appState: appState,
+      setIsLoading: setIsLoading,
+      setOrders: setOrders,
+      setTables: setTables,
+    });
   }, []);
 
   const lastOrder = useMemo(() => {
@@ -102,11 +103,9 @@ function Dashboard() {
       return "-";
     }
     const ascOrders = orders.sort((a, b) => {
-      return (b.dtmOrderDate) - (a.dtmOrderDate);
+      return b.dtmOrderDate - a.dtmOrderDate;
     });
-    return moment(new Date((ascOrders[0]?.dtmOrderDate))).format(
-      "MMM DD,YYYY"
-    );
+    return moment(new Date(ascOrders[0]?.dtmOrderDate)).format("MMM DD,YYYY");
   }, [orders]);
 
   const lastReservation = useMemo(() => {
@@ -121,66 +120,66 @@ function Dashboard() {
     );
   }, [tables]);
 
-  const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
-
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
-
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
-
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
-
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
-
   const statistics = [
     {
-      title: "Last Order",
+      title: dictionary.system.lastOrderDate[lang],
       description: lastOrder,
       img: menuIcon,
     },
     {
-      title: "Last Reservation",
+      title: dictionary.system.lastReservationDate[lang],
       description: lastReservation,
       img: menuIcon,
     },
     {
-      title: "Total Orders",
+      title: dictionary.system.totalOrders[lang],
       description: orders?.length,
       img: menuIcon,
     },
     {
-      title: "Total Tables",
+      title: dictionary.system.totalTables[lang],
       description: tables?.length,
       img: menuIcon,
     },
   ];
 
-  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
+
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
+
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
+
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
+
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
+
   return (
     <React.Fragment>
       <WebsiteHeader
@@ -228,9 +227,16 @@ function Dashboard() {
                   appState?.systemInfo?.jsnSystemAddress?.jsnCountry[lang]}
               </Typography>
             </Grid>
-            <Grid item xs="12" sx={{...styles.fitContentHeight,
-                    paddingY:{lg:"50px",xs:"10px"}
-                  }} container justifyContent={"center"}>
+            <Grid
+              item
+              xs="12"
+              sx={{
+                ...styles.fitContentHeight,
+                paddingY: { lg: "50px", xs: "10px" },
+              }}
+              container
+              justifyContent={"center"}
+            >
               {statistics.map(({ title, description, img }, index) => (
                 <Grid
                   item
@@ -240,9 +246,8 @@ function Dashboard() {
                   justifyContent={"center"}
                   alignContent={"center"}
                   sx={styles.fitContentHeight}
-          px={2}
-          pb={3}
-                  
+                  px={2}
+                  pb={3}
                 >
                   <Box001 title={title} description={description} img={img} />
                 </Grid>
@@ -262,6 +267,20 @@ function Dashboard() {
           </Grid>
         </Grid>
       )}
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
+      />
     </React.Fragment>
   );
 }

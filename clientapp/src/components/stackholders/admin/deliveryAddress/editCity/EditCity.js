@@ -8,6 +8,7 @@ import {
   Grid,
 } from "@mui/material";
 import { App_Primary_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 import { objCategoriesType } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
@@ -26,6 +27,9 @@ const styles = {
   },
   dialogActions: {
     py: "0",
+  },
+  textField: {
+    textTransform: "capitalize",
   },
 };
 
@@ -78,26 +82,29 @@ function EditCity({
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Title0001 title={"Edit City"} dir={dir} />
+                <Title0001 title={dictionary.systemDeliveryAddress.editCity[lang]} dir={dir} />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item lg="6" xs='12' p={1}>
                 <TextField
                   color="warning"
                   required
+                  dir="ltr"
+                  sx={styles.textField}
                   name="nameEng"
-                  label="City Name English"
+                  label={dictionary.labels.cityNameEng[lang]}
                   defaultValue={jsnName?.eng}
                   type="text"
                   fullWidth
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item lg="6" xs='12' p={1}>
                 <TextField
                   color="warning"
                   required
                   name="nameArb"
-                  label="City Name Arabic"
+                  sx={styles.textField}
+                  label={dictionary.labels.cityNameArb[lang]}
                   defaultValue={jsnName?.arb}
                   type="text"
                   dir="rtl"
@@ -112,13 +119,13 @@ function EditCity({
           <Grid
             container
             p={2}
-            px={5}
+            // px={5}
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs="3">
+            <Grid item xs='5' lg="3">
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"

@@ -8,6 +8,7 @@ import {
   Select,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -42,8 +43,8 @@ const styles = {
     textTransform: "capitalize",
   },
   box: {
-    height: "54px",
-    width: "54px",
+    height: { lg: "54px", xs: "45px" },
+    width: { lg: "54px", xs: "45px" },
     textAlign: "center",
     borderRadius: "50%",
     background: App_Second_Color,
@@ -65,15 +66,15 @@ function Country({
 }) {
   return (
     <Grid item xs="12" container>
-      <Grid item xs="6" px={1}>
+      <Grid item lg="6" xs="12" px={1}>
         <FormControl fullWidth>
           <InputLabel sx={styles.inputLabel}>
-            Delivery Address Countries
+            {dictionary.labels.deliveryAddressCountries[lang]}
           </InputLabel>
           <Select
             value={country}
             required
-            label={"Delivery Address Countries"}
+            label={dictionary.labels.deliveryAddressCountries[lang]}
             onChange={onChange}
             sx={styles.select}
           >
@@ -86,7 +87,15 @@ function Country({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs="2" px={1} container justifyContent={"end"}>
+      <Grid item lg={3} display={{ lg: "flex", xs: "none" }} />
+      <Grid
+        item
+        lg="1"
+        xs="4"
+        px={1}
+        sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+        container
+      >
         <Box sx={styles.box} onClick={addCountryOpen}>
           <Grid
             container
@@ -99,7 +108,15 @@ function Country({
         </Box>
       </Grid>
       {!!country && country !== "none" && (
-        <Grid item xs="2" px={1} container justifyContent={"end"}>
+        <Grid
+          item
+          lg="1"
+          xs="4"
+          px={1}
+          sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+          container
+          justifyContent={"center"}
+        >
           <Box sx={styles.box} onClick={editCountryOpen}>
             <Grid
               container
@@ -113,7 +130,15 @@ function Country({
         </Grid>
       )}
       {!!country && country !== "none" && (
-        <Grid item xs="2" px={1} container justifyContent={"end"}>
+        <Grid
+          item
+          lg="1"
+          xs="4"
+          px={1}
+          sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+          container
+          justifyContent={"end"}
+        >
           <Box sx={styles.box} onClick={onDelete}>
             <Grid
               container

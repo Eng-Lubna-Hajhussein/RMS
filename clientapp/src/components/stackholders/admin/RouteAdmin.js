@@ -3,31 +3,22 @@ import Website from "components/shared/website/Website";
 import { AppContext } from "contextapi/context/AppContext";
 import useLanguage from "hooks/useLanguage/useLanguage";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  initialAppState,
-  objCategoriesType,
-} from "appHelper/appVariables";
-import {
-  findSystem,
-  updateSystem,
-} from "appHelper/fetchapi/tblSystem/tblSystem";
-import {
-  bulkCategories,
-  findCategories,
-} from "appHelper/fetchapi/tblCategory/tblCategory";
 import { Button, Grid, Typography } from "@mui/material";
 import { Save } from "@mui/icons-material";
 import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 import UploadLogo from "./uploadLogo/UploadLogo";
 import SharedLink from "./sharedLink/SharedLink";
+import { ctrlRouteAdmin } from "./controller/CtrlRouteAdmin";
+import { dictionary } from "appHelper/appDictionary";
 
 function RouteAdmin() {
   const { appState, appDispatch } = useContext(AppContext);
   const { systemID, systemName } = useParams();
+  const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const [systemInfo, setSystemInfo] = useState(
     JSON.parse(JSON.stringify(appState.systemInfo))
   );
-  const [saveMode, setSaveMode] = useState([]);
   const isSystemUpdated = useRef(false);
   const isMenuUpdated = useRef(false);
   const firstRender = useRef(true);
@@ -38,56 +29,20 @@ function RouteAdmin() {
   const navigate = useNavigate();
   useLanguage();
 
-  const instalData = async () => {
-    const system = await findSystem(systemID);
-    const categoriesData = await findCategories(systemID);
-    const systemData = {};
-    if (Array.isArray(categoriesData)) {
-      const systemMenu = [];
-      const systemDeliveryAddress = [];
-      categoriesData.forEach((category) => {
-        if (category.bigCategoryTypeID === objCategoriesType["Menu"]) {
-          systemMenu.push({
-            ...category,
-            jsnName: JSON.parse(category?.jsnName || {}),
-            jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
-          });
-        }
-        if (
-          category.bigCategoryTypeID === objCategoriesType["DeliveryAddress"]
-        ) {
-          systemDeliveryAddress.push({
-            ...category,
-            jsnName: JSON.parse(category?.jsnName || {}),
-            jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
-          });
-        }
-      });
-      systemData.systemMenu = systemMenu;
-      systemData.systemDeliveryAddress = systemDeliveryAddress;
-    }
-    systemData.bigSystemID = system.bigSystemID;
-    systemData.jsnSystemContact = JSON.parse(system?.jsnSystemContact);
-    systemData.lstSystemReviews = JSON.parse(system?.lstSystemReviews);
-    systemData.lstSystemTeam = JSON.parse(system?.lstSystemTeam);
-    systemData.jsnSystemSections = JSON.parse(system?.jsnSystemSections);
-    systemData.bigWSCategoryID = system?.bigWSCategoryID;
-    systemData.jsnSystemLocation = JSON.parse(system?.jsnSystemLocation);
-    systemData.lstContactUs = JSON.parse(system?.lstContactUs);
-    systemData.strLogoPath = system?.strLogoPath;
-    appState.systemInfo = { ...appState.systemInfo, ...systemData };
-    setSystemInfo({ ...appState.systemInfo, ...systemData });
-    appDispatch({ ...appState });
-  };
   useEffect(() => {
     const funInstallData = async () => {
       setIsLoading(true);
-      await instalData();
+      ctrlRouteAdmin.installData({
+        appDispatch: appDispatch,
+        appState: appState,
+        setSystemInfo: setSystemInfo,
+        systemID: systemID,
+        setIsLoading:setIsLoading
+      });
       setIsLoading(false);
     };
     if (systemID) {
       funInstallData();
-      console.log(appState);
     }
   }, []);
 
@@ -103,7 +58,7 @@ function RouteAdmin() {
 
   const onSaveUpperHeader = (contacts) => {
     setSystemInfo({ ...systemInfo, jsnSystemContact: contacts });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
   const onSaveHero = (heroSectionUpdated) => {
     setSystemInfo({
@@ -113,7 +68,7 @@ function RouteAdmin() {
         lstHeroSlides: heroSectionUpdated,
       },
     });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
   const onSaveOwner = (ownerSectionUpdated) => {
     setSystemInfo({
@@ -123,7 +78,7 @@ function RouteAdmin() {
         jsnOwnerSection: ownerSectionUpdated,
       },
     });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
   const onSaveReservation = (resSectionUpdated) => {
     setSystemInfo({
@@ -133,7 +88,7 @@ function RouteAdmin() {
         jsnReservation: resSectionUpdated,
       },
     });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
   const onSaveAbout = (aboutSectionUpdated) => {
     setSystemInfo({
@@ -143,23 +98,23 @@ function RouteAdmin() {
         jsnAboutSection: aboutSectionUpdated,
       },
     });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
   const addMenuCategory = (category) => {
     systemInfo.systemMenu.push(category);
     setSystemInfo({ ...systemInfo, systemMenu: [...systemInfo?.systemMenu] });
-    isMenuUpdated.current=true;
+    isMenuUpdated.current = true;
   };
   const deleteMenuCategory = (bigID) => {
     if (bigID === systemInfo.bigWSCategoryID) {
       systemInfo.bigWSCategoryID = null;
-      isMenuUpdated.current=true;
+      isSystemUpdated.current = true;
     }
     systemInfo.systemMenu = systemInfo.systemMenu.filter(
       (category) => category.bigID !== bigID
     );
     setSystemInfo({ ...systemInfo });
-    isMenuUpdated.current=true;
+    isMenuUpdated.current = true;
   };
   const editMenuCategory = (category) => {
     const categoryIndex = systemInfo.systemMenu.findIndex(
@@ -172,104 +127,32 @@ function RouteAdmin() {
   const addWS = (categoryID) => {
     systemInfo.bigWSCategoryID = categoryID;
     setSystemInfo({ ...systemInfo });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
-
   const removeWS = () => {
     systemInfo.bigWSCategoryID = null;
     setSystemInfo({ ...systemInfo });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
-
   const addChef = (chef) => {
     systemInfo.lstSystemTeam.push(chef);
     setSystemInfo({ ...systemInfo });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
-
   const editChef = (chef) => {
     const chefIndex = systemInfo.lstSystemTeam.findIndex(
       ({ bigID }) => chef.bigID === bigID
     );
     systemInfo.lstSystemTeam[chefIndex] = chef;
     setSystemInfo({ ...systemInfo });
-    isSystemUpdated.current=true;
+    isSystemUpdated.current = true;
   };
-
   const deleteChef = (bigID) => {
     systemInfo.lstSystemTeam = systemInfo.lstSystemTeam.filter(
       (chef) => chef.bigID !== bigID
     );
     setSystemInfo({ ...systemInfo });
-    isSystemUpdated.current=true;
-  };
-
-  const onSave = async () => {
-    setIsLoading(true);
-    if (isMenuUpdated.current) {
-      const categoriesOnDeleteIDs = (
-        appState?.systemInfo?.systemMenu || []
-      ).reduce((IDs, category) => {
-        const isCatOnDelete =
-          systemInfo?.systemMenu?.findIndex(
-            ({ bigID }) => `${category.bigID}` === `${bigID}`
-          ) === -1;
-        if (isCatOnDelete) {
-          IDs.push(category.bigID);
-        }
-        return IDs;
-      }, []);
-      const categoriesData = await bulkCategories(
-        systemInfo.systemMenu,
-        categoriesOnDeleteIDs
-      );
-      if (Array.isArray(categoriesData)) {
-        const systemMenu = [];
-        categoriesData.forEach((category) => {
-          if (category.bigCategoryTypeID === objCategoriesType.Menu) {
-            systemMenu.push({
-              ...category,
-              jsnName: JSON.parse(category?.jsnName || {}),
-              jsnCategoryInfo: JSON.parse(category?.jsnCategoryInfo),
-            });
-          }
-        });
-        appState.systemInfo.systemMenu = systemMenu;
-      }
-    }
-    if (isSystemUpdated.current) {
-      const objInputSystem = JSON.parse(JSON.stringify(systemInfo));
-      const systemData = await updateSystem(objInputSystem);
-      appState.systemInfo.bigSystemID = systemData.bigSystemID;
-      appState.systemInfo.jsnSystemContact = JSON.parse(
-        systemData?.jsnSystemContact
-      );
-      appState.systemInfo.lstSystemReviews = JSON.parse(
-        systemData?.lstSystemReviews
-      );
-      appState.systemInfo.lstSystemTeam = JSON.parse(systemData?.lstSystemTeam);
-      appState.systemInfo.jsnSystemSections = JSON.parse(
-        systemData?.jsnSystemSections
-      );
-      appState.systemInfo.bigWSCategoryID = systemData?.bigWSCategoryID;
-      appState.systemInfo.jsnSystemLocation = JSON.parse(
-        systemData?.jsnSystemLocation
-      );
-      appState.systemInfo.lstContactUs = JSON.parse(systemData?.lstContactUs);
-      appState.systemInfo.strLogoPath = systemData?.strLogoPath;
-    }
-    appDispatch({ ...appState });
-    isMenuUpdated.current=false;
-    isSystemUpdated.current=false;
-    setIsLoading(false);
-  };
-
-  const onLogout = () => {
-    appState.clientInfo.blnUserLogin = false;
-    appState.clientInfo = initialAppState.clientInfo;
-    appState.systemInfo = initialAppState.systemInfo;
-    appState.userInfo = initialAppState.userInfo;
-    appDispatch({ ...appState });
+    isSystemUpdated.current = true;
   };
 
   useEffect(() => {
@@ -278,68 +161,58 @@ function RouteAdmin() {
     }
   }, [appState.clientInfo.blnUserLogin]);
 
-  const userNavList = [
-    {
-      bigNavID: 6774846478,
-      nav: { eng: "upload picture", arb: "حسابي" },
-      onClick: () => {
-        setUploadPicture(true);
-      },
-    },
-    {
-      bigNavID: 1166046478,
-      nav: { eng: "logout", arb: "تسجيل الخروج" },
-      onClick: onLogout,
-    },
-  ];
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
 
-  const adminNavList = [
-    {
-      bigNavID: 1234146400,
-      nav: { eng: "upload logo", arb: "صورة اللوغو" },
-      onClick: () => {
-        setUploadLogo(true);
-      },
-    },
-    { bigNavID: 1874146400, nav: { eng: "Dashboard", arb: "صورة اللوغو" } },
-    { bigNavID: 1654146400, nav: { eng: "settings", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 2354146400,
-      nav: { eng: "delivery address", arb: "صورة اللوغو" },
-    },
-    { bigNavID: 2554146400, nav: { eng: "shared link", arb: "صورة اللوغو" },onClick: () => {
-      setSharedLinkOpen(true);
-    }, },
-  ];
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
 
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
 
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
 
-    { bigNavID: 2344146478, nav: { eng: "users", arb: "المنيو" } },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
 
   return (
     <React.Fragment>
-      {!!(isSystemUpdated.current||isMenuUpdated.current) && (
+      {(!!isSystemUpdated.current || !!isMenuUpdated.current) && (
         <Grid container justifyContent={"center"}>
-          <Button color="secondary" onClick={onSave} startIcon={<Save />}>
-            Save changes
+          <Button
+            color="secondary"
+            onClick={() => {
+              ctrlRouteAdmin.onSave({
+                appState: appState,
+                appDispatch: appDispatch,
+                isMenuUpdated: isMenuUpdated,
+                isSystemUpdated: isSystemUpdated,
+                setIsLoading: setIsLoading,
+                systemInfo: systemInfo,
+              });
+            }}
+            startIcon={<Save />}
+          >
+            <Typography px={dir === "rtl" ? 2 : 0}>
+              {dictionary.buttons.saveChanges[lang]}
+            </Typography>
           </Button>
         </Grid>
       )}
@@ -387,8 +260,8 @@ function RouteAdmin() {
         dir={appState.clientInfo.strDir}
       />
       <SharedLink
-      open={sharedLinkOpen}
-      handleClose={()=>setSharedLinkOpen(false)}
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
       />
     </React.Fragment>
   );

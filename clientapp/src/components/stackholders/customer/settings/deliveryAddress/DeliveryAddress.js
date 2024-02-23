@@ -4,6 +4,7 @@ import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 import Country from "./country/Country";
 import City from "./city/City";
 import Town from "./town/Town";
+import { dictionary } from "appHelper/appDictionary";
 
 function DeliveryAddress({
   address,
@@ -17,7 +18,7 @@ function DeliveryAddress({
   return (
     <Grid item container xs={12}>
       <Grid item xs={12} p={2}>
-        <Title0001 title={"Delivery Address"} dir={dir} />
+        <Title0001 title={dictionary.customerSettings.deliveryAddress[lang]} dir={dir} />
       </Grid>
       <Grid item xs={12} container>
         {address.countryID && (

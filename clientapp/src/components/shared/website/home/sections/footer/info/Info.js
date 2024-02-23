@@ -1,32 +1,14 @@
 import React from "react";
 import {
-  Button,
   Grid,
-  //   Icon,
   Typography,
-  TextField,
   Box,
 } from "@mui/material";
 import bgImg from "assets/image/footer.png";
 import logo from "assets/image/logo-white.png";
-import tripaLogo from "assets/image/tripa.png";
-import { Link } from "react-router-dom";
-import { ArrowForwardIos } from "@mui/icons-material";
-import SystemContact from "components/sharedUI/websiteHeader/UpperToolbar/SystemContact/SystemContact";
-import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import SystemSocial from "components/sharedUI/websiteHeader/UpperToolbar/SystemSocial/SystemSocial";
 
-const style = {
-  navListTitle: {
-    fontSize: "26px !important",
-    color: "#000 !important",
-    fontWeight: "700 !important",
-    fontFamily: "sans-serif !important",
-    width: "fit-content",
-    borderBottom: "6px solid #ffd40d",
-  },
+const styles = {
   line: {
     width: "100%",
     background: "#ffd40d",
@@ -63,10 +45,11 @@ const style = {
     display: "inline",
     borderBottom: "1px solid #000",
   },
-  tripaReview: {
+  regIn: {
     fontSize: { lg: "16px !important", xs: "14px" },
     color: "#fff",
     fontWeight: "800 !important",
+    textTransform:"capitalize"
   },
   nav: {
     color: "#fff",
@@ -80,20 +63,6 @@ const style = {
   copyRights: {
     fontSize: { lg: "18px !important", xs: "12px" },
     fontWeight: "800 !important",
-  },
-  line: {
-    borderBottom: "6px solid #ffd40d",
-    width: "100%",
-  },
-  socialLink: {
-    fontSize: "15px",
-    marginLeft: "15px",
-    transition: ".3 ease-in-out",
-    textDecoration: "underline",
-    color: "#000",
-    fontWeight: "800",
-    textTransform: "capitalize",
-    cursor: "pointer",
   },
   locationIframe: {
     borderRadius: "10px",
@@ -111,23 +80,23 @@ function Info({
     alignItems={"flex-start"}
     alignSelf={"flex-start"}
   >
-    <div style={style.box}>
+    <div style={styles.box}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box component={"img"} width={"150px"} src={websiteLogo} />
         </Grid>
         <Grid item xs="12" container>
           <iframe
-            src={`https://maps.google.com/maps?q=${jsnSystemLocation?.lat}, ${jsnSystemLocation?.long}&z=15&output=embed`}
+            src={`https://maps.google.com/maps?q=${jsnSystemLocation?.lat}, ${jsnSystemLocation?.long}&z=5&output=embed`}
             width="100%"
             height="100"
             frameborder="0"
-            style={style.locationIframe}
+            style={styles.locationIframe}
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography sx={style.tripaReview}>
-            Supported By Foodio (RMS)
+          <Typography sx={styles.regIn}>
+            {dictionary.footer.registeredIn[lang]}
           </Typography>
         </Grid>
         <Grid item xs={12}>

@@ -17,15 +17,13 @@ import { App_Second_Color } from "appHelper/appColor";
 import {
   COUNTRIES,
   CITIES,
-  Demo_jsnSystemInfo,
-  lstWebsiteNav,
 } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { ctrlSignUp } from "./controller/CtrlSignUp";
 import useMapLocation from "hooks/useMapLocation/useMapLocation";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
-import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import logo from "assets/image/logo-white.png";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -48,9 +46,16 @@ const styles = {
   textfield: {
     background: "#fff",
     borderRadius: "5px",
+    textTransform:"capitalize"
   },
   logo: {
     width: "150px",
+  },
+  inputLabel:{
+    textTransform:"capitalize"
+  },
+  select:{
+    textTransform:"capitalize"
   },
 };
 
@@ -114,12 +119,12 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container justifyContent={"center"}>
               <Typography component={"h3"} sx={styles.title}>
-                Restaurant Registration{" "}
+                {dictionary.signup.restaurantRegistration[lang]}
               </Typography>
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Title0001 title={"Restaurant Info"} dir={dir} />
+                <Title0001 title={dictionary.signup.restaurantInfo[lang]} color={"#fff"} dir={dir} />
               </Grid>
               <Grid item xs="12" container>
                 <Grid item lg="6" xs="12" p={2}>
@@ -128,7 +133,8 @@ function SignupSystem() {
                     variant="outlined"
                     fullWidth
                     type="text"
-                    label="Restaurant Name English"
+                    dir="ltr"
+                    label={dictionary.labels.restaurantNameEng[lang]}
                     className={`form-control ${
                       errors.restaurantNameEng && "invalid"
                     }`}
@@ -146,7 +152,7 @@ function SignupSystem() {
                     variant="outlined"
                     fullWidth
                     type="text"
-                    label="Restaurant Name Arabic"
+                    label={dictionary.labels.restaurantNameArb[lang]}
                     className={`form-control ${
                       errors.restaurantNameArb && "invalid"
                     }`}
@@ -164,7 +170,8 @@ function SignupSystem() {
                     variant="outlined"
                     fullWidth
                     type="text"
-                    label="Owner Name English"
+                    dir="ltr"
+                    label={dictionary.labels.ownerNameEng[lang]}
                     className={`form-control ${
                       errors.ownerNameEng && "invalid"
                     }`}
@@ -182,7 +189,7 @@ function SignupSystem() {
                     variant="outlined"
                     fullWidth
                     type="text"
-                    label="Owner Name Arabic"
+                    label={dictionary.labels.ownerNameArb[lang]}
                     className={`form-control ${
                       errors.ownerNameArb && "invalid"
                     }`}
@@ -196,10 +203,13 @@ function SignupSystem() {
                 </Grid>
                 <Grid item lg="6" xs="12" p={2}>
                   <FormControl fullWidth>
-                    <InputLabel>Country</InputLabel>
+                    <InputLabel sx={styles.inputLabel}>{
+                      dictionary.labels.country[lang]
+                    }</InputLabel>
                     <Select
                       defaultValue={address.countryIndex}
                       required
+                      label={dictionary.labels.country[lang]}
                       onChange={onChangeCountry}
                       sx={styles.textfield}
                     >
@@ -211,10 +221,13 @@ function SignupSystem() {
                 </Grid>
                 <Grid item lg="6" xs="12" p={2}>
                   <FormControl fullWidth>
-                    <InputLabel>City</InputLabel>
+                    <InputLabel sx={styles.inputLabel}>
+                      {dictionary.labels.city[lang]}
+                    </InputLabel>
                     <Select
                       value={address.cityIndex}
                       required
+                      label={dictionary.labels.city[lang]}
                       onChange={onChangeCity}
                       sx={styles.textfield}
                     >
@@ -230,7 +243,7 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Title0001 title={"Registration Info"} dir={dir} />
+                <Title0001 title={dictionary.signup.registrationInfo[lang]} color={"#fff"} dir={dir} />
               </Grid>
               <Grid item lg="6" xs="12" p={2}>
                 <TextField
@@ -238,7 +251,8 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="email"
-                  label="Email"
+                  dir="ltr"
+                  label={dictionary.labels.emailAddress[lang]}
                   className={`form-control ${errors.email && "invalid"}`}
                   {...register("email", {
                     required: "Email is Required",
@@ -258,7 +272,7 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="password"
-                  label="Password"
+                  label={dictionary.labels.password[lang]}
                   className={`form-control ${errors.password && "invalid"}`}
                   {...register("password", {
                     required: "Password is Required",
@@ -271,7 +285,7 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container>
               <Grid item xs="12" p={2}>
-                <Title0001 title={"Payment Info"} dir={dir} />
+                <Title0001 title={dictionary.signup.paymentInfo[lang]} color={"#fff"} dir={dir} />
               </Grid>
               <Grid item xs="12" p={2}>
                 <TextField
@@ -279,7 +293,8 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="text"
-                  label="Card Number"
+                  dir="ltr"
+                  label={dictionary.labels.cardNumber[lang]}
                   className={`form-control ${errors.cardNumber && "invalid"}`}
                   {...register("cardNumber", { required: "Name is Required" })}
                   onKeyUp={() => {
@@ -293,7 +308,7 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="text"
-                  label="CVV Code"
+                  label={dictionary.labels.cvv[lang]}
                   className={`form-control ${errors.cvv && "invalid"}`}
                   {...register("cvv", { required: "CVV Code is Required" })}
                   onKeyUp={() => {
@@ -307,7 +322,8 @@ function SignupSystem() {
                   variant="outlined"
                   fullWidth
                   type="text"
-                  label="Name On Card"
+                  dir="ltr"
+                  label={dictionary.labels.nameOnCard[lang]}
                   className={`form-control ${errors.cardName && "invalid"}`}
                   {...register("cardName", {
                     required: "Name On Card is Required",
@@ -320,7 +336,7 @@ function SignupSystem() {
             </Grid>
             <Grid item xs="12" container justifyContent={"end"} p={2}>
               <AnimButton0001
-                label={"Register With only $50"}
+                label={dictionary.buttons.registerWithOnly[[lang]]}
                 color={App_Second_Color}
                 type="submit"
               />

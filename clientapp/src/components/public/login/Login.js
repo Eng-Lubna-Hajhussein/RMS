@@ -9,6 +9,7 @@ import { App_Second_Color } from "appHelper/appColor";
 import { ctrlLogin } from "./controller/CtrlLogin";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader001 from "components/sharedUI/Loader001/Loader001";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   itemContainer: {
@@ -22,7 +23,7 @@ const styles = {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: {lg:"30px",xs:"25px"},
+    fontSize: { lg: "30px", xs: "25px" },
   },
   textfield: {
     background: "#fff",
@@ -41,7 +42,7 @@ function Login() {
   const lang = appState.clientInfo.strLanguage;
   const dir = appState.clientInfo.strDir;
   const navigate = useNavigate();
-  const { systemID } = useParams();
+  const { systemID,systemName } = useParams();
   const [systemInfo, setSystemInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -76,6 +77,19 @@ function Login() {
     });
   };
 
+  const userNavList = [
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "login", arb: "تسجيل الدخول" },
+      path: systemID ? `/login/${systemName}/${systemID}` : "/login",
+    },
+    {
+      bigNavID: 2344146478,
+      nav: { eng: "register", arb: "تسجيل حساب" },
+      path: systemID ? `/signup/${systemName}/${systemID}` : "/signup",
+    },
+  ];
+
   return (
     <React.Fragment>
       {!isLoading && (
@@ -86,6 +100,7 @@ function Login() {
           navList={lstWebsiteNav}
           websiteLogo={systemInfo?.strLogoPath}
           blnUserLogin={false}
+          userNavList={userNavList}
         />
       )}
       {!isLoading && (
@@ -123,7 +138,7 @@ function Login() {
                   justifyContent={"center"}
                 >
                   <Typography component={"h3"} sx={styles.title}>
-                    Login
+                    {dictionary.login.title[lang]}
                   </Typography>
                 </Grid>
                 <Grid item xs="12" container>
@@ -133,7 +148,8 @@ function Login() {
                       variant="outlined"
                       fullWidth
                       type="email"
-                      label="Email"
+                      label={dictionary.labels.emailAddress[lang]}
+                      dir="ltr"
                       className={`form-control ${errors.email && "invalid"}`}
                       {...register("email", {
                         required: "Email is Required",
@@ -152,8 +168,9 @@ function Login() {
                       sx={styles.textfield}
                       variant="outlined"
                       fullWidth
+                      dir="ltr"
                       type="password"
-                      label="Password"
+                      label={dictionary.labels.password[lang]}
                       className={`form-control ${errors.password && "invalid"}`}
                       {...register("password", {
                         required: "Password is Required",
@@ -166,7 +183,7 @@ function Login() {
                 </Grid>
                 <Grid item xs="12" container px={2} justifyContent={"end"}>
                   <AnimButton0001
-                    label={"Login"}
+                    label={dictionary.buttons.login[lang]}
                     color={App_Second_Color}
                     type="submit"
                   />

@@ -7,6 +7,7 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { findUserOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
 import Box001 from "components/sharedUI/Box001/Box001";
+import { dictionary } from "appHelper/appDictionary";
 
 const style = {
   box: {
@@ -105,22 +106,22 @@ function Activities({ user, lang }) {
 
   const activities = [
     {
-      title: "Last Order",
+      title: dictionary.users.lastOrderDate[lang],
       description: lastOrder,
       img: menuIcon,
     },
     {
-      title: "Last Reservation",
+      title:  dictionary.users.lastReservationDate[lang],
       description: lastReservation,
       img: menuIcon,
     },
     {
-      title: "Total Orders",
+      title: dictionary.users.totalOrders[lang],
       description: orders?.length,
       img: menuIcon,
     },
     {
-      title: "Total Reservations",
+      title:  dictionary.users.totalReservations[lang],
       description: tables?.length,
       img: menuIcon,
     },

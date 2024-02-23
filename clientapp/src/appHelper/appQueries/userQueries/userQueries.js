@@ -116,40 +116,49 @@ export const adminUpdateSettingsQuery = (objInput) => {
 };
 
 export const customerDeleteAccountQuery = (bigUserID) => {
+  const dtmUpdatedDate =  new Date().toISOString();
   return `mutation{
       updateUser(bigUserID:${bigUserID},blnIsDeleted:true){
          blnIsDeleted
+         dtmUpdatedDate
       }
     }`;
 };
 
 export const banCustomerQuery = (bigUserID) => {
+  const dtmUpdatedDate =  new Date().toISOString();
   return `mutation{
-      updateUser(bigUserID:${bigUserID},blnIsDeleted:true){
+      updateUser(bigUserID:${bigUserID},blnIsDeleted:true,dtmUpdatedDate:"${dtmUpdatedDate}"){
          blnIsDeleted
+         dtmUpdatedDate
       }
     }`;
 };
 
 export const unBanCustomerQuery = (bigUserID) => {
+  const dtmUpdatedDate =  new Date().toISOString();
   return `mutation{
-      updateUser(bigUserID:${bigUserID},blnIsDeleted:false){
+      updateUser(bigUserID:${bigUserID},blnIsDeleted:false,dtmUpdatedDate:"${dtmUpdatedDate}"){
          blnIsDeleted
+         dtmUpdatedDate
       }
     }`;
 };
 
 export const deactivateCustomerQuery = (bigUserID) => {
+  const dtmUpdatedDate =  new Date().toISOString();
   return `mutation{
-      updateUser(bigUserID:${bigUserID},blnIsActive:false){
+      updateUser(bigUserID:${bigUserID},blnIsActive:false,dtmUpdatedDate:"${dtmUpdatedDate}"){
         blnIsActive
+        dtmUpdatedDate
       }
     }`;
 };
 
 export const activateCustomerQuery = (bigUserID) => {
+  const dtmUpdatedDate =  new Date().toISOString();
   return `mutation{
-      updateUser(bigUserID:${bigUserID},blnIsActive:true){
+      updateUser(bigUserID:${bigUserID},blnIsActive:true,dtmUpdatedDate:"${dtmUpdatedDate}"){
         blnIsActive
       }
     }`;

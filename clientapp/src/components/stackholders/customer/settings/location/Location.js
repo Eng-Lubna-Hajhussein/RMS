@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   locationIframe: {
@@ -12,7 +13,7 @@ function Location({ appState, lang, dir }) {
   return (
     <Grid item container xs={12}>
       <Grid item xs={12} p={2}>
-        <Title0001 title={"Location"} dir={dir} />
+        <Title0001 title={dictionary.customerSettings.location[lang]} dir={dir} />
       </Grid>
       <Grid item xs={12} container p={2}>
         <iframe

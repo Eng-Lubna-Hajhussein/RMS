@@ -1,5 +1,6 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   inputLabel: {
@@ -15,9 +16,10 @@ const styles = {
 function Country({ address, onChange, deliveryAddress, lang, dir }) {
   return (
     <FormControl fullWidth>
-      <InputLabel sx={styles.inputLabel}>Country</InputLabel>
+      <InputLabel sx={styles.inputLabel}>{dictionary.labels.country[lang]}</InputLabel>
       <Select
         value={address.countryID}
+        label={dictionary.labels.country[lang]}
         required
         onChange={onChange}
         sx={styles.select}

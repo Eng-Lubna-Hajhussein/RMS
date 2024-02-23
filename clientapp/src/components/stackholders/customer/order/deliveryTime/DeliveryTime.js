@@ -25,6 +25,7 @@ import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import DeliveryTimer from "./deliveryTimer/DeliveryTimer";
 import { useParams } from "react-router-dom";
 import { calculateZDirection } from "appHelper/appFunctions";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   paper: {
@@ -81,7 +82,7 @@ function DeliveryTime({
             <TimeToLeave fontSize="large" />
           </Grid>
           <Grid item px={1}>
-            <Typography sx={styles.title}>Delivery Time</Typography>
+            <Typography sx={styles.title}>{dictionary.order.deliveryTime[lang]}</Typography>
           </Grid>
         </Grid>
         <Grid item xs="12" p={1}>
@@ -98,7 +99,7 @@ function DeliveryTime({
               onClick={handleOrderDelivered}
             >
               <Typography color={"#fff"} sx={styles.deliveredBtnLabel}>
-                Delivered
+                {dictionary.buttons.delivered[lang]}
               </Typography>
             </Button>
           </Grid>

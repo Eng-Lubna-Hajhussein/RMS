@@ -33,7 +33,6 @@ const styles = {
     lineHeight: "1.2 !important",
   },
   menuPaper: {
-    // height: "fit-content !important",
     minHeight: "500px",
     height: "500px",
     background: "#f3fbfb",
@@ -54,6 +53,7 @@ const styles = {
     textAlign: "center",
     fontWeight: "800 !important",
     fontSize: { xs: "9px", lg: "15px" },
+    textTransform: "capitalize",
   },
   menuImgCat: {
     zIndex: "111",
@@ -63,6 +63,7 @@ const styles = {
     fontWeight: "800 !important",
     color: "#000",
     fontFamily: "sans-serif",
+    textTransform: "capitalize",
   },
   dishDescription: {
     fontSize: { lg: "18px !important", xs: "10px" },
@@ -547,9 +548,13 @@ export default function RestaurantMenu({
                                   </Link>
                                 )}
                                 {!adminEditMode && !customerEditMode && (
-                                  <Typography sx={styles.dishName}>
-                                    {item.jsnName[lang]}
-                                  </Typography>
+                                  <Link
+                                    to={`/product/${item.bigID}/${systemName}/${systemID}`}
+                                  >
+                                    <Typography sx={styles.dishName}>
+                                      {item.jsnName[lang]}
+                                    </Typography>
+                                  </Link>
                                 )}
                               </Grid>
                               <Grid

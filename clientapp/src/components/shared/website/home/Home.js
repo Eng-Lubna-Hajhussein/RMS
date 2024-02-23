@@ -164,6 +164,7 @@ function Home({
         jsnSystemContact={systemInfo.jsnSystemContact}
         dir={dir}
         websiteLogo={websiteLogo}
+        blnAdmin={adminEditMode}
       />
       <Loader001 status={"loaded"} />
     </React.Fragment>

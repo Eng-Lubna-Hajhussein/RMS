@@ -38,9 +38,12 @@ const styles = {
     color: "#555",
   },
   reviewComment: {
-    fontSize: "14px",
+    fontSize: { lg: "14px", xs: "9px" },
     fontWeight: "800",
     textTransform: "capitalize",
+    height: "80px",
+    overflowX: "auto",
+    paddingTop: "10px",
   },
   tablePagination: {
     ".MuiTablePagination-toolbar": {
@@ -56,6 +59,14 @@ const styles = {
       background: "#fff",
       borderRadius: "10px",
       border: `3px solid ${App_Second_Color}`,
+    },
+    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+      marginRight: { xs: "5px", lg: "15px" },
+      marginLeft: { xs: "5px", lg: "5px" },
+    },
+    ".MuiTablePagination-actions": {
+      marginLeft: { xs: "5px", lg: "15px" },
+      marginRight: { xs: "5px", lg: "15px" },
     },
   },
 };
@@ -91,14 +102,14 @@ function ReviewsTable({ reviews, lang, dir }) {
                     alignItems={"center"}
                     alignContent={"center"}
                   >
-                    <Grid item xs={1} sx={styles.fitContentHeight}>
+                    <Grid item lg={1} xs={3} sx={styles.fitContentHeight}>
                       <Avatar
                         src={review?.strImgPath}
                         height="50px"
                         width="50px"
                       />
                     </Grid>
-                    <Grid item xs={11} container>
+                    <Grid item lg={11} xs={9} container>
                       <Grid item xs="12">
                         <Link>
                           <Typography color={"primary"} sx={styles.username}>
@@ -149,7 +160,17 @@ function ReviewsTable({ reviews, lang, dir }) {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelDisplayedRows={({ page }) => {
-              return <Typography>Page: {page + 1}</Typography>;
+              return   <Typography
+              sx={{
+                fontSize: {
+                  lg: "16px",
+                  xs: "14px",
+                },
+                fontWeight: "600",
+              }}
+            >
+              Page: {page + 1}
+            </Typography>;
             }}
             backIconButtonProps={{
               color: "#fff",
@@ -157,7 +178,17 @@ function ReviewsTable({ reviews, lang, dir }) {
             nextIconButtonProps={{ color: "#fff" }}
             showFirstButton={true}
             showLastButton={true}
-            labelRowsPerPage={<Typography>Rows:</Typography>}
+            labelRowsPerPage={ <Typography
+              sx={{
+                fontSize: {
+                  lg: "16px",
+                  xs: "14px",
+                },
+                fontWeight: "600",
+              }}
+            >
+              Rows:
+            </Typography>}
             sx={styles.tablePagination}
           />
         </Grid>

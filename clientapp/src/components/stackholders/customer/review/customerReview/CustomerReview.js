@@ -36,6 +36,15 @@ import bgImg from "assets/image/patron.jpg";
 import { useForm } from "react-hook-form";
 import moment from "moment";
 import { Link, useParams } from "react-router-dom";
+import { dictionary } from "appHelper/appDictionary";
+
+const styles = {
+  textField: {
+    background: "#fff",
+    borderRadius: "5px",
+    textTransform: "capitalize",
+  },
+};
 
 function CustomerReview({
   handleRatingChange,
@@ -81,7 +90,7 @@ function CustomerReview({
               width: "fit-content",
             }}
           >
-            Your Review !
+            {dictionary.customerReview.title[lang]} !
           </Typography>
         </Grid>
         <Grid item xs="12" container justifyContent={"start"}>
@@ -92,20 +101,21 @@ function CustomerReview({
             <Grid item xs="12" container>
               <Grid item lg={6} xs={12} px={2} sx={{ paddingY: "10px" }}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textField}
                   variant="outlined"
                   fullWidth
                   type="text"
                   multiline
                   rows={4}
+                  dir="ltr"
                   inputRef={reviewTextEng}
                   defaultValue={userReview?.jsnComment["eng"]}
-                  label="Review English"
+                  label={dictionary.labels.reviewEng[lang]}
                 />
               </Grid>
               <Grid item lg={6} xs={12} px={2} sx={{ paddingY: "10px" }}>
                 <TextField
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={styles.textField}
                   variant="outlined"
                   fullWidth
                   type="text"
@@ -114,7 +124,7 @@ function CustomerReview({
                   defaultValue={userReview?.jsnComment["arb"]}
                   dir="rtl"
                   inputRef={reviewTextArb}
-                  label="Review Arabic"
+                  label={dictionary.labels.reviewArb[lang]}
                 />
               </Grid>
             </Grid>
@@ -123,7 +133,7 @@ function CustomerReview({
                 <Grid item lg="2" xs="6">
                   <AnimButton0001
                     onClick={handleAdd}
-                    label={"Add"}
+                    label={dictionary.buttons.add[lang]}
                     fullWidth={true}
                     color={App_Primary_Color}
                   />
@@ -133,7 +143,7 @@ function CustomerReview({
                 <Grid item lg="2" xs="6">
                   <AnimButton0001
                     onClick={handleDelete}
-                    label={"Delete"}
+                    label={dictionary.buttons.delete[lang]}
                     fullWidth={true}
                     color={App_Second_Color}
                   />
@@ -143,7 +153,7 @@ function CustomerReview({
                 <Grid item lg="2" xs="6">
                   <AnimButton0001
                     onClick={handleEdit}
-                    label={"Edit"}
+                    label={dictionary.buttons.edit[lang]}
                     fullWidth={true}
                     color={App_Primary_Color}
                   />

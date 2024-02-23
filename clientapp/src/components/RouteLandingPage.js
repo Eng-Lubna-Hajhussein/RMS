@@ -10,17 +10,13 @@ import {
   objCategoriesType,
   objRoleID,
 } from "appHelper/appVariables";
-import {
-  findSystem,
-} from "appHelper/fetchapi/tblSystem/tblSystem";
-import {
-  findCategories,
-} from "appHelper/fetchapi/tblCategory/tblCategory";
+import { findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
+import { findCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
 import { Typography } from "@mui/material";
 
 function RouteLandingPage({ isDemo }) {
   const { appState, appDispatch } = useContext(AppContext);
-  const { systemID } = useParams();
+  const { systemID, systemName } = useParams();
   const navigate = useNavigate();
   const [systemInfo, setSystemInfo] = useState(null);
   const firstRender = useRef(true);
@@ -103,6 +99,19 @@ function RouteLandingPage({ isDemo }) {
     setSystemInfo(JSON.parse(JSON.stringify(appState.systemInfo)));
   }, [appState, appState.systemInfo]);
 
+  const userNavList = [
+    {
+      bigNavID: 1342146478,
+      nav: { eng: "login", arb: "تسجيل الدخول" },
+      path: systemID ? `/login/${systemName}/${systemID}` : "/login",
+    },
+    {
+      bigNavID: 2344146478,
+      nav: { eng: "register", arb: "تسجيل حساب" },
+      path: systemID ? `/signup/${systemName}/${systemID}` : "/signup",
+    },
+  ];
+
   return (
     <React.Fragment>
       {isLoading && <Typography>loading</Typography>}
@@ -117,11 +126,16 @@ function RouteLandingPage({ isDemo }) {
           navList={lstWebsiteNav}
           systemID={systemID}
           websiteLogo={
-            isDemo?Demo_jsnSystemInfo.strLogoPath:systemInfo.strLogoPath
+            isDemo ? Demo_jsnSystemInfo.strLogoPath : systemInfo.strLogoPath
           }
+          userNavList={userNavList}
           jsnSystemLocation={Demo_objSystemLocation}
           systemPath={systemInfo?.strSystemPathURL}
-          ws={isDemo?Demo_jsnSystemInfo.bigWSCategoryID:systemInfo?.bigWSCategoryID}
+          ws={
+            isDemo
+              ? Demo_jsnSystemInfo.bigWSCategoryID
+              : systemInfo?.bigWSCategoryID
+          }
           lang={appState.clientInfo.strLanguage}
           userImg={appState?.userInfo?.strImgPath}
           userName={JSON.parse(JSON.stringify(appState?.userInfo?.jsnFullName))}

@@ -11,13 +11,14 @@ const styles = {
   },
 };
 
-function Title0001({ title, dir }) {
+function Title0001({ title, dir,color="#000" }) {
   return (
     <Typography
       sx={{
         ...styles.title,
         borderLeft: dir === "ltr" && `5px solid ${App_Second_Color}`,
         borderRight: dir === "rtl" && `5px solid ${App_Second_Color}`,
+        color:color
       }}
     >
       {title}

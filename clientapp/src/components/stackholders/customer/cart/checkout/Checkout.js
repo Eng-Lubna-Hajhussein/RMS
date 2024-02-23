@@ -15,6 +15,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ctrlCart } from "../controller/CtrlCart";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   dialogTitle: {
@@ -29,6 +30,9 @@ const styles = {
   dialogActions: {
     py: "0",
   },
+  textField:{
+    textTransform:"capitalize"
+  }
 };
 
 function Checkout({ open, handleClose, lang, dir }) {
@@ -69,15 +73,16 @@ function Checkout({ open, handleClose, lang, dir }) {
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs="12">
               <Grid item xs="12" p={1}>
-                <Title0001 title={"Checkout"} dir={dir} />
+                <Title0001 title={dictionary.shared.checkout[lang]} dir={dir} />
               </Grid>
               <Grid item xs="12" p={1}>
                 <TextField
                   color="warning"
                   required
                   name="cardNumber"
-                  label="Card Number"
+                  label={dictionary.labels.cardNumber[lang]}
                   type="text"
+                  dir="ltr"
                   fullWidth
                   variant="outlined"
                   defaultValue={
@@ -90,8 +95,10 @@ function Checkout({ open, handleClose, lang, dir }) {
                   color="warning"
                   required
                   name="cvv"
-                  label="CVV Code"
+                  label={dictionary.labels.cvv[lang]}
+                  sx={styles.textField}
                   type="text"
+                  dir="ltr"
                   fullWidth
                   defaultValue={appState?.userInfo?.jsnClientPayment?.strCVV}
                   variant="outlined"
@@ -102,8 +109,10 @@ function Checkout({ open, handleClose, lang, dir }) {
                   color="warning"
                   required
                   name="cardName"
-                  label="Name On Card"
+                  label={dictionary.labels.nameOnCard[lang]}
                   type="text"
+                  sx={styles.textField}
+                  dir="ltr"
                   fullWidth
                   variant="outlined"
                   defaultValue={
@@ -121,16 +130,9 @@ function Checkout({ open, handleClose, lang, dir }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item lg="2" xs="6">
+            <Grid item lg="2" xs="5">
               <AnimButton0001
-                label={
-                  <Typography
-                    sx={{
-                      fontSize: { xs: "16px" },
-                    }}
-                  >
-                    checkout
-                  </Typography>
+                label={dictionary.buttons.checkout[lang]
                 }
                 color={App_Primary_Color}
                 fullWidth={true}

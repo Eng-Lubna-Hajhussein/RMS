@@ -21,6 +21,7 @@ import { Link, useParams } from "react-router-dom";
 import { findUsers } from "appHelper/fetchapi/tblUser/tblUser";
 import arrowImg from "assets/image/arrow-2.png";
 import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
@@ -118,6 +119,34 @@ const styles = {
         lg: "16px",
         xs: "14px",
       },
+      ".MuiTablePagination-actions": {
+        marginLeft: { xs: "5px", lg: "15px" },
+        marginRight: { xs: "5px", lg: "15px" },
+      },
+    },
+    fitContentHeight: {
+      height: "fit-content",
+    },
+    tableID: {
+      fontSize: { lg: "17px", xs: "12px" },
+      fontWeight: { lg: "800", xs: "600" },
+    },
+    seatsNum: {
+      fontSize: { lg: "17px", xs: "12px" },
+      fontWeight: { lg: "800", xs: "600" },
+    },
+    price: {
+      fontSize: { lg: "17px", xs: "12px" },
+      fontWeight: { lg: "800", xs: "600" },
+    },
+    status: {
+      color: "#fff",
+      textTransform: "capitalize",
+      fontWeight: "700",
+    },
+    viewBtnLabel: {
+      fontSize: "15px",
+      textTransform: "uppercase",
     },
   },
 };
@@ -136,7 +165,16 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const columns = ["Account", "Role", "Email", "Address", "Status", "Activity"];
+  // const columns = ["Account", "Role", "Email", "Address", "Status", "Activity"];
+  const columns = [
+    { eng: "account", arb: "الحساب" },
+    { eng: "role", arb: "الوظيفة" },
+    { eng: "email", arb: "الايميل" },
+    { eng: "address", arb: "العنوان" },
+    { eng: "status", arb: "الحالة" },
+    { eng: "activity", arb: "نشاط الحساب" },
+  ];
+
   return (
     <Grid item xs="12" sx={styles.container} px={1}>
       <Table
@@ -151,13 +189,14 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
           <TableRow>
             {columns.map((column, index) => (
               <TableCell sx={styles.columnTablecell} align="center">
-               <Typography
+                <Typography
                   sx={{
                     fontSize: { lg: "15px", xs: "12px" },
                     fontWeight: { lg: "800", xs: "800" },
+                    textTransform: "capitalize",
                   }}
                 >
-                  {column}
+                  {column[lang]}
                 </Typography>
               </TableCell>
             ))}
@@ -192,7 +231,7 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
                   <Grid item>
                     {appState.userInfo.bigUserID === user.bigUserID && (
                       <Typography color={"primary"} sx={styles.username}>
-                        Me (Owner)
+                        ({dictionary.users.owner[lang]})
                       </Typography>
                     )}
                     {!(appState.userInfo.bigUserID === user.bigUserID) && (
@@ -216,7 +255,9 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
                 scope="row"
               >
                 <Typography color={"#000"} sx={styles.userRole}>
-                  {objIDRole[user.bigUserRoleID]}
+                  {objIDRole[user.bigUserRoleID] === "Admin"
+                    ? dictionary.users.admin[lang]
+                    : dictionary.users.customer[lang]}
                 </Typography>
               </TableCell>
               <TableCell
@@ -237,7 +278,7 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
               >
                 <Typography color={"#000"} sx={styles.userAddress}>
                   {user.jsnAddress.jsnCity[lang] +
-                    ", " +
+                    (dir === "rtl" ? "، " : ", ") +
                     user.jsnAddress.jsnCountry[lang]}
                 </Typography>
               </TableCell>
@@ -251,7 +292,9 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
                   <Chip
                     color={"error"}
                     label={
-                      <Typography sx={styles.status}>{"Banned"}</Typography>
+                      <Typography sx={styles.status}>
+                        {dictionary.users.banned[lang]}
+                      </Typography>
                     }
                   />
                 ) : (
@@ -268,7 +311,9 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
                   color={user.blnIsActive ? "success" : "error"}
                   label={
                     <Typography sx={styles.activity}>
-                      {user.blnIsActive ? "Active" : "Deactivated"}
+                      {user.blnIsActive
+                        ? dictionary.users.active[lang]
+                        : dictionary.users.deactivated[lang]}
                     </Typography>
                   }
                 />
@@ -296,7 +341,21 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelDisplayedRows={({ page }) => {
-                return <Typography>Page: {page + 1}</Typography>;
+                return (
+                  <Typography
+                    dir={dir}
+                    sx={{
+                      fontSize: {
+                        lg: "16px",
+                        xs: "14px",
+                      },
+                      fontWeight: "600",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {dictionary.tablePagination.page[lang]}: {page + 1}
+                  </Typography>
+                );
               }}
               backIconButtonProps={{
                 color: "#fff",
@@ -304,8 +363,31 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
               nextIconButtonProps={{ color: "#fff" }}
               showFirstButton={true}
               showLastButton={true}
-              labelRowsPerPage={<Typography>Rows:</Typography>}
-              sx={styles.tablePagination}
+              labelRowsPerPage={
+                <Typography
+                  dir={dir}
+                  sx={{
+                    fontSize: {
+                      lg: "16px",
+                      xs: "14px",
+                    },
+                    fontWeight: "600",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {dictionary.tablePagination.rows[lang]}:
+                </Typography>
+              }
+              sx={{
+                ...styles.tablePagination,
+                ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+                  marginRight: {
+                    xs: "5px",
+                    lg: dir === "rtl" ? "5px" : "15px",
+                  },
+                  marginLeft: { xs: "5px", lg: dir === "rtl" ? "15px" : "5px" },
+                },
+              }}
             />
           </TableRow>
         </TableFooter>

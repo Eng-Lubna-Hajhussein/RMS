@@ -81,7 +81,7 @@ export const ctrlRouteCustomer = {
     return [
       {
         bigNavID: 6774846478,
-        nav: { eng: "upload picture", arb: "حسابي" },
+        nav: { eng: "profile picture", arb: "الصورة الشخصية" },
         onClick: handleUploadPictureOpen,
       },
       {
@@ -91,7 +91,7 @@ export const ctrlRouteCustomer = {
       },
       {
         bigNavID: 1234846478,
-        nav: { eng: "settings", arb: "حسابي" },
+        nav: { eng: "settings", arb: "الاعدادات" },
         path: `/customer/settings/${systemName}/${systemID}`,
       },
       {
@@ -127,7 +127,7 @@ export const ctrlRouteCustomer = {
               bigNavID: 7644146400,
               nav: {
                 eng: "menu",
-                arb: "كرت التسوق",
+                arb: "المنيو",
                 path: `/customer/${systemName}/${systemID}`,
               },
             },
@@ -135,37 +135,37 @@ export const ctrlRouteCustomer = {
         },
         {
           bigNavID: 7943146478,
-          nav: { eng: "order", arb: "الاخبار" },
+          nav: { eng: "order", arb: "طلبك" },
           navList: [
             {
-              nav: { eng: "undelivered order", arb: "مدونتنا" },
+              nav: { eng: "current order", arb: "طلبك الحالي" },
               path: `/customer/order/${systemName}/${systemID}`,
             },
             {
-              nav: { eng: "delivered orders", arb: "تفاصيل المدونة" },
+              nav: { eng: "orders", arb: "طلباتك" },
               path: `/customer/orders/${systemName}/${systemID}`,
             },
           ],
         },
         {
           bigNavID: 948246478,
-          nav: { eng: "table", arb: "الصفحات" },
+          nav: { eng: "table", arb: "الحجوزات" },
           navList: [
             {
               bigNavID: 341246078,
-              nav: { eng: "reserve table", arb: "عنا" },
+              nav: { eng: "reserve table", arb: "حجز طاولة" },
               path: `/customer/reserve-table/${systemName}/${systemID}`,
             },
             {
               bigNavID: 968341478,
-              nav: { eng: "reserved tables", arb: "خدماتنا" },
+              nav: { eng: "reserved tables", arb: "الطاولات المحجوزة" },
               path: `/customer/tables/${systemName}/${systemID}`,
             },
           ],
         },
         {
           bigNavID: 2344146478,
-          nav: { eng: "review", arb: "المنيو" },
+          nav: { eng: "review", arb: "قيمنا" },
           path: `/customer/review/${systemName}/${systemID}`,
         },
       ]

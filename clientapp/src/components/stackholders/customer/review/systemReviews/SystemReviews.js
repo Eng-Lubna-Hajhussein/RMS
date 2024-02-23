@@ -15,6 +15,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   reviewBox: {
@@ -49,10 +50,24 @@ const styles = {
     paddingTop: "10px",
   },
   tablePagination: {
+    // width: "fit-content",
+    // padding: "0 !important",
+    // margin: "0 !important",
+    borderBottom: "none !important",
+    "&": {
+      // marginTop: theme.spacing(2),
+      justifyContent: "center",
+      display: "flex",
+      borderBottom: "none !important",
+    },
     ".MuiTablePagination-toolbar": {
       textAlign: "center",
-      border: `4px solid ${App_Primary_Color}`,
+      // border: `4px solid ${App_Primary_Color}`,
+      width: "fit-content",
+      padding: "2px !important",
+      margin: "0 !important",
       borderRadius: "10px",
+      borderBottom: "none !important",
     },
     ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
       fontWeight: "800",
@@ -64,12 +79,12 @@ const styles = {
       border: `3px solid ${App_Second_Color}`,
     },
     ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
-      marginRight: { xs: "5px", lg: "15px" },
-      marginLeft: { xs: "5px", lg: "5px" },
+      margin: "2px",
     },
     ".MuiTablePagination-actions": {
-      marginLeft: { xs: "5px", lg: "15px" },
-      marginRight: { xs: "5px", lg: "15px" },
+      background: App_Primary_Color,
+      borderRadius: "10px",
+      margin: "4px",
     },
   },
 };
@@ -165,16 +180,18 @@ function SystemReviews({ reviews, lang, dir }) {
             labelDisplayedRows={({ page }) => {
               return (
                 <Typography
-                  sx={{
-                    fontSize: {
-                      lg: "16px",
-                      xs: "14px",
-                    },
-                    fontWeight: "600",
-                  }}
-                >
-                  Page: {page + 1}
-                </Typography>
+                dir={dir}
+                sx={{
+                  fontSize: {
+                    lg: "16px",
+                    xs: "14px",
+                  },
+                  fontWeight: "600",
+                  textTransform: "capitalize",
+                }}
+              >
+                {dictionary.tablePagination.page[lang]}: {page + 1}
+              </Typography>
               );
             }}
             backIconButtonProps={{
@@ -185,18 +202,25 @@ function SystemReviews({ reviews, lang, dir }) {
             showLastButton={true}
             labelRowsPerPage={
               <Typography
+                dir={dir}
                 sx={{
                   fontSize: {
                     lg: "16px",
                     xs: "14px",
                   },
                   fontWeight: "600",
+                  textTransform: "capitalize",
                 }}
               >
-                Rows:
+                {dictionary.tablePagination.rows[lang]}:
               </Typography>
             }
-            sx={styles.tablePagination}
+            sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+              marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
+              marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
+            },
+
+          }}
           />
         </Grid>
       )}

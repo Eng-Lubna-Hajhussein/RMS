@@ -40,10 +40,13 @@ const styles = {
   list: {
     width: "100vw",
     paddingY: "20px",
+    
+    
   },
   listItemText: {
     textTransform: "capitalize",
     fontSize: "18px",
+    color: "#000",
   },
   collapseItemText: {
     textTransform: "capitalize",
@@ -76,12 +79,13 @@ function DrawerNav({
 
   return (
     <Drawer
-      anchor="left"
+      anchor={dir === "ltr" ? "left" : "right"}
       open={openDrawer}
       sx={{ zIndex: "10000" }}
       onClose={() => setOpenDrawer(false)}
     >
       <List
+        
         component="nav"
         subheader={
           <ListSubheader component="div" sx={styles.listSubheader}>
@@ -95,23 +99,29 @@ function DrawerNav({
             </Grid>
           </ListSubheader>
         }
-        sx={styles.list}
+        sx={{...styles.list,
+          ".css-mg8nvi-MuiButtonBase-root-MuiListItem-root":{
+            textAlign:dir==='ltr'?'left':'right'
+          }
+        }}
       >
-        {navList.map(({ bigNavID, nav, navList }, index) => (
-          <React.Fragment key={index}>
+        {navList.map(({ bigNavID, path, nav, navList }, index) => (
+          <Grid container dir={dir} p={0} m={0} key={index}>
             {!navList?.length && (
-              <ListItem button>
-                <ListItemText
-                  primary={
-                    <Typography sx={styles.listItemText}>
-                      {nav[lang]}
-                    </Typography>
-                  }
-                />
-              </ListItem>
+              <Link to={path}>
+                <ListItem button>
+                  <ListItemText
+                    primary={
+                      <Typography sx={styles.listItemText}>
+                        {nav[lang]}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              </Link>
             )}
             {navList?.length && (
-              <>
+              <div p={0} m={0} key={index}>
                 <ListItem
                   button
                   onClick={() => {
@@ -121,6 +131,7 @@ function DrawerNav({
                   }}
                 >
                   <ListItemText
+                    
                     primary={
                       <Typography sx={styles.listItemText}>
                         {nav[lang]}
@@ -138,23 +149,25 @@ function DrawerNav({
                   timeout="auto"
                   unmountOnExit
                 >
-                  {navList?.map(({ nav }, index) => (
-                    <List component="div" key={index} disablePadding>
+                  {navList?.map(({ nav, path }, index) => (
+                    <Link to={path}>
+                      <List component="div" key={index} disablePadding>
                       <ListItem button>
                         <ListItemText
                           primary={
-                            <Typography px={2} sx={styles.collapseItemText}>
+                            <Typography px={2} dir="rtl" sx={styles.collapseItemText}>
                               {nav[lang]}
                             </Typography>
                           }
                         />
                       </ListItem>
-                    </List>
+                      </List>
+                    </Link>
                   ))}
                 </Collapse>
-              </>
+              </div>
             )}
-          </React.Fragment>
+          </Grid>
         ))}
         <ListItem button sx={{ ...styles.paddingY40 }}>
           <Typography className="animated-btn-001">
@@ -165,7 +178,7 @@ function DrawerNav({
         <ListItem button>
           <Grid container item xs={12} justifyContent={"start"}>
             <SystemContact
-            color={"#e4e4e4"}
+              color={"#e4e4e4"}
               contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
               lang={lang}
             />
@@ -174,7 +187,7 @@ function DrawerNav({
         <ListItem button>
           <Grid container item xs={12}>
             <SystemContact
-             color={"#e4e4e4"}
+              color={"#e4e4e4"}
               contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
               lang={lang}
             />

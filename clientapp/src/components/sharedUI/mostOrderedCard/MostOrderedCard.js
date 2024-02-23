@@ -21,7 +21,7 @@ const styles = {
   },
   subtitle: {
     color: "#555",
-    fontSize: { lg: "15px !important", xs: "8px" },
+    fontSize: { lg: "15px !important", xs: "12px" },
   },
   crossBox: {
     backgroundColor: "#ffd40d",

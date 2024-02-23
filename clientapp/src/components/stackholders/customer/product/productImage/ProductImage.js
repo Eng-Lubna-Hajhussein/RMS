@@ -6,16 +6,16 @@ const styles = {
   saleBox: {
     backgroundColor: "#ffd40d !important",
     borderRadius: "50% !important",
-    width: "60px",
-    height: "60px",
+    width: { lg: "60px", xs: "50px" },
+    height: { lg: "60px", xs: "50px" },
   },
   saleTitle: {
     color: "#000",
-    fontSize: "18px !important",
+    fontSize: { lg: "18px !important", xs: "12px" },
     fontWeight: "800 !important",
   },
   imgBox: {
-    height: "430px",
+    height: { lg: "430px", xs: "fit-content" },
     width: "100%",
     border: `4px solid ${App_Second_Color}`,
     borderRadius: "20px",
@@ -24,9 +24,9 @@ const styles = {
     height: "100%",
   },
   img: {
-    height: "300px",
-    width: "250px",
-    padding: "50px 30px",
+    height: { lg: "300px", xs: "160px" },
+    width: { lg: "250px", xs: "150px" },
+    padding: { lg: "50px 30px", xs: "10px 10px" },
     background: App_Primary_Color,
     borderRadius: "20px",
     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;",

@@ -6,7 +6,7 @@ export const App_Server_Url = "http://localhost:4000";
 
 export const App_Localhost_Client_Url = "http://localhost:3000/";
 
-export const App_Server_URL_GraphQL = 'http://localhost:4000/graphql';
+export const App_Server_URL_GraphQL = "http://localhost:4000/graphql";
 
 export const strServerAssetsPath = "http://localhost:4000/assets/";
 
@@ -16,9 +16,9 @@ export const icons = {
 };
 
 export const objCategoriesType = {
-  DeliveryAddress:4026111142,
-  Menu:3916121742
-}
+  DeliveryAddress: 4026111142,
+  Menu: 3916121742,
+};
 
 export const lstWebsiteNav = [
   { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
@@ -27,32 +27,36 @@ export const lstWebsiteNav = [
     bigNavID: 8944146478,
     nav: { eng: "shop", arb: "تسوق" },
     navList: [
-      { bigNavID: 8944146400, nav: { eng: "shop cart", arb: "كرت التسوق" } },
-      { bigNavID: 6944146478, nav: { eng: "cart checkout", arb: "الحساب" } },
+      {
+        bigNavID: 8944146400,
+        nav: { eng: "shop cart", arb: "كرت التسوق" },
+      },
+      {
+        bigNavID: 7644146400,
+        nav: {
+          eng: "cart checkout",
+          arb: "الدفع",
+        },
+      },
     ],
   },
   {
     bigNavID: 7943146478,
-    nav: { eng: "news", arb: "الاخبار" },
+    nav: { eng: "order", arb: "طلبك" },
     navList: [
-      { nav: { eng: "our blog", arb: "مدونتنا" } },
-      { nav: { eng: "blog details", arb: "تفاصيل المدونة" } },
+      { nav: { eng: "delivery", arb: "توصيل" } },
+      { nav: { eng: "reserve table", arb: "احجز طاولة" } },
     ],
   },
   {
     bigNavID: 948246478,
-    nav: { eng: "pages", arb: "الصفحات" },
-    navList: [
-      { bigNavID: 341246078, nav: { eng: "about", arb: "عنا" } },
-      { bigNavID: 968341478, nav: { eng: "our services", arb: "خدماتنا" } },
-      { bigNavID: 255546478, nav: { eng: "login", arb: "تسجيل الدخول" } },
-    ],
+    nav: { eng: "tables", arb: "الحجوزات" },
   },
-  { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
+  { bigNavID: 941116478,  nav: { eng: "review", arb: "قيمنا" }, },
 ];
 
 export const Demo_jsnSystemInfo = {
-  bigSystemID:1111111111,
+  bigSystemID: 1111111111,
   jsnSystemContact: {
     strEmail: "info@domain.com",
     strPhone: "+1 (850) 344 0 66",
@@ -104,7 +108,7 @@ export const Demo_jsnSystemInfo = {
   ],
   lstSystemTeam: [
     {
-      bigID:3754450561,
+      bigID: 3754450561,
       jsnName: { eng: "Thomas Walim", arb: "ثوماس ويليام" },
       jsnSpecialization: { eng: "Dessert specialist", arb: "اختصاصي حلويات" },
       strFacebookLink: "https://www.facebook.com/",
@@ -113,7 +117,7 @@ export const Demo_jsnSystemInfo = {
       strImgPath: `${strServerAssetsPath}demo/chef-1.png`,
     },
     {
-      bigID:5767585311,
+      bigID: 5767585311,
       jsnName: { eng: "James Jhonson", arb: "جيمس جوهانسون" },
       jsnSpecialization: { eng: "Chef Master", arb: "ماستر شيف" },
       strFacebookLink: "https://www.facebook.com/",
@@ -122,7 +126,7 @@ export const Demo_jsnSystemInfo = {
       strImgPath: `${strServerAssetsPath}demo/chef-2.png`,
     },
     {
-      bigID:9609737351,
+      bigID: 9609737351,
       jsnName: { eng: "Room Minal", arb: "روم مينال" },
       jsnSpecialization: { eng: "coffee specialist", arb: "اختصاصي قهوة" },
       strFacebookLink: "https://www.facebook.com/",
@@ -139,16 +143,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
-        strBgAnimationType:""
+        strBgAnimationType: "",
       },
       {
         strImgPath: `${strServerAssetsPath}demo/slide2.jpg`,
@@ -156,16 +160,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
-        strBgAnimationType:""
+        strBgAnimationType: "",
       },
       {
         strImgPath: `${strServerAssetsPath}demo/slide3.jpg`,
@@ -173,16 +177,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
-        strBgAnimationType:""
+        strBgAnimationType: "",
       },
       {
         strImgPath: `${strServerAssetsPath}demo/slide4.jpg`,
@@ -190,16 +194,16 @@ export const Demo_jsnSystemInfo = {
         jsnSubtitle: {
           eng: "festive dining at Farthings where we are strong believers in using the very best produce",
           arb: "تناول معنا افضل الطعام حيث نؤمن بشدة باستخدام افضل المنتجات",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
         jsnTitle: {
           eng: "the perfect space to enjoy fantastic food",
           arb: "افضل  مكان للاستمتاع بالطعام الرائع مع اصدقائك او عائلتك",
-          style:{},
-          strAnimationType:""
+          style: {},
+          strAnimationType: "",
         },
-        strBgAnimationType:""
+        strBgAnimationType: "",
       },
     ],
     jsnOwnerSection: {
@@ -261,11 +265,11 @@ export const Demo_jsnSystemInfo = {
   bigWSCategoryID: 3013919779,
   jsnLocation: {},
   lstContactUs: [],
-  strLogoPath:`${strServerAssetsPath}demo/logo.png`,
-  systemMenu:[
+  strLogoPath: `${strServerAssetsPath}demo/logo.png`,
+  systemMenu: [
     {
       bigID: 3891922142,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "desert", arb: "الحلوى" },
       bigParentID: 0,
       jsnCategoryInfo: {
@@ -280,7 +284,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 3156578173,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "steak", arb: "الستيك" },
       bigParentID: 0,
       jsnCategoryInfo: {
@@ -295,7 +299,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 9723164333,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "coffee", arb: "القهوة" },
       bigParentID: 0,
       jsnCategoryInfo: {
@@ -310,7 +314,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 7087331728,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "pizza", arb: "البيتزا" },
       bigParentID: 0,
       jsnCategoryInfo: {
@@ -325,7 +329,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 8129351047,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "burger", arb: "البرغر" },
       bigParentID: 0,
       jsnCategoryInfo: {
@@ -340,7 +344,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 3013919779,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3891922142,
       jsnName: { eng: "Chease Garlic Bread", arb: "خبز الجبنة بالثوم" },
       jsnCategoryInfo: {
@@ -361,7 +365,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 9559275219,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3891922142,
       jsnName: { eng: "Rastrami Roll", arb: "راسترامي رول" },
       jsnCategoryInfo: {
@@ -381,7 +385,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 8033919014,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3891922142,
       jsnName: { eng: "Caprese Salad Kabobs", arb: "كابريزي سلطة كابوبس" },
       jsnCategoryInfo: {
@@ -401,7 +405,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 8052907570,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3891922142,
       jsnName: {
         eng: "Peachy Jalepeno Guacomole",
@@ -424,7 +428,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 1806513103,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3156578173,
       jsnName: { eng: "Chease Garlic Bread", arb: "خبز الجبنة بالثوم" },
       jsnCategoryInfo: {
@@ -463,7 +467,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 7547915806,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3156578173,
       jsnName: { eng: "Caprese Salad Kabobs", arb: "كابريزي سلطة كابوبس" },
       jsnCategoryInfo: {
@@ -483,7 +487,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 2818883117,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 3156578173,
       jsnName: {
         eng: "Peachy Jalepeno Guacomole",
@@ -506,7 +510,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 5119732624,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "Espresso Macchiato", arb: "اسبريسو ماكياتو" },
       bigParentID: 9723164333,
       jsnCategoryInfo: {
@@ -526,7 +530,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 6976723630,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "Mocha Whipped Cream", arb: "موكا كريمة مخفوقة" },
       bigParentID: 9723164333,
       jsnCategoryInfo: {
@@ -546,7 +550,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 7629450130,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "Cold Coffee", arb: "قهوة باردة" },
       bigParentID: 9723164333,
       jsnCategoryInfo: {
@@ -566,7 +570,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 9177008033,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       jsnName: { eng: "Caramel Macchiato", arb: "كراميل ماكياتو" },
       bigParentID: 9723164333,
       jsnCategoryInfo: {
@@ -586,7 +590,7 @@ export const Demo_jsnSystemInfo = {
     },
     {
       bigID: 9785069374,
-      bigCategoryTypeID:objCategoriesType.Menu,
+      bigCategoryTypeID: objCategoriesType.Menu,
       bigParentID: 7087331728,
       jsnName: { eng: "Chease Garlic Bread", arb: "خبز الجبنة بالثوم" },
       jsnCategoryInfo: {
@@ -604,7 +608,7 @@ export const Demo_jsnSystemInfo = {
         intRating: 5,
       },
     },
-  ]
+  ],
 };
 
 export const COUNTRIES = [
@@ -626,38 +630,38 @@ export const objRoleID = {
 };
 
 export const objIDRole = {
-  1511510928:'Admin',
-  7411510928:'Customer'
-}
+  1511510928: "Admin",
+  7411510928: "Customer",
+};
 
-export const Demo_objSystemLocation = {lat:35.856737,long:30.606619}
+export const Demo_objSystemLocation = { lat: 35.856737, long: 30.606619 };
 
 export const tabsOptions = [
-  { key: "dessert", jsnName: {eng:"dessert",arb:"حلويات"} },
-  { key: "drinks", jsnName: {eng:"drinks",arb:"ستيك"} },
-  { key: "traditional", jsnName: {eng:"traditional",arb:"قهوة"} },
-  { key: "pizza", jsnName: {eng:"pizza",arb:"بيتزا"} },
-  { key: "burger", jsnName: {eng:"burger",arb:"برغر"} },
+  { key: "dessert", jsnName: { eng: "dessert", arb: "حلويات" } },
+  { key: "drinks", jsnName: { eng: "drinks", arb: "مشروبات" } },
+  { key: "traditional", jsnName: { eng: "traditional", arb: "طبخات" } },
+  { key: "pizza", jsnName: { eng: "pizza", arb: "بيتزا" } },
+  { key: "burger", jsnName: { eng: "burger", arb: "برغر" } },
 ];
 
 export const objTabsAssets = {
-  "dessert": {
+  dessert: {
     strIconPath: `${strServerAssetsPath}desert.svg`,
     strImgPath: `${strServerAssetsPath}desert.png`,
   },
-  "drinks": {
+  drinks: {
     strIconPath: `${strServerAssetsPath}drinks.svg`,
     strImgPath: `${strServerAssetsPath}drinks.png`,
   },
-  "traditional": {
+  traditional: {
     strIconPath: `${strServerAssetsPath}traditional.svg`,
     strImgPath: `${strServerAssetsPath}traditional.png`,
   },
-  "pizza": {
+  pizza: {
     strIconPath: `${strServerAssetsPath}pizza.svg`,
     strImgPath: `${strServerAssetsPath}pizza.png`,
   },
-  "burger": {
+  burger: {
     strIconPath: `${strServerAssetsPath}burger.svg`,
     strImgPath: `${strServerAssetsPath}burger.png`,
   },
@@ -700,11 +704,11 @@ export const initialAppState = {
       lstProduct: [],
       strTotalPrice: "",
     },
-    jsnClientPayment:{}
+    jsnClientPayment: {},
   },
 };
 
-export const animationEditorOptions=[
+export const animationEditorOptions = [
   { key: "none", value: "none" },
   { key: "fadeIn", value: "fadeIn" },
   { key: "fadeOut", value: "fadeOut" },
@@ -732,7 +736,7 @@ export const animationEditorOptions=[
   { key: "slideInLeft", value: "slideInLeft" },
   { key: "slideInRight", value: "slideInRight" },
   { key: "slideOutUp", value: "slideOutUp" },
-]
+];
 
 export const fontList = [
   "Arial",

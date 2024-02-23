@@ -6,6 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {
   Button,
+  Chip,
   Grid,
   TableFooter,
   TablePagination,
@@ -14,12 +15,41 @@ import {
 import { App_Primary_Color } from "appHelper/appColor";
 import { Visibility } from "@mui/icons-material";
 import moment from "moment";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
     overflowX: "auto",
     marginRight: "auto",
     marginLeft: "auto",
+  },
+  itemContainer: {
+    background: "#f4fcfc",
+    height: "140px",
+    marginY: "50px",
+    borderRadius: "20px",
+    padding: "20px",
+  },
+  title: {
+    textTransform: "uppercase",
+    fontSize: "28px",
+    fontWeight: "800",
+    color: App_Primary_Color,
+    borderBottom: "3px solid #ffd40d",
+    width: "fit-content",
+  },
+  subtitle: {
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+  arrowImg: {
+    transform: "rotate(180deg)",
+    height: "80px",
+    width: "100%",
+  },
+  table: {
+    // minWidth: 650,
+    // border: "1px solid #c4c4c4",
   },
   columnTablecell: {
     border: "1px solid #c4c4c4",
@@ -56,8 +86,8 @@ const styles = {
     fontWeight: { lg: "800", xs: "600" },
   },
   view: {
-    fontSize: { lg: "15px", xs: "10px" },
-    fontWeight: { lg: "800", xs: "600" },
+    fontSize: { lg: "15px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "800" },
     textTransform: "uppercase",
   },
   tablePagination: {
@@ -77,7 +107,22 @@ const styles = {
         lg: "16px",
         xs: "14px",
       },
+      ".MuiTablePagination-actions": {
+        marginLeft: { xs: "5px", lg: "15px" },
+        marginRight: { xs: "5px", lg: "15px" },
+      },
     },
+
+  },
+  status: {
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "700",
+    fontSize: { lg: "15px", xs: "12px" },
+    fontWeight: { lg: "800", xs: "800" },
+  },
+  tableContainer: {
+    marginBottom: "50px",
   },
 };
 
@@ -96,12 +141,13 @@ function OrdersInfo({ orders, lang, dir }) {
     setPage(0);
   };
   const columns = [
-    "Order ID",
-    "Address",
-    "Total Price",
-    "Order Date",
-    "Order Time",
-    "Order Details",
+    { eng: "order id", arb: "معرف الطلب" },
+    { eng: "address", arb: "العنوان" },
+    { eng: "total price", arb: "السعر الكلي" },
+    { eng: "order date", arb: "تاريخ الطلب" },
+    { eng: "order time", arb: "وقت الطلب" },
+    { eng: "status", arb: "الحالة" },
+    { eng: "order details", arb: "تفاصيل الطلب" },
   ];
   return (
     <Grid item xs="12" container sx={styles.container}>
@@ -110,13 +156,14 @@ function OrdersInfo({ orders, lang, dir }) {
           <TableRow>
             {columns.map((column) => (
               <TableCell sx={styles.columnTablecell} align="center">
-                <Typography
+               <Typography
                   sx={{
                     fontSize: { lg: "15px", xs: "12px" },
                     fontWeight: { lg: "800", xs: "800" },
+                    textTransform: "capitalize",
                   }}
                 >
-                  {column}
+                  {column[lang]}
                 </Typography>
               </TableCell>
             ))}
@@ -144,7 +191,7 @@ function OrdersInfo({ orders, lang, dir }) {
               >
                 <Typography sx={styles.orderAddress}>
                   {order?.jsnAddress?.jsnCity[lang] +
-                    ", " +
+                   (dir === "rtl" ? "، " : ", ") +
                     order?.jsnAddress?.jsnCountry[lang]}
                 </Typography>
               </TableCell>
@@ -178,6 +225,16 @@ function OrdersInfo({ orders, lang, dir }) {
                   {moment(new Date(order?.dtmOrderDate)).format("hh:mm A")}
                 </Typography>
               </TableCell>
+              <TableCell align="center">
+                <Chip
+                  color={order.blnDelivered ? "success" : "error"}
+                  label={
+                    <Typography sx={styles.status}>
+                      {order.blnDelivered ? dictionary.orders.delivered[lang] : dictionary.orders.onDelivery[lang]}
+                    </Typography>
+                  }
+                />
+              </TableCell>
               <TableCell
                 sx={styles.rowTablecell}
                 align="center"
@@ -185,7 +242,9 @@ function OrdersInfo({ orders, lang, dir }) {
                 scope="row"
               >
                 <Button endIcon={<Visibility />}>
-                  <Typography sx={styles.view}>view</Typography>
+                <Typography sx={styles.view} px={1}>
+                    {dictionary.buttons.view[lang]}
+                  </Typography>
                 </Button>
               </TableCell>
             </TableRow>
@@ -213,16 +272,18 @@ function OrdersInfo({ orders, lang, dir }) {
               labelDisplayedRows={({ page }) => {
                 return (
                   <Typography
-                    sx={{
-                      fontSize: {
-                        lg: "16px",
-                        xs: "14px",
-                      },
-                      fontWeight: "600",
-                    }}
-                  >
-                    Page: {page + 1}
-                  </Typography>
+                  dir={dir}
+                  sx={{
+                    fontSize: {
+                      lg: "16px",
+                      xs: "14px",
+                    },
+                    fontWeight: "600",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {dictionary.tablePagination.page[lang]}: {page + 1}
+                </Typography>
                 );
               }}
               backIconButtonProps={{
@@ -233,18 +294,25 @@ function OrdersInfo({ orders, lang, dir }) {
               showLastButton={true}
               labelRowsPerPage={
                 <Typography
+                  dir={dir}
                   sx={{
                     fontSize: {
                       lg: "16px",
                       xs: "14px",
                     },
                     fontWeight: "600",
+                    textTransform: "capitalize",
                   }}
                 >
-                  Rows:
+                  {dictionary.tablePagination.rows[lang]}:
                 </Typography>
               }
-              sx={styles.tablePagination}
+              sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+                marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
+                marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
+              },
+
+            }}
             />
           </TableRow>
         </TableFooter>

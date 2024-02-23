@@ -16,7 +16,7 @@ export const CtrlUsers = {
     user,
     setUsers,
     users,
-    handleClose
+    handleClose,
   }) => {
     try {
       setIsLoading(true);
@@ -26,10 +26,13 @@ export const CtrlUsers = {
           (user) => user.bigUserID === bigUserID
         );
         if (userIndex !== -1) {
-          users[userIndex] = { ...users[userIndex], blnIsDeleted: true };
+          users[userIndex] = {
+            ...users[userIndex],
+            blnIsDeleted: true,
+            dtmUpdatedDate: bannedAccount?.dtmUpdatedDate,
+          };
           setUsers([...users]);
-          handleClose()
-          
+          handleClose();
         }
       }
       setIsLoading(false);
@@ -44,7 +47,7 @@ export const CtrlUsers = {
     setUsers,
     users,
     setUserInfo,
-    handleClose
+    handleClose,
   }) => {
     try {
       setIsLoading(true);
@@ -54,9 +57,13 @@ export const CtrlUsers = {
           (user) => user.bigUserID === bigUserID
         );
         if (userIndex !== -1) {
-          users[userIndex] = { ...users[userIndex], blnIsDeleted: false };
+          users[userIndex] = {
+            ...users[userIndex],
+            blnIsDeleted: false,
+            dtmUpdatedDate: unbannedAccount?.dtmUpdatedDate,
+          };
           setUsers([...users]);
-          handleClose()
+          handleClose();
         }
       }
       setIsLoading(false);
@@ -71,7 +78,7 @@ export const CtrlUsers = {
     setUsers,
     users,
     setUserInfo,
-    handleClose
+    handleClose,
   }) => {
     try {
       setIsLoading(true);
@@ -81,9 +88,13 @@ export const CtrlUsers = {
           (user) => user.bigUserID === bigUserID
         );
         if (userIndex !== -1) {
-          users[userIndex] = { ...users[userIndex], blnIsActive: false };
+          users[userIndex] = {
+            ...users[userIndex],
+            blnIsActive: false,
+            dtmUpdatedDate: deactivatedAccount?.dtmUpdatedDate,
+          };
           setUsers([...users]);
-          handleClose()
+          handleClose();
         }
       }
       setIsLoading(false);
@@ -98,7 +109,7 @@ export const CtrlUsers = {
     setUsers,
     users,
     setUserInfo,
-    handleClose
+    handleClose,
   }) => {
     try {
       setIsLoading(true);
@@ -108,9 +119,13 @@ export const CtrlUsers = {
           (user) => user.bigUserID === bigUserID
         );
         if (userIndex !== -1) {
-          users[userIndex] = { ...users[userIndex], blnIsActive: true };
+          users[userIndex] = {
+            ...users[userIndex],
+            blnIsActive: true,
+            dtmUpdatedDate: activatedAccount?.dtmUpdatedDate,
+          };
           setUsers([...users]);
-          handleClose()
+          handleClose();
         }
       }
       setIsLoading(false);

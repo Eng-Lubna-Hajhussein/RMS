@@ -2,33 +2,26 @@ import { objAppActions } from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import {
-  Button,
-  Chip,
   Grid,
-  TableFooter,
-  TablePagination,
-  TextField,
   Typography,
 } from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/OptionList/OptionList";
-import { MoreVert, Visibility } from "@mui/icons-material";
-import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import { App_Primary_Color } from "appHelper/appColor";
 import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ctrlTables } from "./controller/CtrlTables";
 import EditTable from "./editTable/EditTable";
+import AddTable from "./addTable/AddTable";
+import TablesInfo from "./tablesInfo/TablesInfo";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: "5px",
+    marginY: { lg: "50px", xs: "20px" },
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -110,64 +103,79 @@ const styles = {
 function Tables() {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const [tables, setTables] = useState([]);
   const { systemID, systemName } = useParams();
   const [tableOnAction, setTableOnAction] = useState();
   const [openEditTable, setOpenEditTable] = useState(false);
+  const navigate = useNavigate();
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tables.length) : 0;
+  const handleFreeTable = (table,index) => {
+    ctrlTables.freeTable({
+      bigTableID: table.bigTableID,
+      index: index,
+      isLoading: isLoading,
+      setIsLoading: setIsLoading,
+      tables: tables,
+      setTables: setTables,
+    });
+  }
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const handleDeleteTable = (table)=>{
+    ctrlTables.deleteTable({
+      bigTableID: table.bigTableID,
+      isLoading: isLoading,
+      setIsLoading: setIsLoading,
+      setTables: setTables,
+      tables: tables,
+    });
+  }
+
+  const handleEditTable = (table)=>{
+    setTableOnAction(table);
+    setOpenEditTable(true);
+  }
+
+
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
+
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
   };
 
-  const userNavList = [
-    { bigNavID: 6774846478, nav: { eng: "upload picture", arb: "حسابي" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
 
-  const adminNavList = [
-    { bigNavID: 1234146400, nav: { eng: "upload logo", arb: "صورة اللوغو" } },
-    {
-      bigNavID: 3234146150,
-      nav: { eng: "dashboard", arb: "داشبورد" },
-    },
-    { bigNavID: 7764142478, nav: { eng: "settings", arb: "الاعدادات" } },
-  ];
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
 
-  const navList = [
-    {
-      bigNavID: 1342146478,
-      nav: { eng: "home", arb: "الرئيسية" },
-      path: `/admin/${systemName}/${systemID}`,
-    },
-
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "orders", arb: "تسوق" },
-      path: `/admin/orders/${systemName}/${systemID}`,
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "tables", arb: "الاخبار" },
-      path: `/admin/tables/${systemName}/${systemID}`,
-    },
-
-    {
-      bigNavID: 2344146478,
-      nav: { eng: "users", arb: "المنيو" },
-      path: `/admin/users/${systemName}/${systemID}`,
-    },
-    { bigNavID: 2344146478, nav: { eng: "reviews", arb: "المنيو" } },
-  ];
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const instalData = async () => {
     setIsLoading(true);
@@ -236,264 +244,25 @@ function Tables() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
-            <Grid
-              item
-              xs="12"
-              px={1}
-              pb={10}
-              justifyContent={"center"}
-              sx={styles.itemContainer}
-            >
-              <Grid container>
-                <Grid item xs="12" container px={2} justifyContent={"start"}>
-                  <Typography sx={styles.title}>Add A TABLE !</Typography>
-                </Grid>
-                <Grid item xs="12" container justifyContent={"start"}>
-                  <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-                    <Grid item xs="12" container py={3}>
-                      <Grid item xs="6" px={2}>
-                        <TextField
-                          sx={styles.textfield}
-                          variant="outlined"
-                          fullWidth
-                          type="number"
-                          label="Seats Number"
-                          className={`form-control ${
-                            errors.seatsNum && "invalid"
-                          }`}
-                          {...register("seatsNum", {
-                            required: "Seats Number is Required",
-                          })}
-                          onKeyUp={() => {
-                            trigger("seatsNum");
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs="6" px={2}>
-                        <TextField
-                          sx={styles.textfield}
-                          variant="outlined"
-                          fullWidth
-                          type="text"
-                          label="Price Per Hour"
-                          className={`form-control ${
-                            errors.pricePerHour && "invalid"
-                          }`}
-                          {...register("pricePerHour", {
-                            required: "Price Per Hour is Required",
-                          })}
-                          onKeyUp={() => {
-                            trigger("pricePerHour");
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs="12" container justifyContent={"end"} p={2}>
-                        <AnimButton0001
-                          label={"Add Table"}
-                          color={App_Primary_Color}
-                          type="submit"
-                        />
-                      </Grid>
-                    </Grid>
-                  </form>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs="12" container sx={styles.tableContainer} px={1}>
-              <Table
-                aria-label="simple table"
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-              >
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell sx={styles.columnTablecell} align="center">
-                        {column}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {(rowsPerPage > 0
-                    ? tables.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                    : tables
-                  )?.map((table, index) => (
-                    <TableRow>
-                      <TableCell
-                        sx={styles.rowTablecell}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Grid
-                          container
-                          alignContent={"center"}
-                          alignItems={"center"}
-                          sx={styles.fitContentHeight}
-                        >
-                          {table.blnTableAvailable && (
-                            <Grid item xs="1">
-                              <OptionList
-                                nav={""}
-                                navList={actionItemNavList.map((nav) => ({
-                                  ...nav,
-                                  onClick: () => {
-                                    if (
-                                      objAppActions["Delete"] === nav.bigNavID
-                                    ) {
-                                      ctrlTables.deleteTable({
-                                        bigTableID: table.bigTableID,
-                                        isLoading: isLoading,
-                                        setIsLoading: setIsLoading,
-                                        setTables: setTables,
-                                        tables: tables,
-                                      });
-                                    }
-                                    if (
-                                      objAppActions["Edit"] === nav.bigNavID
-                                    ) {
-                                      setTableOnAction(table);
-                                      setOpenEditTable(true);
-                                    }
-                                  },
-                                }))}
-                                endIcon={<MoreVert />}
-                                lang={appState.clientInfo.strLanguage}
-                              />
-                            </Grid>
-                          )}
-                          <Grid item xs={table.blnTableAvailable ? "11" : "12"}>
-                            <Typography color={"#000"} sx={styles.tableID}>
-                              #{table.bigTableID}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell
-                        sx={styles.rowTablecell}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography color={"#000"} sx={styles.seatsNum}>
-                          {table.intSeatsNumber}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={styles.rowTablecell}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Typography color={App_Primary_Color} sx={styles.price}>
-                          ${table.strTablePrice}
-                        </Typography>
-                      </TableCell>
-
-                      <TableCell
-                        sx={styles.rowTablecell}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Chip
-                          color={table.blnTableAvailable ? "success" : "error"}
-                          label={
-                            <Typography sx={styles.status}>
-                              {table.blnTableAvailable
-                                ? "Available"
-                                : "Reserved"}
-                            </Typography>
-                          }
-                        />
-                      </TableCell>
-                      <TableCell
-                        sx={styles.rowTablecell}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <Button
-                          endIcon={<Visibility />}
-                          disabled={table.blnTableAvailable}
-                        >
-                          <Typography sx={styles.viewBtnLabel}>view</Typography>
-                        </Button>
-                      </TableCell>
-                      <TableCell
-                        sx={styles.rowTablecell}
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        <AnimButton0001
-                          label={"free table"}
-                          color={App_Second_Color}
-                          disabled={table.blnTableAvailable}
-                          onClick={() => {
-                            ctrlTables.freeTable({
-                              bigTableID: table.bigTableID,
-                              index: index,
-                              isLoading: isLoading,
-                              setIsLoading: setIsLoading,
-                              tables: tables,
-                              setTables: setTables,
-                            });
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      rowsPerPageOptions={[5, 10, 25]}
-                      count={tables.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      SelectProps={{
-                        inputProps: {
-                          "aria-label": "rows per page",
-                        },
-                      }}
-                      onPageChange={handleChangePage}
-                      onRowsPerPageChange={handleChangeRowsPerPage}
-                      labelDisplayedRows={({ page }) => {
-                        return (
-                          <Typography>
-                            Page: {page + 1}
-                          </Typography>
-                        );
-                      }}
-                      backIconButtonProps={{
-                        color: "#fff",
-                      }}
-                      nextIconButtonProps={{ color: "#fff" }}
-                      showFirstButton={true}
-                      showLastButton={true}
-                      labelRowsPerPage={
-                        <Typography>Rows:</Typography>
-                      }
-                      sx={styles.tablePagination}
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </Grid>
+          <Grid item lg="10" xs="12" px={2} container>
+            <AddTable
+            errors={errors}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            register={register}
+            trigger={trigger}
+            lang={lang}
+            dir={dir}
+            />
+            <TablesInfo
+            appState={appState}
+            lang={lang}
+            dir={dir}
+            handleDeleteTable={handleDeleteTable}
+            handleEditTable={handleEditTable}
+            handleFreeTable={handleFreeTable}
+            tables={tables}
+            />
           </Grid>
         </Grid>
       )}
@@ -506,6 +275,20 @@ function Tables() {
         setIsLoading={setIsLoading}
         tables={tables}
         setTables={setTables}
+      />
+       <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
       />
     </React.Fragment>
   );

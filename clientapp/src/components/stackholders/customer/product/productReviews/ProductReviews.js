@@ -12,6 +12,7 @@ import {
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   reviewBox: {
@@ -38,15 +39,32 @@ const styles = {
     color: "#555",
   },
   reviewComment: {
-    fontSize: "14px",
+    fontSize: { lg: "14px", xs: "9px" },
     fontWeight: "800",
     textTransform: "capitalize",
+    height: "80px",
+    overflowX: "auto",
+    paddingTop: "10px",
   },
   tablePagination: {
+    // width: "fit-content",
+    // padding: "0 !important",
+    // margin: "0 !important",
+    borderBottom: "none !important",
+    "&": {
+      // marginTop: theme.spacing(2),
+      justifyContent: "center",
+      display: "flex",
+      borderBottom: "none !important",
+    },
     ".MuiTablePagination-toolbar": {
       textAlign: "center",
-      border: `4px solid ${App_Primary_Color}`,
+      // border: `4px solid ${App_Primary_Color}`,
+      width: "fit-content",
+      padding: "2px !important",
+      margin: "0 !important",
       borderRadius: "10px",
+      borderBottom: "none !important",
     },
     ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
       fontWeight: "800",
@@ -56,6 +74,14 @@ const styles = {
       background: "#fff",
       borderRadius: "10px",
       border: `3px solid ${App_Second_Color}`,
+    },
+    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+      margin: "2px",
+    },
+    ".MuiTablePagination-actions": {
+      background: App_Primary_Color,
+      borderRadius: "10px",
+      margin: "4px",
     },
   },
 };
@@ -100,14 +126,14 @@ function ProductReviews({ product, lang, dir }) {
                     alignItems={"center"}
                     alignContent={"center"}
                   >
-                    <Grid item xs={1} sx={styles.heightFitContent}>
+                    <Grid item  lg={1} xs={3} sx={styles.heightFitContent}>
                       <Avatar
                         src={review?.strImgPath}
                         height="50px"
                         width="50px"
                       />
                     </Grid>
-                    <Grid item xs={11} container>
+                    <Grid item lg={11} xs={9} container>
                       <Grid item xs="12">
                         <Link>
                           <Typography color={"primary"} sx={styles.username}>
@@ -158,7 +184,19 @@ function ProductReviews({ product, lang, dir }) {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelDisplayedRows={({ page }) => {
-              return <Typography>Page: {page + 1}</Typography>;
+              return       <Typography
+              dir={dir}
+              sx={{
+                fontSize: {
+                  lg: "16px",
+                  xs: "14px",
+                },
+                fontWeight: "600",
+                textTransform: "capitalize",
+              }}
+            >
+              {dictionary.tablePagination.page[lang]}: {page + 1}
+            </Typography>;
             }}
             backIconButtonProps={{
               color: "#fff",
@@ -166,8 +204,27 @@ function ProductReviews({ product, lang, dir }) {
             nextIconButtonProps={{ color: "#fff" }}
             showFirstButton={true}
             showLastButton={true}
-            labelRowsPerPage={<Typography>Rows:</Typography>}
-            sx={styles.tablePagination}
+            labelRowsPerPage={
+              <Typography
+                dir={dir}
+                sx={{
+                  fontSize: {
+                    lg: "16px",
+                    xs: "14px",
+                  },
+                  fontWeight: "600",
+                  textTransform: "capitalize",
+                }}
+              >
+                {dictionary.tablePagination.rows[lang]}:
+              </Typography>
+            }
+            sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
+              marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
+              marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
+            },
+
+          }}
           />
         </Grid>
       )}

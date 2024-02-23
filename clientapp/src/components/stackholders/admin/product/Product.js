@@ -1,65 +1,71 @@
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductDetails from "./productDetails/ProductDetails";
 import ProductReviews from "./productReviews/ProductReviews";
+import { ctrlRouteAdmin } from "../controller/CtrlRouteAdmin";
+import UploadPicture from "components/shared/uploadPicture/UploadPicture";
+import UploadLogo from "../uploadLogo/UploadLogo";
+import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: "5px",
+    marginY: { lg: "50px", xs: "20px" },
   },
 };
 
 function Product() {
-  const { appState } = useContext(AppContext);
+  const { appState,appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const dir = appState.clientInfo.strDir;
-  const { productID } = useParams();
+  const { productID, systemID, systemName } = useParams();
+  const navigate = useNavigate();
+  const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const [uploadLogoOpen, setUploadLogo] = useState(false);
+  const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
   const product = useMemo(() => {
     return appState.systemInfo.systemMenu.find(
       ({ bigID }) => Number(bigID) === Number(productID)
     );
   }, []);
-  const userNavList = [
-    { bigNavID: 9974846478, nav: { eng: "profile", arb: "حسابي" } },
-    { bigNavID: 5674846478, nav: { eng: "settings", arb: "الاعدادات" } },
-    { bigNavID: 1166046478, nav: { eng: "logout", arb: "تسجيل الخروج" } },
-  ];
-  const navList = [
-    { bigNavID: 1342146478, nav: { eng: "home", arb: "الرئيسية" } },
+  useEffect(() => {
+    if (!appState.clientInfo.blnUserLogin) {
+      navigate(`/${systemName}/${systemID}`);
+    }
+  }, [appState.clientInfo.blnUserLogin]);
 
-    {
-      bigNavID: 8944146478,
-      nav: { eng: "shop", arb: "تسوق" },
-      navList: [
-        { bigNavID: 8944146400, nav: { eng: "shop cart", arb: "كرت التسوق" } },
-        { bigNavID: 6944146478, nav: { eng: "cart checkout", arb: "الحساب" } },
-      ],
-    },
-    {
-      bigNavID: 7943146478,
-      nav: { eng: "order", arb: "الاخبار" },
-      navList: [
-        { nav: { eng: "undelivered order", arb: "مدونتنا" } },
-        { nav: { eng: "delivered orders", arb: "تفاصيل المدونة" } },
-      ],
-    },
-    {
-      bigNavID: 948246478,
-      nav: { eng: "table", arb: "الصفحات" },
-      navList: [
-        { bigNavID: 341246078, nav: { eng: "reserve table", arb: "عنا" } },
-        {
-          bigNavID: 968341478,
-          nav: { eng: "reserved tables", arb: "خدماتنا" },
-        },
-      ],
-    },
-    { bigNavID: 941116478, nav: { eng: "contact", arb: "تواصل معنا" } },
-    { bigNavID: 2344146478, nav: { eng: "review", arb: "المنيو" } },
-  ];
+  const handleUploadPictureOpen = () => {
+    setUploadPicture(true);
+  };
+
+  const handleSharedLinkOpen = () => {
+    setSharedLinkOpen(true);
+  };
+
+  const handleUploadLogoOpen = () => {
+    setUploadLogo(true);
+  };
+
+  const adminNavList = ctrlRouteAdmin.generateAdminNavList({
+    handleSharedLinkOpen: handleSharedLinkOpen,
+    handleUploadLogoOpen: handleUploadLogoOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+
+  const userNavList = ctrlRouteAdmin.generateUserNavList({
+    appState: appState,
+    appDispatch: appDispatch,
+    handleUploadPictureOpen: handleUploadPictureOpen,
+    systemID: systemID,
+    systemName: systemName,
+  });
+  const navList = ctrlRouteAdmin.generateWebsiteNavList({
+    systemID: systemID,
+    systemName: systemName,
+  });
 
   return (
     <React.Fragment>
@@ -71,17 +77,32 @@ function Product() {
         websiteLogo={appState?.systemInfo?.strLogoPath}
         jsnSystemContact={appState.systemInfo.jsnSystemContact}
         editable={false}
+        adminNavList={adminNavList}
         userImg={appState.userInfo.strImgPath}
         userName={appState.userInfo.jsnFullName}
         intCartProduct={appState.userInfo.userOrder?.lstProduct?.length}
         blnUserLogin={appState.clientInfo.blnUserLogin}
       />
       <Grid container justifyContent={"center"} sx={styles.container}>
-        <Grid item xs="10" container>
+        <Grid item lg="10" xs="12" px={2} container>
           <ProductDetails product={product} lang={lang} dir={dir} />
           <ProductReviews product={product} lang={lang} dir={dir} />
         </Grid>
       </Grid>
+      <UploadPicture
+        open={uploadPictureOpen}
+        handleClose={() => setUploadPicture(false)}
+      />
+      <UploadLogo
+        open={uploadLogoOpen}
+        handleClose={() => setUploadLogo(false)}
+        lang={appState.clientInfo.strLanguage}
+        dir={appState.clientInfo.strDir}
+      />
+      <SharedLink
+        open={sharedLinkOpen}
+        handleClose={() => setSharedLinkOpen(false)}
+      />
     </React.Fragment>
   );
 }

@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import { Grid, Typography } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   paper: {
@@ -18,6 +19,7 @@ const styles = {
   cartTotals: {
     fontSize: { lg: "25px", xs: "20px" },
     fontWeight: "800",
+    textTransform:"capitalize"
   },
   subPaper: {
     height: { lg: "250px", xs: "200px" },
@@ -31,6 +33,7 @@ const styles = {
   font: {
     fontSize: { lg: "15px", xs: "14px" },
     fontWeight: "800",
+    // textTransform:"capitalize"
   },
   totalPaper: {
     height: { lg: "80px", xs: "60px" },
@@ -38,14 +41,14 @@ const styles = {
     boxShadow: "none",
     background: "#f4fcfc",
     borderRadius: "20px",
-    paddingX: {lg:"20px",xs:"10px"},
+    paddingX: { lg: "20px", xs: "10px" },
   },
   fitContentHeight: {
     height: "fit-content",
   },
   totalContainer: {
     height: "100%",
-    paddingX: {lg:"20px",xs:"10px"},
+    paddingX: { lg: "20px", xs: "10px" },
   },
 };
 
@@ -54,7 +57,9 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
     <Paper sx={styles.paper}>
       <Grid container sx={styles.fullHeight} alignContent={"start"}>
         <Grid item xs="12" p={1} pb={2}>
-          <Typography sx={styles.cartTotals}>Cart Totals</Typography>
+          <Typography sx={styles.cartTotals}>
+            {dictionary.cart.title[lang]}
+          </Typography>
         </Grid>
         <Grid item xs="12">
           <Paper sx={styles.subPaper}>
@@ -62,7 +67,9 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
               <Grid container item xs="12" sx={styles.container}>
                 <Grid item xs="12" py={1} container>
                   <Grid item xs="6" container justifyContent={"start"}>
-                    <Typography sx={styles.font}>Sub total:</Typography>
+                    <Typography sx={styles.font}>
+                      {dictionary.cart.subtotal[lang]}:
+                    </Typography>
                   </Grid>
                   <Grid item xs="6" container justifyContent={"flex-end"}>
                     <Typography sx={styles.font}>${totalPrice}</Typography>
@@ -70,10 +77,14 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
                 </Grid>
                 <Grid item xs="12" py={1} container>
                   <Grid item xs="6" container justifyContent={"start"}>
-                    <Typography sx={styles.font}>Shipping:</Typography>
+                    <Typography sx={styles.font}>
+                      {dictionary.cart.shipping[lang]}:
+                    </Typography>
                   </Grid>
                   <Grid item xs="6" container justifyContent={"flex-end"}>
-                    <Typography sx={styles.font}>free</Typography>
+                    <Typography sx={styles.font}>
+                      {dictionary.cart.free[lang]}
+                    </Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -86,9 +97,15 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
                 alignContent={"center"}
               >
                 <Paper sx={styles.totalPaper}>
-                  <Grid container sx={styles.totalContainer} alignContent={"center"}>
+                  <Grid
+                    container
+                    sx={styles.totalContainer}
+                    alignContent={"center"}
+                  >
                     <Grid item xs="6" container justifyContent={"start"}>
-                      <Typography sx={styles.font}>Total:</Typography>
+                      <Typography sx={styles.font}>
+                        {dictionary.cart.total[lang]}:
+                      </Typography>
                     </Grid>
                     <Grid item xs="6" container justifyContent={"flex-end"}>
                       <Typography sx={styles.font}>${totalPrice}</Typography>
@@ -101,13 +118,7 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
         </Grid>
         <Grid item xs="12" p={1} pt={3} container justifyContent={"end"}>
           <AnimButton0001
-            label={<Typography
-            sx={{
-              fontSize:{xs:"16px"}
-            }}
-            >
-              proceed to checkout
-            </Typography>}
+            label={dictionary.buttons.proceedToCheckout[lang]}
             color={App_Primary_Color}
             onClick={handleCheckoutOpen}
           />

@@ -16,6 +16,7 @@ import useUpload from "hooks/useUpload/useUpload";
 import { ctrlUploadPicture } from "./controller/CtrlUploadLogo";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 import UploadButton001 from "components/sharedUI/UploadButton001/UploadButton001";
+import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   dialogTitle: {
@@ -99,7 +100,7 @@ function UploadLogo({ open, handleClose, lang, dir }) {
           >
             <Grid item xs="12" container justifyContent={"center"}>
               <Grid item xs="12" py={2}>
-                <Title0001 title={"Profile Picture Image"} dir={dir} />
+                <Title0001 title={dictionary.system.websiteLogo[lang]} dir={dir} />
               </Grid>
               <Grid
                 item
@@ -131,11 +132,11 @@ function UploadLogo({ open, handleClose, lang, dir }) {
           <Grid
             container
             p={2}
-            px={5}
+            px={1}
             justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyContent={"end"}
           >
-            <Grid item xs="4">
+            <Grid item lg="4" xs='5'>
               <AnimButton0001
                 label={"save"}
                 color={App_Primary_Color}

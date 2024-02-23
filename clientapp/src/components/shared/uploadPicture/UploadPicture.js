@@ -36,9 +36,13 @@ import { AppContext } from "contextapi/context/AppContext";
 import useUpload from "hooks/useUpload/useUpload";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ctrlUploadPicture } from "./controller/CtrlUploadPicture";
+import Title0001 from "components/sharedUI/Title0001.js/Title0001";
+import { dictionary } from "appHelper/appDictionary";
 
 function UploadPicture({ open, handleClose }) {
   const { appState, appDispatch } = useContext(AppContext);
+  const lang = appState.clientInfo.strLanguage;
+  const dir = appState.clientInfo.strDir;
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
@@ -89,15 +93,7 @@ function UploadPicture({ open, handleClose }) {
           >
             <Grid item xs={12} container justifyContent={"center"}>
               <Grid item xs={12} py={2}>
-                <Typography
-                  sx={{
-                    borderLeft: `5px solid ${App_Second_Color}`,
-                    fontWeight: "600",
-                    px: "3px",
-                  }}
-                >
-                  Profile Picture Image
-                </Typography>
+                 <Title0001 title={dictionary.shared.profilePicture[lang]} dir={dir} />
               </Grid>
               <Grid
                 item
@@ -154,13 +150,13 @@ function UploadPicture({ open, handleClose }) {
           <Grid
             container
             p={2}
-            px={5}
+            // px={5}
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item xs={4}>
+            <Grid item lg={3} xs={5}>
               <AnimButton0001
-                label={"save"}
+                label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
                 fullWidth={true}
                 type="submit"

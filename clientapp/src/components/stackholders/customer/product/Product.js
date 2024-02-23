@@ -14,7 +14,7 @@ import ProductReview from "./productReview/ProductReview";
 
 const styles = {
   container: {
-    marginY: "50px",
+    marginY: { lg: "50px", xs: "20px" },
   },
 };
 
@@ -148,22 +148,43 @@ function Product() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
+          <Grid item lg="10" xs="12" px={2} container>
             <Grid item xs="12" container>
-              <Grid item xs="4" px={4}>
+              <Grid
+                item
+                lg="4"
+                xs={12}
+                display={{lg:"flex",xs:"none"}}
+                sx={{ paddingX: { lg: "20px", xs: "10px" } }}
+              >
                 <ProductImage product={product} dir={dir} />
               </Grid>
               <Grid
                 item
-                xs="8"
-                px={4}
+                lg="8"
+                xs={12}
+                // px={4}
+                sx={{ paddingX: { lg: "40px", xs: "10px" } }}
                 container
                 alignContent={"start"}
                 justifyContent={"end"}
               >
-                <Grid item xs="12" container p={0} m={0}>
+                <Grid item xs="12" container 
+                sx={{
+                  padding:{xs:"10px",lg:"0px"}
+                }}
+                m={0}>
                   <ProductDetails product={product} lang={lang} dir={dir} />
                 </Grid>
+                <Grid
+                item
+                lg="4"
+                xs={12}
+                display={{lg:"none",xs:"flex"}}
+                sx={{ paddingX: { lg: "40px", xs: "10px" } }}
+              >
+                <ProductImage product={product} dir={dir} />
+              </Grid>
                 <Grid item xs="12" container p={0} m={0}>
                   <ProductReview
                     dir={dir}

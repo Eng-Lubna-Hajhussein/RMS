@@ -1,4 +1,5 @@
 import { Grid, TextField } from "@mui/material";
+import { dictionary } from "appHelper/appDictionary";
 import CopyToClipboardButton from "components/sharedUI/CopyToClipboardButton/CopyToClipboardButton";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -10,13 +11,13 @@ const styles = {
   },
 };
 
-function PersonalInfo({ user, lang }) {
+function PersonalInfo({ user, lang,dir }) {
   const { systemName, systemID } = useParams();
   return (
     <Grid container>
       <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
         <CopyToClipboardButton
-          label="User Profile Link"
+          label={dictionary.labels.userProfileLink[lang]}
           value={`http:/localhost:3000/customer/profile/${user.bigUserID}/${systemName}/${systemID}`}
         />
       </Grid>
@@ -26,7 +27,7 @@ function PersonalInfo({ user, lang }) {
           fullWidth
           value={user.jsnFullName[lang]}
           sx={styles.username}
-          label={"User Full Name"}
+          label={dictionary.labels.userFullName[lang]}
           variant="outlined"
           inputProps={{
             style: { textTransform: "capitalize" },
@@ -38,7 +39,7 @@ function PersonalInfo({ user, lang }) {
           aria-readonly
           fullWidth
           value={user.strEmail}
-          label={"User Email"}
+          label={dictionary.labels.userEmail[lang]}
           variant="outlined"
         />
       </Grid>
@@ -51,10 +52,10 @@ function PersonalInfo({ user, lang }) {
             ", " +
             user.jsnAddress.jsnCountry[lang]
           }
-          label={"User Address"}
+          label={dictionary.labels.userAddress[lang]}
           variant="outlined"
           inputProps={{
-            style: { textTransform: "capitalize" },
+            style: { textTransform: "capitalize",direction:dir },
           }}
         />
       </Grid>
@@ -63,7 +64,7 @@ function PersonalInfo({ user, lang }) {
           aria-readonly
           fullWidth
           value={moment(new Date(user.dtmCreatedDate)).format("YYYY-MM-DD")}
-          label={"Joined Date"}
+          label={dictionary.labels.joinedDate[lang]}
           variant="outlined"
           inputProps={{
             style: { textTransform: "capitalize" },
@@ -76,7 +77,7 @@ function PersonalInfo({ user, lang }) {
           aria-readonly
           fullWidth
           value={moment(new Date(user.dtmUpdatedDate)).format("YYYY-MM-DD")}
-          label={"Last Updated Date"}
+          label={dictionary.labels.lastUpdate[lang]}
           variant="outlined"
           inputProps={{
             style: { textTransform: "capitalize" },

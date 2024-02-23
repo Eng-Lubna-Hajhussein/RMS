@@ -7,8 +7,7 @@ const styles = {
   container: {
     backgroundPosition: "center",
     backgroundSize: "cover",
-
-    height: { lg: "600px", xs: "700px" },
+    height: { lg: "600px", xs: "900px" },
     width: "100%",
     content: '""',
     position: "absolute",
