@@ -32,6 +32,7 @@ const styles = {
   },
   logo: {
     width: "150px",
+    height: "30px",
   },
   title: {
     color: "#000",

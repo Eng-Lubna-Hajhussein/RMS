@@ -38,6 +38,7 @@ export const ctrlRouteCustomer = {
     }
     if (userOrder) {
       appState.userInfo.userOrder = {
+        ...appState.userInfo.userOrder,
         bigOrderID: userOrder.bigOrderID,
         bigSystemID: userOrder.bigSystemID,
         bigUserID: userOrder.bigUserID,

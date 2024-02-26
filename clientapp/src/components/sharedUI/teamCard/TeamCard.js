@@ -25,6 +25,7 @@ const styles = {
     color: "#f3274c",
     fontSize: "18px !important",
     fontWeight: "800 !important",
+    textTransform: "capitalize",
   },
   name: {
     fontSize: "30px !important",
@@ -33,6 +34,7 @@ const styles = {
     fontWeight: "900 !important",
     transition: ".3s ease-in-out",
     fontFamily: "san-serif",
+    textTransform: "capitalize",
   },
   social: {
     transition: ".3s ease-in-out",
@@ -66,15 +68,18 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
 
   const socials = [
     {
-      icon:<FacebookSharp />,link:''
+      icon: <FacebookSharp />,
+      link: "",
     },
     {
-      icon:<Twitter />,link:''
+      icon: <Twitter />,
+      link: "",
     },
     {
-      icon: <Instagram />,link:''
+      icon: <Instagram />,
+      link: "",
     },
-  ]
+  ];
 
   return (
     <>
@@ -140,21 +145,21 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
               <Typography sx={styles.name}>{item.jsnName[lang]}</Typography>
             </Grid>
             <Grid item xs={12} container justifyContent={"center"}>
-              {socials.map(({icon,link},index)=>(
-              <Grid item xs="3" container justifyContent={"center"}>
-                <Box sx={styles.social}>
-                  <Grid
-                    container
-                    item
-                    xs={12}
-                    justifyContent={"center"}
-                    alignContent={"center"}
-                    sx={styles.fullHeight}
-                  >
-                    {icon}
-                  </Grid>
-                </Box>
-              </Grid>
+              {socials.map(({ icon, link }, index) => (
+                <Grid item xs="3" container justifyContent={"center"}>
+                  <Box sx={styles.social}>
+                    <Grid
+                      container
+                      item
+                      xs={12}
+                      justifyContent={"center"}
+                      alignContent={"center"}
+                      sx={styles.fullHeight}
+                    >
+                      {icon}
+                    </Grid>
+                  </Box>
+                </Grid>
               ))}
             </Grid>
           </Grid>

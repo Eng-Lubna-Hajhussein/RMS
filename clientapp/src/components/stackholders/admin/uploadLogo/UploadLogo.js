@@ -37,8 +37,9 @@ const styles = {
     borderRadius: "10px",
   },
   logoImgBox: {
-    height: "150px",
+    height: "30px",
     backgroundSize: "100% 100%",
+    width: "150px",
   },
   dialogActions: {
     py: "0",
@@ -100,7 +101,10 @@ function UploadLogo({ open, handleClose, lang, dir }) {
           >
             <Grid item xs="12" container justifyContent={"center"}>
               <Grid item xs="12" py={2}>
-                <Title0001 title={dictionary.system.websiteLogo[lang]} dir={dir} />
+                <Title0001
+                  title={dictionary.system.websiteLogo[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid
                 item
@@ -136,7 +140,7 @@ function UploadLogo({ open, handleClose, lang, dir }) {
             justifyItems={"flex-end"}
             justifyContent={"end"}
           >
-            <Grid item lg="4" xs='5'>
+            <Grid item lg="4" xs="5">
               <AnimButton0001
                 label={"save"}
                 color={App_Primary_Color}

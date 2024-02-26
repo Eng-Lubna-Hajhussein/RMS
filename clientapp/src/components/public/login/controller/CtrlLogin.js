@@ -41,7 +41,7 @@ export const ctrlLogin = {
         alert("your account has been deleted or banned");
         return;
       }
-      if (loggedUser?.blnIsActive) {
+      if (!loggedUser?.blnIsActive) {
         alert("your account has been deactivated");
         return;
       }

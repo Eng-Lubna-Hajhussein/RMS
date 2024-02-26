@@ -182,7 +182,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
             justifyItems={"flex-end"}
             justifyContent={"flex-end"}
           >
-            <Grid item lg={2} xs={6}>
+            <Grid item lg={3} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}

@@ -18,7 +18,7 @@ function PersonalInfo({ user, lang,dir }) {
       <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
         <CopyToClipboardButton
           label={dictionary.labels.userProfileLink[lang]}
-          value={`http:/localhost:3000/customer/profile/${user.bigUserID}/${systemName}/${systemID}`}
+          value={`http:/localhost:3000/profile/${user.bigUserID}/${systemName}/${systemID}`}
         />
       </Grid>
       <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>

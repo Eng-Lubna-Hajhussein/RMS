@@ -163,6 +163,7 @@ export const ctrlSignUp = {
       if (regUser?.bigUserID && system?.bigSystemID) {
         appState.clientInfo.blnUserLogin = true;
         appState.userInfo = {
+          ...appState.userInfo,
           bigUserID: regUser.bigUserID,
           bigUserRoleID: regUser.bigUserRoleID,
           jsnAddress: JSON.parse(regUser.jsnAddress),

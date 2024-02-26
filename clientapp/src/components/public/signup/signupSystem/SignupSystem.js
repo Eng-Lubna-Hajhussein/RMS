@@ -151,6 +151,7 @@ function SignupSystem() {
                     sx={styles.textfield}
                     variant="outlined"
                     fullWidth
+                    dir="rtl"
                     type="text"
                     label={dictionary.labels.restaurantNameArb[lang]}
                     className={`form-control ${
@@ -189,6 +190,7 @@ function SignupSystem() {
                     variant="outlined"
                     fullWidth
                     type="text"
+                    dir="rtl"
                     label={dictionary.labels.ownerNameArb[lang]}
                     className={`form-control ${
                       errors.ownerNameArb && "invalid"

@@ -52,7 +52,7 @@ export const lstWebsiteNav = [
     bigNavID: 948246478,
     nav: { eng: "tables", arb: "الحجوزات" },
   },
-  { bigNavID: 941116478,  nav: { eng: "review", arb: "قيمنا" }, },
+  { bigNavID: 941116478, nav: { eng: "review", arb: "قيمنا" } },
 ];
 
 export const Demo_jsnSystemInfo = {
@@ -285,11 +285,11 @@ export const Demo_jsnSystemInfo = {
     {
       bigID: 3156578173,
       bigCategoryTypeID: objCategoriesType.Menu,
-      jsnName: { eng: "steak", arb: "الستيك" },
+      jsnName: { eng: "traditional", arb: "طبخات" },
       bigParentID: 0,
       jsnCategoryInfo: {
-        strIconPath: `${strServerAssetsPath}steak.svg`,
-        strImgPath: `${strServerAssetsPath}steak.png`,
+        strIconPath: `${strServerAssetsPath}traditional.svg`,
+        strImgPath: `${strServerAssetsPath}traditional.png`,
         blnFeatured: false,
         blnMostOrdered: false,
         blnOnSale: false,
@@ -300,11 +300,11 @@ export const Demo_jsnSystemInfo = {
     {
       bigID: 9723164333,
       bigCategoryTypeID: objCategoriesType.Menu,
-      jsnName: { eng: "coffee", arb: "القهوة" },
+      jsnName: { eng: "drinks", arb: "المشروبات" },
       bigParentID: 0,
       jsnCategoryInfo: {
-        strIconPath: `${strServerAssetsPath}coffee.svg`,
-        strImgPath: `${strServerAssetsPath}coffee.png`,
+        strIconPath: `${strServerAssetsPath}drinks.svg`,
+        strImgPath: `${strServerAssetsPath}drinks.png`,
         blnFeatured: false,
         blnMostOrdered: false,
         blnOnSale: false,

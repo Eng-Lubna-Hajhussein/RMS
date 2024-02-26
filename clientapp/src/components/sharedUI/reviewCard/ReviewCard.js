@@ -1,5 +1,6 @@
 import { Box, Grid, Rating, Typography } from "@mui/material";
 import quoteIcon from "assets/image/quote.png";
+import { Link, useParams } from "react-router-dom";
 
 const styles = {
   box: {
@@ -46,6 +47,7 @@ const styles = {
 };
 
 function ReviewCard({ review, lang, dir }) {
+  const {systemName,systemID} = useParams();
   return (
     <Box sx={styles.box}>
       <Grid
@@ -73,12 +75,17 @@ function ReviewCard({ review, lang, dir }) {
           alignItems={"center"}
         >
           <Grid item xs={12}>
+            {systemID&&<Link to={`/profile/${review?.bigUserID}/${systemName}/${systemID}`}>
             <Typography sx={styles.username}>
               {review?.jsnUserName[lang]}
             </Typography>
+            </Link>}
+            {!systemID&&<Typography sx={styles.username}>
+              {review?.jsnUserName[lang]}
+            </Typography>}
           </Grid>
           <Grid item xs={12} container alignContent={"center"}>
-            <Rating value={review?.intRating} />
+            <Rating value={review?.intRating} readOnly />
           </Grid>
         </Grid>
         <Grid

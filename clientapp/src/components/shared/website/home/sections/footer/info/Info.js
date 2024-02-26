@@ -67,6 +67,10 @@ const styles = {
   locationIframe: {
     borderRadius: "10px",
   },
+  logo: {
+    width: "150px",
+    height: "30px",
+  },
 };
 
 function Info({
@@ -83,7 +87,7 @@ function Info({
     <div style={styles.box}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Box component={"img"} width={"150px"} src={websiteLogo} />
+          <Box component={"img"} sx={styles.logo} src={websiteLogo} />
         </Grid>
         <Grid item xs="12" container>
           <iframe

@@ -71,6 +71,7 @@ const styles = {
     color: "#555",
     fontFamily: "Epilogue",
     lineHeight: { lg: "30px !important", xs: "20px" },
+    textTransform:"capitalize"
   },
   dishPrice: {
     fontSize: { lg: "22px !important", xs: "13px" },
@@ -265,7 +266,7 @@ export default function RestaurantMenu({
                 justifyItems={"center"}
                 justifyContent={"center"}
                 alignContent={"center"}
-                alignItems={"center"}
+                // alignItems={"center"}
                 sx={{
                   height: {
                     xs: "90px !important",
@@ -279,7 +280,14 @@ export default function RestaurantMenu({
                 }
               >
                 {adminEditMode && (
-                  <Grid item lg={1} xs="3" container justifyContent={"start"}>
+                  <Grid
+                    item
+                    lg={1}
+                    xs="3"
+                    container
+                    alignContent={"start"}
+                    justifyContent={"start"}
+                  >
                     <OptionList
                       nav={""}
                       onClick={() => {}}
@@ -402,8 +410,8 @@ export default function RestaurantMenu({
                   container
                   item
                   xs={12}
-                  alignItems={"center"}
-                  alignSelf={"center"}
+                  alignItems={"start"}
+                  alignSelf={"start"}
                   sx={{
                     ...styles.fullHeight,
                     paddingLeft: { lg: dir === "ltr" && "180px", xs: "10px" },
@@ -430,9 +438,9 @@ export default function RestaurantMenu({
                   <Grid item lg={11} xs={12}>
                     <Grid
                       container
-                      justify={"start"}
+                      justifyContent={"start"}
                       sx={{ height: "100%" }}
-                      alignItems={"center"}
+                      // alignItems={"center"}
                     >
                       <Grid
                         item
@@ -462,7 +470,14 @@ export default function RestaurantMenu({
                       )}
                       {objTabs?.tabsContent[objTabs.activeTab.bigID]?.map(
                         (item, index, tabsContent) => (
-                          <Grid item xs={12} container alignContent={"start"}>
+                          <Grid
+                            item
+                            xs={12}
+                            container
+                            alignItems={"start"}
+                            sx={{ height: "fit-content" }}
+                            alignContent={"start"}
+                          >
                             {adminEditMode && (
                               <Grid
                                 item
@@ -566,7 +581,7 @@ export default function RestaurantMenu({
                                 justifyItems={"flex-end"}
                               >
                                 <Typography sx={styles.dishPrice}>
-                                  ${item.jsnCategoryInfo.strPrice}
+                                  ${item.jsnCategoryInfo?.blnOnSale?item.jsnCategoryInfo.strSalePrice :item.jsnCategoryInfo.strPrice}
                                 </Typography>
                               </Grid>
                               {customerEditMode && (

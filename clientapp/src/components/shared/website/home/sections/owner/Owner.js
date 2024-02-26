@@ -44,6 +44,7 @@ const styles = {
   },
   logo: {
     width: "150px",
+    height: "30px",
   },
   editBox: {
     background: "#dad8d9",

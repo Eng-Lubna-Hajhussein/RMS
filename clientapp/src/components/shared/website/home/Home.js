@@ -140,7 +140,7 @@ function Home({
         deleteChef={deleteChef}
       />
 
-      {systemInfo?.lstSystemReviews?.length && (
+      {!!(systemInfo?.lstSystemReviews?.length) && (
         <Testimonial
           lang={lang}
           dir={dir}

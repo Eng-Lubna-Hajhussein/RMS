@@ -178,7 +178,7 @@ function AddItem({
               >
                 <Grid
                   item
-                  xs={12}
+                  xs={8}
                   container
                   justifyContent={"center"}
                   alignContent={"center"}

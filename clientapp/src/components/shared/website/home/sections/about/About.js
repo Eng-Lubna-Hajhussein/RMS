@@ -9,7 +9,7 @@ import EditAbout from "./EditAbout";
 const styles = {
   container: {
     marginY: { lg: "100px", xs: "20px" },
-    paddingX: { lg: "60px", xs: "10px" },
+    // paddingX: { lg: "60px", xs: "10px" },
     background: "#f5f8fd",
   },
   containerItem: {

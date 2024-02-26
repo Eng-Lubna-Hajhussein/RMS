@@ -31,6 +31,7 @@ const styles = {
   },
   logo: {
     width: "150px",
+    height: "30px",
   },
   titleContainer: {
     paddingBottom: { lg: "20px", xs: "10px" },
@@ -42,7 +43,7 @@ function Login() {
   const lang = appState.clientInfo.strLanguage;
   const dir = appState.clientInfo.strDir;
   const navigate = useNavigate();
-  const { systemID,systemName } = useParams();
+  const { systemID, systemName } = useParams();
   const [systemInfo, setSystemInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -193,6 +194,7 @@ function Login() {
           </Grid>
         </Grid>
       )}
+
       <Loader001 status={isLoading ? "loading" : "loaded"} />
     </React.Fragment>
   );

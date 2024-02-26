@@ -53,6 +53,7 @@ const styles = {
   },
   logo: {
     width: { lg: "150px", xs: "100%" },
+    height: "30px",
   },
   navListContainer: { display: { lg: "flex", xs: "none" } },
   menuIconContainer: { display: { lg: "none", xs: "flex" } },
@@ -160,18 +161,25 @@ function LowerToolbar({
             justifyContent={"flex-end"}
             justifyItems={"flex-end"}
           >
-            {customerEditMode&&(
-              <Grid item lg={2} display={{lg:"flex",xs:"none"}}>
-<Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
+            {customerEditMode && (
+              <Grid item lg={2} display={{ lg: "flex", xs: "none" }}>
+                <Badge badgeContent={intCartProduct} sx={styles.shoppingBadge}>
                   <ShoppingBagOutlined
                     fontSize="large"
                     sx={styles.shoppingIcon}
                   />
-                </Badge> 
+                </Badge>
               </Grid>
             )}
-            { (
-              <Grid item lg={2} xs={8} display={{lg:"none",xs:"flex"}} container justifyContent={"start"}>
+            {
+              <Grid
+                item
+                lg={2}
+                xs={8}
+                display={{ lg: "none", xs: "flex" }}
+                container
+                justifyContent={"start"}
+              >
                 <Grid
                   item
                   container
@@ -184,10 +192,10 @@ function LowerToolbar({
                       <NavList
                         nav={
                           <Box sx={styles.regIconBox}>
-                        <Icon>
-                          <HowToRegOutlined sx={styles.regIcon} />
-                        </Icon>
-                      </Box>
+                            <Icon>
+                              <HowToRegOutlined sx={styles.regIcon} />
+                            </Icon>
+                          </Box>
                         }
                         navList={userNavList}
                         lang={lang}
@@ -198,11 +206,7 @@ function LowerToolbar({
                     <Grid item alignSelf={"center"}>
                       <NavList
                         nav={
-                          <Avatar
-                                src={userImg}
-                                height="50px"
-                                width="50px"
-                              />
+                          <Avatar src={userImg} height="50px" width="50px" />
                         }
                         navList={userNavList}
                         lang={lang}
@@ -211,11 +215,15 @@ function LowerToolbar({
                   )}
                 </Grid>
               </Grid>
-            )}
+            }
 
             <Grid item lg={8} sx={styles.reverseBtnContainer}>
               <AnimButton0001
-                label={editable?dictionary.buttons.addTableBtn[lang]: dictionary.buttons.reverseTableBtn[lang]}
+                label={
+                  editable
+                    ? dictionary.buttons.addTableBtn[lang]
+                    : dictionary.buttons.reverseTableBtn[lang]
+                }
                 fullWidth={true}
                 color={App_Primary_Color}
               />
