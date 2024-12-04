@@ -1,4 +1,4 @@
-import Carousel from "components/sharedUI/Carousel/Carousel";
+import Carousel from "components/sharedUI/carousel/Carousel";
 import HeroContent from "./heroContent/HeroContent";
 import React, { useMemo } from "react";
 

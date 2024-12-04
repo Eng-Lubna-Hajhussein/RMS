@@ -1,4 +1,4 @@
-import BtnProgressToTop from "components/sharedUI/BtnProgressToTop/BtnProgressToTop";
+import BtnProgressToTop from "components/sharedUI/btnProgressToTop/BtnProgressToTop";
 import Chatbot from "../../public/chatbot/Chatbot";
 import Home from "./home/Home";
 

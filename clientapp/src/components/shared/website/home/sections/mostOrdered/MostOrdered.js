@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
-import Carousel from "components/sharedUI/Carousel/Carousel";
-import MostOrderedCard from "components/sharedUI/MostOrderedCard/MostOrderedCard";
+import Carousel from "components/sharedUI/carousel/Carousel";
+import MostOrderedCard from "components/sharedUI/mostOrderedCard/MostOrderedCard";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {

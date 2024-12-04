@@ -8,7 +8,7 @@ import { Grid, TextField, Typography, Box } from "@mui/material";
 import { App_Second_Color } from "appHelper/appColor";
 import { ctrlLogin } from "./controller/CtrlLogin";
 import { useNavigate, useParams } from "react-router-dom";
-import Loader001 from "components/sharedUI/Loader001/Loader001";
+import Loader001 from "components/sharedUI/loader001/Loader001";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {

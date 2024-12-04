@@ -13,7 +13,7 @@ import SystemContact from "./SystemContact/SystemContact";
 import SystemSocial from "./SystemSocial/SystemSocial";
 import EditUpperToolbar from "./EditUpperToolbar/EditUpperToolbar";
 import { Link, useParams } from "react-router-dom";
-import NavList from "components/sharedUI/NavList/NavList";
+import NavList from "components/sharedUI/navList/NavList";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {

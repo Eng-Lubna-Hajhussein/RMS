@@ -16,7 +16,7 @@ import {
   HowToRegOutlined,
 } from "@mui/icons-material";
 import logoIcon from "assets/image/logo.png";
-import NavList from "../../NavList/NavList";
+import NavList from "../../navList/NavList";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { App_Primary_Color } from "appHelper/appColor";

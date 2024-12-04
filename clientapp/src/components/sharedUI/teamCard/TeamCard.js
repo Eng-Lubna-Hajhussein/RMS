@@ -6,7 +6,7 @@ import {
   MoreVert,
   Twitter,
 } from "@mui/icons-material";
-import OptionList from "../OptionList/OptionList";
+import OptionList from "../optionList/OptionList";
 import { objAppActions } from "appHelper/appVariables";
 
 const styles = {

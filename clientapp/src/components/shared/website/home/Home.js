@@ -11,7 +11,7 @@ import Team from "./sections/team/Team";
 import About from "./sections/about/About";
 import Follow from "./sections/follow/Follow";
 import Footer from "./sections/footer/Footer";
-import Loader001 from "components/sharedUI/Loader001/Loader001";
+import Loader001 from "components/sharedUI/loader001/Loader001";
 import "./Home.css";
 
 function Home({

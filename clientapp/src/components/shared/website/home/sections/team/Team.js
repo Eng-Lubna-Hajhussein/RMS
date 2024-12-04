@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import TeamCard from "components/sharedUI/TeamCard/TeamCard";
-import Carousel from "components/sharedUI/Carousel/Carousel";
+import TeamCard from "components/sharedUI/teamCard/TeamCard";
+import Carousel from "components/sharedUI/carousel/Carousel";
 import "./Team.css";
 import { App_Second_Color } from "appHelper/appColor";
 import AddIcon from "@mui/icons-material/Add";

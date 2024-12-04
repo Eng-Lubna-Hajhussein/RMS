@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
-import ReviewCard from "components/sharedUI/ReviewCard/ReviewCard";
-import Carousel from "components/sharedUI/Carousel/Carousel";
+import ReviewCard from "components/sharedUI/reviewCard/ReviewCard";
+import Carousel from "components/sharedUI/carousel/Carousel";
 import { useMemo } from "react";
 
 const styles = {

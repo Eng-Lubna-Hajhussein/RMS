@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { AppBar, CssBaseline } from "@mui/material";
-import DrawerNav from "./DrawerNav/DrawerNav";
-import UpperToolbar from "./UpperToolbar/UpperToolbar";
-import LowerToolbar from "./LowerToolbar/LowerToolbar";
+import DrawerNav from "./drawerNav/DrawerNav";
+import UpperToolbar from "./upperToolbar/UpperToolbar";
+import LowerToolbar from "./lowerToolbar/LowerToolbar";
 
 const styles = {
   appBar: {

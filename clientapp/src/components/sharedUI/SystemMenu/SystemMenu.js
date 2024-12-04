@@ -5,7 +5,7 @@ import { objAppActions, tabsOptions } from "appHelper/appVariables";
 import { Add, MoreVert } from "@mui/icons-material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AddTab from "./AddTab/AddTab";
-import OptionList from "../OptionList/OptionList";
+import OptionList from "../optionList/OptionList";
 import AddItem from "./AddItem/AddItem";
 import EditItem from "./EditItem/EditItem";
 import shoppingIcon from "assets/image/shopping.svg";

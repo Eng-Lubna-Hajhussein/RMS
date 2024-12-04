@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/OptionList/OptionList";
+import OptionList from "components/sharedUI/optionList/OptionList";
 import { MoreVert } from "@mui/icons-material";
 import { dictionary } from "appHelper/appDictionary";
 

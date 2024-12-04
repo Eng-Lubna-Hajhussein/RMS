@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
-import FeaturedCard from "components/sharedUI/FeaturedCard/FeaturedCard";
-import Carousel from "components/sharedUI/Carousel/Carousel";
+import FeaturedCard from "components/sharedUI/featuredCard/FeaturedCard";
+import Carousel from "components/sharedUI/carousel/Carousel";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {

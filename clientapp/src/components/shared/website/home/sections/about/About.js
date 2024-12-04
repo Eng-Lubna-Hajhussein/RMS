@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import Button0001 from "components/sharedUI/Button0001/Button0001";
+import Button0001 from "components/sharedUI/button0001/Button0001";
 import { dictionary } from "appHelper/appDictionary";
 import googlePlayIcon from "assets/image/google-play.png";
 import appleIcon from "assets/image/apple.png";

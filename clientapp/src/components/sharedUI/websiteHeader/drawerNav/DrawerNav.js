@@ -23,9 +23,9 @@ import { lstWebsiteNav } from "appHelper/appVariables";
 import { dictionary } from "appHelper/appDictionary";
 import logoIcon from "assets/image/logo.png";
 import { Link, useParams } from "react-router-dom";
-import NavList from "components/sharedUI/NavList/NavList";
-import SystemContact from "../UpperToolbar/SystemContact/SystemContact";
-import SystemSocial from "../UpperToolbar/SystemSocial/SystemSocial";
+import NavList from "components/sharedUI/navList/NavList";
+import SystemContact from "../upperToolbar/SystemContact/SystemContact";
+import SystemSocial from "../upperToolbar/SystemSocial/SystemSocial";
 
 const styles = {
   listSubheader: {
