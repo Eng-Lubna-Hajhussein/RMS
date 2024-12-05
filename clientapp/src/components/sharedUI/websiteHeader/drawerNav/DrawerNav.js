@@ -9,10 +9,8 @@ import {
   Typography,
   Box,
   Grid,
-  Avatar,
-  Icon,
   Divider,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import {
   ExpandLess,
   ExpandMore,
@@ -82,6 +80,7 @@ function DrawerNav({
       anchor={dir === "ltr" ? "left" : "right"}
       open={openDrawer}
       sx={{ zIndex: "10000" }}
+      width={"100%"}
       onClose={() => setOpenDrawer(false)}
     >
       <List
@@ -174,7 +173,7 @@ function DrawerNav({
             {dictionary.buttons.reverseTableBtn[lang]}
           </Typography>
         </ListItem>
-        <Divider sx={{ paddingBottom: "10px" }} />
+        <Divider sx={{ mb: "10px" }} />
         <ListItem button>
           <Grid container item xs={12} justifyContent={"start"}>
             <SystemContact

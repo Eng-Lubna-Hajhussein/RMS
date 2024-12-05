@@ -1,15 +1,12 @@
-import { Button, Typography } from "@mui/material";
+import { Typography,Button } from "@basetoolkit/ui";
 import "./AnimButton0001.css";
 
 const styles = {
   inner: {
     fontWeight: "800",
     width: "100%",
-    fontSize:{lg:"16px",xs:"14px"},
-    padding:{lg:"18px 20px",xs:"12px 15px"},
-    // ":before":{
-    //   height: {lg:"72px",xs:"80px"}
-    // }
+    lg:{p:"18px 20px !important",fontSize:"16px !important"},
+    xs:{p:"12px 15px !important" ,fontSize:"14px !important"}
   },
 };
 
@@ -33,9 +30,10 @@ function AnimButton0001({
         sx={{
           ...styles.inner,
           backgroundColor: color,
-          ":before": {
+          "&:before": {
             borderColor: color,
-            height: {lg:"72px",xs:"58px"}
+            lg:{height:"78px"},
+            xs:{height:"67px"}
           },
         }}
       >

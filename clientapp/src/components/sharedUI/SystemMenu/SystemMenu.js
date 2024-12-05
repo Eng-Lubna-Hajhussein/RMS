@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Badge, Box, Grid, Paper, Typography } from "@mui/material";
+import { Badge, Box, Grid, Paper, Typography } from "@basetoolkit/ui";
 import "./SystemMenu.css";
 import { objAppActions, tabsOptions } from "appHelper/appVariables";
 import { Add, MoreVert } from "@mui/icons-material";
@@ -10,6 +10,7 @@ import AddItem from "./AddItem/AddItem";
 import EditItem from "./EditItem/EditItem";
 import shoppingIcon from "assets/image/shopping.svg";
 import { Link, useParams } from "react-router-dom";
+import { badgeClasses } from "@basetoolkit/ui/classes";
 
 const styles = {
   addDish: {
@@ -25,12 +26,13 @@ const styles = {
     cursor: "pointer",
   },
   menuTitle: {
-    fontSize: { lg: "40px !important", xs: "20px" },
     textTransform: "capitalize",
     color: "#000",
     fontFamily: "sans-serif",
     fontWeight: "800 !important",
     lineHeight: "1.2 !important",
+    lg: { fontSize: "40px !important" },
+    xs: { fontSize: "20px" },
   },
   menuPaper: {
     minHeight: "500px",
@@ -42,7 +44,7 @@ const styles = {
     overflowY: "auto",
   },
   shoppingBadge: {
-    "& .MuiBadge-badge": {
+    [`&.${badgeClasses.badge}`]: {
       background: App_Primary_Color,
       color: "#fff",
       fontWeight: "800",
@@ -52,36 +54,39 @@ const styles = {
     width: "100%",
     textAlign: "center",
     fontWeight: "800 !important",
-    fontSize: { xs: "9px", lg: "15px" },
     textTransform: "capitalize",
+    lg: { fontSize: "15px" },
+    xs: { fontSize: "9px" },
   },
   menuImgCat: {
     zIndex: "111",
   },
   dishName: {
-    fontSize: { lg: "16px !important", xs: "10px" },
     fontWeight: "800 !important",
     color: "#000",
     fontFamily: "sans-serif",
     textTransform: "capitalize",
+    lg: { fontSize: "16px !important" },
+    xs: { fontSize: "10px" },
   },
   dishDescription: {
-    fontSize: { lg: "18px !important", xs: "10px" },
     fontWeight: "400 !important",
     color: "#555",
     fontFamily: "Epilogue",
-    lineHeight: { lg: "30px !important", xs: "20px" },
-    textTransform:"capitalize"
+    textTransform: "capitalize",
+    lg: { fontSize: "18px !important", lineHeight: "30px !important" },
+    xs: { fontSize: "10px", lineHeight: "20px" },
   },
   dishPrice: {
-    fontSize: { lg: "22px !important", xs: "13px" },
     fontWeight: "800 !important",
     color: "#f3274c",
     fontFamily: "sans-serif",
+    lg: { fontSize: "22px !important" },
+    xs: { fontSize: "13px" },
   },
   catImg: {
-    height: { lg: "50px", xs: "40px" },
-    width: { lg: "90%", xs: "100%" },
+    lg: { height: "50px", width: "90%" },
+    xs: { height: "40px", width: "100%" },
   },
   menuContainer: {
     position: "relative",
@@ -95,16 +100,16 @@ const styles = {
     border: "2px dashed #e4e4e4",
     borderRadius: "10px",
     cursor: "pointer",
-    height: {
-      xs: "90px !important",
-      lg: "166px !important",
-    },
+
+    lg: { height: "166px !important" },
+    xs: { height: "90px !important" },
   },
   tabOptionListContainer: {
     marginBottom: "-50px",
   },
   lgDisplay: {
-    display: { lg: "flex", xs: "none" },
+    lg: { display: "flex" },
+    xs: { display: "none !important" },
   },
   addIcon: {
     color: "#e4e4e4",
@@ -113,13 +118,15 @@ const styles = {
     position: "absolute",
     height: "100%",
     top: "50px",
-    display: { lg: "flex", xs: "none" },
+    lg: { display: "flex" },
+    xs: { display: "none !important" },
   },
   fullHeight: {
     height: "100%",
   },
   xsDisplay: {
-    display: { lg: "none", xs: "flex" },
+    lg: { display: "none !important" },
+    xs: { display: "flex" },
   },
   addItemBox: {
     height: "54px",
@@ -130,7 +137,8 @@ const styles = {
     cursor: "pointer",
   },
   tab: {
-    paddingTop: { xs: "20px", lg: "30px" },
+    lg: { pt: "30px" },
+    xs: { pt: "20px" },
   },
 };
 
@@ -266,12 +274,9 @@ export default function RestaurantMenu({
                 justifyItems={"center"}
                 justifyContent={"center"}
                 alignContent={"center"}
-                // alignItems={"center"}
                 sx={{
-                  height: {
-                    xs: "90px !important",
-                    lg: "fit-content !important",
-                  },
+                  xs: { height: "90px !important" },
+                  lg: { height: "fit-content !important" },
                 }}
                 className={
                   `${tab?.bigID}` === `${objTabs?.activeTab?.bigID}`
@@ -321,10 +326,8 @@ export default function RestaurantMenu({
                       component={"img"}
                       src={tab?.jsnCategoryInfo?.strIconPath}
                       sx={{
-                        height: {
-                          lg: "auto !important",
-                          xs: "40px !important",
-                        },
+                        lg: { height: "auto !important" },
+                        xs: { height: "40px !important" },
                       }}
                       className={
                         `${tab?.bigID}` === `${objTabs?.activeTab?.bigID}`
@@ -356,7 +359,7 @@ export default function RestaurantMenu({
               container
               lg={2}
               xs={4}
-              sx={{ paddingTop: { lg: "30px", xs: "20px" } }}
+              sx={{ lg: { pt: "30px" }, xs: { pt: "20px" } }}
               px={2}
             >
               <Grid
@@ -414,8 +417,11 @@ export default function RestaurantMenu({
                   alignSelf={"start"}
                   sx={{
                     ...styles.fullHeight,
-                    paddingLeft: { lg: dir === "ltr" && "180px", xs: "10px" },
-                    paddingRight: { lg: dir === "rtl" && "180px", xs: "10px" },
+                    lg: {
+                      pl: dir === "ltr" && "180px !important",
+                      pr: dir === "rtl" && "180px !important",
+                    },
+                    xs: { px: "10px !important" },
                   }}
                 >
                   <Grid
@@ -485,8 +491,8 @@ export default function RestaurantMenu({
                                 container
                                 justifyContent={"start"}
                                 alignItems={"center"}
-                                alignSelf={"flex-start"}
-                                sx={{ paddingY: { lg: "20px", xs: "15px" } }}
+                                alignSelf={"start"}
+                                sx={{ lg: { py: "20px" }, xs: { py: "15px" } }}
                               >
                                 <OptionList
                                   nav={""}
@@ -522,7 +528,7 @@ export default function RestaurantMenu({
                               xs={adminEditMode ? 11 : 12}
                               justify={"start"}
                               alignItems={"center"}
-                              alignSelf={"flex-start"}
+                              alignSelf={"start"}
                               py={2}
                               sx={{
                                 borderBottom:
@@ -576,12 +582,15 @@ export default function RestaurantMenu({
                                 item
                                 container
                                 xs={3}
-                                justifySelf={"flex-end"}
+                                justifySelf={"end"}
                                 justifyContent={"end"}
-                                justifyItems={"flex-end"}
+                                justifyItems={"end"}
                               >
                                 <Typography sx={styles.dishPrice}>
-                                  ${item.jsnCategoryInfo?.blnOnSale?item.jsnCategoryInfo.strSalePrice :item.jsnCategoryInfo.strPrice}
+                                  $
+                                  {item.jsnCategoryInfo?.blnOnSale
+                                    ? item.jsnCategoryInfo.strSalePrice
+                                    : item.jsnCategoryInfo.strPrice}
                                 </Typography>
                               </Grid>
                               {customerEditMode && (
@@ -645,8 +654,11 @@ export default function RestaurantMenu({
                 alignSelf={"center"}
                 sx={{
                   ...styles.fullHeight,
-                  paddingLeft: { lg: dir === "ltr" && "180px", xs: "25px" },
-                  paddingRight: { lg: dir === "rtl" && "180px", xs: "25px" },
+                  lg: {
+                    pl: dir === "ltr" && "180px !important",
+                    pr: dir === "rtl" && "180px !important",
+                  },
+                  xs: { px: "25px !important" },
                 }}
               >
                 <Grid item lg={11} xs={12}>

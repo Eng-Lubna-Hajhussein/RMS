@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import { AppBar, CssBaseline } from "@mui/material";
+import { CssBaseline, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import DrawerNav from "./drawerNav/DrawerNav";
 import UpperToolbar from "./upperToolbar/UpperToolbar";
 import LowerToolbar from "./lowerToolbar/LowerToolbar";
-
-const styles = {
-  appBar: {
-    boxShadow: "none",
-  },
-};
 
 function WebsiteHeader({
   jsnSystemContact,
@@ -25,13 +19,15 @@ function WebsiteHeader({
   userNavList,
   customerEditMode,
   websiteLogo,
-  dir
+  dir,
 }) {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="static" sx={styles.appBar} p={0} m={0}>
+      {!isExtraSmallAndDown && (
         <UpperToolbar
           jsnSystemContact={jsnSystemContact}
           onSaveUpperHeader={onSaveUpperHeader}
@@ -44,23 +40,23 @@ function WebsiteHeader({
           userNavList={userNavList}
           systemPath={systemPath}
         />
-        <LowerToolbar
-          navList={navList}
-          lang={lang}
-          openDrawer={openDrawer}
-          setOpenDrawer={setOpenDrawer}
-          editable={editable}
-          intCartProduct={intCartProduct}
-          adminNavList={adminNavList}
-          customerEditMode={customerEditMode}
-          websiteLogo={websiteLogo}
-          dir={dir}
-          userName={userName}
-          blnUserLogin={blnUserLogin}
-          userNavList={userNavList}
-          userImg={userImg}
-        />
-      </AppBar>
+      )}
+      <LowerToolbar
+        navList={navList}
+        lang={lang}
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}
+        editable={editable}
+        intCartProduct={intCartProduct}
+        adminNavList={adminNavList}
+        customerEditMode={customerEditMode}
+        websiteLogo={websiteLogo}
+        dir={dir}
+        userName={userName}
+        blnUserLogin={blnUserLogin}
+        userNavList={userNavList}
+        userImg={userImg}
+      />
       <DrawerNav
         openDrawer={openDrawer}
         navList={navList}

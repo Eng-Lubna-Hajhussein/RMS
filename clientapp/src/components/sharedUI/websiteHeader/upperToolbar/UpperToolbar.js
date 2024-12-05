@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import {
   Toolbar,
   Grid,
-  Icon,
   Box,
   Typography,
   Button,
   Avatar,
-} from "@mui/material";
-import { HowToRegOutlined } from "@mui/icons-material";
+  SvgIcon
+} from "@basetoolkit/ui";
 import SystemContact from "./SystemContact/SystemContact";
 import SystemSocial from "./SystemSocial/SystemSocial";
 import EditUpperToolbar from "./EditUpperToolbar/EditUpperToolbar";
@@ -25,10 +24,10 @@ const styles = {
       paddingLeft: "50px",
       paddingRight: "50px",
     },
-    display: {
-      xs: "none",
-      lg: "flex",
-    },
+    display:"flex",
+    xs:{
+      display:"none"
+    }
   },
   regTypography: {
     fontSize: "14px",
@@ -53,7 +52,7 @@ const styles = {
     textTransform: "capitalize",
   },
   regIcon: {
-    color: "#000000",
+    fill: "#000000",
   },
   fitContentHeight: {
     height: "fit-content",
@@ -93,21 +92,21 @@ function UpperToolbar({
           </Button>
         </Grid>
       )}
-      <Toolbar sx={styles.upperToolbar}>
-        <Grid container direction={"row"} alignItems={"center"}>
-          <Grid container item xs={3} spacing={"3"} justifyContent={"start"}>
+      <Toolbar sx={styles.upperToolbar} width={"100%"}>
+        <Grid container direction={"row"} alignItems={"center"} width={"100%"}>
+          <Grid container item xs={3} spacing={3} justifyContent={"start"}>
             <SystemContact
               contact={{ type: "strEmail", value: jsnSystemContact.strEmail }}
               lang={lang}
             />
           </Grid>
-          <Grid container item xs={3} spacing={"3"}>
+          <Grid container item xs={3} spacing={3}>
             <SystemContact
               contact={{ type: "strPhone", value: jsnSystemContact.strPhone }}
               lang={lang}
             />
           </Grid>
-          <Grid container item xs={3} justifyContent={"center"} spacing={"3"}>
+          <Grid container item xs={3} justifyContent={"center"} spacing={3}>
             <Grid item xs={3}>
               <SystemSocial
                 social={{
@@ -140,16 +139,14 @@ function UpperToolbar({
             container
             item
             xs={3}
-            spacing={"3"}
-            justifyContent={"flex-end"}
+            spacing={3}
+            justifyContent={"end"}
           >
-            <Grid item container xs={12} justifyContent={"flex-end"}>
+            <Grid item container xs={12} justifyContent={"end"}>
               <Grid item px={1}>
                 {!blnUserLogin && (
                   <Box sx={styles.regIconBox}>
-                    <Icon>
-                      <HowToRegOutlined sx={styles.regIcon} />
-                    </Icon>
+                    <SvgIcon icon="how_to_reg" sx={styles.regIcon} color="black" />
                   </Box>
                 )}
               </Grid>

@@ -11,8 +11,8 @@ export const App_Server_URL_GraphQL = "http://localhost:4000/graphql";
 export const strServerAssetsPath = "http://localhost:4000/assets/";
 
 export const icons = {
-  strEmail: <EmailOutlined fontSize="small" />,
-  strPhone: <PhoneOutlined fontSize="small" />,
+  strEmail: "email",//<EmailOutlined fontSize="small" />,
+  strPhone: "phone"//<PhoneOutlined fontSize="small" />,
 };
 
 export const objCategoriesType = {

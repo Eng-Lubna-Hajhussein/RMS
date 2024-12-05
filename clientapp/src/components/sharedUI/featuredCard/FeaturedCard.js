@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Rating } from "@mui/material";
+import { Box, Grid, Typography } from "@basetoolkit/ui";
 import shoppingIcon from "assets/image/shopping.svg";
 
 const styles = {

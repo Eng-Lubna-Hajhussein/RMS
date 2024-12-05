@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@basetoolkit/ui";
 import "./AnimCard0001.css";
 
 const styles = {
@@ -56,14 +56,14 @@ const styles = {
     lineHeight: "30px",
   },
   btn: {
-    background: "#fff",
-    padding: "25px",
-    borderRadius: "20px",
-    ":hover": { background: "#fff" },
+    background: "#fff !important",
+    padding: "25px !important",
+    borderRadius: "20px !important",
+    ":hover": { background: "#fff !important" },
   },
   label: {
     color: "#000",
-    fontWeight: "800",
+    fontWeight: "800 !important",
     textTransform: "capitalize",
   },
 };
@@ -78,7 +78,12 @@ export default function AnimCard0001({ title, description, bgImg, label }) {
       }}
     >
       <Grid item xs={12} sx={styles.frontCard} justify={"center"}>
-        <Grid container alignItems={"flex-end"} sx={styles.fullHeight}>
+        <Grid
+          container
+          alignItems={"end"}
+          height={"100%"}
+          sx={styles.fullHeight}
+        >
           <Grid
             item
             xs={12}
@@ -96,6 +101,8 @@ export default function AnimCard0001({ title, description, bgImg, label }) {
         xs={12}
         container
         justifyItems={"center"}
+        height={"100%"}
+        alignItems="center"
         className="back-card"
       >
         <Grid item xs={12}>

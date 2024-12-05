@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Grid, Rating, Typography, Button } from "@mui/material";
+import { Box, Grid, Rating, Typography, Button } from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
 import { App_Primary_Color } from "appHelper/appColor";
 import videoIcon from "assets/image/video.svg";
@@ -10,34 +10,35 @@ import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   container: {
-    height: { lg: "600px", xs: "900px" },
-    paddingX: { lg: "60px", xs: "15px" },
+    lg:{height:"600px",px:"60px"},
+    xs:{height:"900px",px:"15px"},
   },
   title: {
     color: "#fff",
     textTransform: "capitalize",
-    fontSize: { lg: "50px", xs: "30px" },
     lineHeight: "1.2",
-    width: { lg: "60%" },
+    lg:{width:"60%",fontSize:"50px !important"},
+    xs:{fontSize:"30px !important"},
     fontWeight: "700",
     fontFamily: "Fredoka",
   },
   subtitle: {
     color: "#fff",
     textTransform: "capitalize",
-    fontSize: { lg: "20.5px", xs: "15px" },
     lineHeight: "34px",
-    width: { lg: "60%" },
+    lg:{width:"60%",fontSize:"20.5px !important"},
+    xs:{fontSize:"15px !important"},
     fontWeight: "500",
     fontFamily: "sans-serif",
   },
   box: {
     border: "3px solid #ffd40d",
-    padding: { lg: "20px 30px", xs: "15px 10px" },
     borderRadius: "30px",
     backgroundColor: "#000000d4",
     width: "100%",
     position: "relative",
+    lg:{p:"20px 30px"},
+    xs:{p:"15px 10px"}
   },
   boxCaption: {
     lineHeight: "14px",
@@ -53,24 +54,27 @@ const styles = {
   },
   boxTitle: {
     color: "#fff",
-    fontSize: { lg: "28px", xs: "20px" },
     fontWeight: "700",
     lineHeight: "1.2",
     fontFamily: "sans-serif",
     display: "inline-block",
     textAlign: "left",
+    lg:{fontSize:"28px"},
+    xs:{fontSize:"20px"}
   },
   dollarSign: {
     color: "#f3274c",
-    fontSize: { lg: "28px", xs: "20px" },
     display: "inline-block",
+    lg:{fontSize:"28px"},
+    xs:{fontSize:"20px"}
   },
   boxSubtitle: {
     color: "#fff",
     fontWeight: "700",
     lineHeight: "1.2",
-    fontSize: { lg: "18px", xs: "14px" },
     textTransform: "capitalize",
+    lg:{fontSize:"18px"},
+    xs:{fontSize:"14px"}
   },
   py20: {
     paddingY: "20px",
@@ -88,11 +92,12 @@ const styles = {
     color: "#555",
     fontWeight: "400",
     fontSize: "14px",
-    height: { xs: "40px !important", lg: "fit-content" },
-    overflowY: { xs: "auto", lg: "hidden" },
+    lg:{height:"fit-content",overflowY:"hidden"},
+    xs:{height:"40px !important",overflowY:"auto"}
   },
   videoBtn: {
-    paddingTop: { xs: "30px", lg: "0px" },
+    lg:{pt:"0px"},
+    xs:{pt:"30px"}
   },
 };
 
@@ -194,11 +199,12 @@ function HeroContent({
               lg={4}
               xs={12}
               sx={{
-                paddingY: { xs: "40px", lg: "0px" },
+                lg:{py:"0px"},
+                xs:{py:"40px"}
               }}
             >
               <Grid container justify={"end"}>
-                <Grid item lg={12} xs={12} alignSelf={"flex-start"}>
+                <Grid item lg={12} xs={12} alignSelf={"start"}>
                   <Box
                     outline="0"
                     elevation="0"
@@ -218,7 +224,7 @@ function HeroContent({
                       <Grid item xs={8} container justify={"start"}>
                         <Grid item xs={12} justify={"start"}>
                           <Typography dir='ltr' sx={styles.boxTitle}>
-                            <Typography dir='ltr' sx={styles.dollarSign}>$</Typography>
+                            <Typography dir='ltr' component={"span"} display="inline" sx={styles.dollarSign}>$</Typography>
                             {content.wsCategory.jsnCategoryInfo.strPrice}
                           </Typography>
                         </Grid>
@@ -257,8 +263,8 @@ function HeroContent({
                           component={"img"}
                           src={content.wsCategory.jsnCategoryInfo.strImgPath}
                           sx={{
-                            height: { lg: "130px", xs: "100px" },
-                            width: { lg: "130px", xs: "100px" },
+                            lg:{height:"130px",width:"130px"},
+                            xs:{height:"100px",width:"100px"},
                           }}
                         />
                       </Grid>

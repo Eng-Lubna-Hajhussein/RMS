@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import Carousel from "components/sharedUI/carousel/Carousel";
 import MostOrderedCard from "components/sharedUI/mostOrderedCard/MostOrderedCard";
 import { dictionary } from "appHelper/appDictionary";
@@ -7,17 +7,18 @@ import { dictionary } from "appHelper/appDictionary";
 const styles = {
   container: {
     height: "fit-content",
-    marginY: { lg: "100px", xs: "20px" },
-    paddingX: { lg: "60px", xs: "10px" },
+    lg:{my:"100px",px:"60px"},
+    xs:{my:"20px",px:"10px"}
   },
   mainTitle: {
-    fontSize: { lg: "50px !important", xs: "30px" },
     color: "#000 !important",
     fontWeight: "700 !important",
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
     textTransform: "capitalize",
+    lg:{fontSize:"50px !important"},
+    xs:{fontSize:"30px"}
   },
   line: {
     width: "100%",
@@ -26,15 +27,18 @@ const styles = {
     height: "12px",
   },
   titleContainer: {
-    marginBottom: { lg: "50px", xs: "20px" },
+    lg: {mb:"50px"}, xs: {mb:"20px"} 
   },
 };
 
 export default function MostOrdered({ lstMostOrdered, lang, dir }) {
+  const theme = useTheme();
+  const isLargeAndDown = useMediaQueryMatch(theme.breakpoints.down("lg"));
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   const slides = useMemo(() => {
     return lstMostOrdered.map((item) => ({
       slideContent: <MostOrderedCard lang={lang} dir={dir} item={item} />,
-      sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
+      sxStyle: { height: "fit-content" },
     }));
   }, [lstMostOrdered, lang, dir]);
   return (
@@ -59,7 +63,9 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
         </Grid>
         <Grid item lg={3} xs={6} sx={styles.line} />
       </Grid>
-      <Grid item xs={12} display={{ lg: "flex", xs: "none" }}>
+      <Grid item xs={12}
+      display={isExtraSmallAndDown?"none":"flex"}
+       >
         <Carousel
           slides={slides}
           activeSlides={2}
@@ -70,7 +76,9 @@ export default function MostOrdered({ lstMostOrdered, lang, dir }) {
           dir={dir}
         />
       </Grid>
-        <Grid item xs={12} display={{ lg: "none", xs: "flex" }}>
+        <Grid item xs={12} 
+        display={isExtraSmallAndDown?"flex":"none"}
+        >
         <Carousel
           slides={slides}
           activeSlides={1}

@@ -1,18 +1,22 @@
-import { Link } from "@mui/material";
+import { Link } from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   socialLink: {
-    color: "#000",
     fontSize: "14px",
-    textDecoration: "underline #000",
     fontWeight: "600",
   },
 };
 
 function SystemSocial({ social, lang }) {
   return (
-    <Link href={social.path} target="_blank" sx={styles.socialLink}>
+    <Link
+      href={social.path}
+      target="_blank"
+      color="#000"
+      underline="always"
+      style={styles.socialLink}
+    >
       {dictionary.contact[social.type][lang]}
     </Link>
   );

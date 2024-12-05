@@ -1,4 +1,4 @@
-.carousel-container {
+.custom-carousel-container {
   position: relative;
   display: flex;
   justify-content: center;
@@ -8,17 +8,17 @@
   background-size: 100% 100%;
 }
 
-.slide {
+.custom-slide {
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
 }
 
-.slide-hidden {
+.custom-slide-hidden {
   display: none;
 }
 
-.indicator {
+.custom-indicator {
   height: 1rem;
   width: 1rem;
   border-radius: 100%;
@@ -29,11 +29,11 @@
   cursor: pointer;
 }
 
-.indicator-inactive {
+.custom-indicator-inactive {
   border: none;
 }
 
-.video a {
+.custom-video a {
   color: white;
   display: flex;
   letter-spacing: 1px;
@@ -41,33 +41,33 @@
   font-weight: 700;
 }
 
-a {
+.custom-video a {
   text-decoration: none;
 }
 
-.video i {
+.custom-video i {
   width: 65px;
   height: 65px;
 }
 
-.video i {
+.custom-video i {
   display: flex;
   align-items: center;
   justify-content: center;
   border: 3px solid #fff;
   border-radius: 50%;
-  -webkit-animation: ripple 3s infinite;
-  animation: ripple 3s infinite;
+  -webkit-animation: ripple-effect 3s infinite;
+  animation: ripple-effect 3s infinite;
 }
 
-.video a {
+.custom-video a {
   color: white;
   display: flex;
   letter-spacing: 1px;
   align-items: center;
 }
 
-@keyframes ripple {
+@keyframes ripple-effect {
   70% {
     box-shadow: 0 0 0 20px rgb(255 212 13 / 25%);
   }
@@ -78,7 +78,7 @@ a {
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 1200px) {
-  .carousel {
+  .custom-carousel {
     max-height: 600px;
     min-height: 600px;
   }

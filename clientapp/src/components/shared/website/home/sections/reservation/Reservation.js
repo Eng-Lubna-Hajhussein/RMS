@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@basetoolkit/ui";
 import AnimCard0001 from "components/sharedUI/AnimCard0001/AnimCard0001";
 import EditReservation from "./EditReservation";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: {lg:"100px",xs:"20px"},
+    lg:{my:"100px"},
+    xs:{my:"20px"}
   },
   containerItem: {
-    paddingX: {lg:"60px",xs:"5px"},
+    lg:{px:"60px"},
+    xs:{px:"5px"}
   },
   midCard: {
-    paddingTop: { lg: "200px !important", xs: "0px" },
+    lg:{pt:"200px !important"},
+    xs:{pt:"0px"}
   },
   editNote: {
     color: "#000",
@@ -24,7 +27,7 @@ const styles = {
     background: "#dad8d9",
   },
   cardContainer:{
-    marginY:{xs:"10px"}
+    xs:{my:"10px"}
   }
 };
 

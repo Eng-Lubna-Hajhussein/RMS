@@ -1,43 +1,48 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@basetoolkit/ui";
 import React, { useState } from "react";
 import EditOwner from "./EditOwner";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: {lg:"100px",xs:"20px"},
-    paddingX: { lg: "60px", xs: "15px" },
+    lg:{my:"100px",px:"60px"},
+    xs:{my:"20px",px:"15px"}
   },
   title: {
     color: "#f3274c",
-    fontSize: { lg: "25px", xs: "12px" },
     textTransform: "uppercase",
     fontWeight: "800",
+    lg:{fontSize:"25px"},
+    xs:{fontSize:"12px"}
   },
   subtitle: {
     color: "#000",
-    fontSize: { lg: "50px", xs: "20px" },
     textTransform: "capitalize",
     fontWeight: "700",
+    lg:{fontSize:"50px"},
+    xs:{fontSize:"20px"}
   },
   ownerComment: {
-    fontSize: { lg: "18px", xs: "10px" },
     color: "#555",
+    lg:{fontSize:"18px"},
+    xs:{fontSize:"10px"}
   },
   avatar: {
-    height: { lg: "80px", xs: "50px" },
-    width: { lg: "80px", xs: "50px" },
+    lg:{height:"80px",width:"80px"},
+    xs:{height:"50px",width:"50px"}
   },
   name: {
-    fontSize: { lg: "24px", xs: "12px" },
     fontWeight: "700",
     color: "#000",
     textTransform: "capitalize",
+    lg:{fontSize:"24px"},
+    xs:{fontSize:"12px"}
   },
   specialization: {
-    fontSize: { lg: "16px", xs: "8px" },
     color: "#555",
     textTransform: "capitalize",
+    lg:{fontSize:"16px"},
+    xs:{fontSize:"8px"}
   },
   heightFitContent: {
     height: "fit-content",

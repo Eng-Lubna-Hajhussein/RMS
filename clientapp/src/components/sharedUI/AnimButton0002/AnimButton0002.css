@@ -17,8 +17,8 @@
   justify-content: center;
   border: 3px solid #fff;
   border-radius: 50%;
-  -webkit-animation: ripple 3s infinite;
-  animation: ripple 3s infinite;
+  -webkit-animation: ripple-effect 3s infinite;
+  animation: ripple-effect 3s infinite;
 }
 
 .anim-btn-0002 a {
@@ -29,7 +29,7 @@
   text-decoration: none;
 }
 
-@keyframes ripple {
+@keyframes ripple-effect {
   70% {
     box-shadow: 0 0 0 20px rgb(255 212 13 / 25%);
   }
@@ -40,7 +40,7 @@
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 1200px) {
-  .carousel {
+  .custom-carousel {
     max-height: 600px;
     min-height: 600px;
   }

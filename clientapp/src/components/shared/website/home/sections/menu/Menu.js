@@ -1,20 +1,22 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import SystemMenu from "components/sharedUI/SystemMenu/SystemMenu";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: { lg: "100px", xs: "20px" },
+    lg:{my:"100px"},
+    xs:{my:"20px"}
   },
   mainTitle: {
-    fontSize: { lg: "50px !important", xs: "30px" },
     color: "#000 !important",
     fontWeight: "700 !important",
     lineHeight: "1.2 !important",
     fontFamily: "sans-serif !important",
     width: "fit-content",
     textTransform: "capitalize",
+    lg:{fontSize:"50px !important"},
+    xs:{fontSize:"30px"}
   },
   line: {
     width: "100%",
@@ -23,7 +25,8 @@ const styles = {
     height: "12px",
   },
   titleContainer: {
-    marginBottom: { lg: "10px", xs: "2px" },
+    lg:{mb:"10px"},
+    xs:{mb:"2px"}
   },
 };
 

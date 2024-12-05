@@ -1,7 +1,7 @@
 import { icons } from "appHelper/appVariables";
 import { dictionary } from "appHelper/appDictionary";
 import React from "react";
-import { Box, Grid, Icon, Typography } from "@mui/material";
+import { Box, Grid, Typography, SvgIcon } from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 
 const styles = {
@@ -10,7 +10,6 @@ const styles = {
     padding: "2px",
     width: "34px",
     textAlign: "center",
-    // background: "#f3274c",
     borderRadius: "50%",
   },
   contactTypography: {
@@ -20,35 +19,50 @@ const styles = {
   },
 };
 
-function SystemContact({ lang, contact,color=App_Primary_Color }) {
+function SystemContact({ lang, contact, color = App_Primary_Color }) {
   return (
-    <Grid container item xs='12' alignContent={'center'} alignItems={'center'} spacing={2}>
-      <Grid item >
-        <Box sx={{...styles.contactIconBox,
-        background:color
-        }}>
-          <Icon>{icons[contact.type]}</Icon>
+    <Grid
+      container
+      item
+      xs="12"
+      alignContent={"center"}
+      alignItems={"center"}
+      spacing={1}
+    >
+      <Grid item>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ ...styles.contactIconBox, background: color }}
+        >
+          <SvgIcon
+            fontSize={18}
+            color="white"
+            variant="filled"
+            icon={icons[contact.type]}
+          />
         </Box>
       </Grid>
-        <Grid item>
-          <Typography
-            component={"span"}
-            sx={styles.contactTypography}
-            color={"#000"}
-          >
-            {dictionary.contact[contact.type][lang]} :
-          </Typography>
-        </Grid>
-        <Grid item >
-          <Typography
-            dir="ltr"
-            component={"span"}
-            sx={styles.contactTypography}
-            color={"#000"}
-          >
-            {contact.value}
-          </Typography>
-        </Grid>
+      <Grid item>
+        <Typography
+          component={"span"}
+          sx={styles.contactTypography}
+          color={"#000"}
+        >
+          {dictionary.contact[contact.type][lang]} :
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography
+          dir="ltr"
+          component={"span"}
+          sx={styles.contactTypography}
+          color={"#000"}
+        >
+          {contact.value}
+        </Typography>
+      </Grid>
     </Grid>
   );
 }

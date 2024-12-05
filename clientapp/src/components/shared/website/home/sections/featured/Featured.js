@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import FeaturedCard from "components/sharedUI/featuredCard/FeaturedCard";
 import Carousel from "components/sharedUI/carousel/Carousel";
 import { dictionary } from "appHelper/appDictionary";
@@ -8,12 +8,11 @@ const styles = {
   container: {
     backgroundColor: "#f3fbfb",
     height: "fit-content",
-    marginY: { lg: "100px", xs: "20px" },
-    paddingX: { lg: "60px", xs: "10px" },
-    paddingY: { lg: "50px", xs: "20px" },
+    lg: { my: "100px", px: "60px", py: "50px" },
+    xs: { my: "20px", px: "100px", py: "20px" },
   },
   mainTitle: {
-    fontSize: { lg: "50px !important", xs: "30px" },
+     lg: {fontSize:"50px !important"}, xs: {fontSize:"30px"} ,
     color: "#000",
     fontWeight: "700",
     lineHeight: "1.2",
@@ -30,10 +29,13 @@ const styles = {
 };
 
 export default function Featured({ lang, dir, lstFeatured }) {
+  const theme = useTheme();
+  const isLargeAndDown = useMediaQueryMatch(theme.breakpoints.down("lg"));
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   const slides = useMemo(() => {
     return lstFeatured.map((item) => ({
       slideContent: <FeaturedCard lang={lang} dir={dir} item={item} />,
-      sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
+      sxStyle: { height: "fit-content" },
     }));
   }, [lstFeatured, lang, dir]);
   return (
@@ -52,9 +54,11 @@ export default function Featured({ lang, dir, lstFeatured }) {
         </Grid>
         <Grid item lg={3} xs={6} pt={0} sx={styles.line} />
       </Grid>
-      <Grid item lg={12} xs={12} alignSelf={"flex-end"}>
-        <Grid container alignItems={"flex-end"} alignSelf={"flex-end"}>
-          <Grid item xs={12} display={{ lg: "flex", xs: "none" }}>
+      <Grid item lg={12} xs={12} alignSelf={"end"}>
+        <Grid container alignItems={"end"} alignSelf={"end"}>
+          <Grid item xs={12} 
+          display={isExtraSmallAndDown?"none":"flex"}
+          >
             <Carousel
               slides={slides}
               activeSlides={3}
@@ -65,7 +69,9 @@ export default function Featured({ lang, dir, lstFeatured }) {
               dir={dir}
             />
           </Grid>
-          <Grid item xs={12} display={{ lg: "none", xs: "flex" }}>
+          <Grid item xs={12}
+           display={isExtraSmallAndDown?"flex":"none"}
+           >
             <Carousel
               slides={slides}
               activeSlides={1}

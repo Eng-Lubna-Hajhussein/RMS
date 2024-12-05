@@ -2,7 +2,7 @@ import React from "react";
 import Router from "Router";
 import "index.css";
 import AppContextProvider from "contextapi/context/AppContext";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme } from "@basetoolkit/ui";
 
 const theme = createTheme({
   palette: {

@@ -12,7 +12,7 @@ import {
 } from "appHelper/appVariables";
 import { findSystem } from "appHelper/fetchapi/tblSystem/tblSystem";
 import { findCategories } from "appHelper/fetchapi/tblCategory/tblCategory";
-import { Typography } from "@mui/material";
+import { Typography } from "@basetoolkit/ui";
 
 function RouteLandingPage({ isDemo }) {
   const { appState, appDispatch } = useContext(AppContext);

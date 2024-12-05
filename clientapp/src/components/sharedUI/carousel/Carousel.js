@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import AnimationBG from "../AnimationBG/AnimationBG";
 import "./Carousel.css";
 
@@ -7,7 +7,6 @@ const styles = {
   container: {
     backgroundPosition: "center",
     backgroundSize: "cover",
-    height: { lg: "600px", xs: "900px" },
     width: "100%",
     content: '""',
     position: "absolute",
@@ -15,13 +14,17 @@ const styles = {
     right: "0",
     bottom: "0",
     zIndex: "-1",
+    lg:{height:"600px"},
+    xs:{height:"900px"}
   },
   lgDisplay: {
-    display: { lg: "flex", xs: "none" },
+    lg:{display:"flex !important"},
+    xs:{display:"none !important"}
   },
   insetIndicators: {
     marginTop: "-80px",
-    paddingX: { lg: "60px !important", xs: "15px" },
+    lg:{px:"600px !important"},
+    xs:{px:"15px !important"}
   },
   outsetIndicators: {
     marginTop: "10px",
@@ -42,14 +45,17 @@ export const Carousel = ({
 }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const indicators = Math.ceil(slides.length / activeSlides);
+  const theme = useTheme();
+  const isLargeAndDown = useMediaQueryMatch(theme.breakpoints.down("lg"));
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
 
   return (
-    <Grid container mx={0} className="carousel-container">
+    <Grid container mx={0} className="custom-carousel-container">
       <Grid item container xs={12}>
         {slides.map((slide, index) => {
           return (
             <div
-              className={activeSlide === index ? "slide" : "slide slide-hidden"}
+              className={activeSlide === index ? "custom-slide" : "custom-slide custom-slide-hidden"}
               key={index}
             >
               <AnimationBG type={slide?.bgAnimation || "none"}>
@@ -59,7 +65,7 @@ export const Carousel = ({
                   xs={12}
                   sx={{
                     ...slide.sxStyle,
-                    ":before": slide?.image && {
+                    "&:before": slide?.image && {
                       background: `url(${slide?.image})`,
                       transform: dir === "rtl" && "scaleX(-1)",
                       ...styles.container,
@@ -161,9 +167,9 @@ export const Carousel = ({
           container
           xs={12}
           justifyContent={justify}
-          display={{ lg: "flex", xs: "none" }}
+          display={isExtraSmallAndDown?"none":"flex"}
           sx={inset && styles.insetIndicators}
-          className="indicators"
+          className="custom-indicators"
           py={!inset && 3}
         >
           {Array(indicators)
@@ -174,8 +180,8 @@ export const Carousel = ({
                   key={index}
                   className={
                     activeSlide === index
-                      ? "indicator"
-                      : "indicator indicator-inactive"
+                      ? "custom-indicator"
+                      : "custom-indicator custom-indicator-inactive"
                   }
                   style={{
                     borderColor: activeColor,
@@ -194,9 +200,9 @@ export const Carousel = ({
           container
           xs={12}
           justifyContent={justify}
-          display={{ lg: "none", xs: "flex" }}
+          display={isExtraSmallAndDown?"flex":"none"}
           sx={inset && styles.insetIndicators}
-          className="indicators"
+          className="custom-indicators"
           py={!inset && 2}
         >
           {Array(indicators)
@@ -207,8 +213,8 @@ export const Carousel = ({
                   key={index}
                   className={
                     activeSlide === index
-                      ? "indicator"
-                      : "indicator indicator-inactive"
+                      ? "custom-indicator"
+                      : "custom-indicator custom-indicator-inactive"
                   }
                   style={{
                     borderColor: activeColor,

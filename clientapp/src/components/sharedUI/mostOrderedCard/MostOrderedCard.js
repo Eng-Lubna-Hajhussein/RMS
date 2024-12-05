@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
@@ -7,13 +7,15 @@ const styles = {
     backgroundSize: "100% 100%",
     backgroundRepeat: "no-repeat",
     borderRadius: "30px !important",
-    minHeight: { lg: "250px !important", xs: "120px" },
+    lg: { minHeight: "250px !important",height: "auto" },
+    xs: { minHeight: "120px" },
     width: "100%",
-    border: `6px solid #f3274c`,
-    padding: "20px",
+    border: `6px solid #f3274c !important`,
+    padding: "20px !important",
   },
   title: {
-    fontSize: { lg: "25px !important", xs: "12px" },
+    lg: { fontSize: "25px !important" },
+    xs: { fontSize: "12px" },
     fontWeight: "800 !important",
     color: "#000",
     textTransform: "capitalize",
@@ -21,25 +23,28 @@ const styles = {
   },
   subtitle: {
     color: "#555",
-    fontSize: { lg: "15px !important", xs: "12px" },
+    lg: { fontSize: "15px !important" },
+    xs: { fontSize: "12px" },
   },
   crossBox: {
     backgroundColor: "#ffd40d",
     borderRadius: "50% !important",
-    width: { lg: "150px !important", xs: "100px" },
-    height: { lg: "150px !important", xs: "100px" },
+    lg: { width: "150px !important", height: "150px !important" },
+    xs: { width: "100px", height: "100px" },
     textAlign: "center",
   },
   price: {
     color: "#f3274c",
-    fontSize: { lg: "25px !important", xs: "15px" },
+    lg: { fontSize: "25px !important" },
+    xs: { fontSize: "15px" },
     fontFamily: "sans-serif",
     fontWeight: "800 !important",
   },
   perPerson: {
     color: "#212529",
     fontWeight: "800 !important",
-    fontSize: { lg: "12px !important", xs: "10px" },
+    lg: { fontSize: "12px !important" },
+    xs: { fontSize: "10px" },
     fontFamily: "sans-serif",
     textTransform: "capitalize !important",
   },
@@ -47,10 +52,12 @@ const styles = {
     height: "100%",
   },
   itemImg: {
-    height: { lg: "180px", xs: "100px" },
+    lg: { height: "180px" },
+    xs: { height: "100px" },
   },
   crossBoxGrid: {
-    marginTop: { lg: "-100px", xs: "-60px" },
+    lg: { mt: "-80px" },
+    xs: { mt: "-60px" },
   },
 };
 
@@ -59,7 +66,7 @@ function MostOrderedCard({ item, lang, dir }) {
     <Grid container item>
       <Grid item xs={12} container px={2}>
         <Paper sx={styles.paper}>
-          <Grid container item sx={styles.fullHeight} alignItems={"flex-start"}>
+          <Grid container item sx={styles.fullHeight} alignItems={"start"}>
             <Grid item xs={7} container>
               <Grid item lg={12}>
                 <Typography sx={styles.title}>{item?.jsnName[lang]}</Typography>
@@ -118,11 +125,13 @@ function MostOrderedCard({ item, lang, dir }) {
                           : "#f3274c",
                         textDecoration:
                           item?.jsnCategoryInfo?.blnOnSale && "line-through",
-                        fontSize: {
-                          lg: item?.jsnCategoryInfo?.blnOnSale
+                        lg: {
+                          fontSize: item?.jsnCategoryInfo?.blnOnSale
                             ? "15px"
                             : "25px",
-                          xs: item?.jsnCategoryInfo?.blnOnSale
+                        },
+                        xs: {
+                          fontSize: item?.jsnCategoryInfo?.blnOnSale
                             ? "12px"
                             : "15px",
                         },
