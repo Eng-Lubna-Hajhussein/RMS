@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@basetoolkit/ui";
 import Button0001 from "components/sharedUI/button0001/Button0001";
 import { dictionary } from "appHelper/appDictionary";
 import googlePlayIcon from "assets/image/google-play.png";
@@ -8,24 +8,28 @@ import EditAbout from "./EditAbout";
 
 const styles = {
   container: {
-    marginY: { lg: "100px", xs: "20px" },
-    // paddingX: { lg: "60px", xs: "10px" },
+    lg: { my: "100px" },
+    xs: { my: "20px" },
     background: "#f5f8fd",
   },
   containerItem: {
-    paddingX: { lg: "60px", xs: "15px" },
+    lg: { px: "60px !important" },
+    xs: { px: "15px !important" },
   },
   leftItemContainer: {
-    paddingY: "50px",
+    paddingY: "50px !important",
   },
   title: {
     color: "#f3274c",
-    fontSize: { lg: "25px", xs: "14px" },
+    lg: { fontSize: "25px" },
+    xs: { fontSize: "14px" },
+
     textTransform: "uppercase",
     fontWeight: "800",
   },
   subtitle: {
-    fontSize: { lg: "50px", xs: "20px" },
+    lg: { fontSize: "50px" },
+    xs: { fontSize: "20px" },
     color: "#000",
     fontWeight: "800",
     textTransform: "capitalize",
@@ -52,7 +56,7 @@ const styles = {
     background: "#dad8d9",
   },
   downloadContainer: {
-    marginTop: { xs: "20px" },
+    xs: { mt: "20px" },
   },
 };
 
@@ -71,14 +75,14 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
             sx={styles.editBox}
             xs={12}
           >
-            <Button variant="text" onClick={handleEditOpen}>
+            <Button variant="text" style={{padding:"0px"}} onClick={handleEditOpen}>
               <Typography sx={styles.editNote}>
                 {dictionary.aboutSection.title[lang]}
               </Typography>
             </Button>
           </Grid>
         )}
-        <Grid item container sx={styles.containerItem} xs={12}>
+        <Grid item container sx={styles.containerItem} xs={12} p={0} m={0}>
           <Grid item container lg={6} xs={12} sx={styles.leftItemContainer}>
             <Grid item xs={12}>
               <Typography sx={styles.title}>
@@ -107,7 +111,7 @@ function About({ lang, dir, jsnAboutSection, editable, onSaveAbout }) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container lg={6} xs={12}>
+          <Grid item container p={0} m={0} lg={6} xs={12}>
             <Box
               component={"img"}
               src={jsnAboutSection.strImgPath}

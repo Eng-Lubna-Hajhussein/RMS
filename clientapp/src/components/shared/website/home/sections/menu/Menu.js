@@ -50,15 +50,15 @@ function Menu({
   removeOrderProduct,
 }) {
   return (
-    <Grid container sx={styles.container}>
+    <Grid container  sx={styles.container}>
       <Grid
         item
-        lg={12}
+        xs={12}
         sx={styles.titleContainer}
         container
         justifyContent={"center"}
       >
-        <Grid item lg={12} container justifyContent={"center"}>
+        <Grid item  xs={12} container justifyContent={"center"}>
           <Typography sx={styles.mainTitle}>
             {dictionary.menuSection.title[lang]}
           </Typography>

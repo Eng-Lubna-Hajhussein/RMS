@@ -1,5 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  useMediaQueryMatch,
+  useTheme,
+} from "@basetoolkit/ui";
 import TeamCard from "components/sharedUI/teamCard/TeamCard";
 import Carousel from "components/sharedUI/carousel/Carousel";
 import "./Team.css";
@@ -12,11 +18,12 @@ import { dictionary } from "appHelper/appDictionary";
 const styles = {
   container: {
     height: "fit-content",
-    marginY: { lg: "100px", xs: "20px" },
-    paddingX: { lg: "60px", xs: "10px" },
+    lg: { my: "100px", px: "60px" },
+    xs: { my: "20px", px: "10px" },
   },
   mainTitle: {
-    fontSize: { lg: "50px !important", xs: "30px" },
+    lg: { fontSize: "50px !important" },
+    xs: { fontSize: "30px" },
     color: "#000 !important",
     fontWeight: "700 !important",
     lineHeight: "1.2 !important",
@@ -56,6 +63,10 @@ export default function Team({
   const [editOpen, setEditOpen] = useState(false);
   const [itemOnAction, setItemOnAction] = useState();
 
+  const theme = useTheme();
+  const isLargeAndDown = useMediaQueryMatch(theme.breakpoints.down("lg"));
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
+
   const slides = useMemo(() => {
     return lstSystemTeam.map((item) => ({
       slideContent: (
@@ -71,7 +82,7 @@ export default function Team({
           item={item}
         />
       ),
-      sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
+      sxStyle: { height: "fit-content", position:"relative" },
     }));
   }, [lstSystemTeam, lang, dir]);
 
@@ -113,7 +124,12 @@ export default function Team({
             </Box>
           </Grid>
         )}
-        <Grid container item xs={12} display={{ lg: "flex", xs: "none" }}>
+        <Grid
+          container
+          item
+          xs={12}
+          display={isExtraSmallAndDown ? "none" : "flex"}
+        >
           <Carousel
             slides={slides}
             activeSlides={3}
@@ -124,7 +140,12 @@ export default function Team({
             dir={dir}
           />
         </Grid>
-        <Grid container item xs={12} display={{ lg: "none", xs: "flex" }}>
+        <Grid
+          container
+          item
+          xs={12}
+          display={isExtraSmallAndDown ? "flex" : "none"}
+        >
           <Carousel
             slides={slides}
             activeSlides={1}
@@ -149,6 +170,7 @@ export default function Team({
         handleClose={() => setEditOpen(false)}
         editable={editable}
         onSave={editChef}
+        onDelete={deleteChef}
         chef={itemOnAction}
         lang={lang}
         dir={dir}

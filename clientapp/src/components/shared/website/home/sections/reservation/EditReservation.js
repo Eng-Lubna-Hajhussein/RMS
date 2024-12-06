@@ -162,16 +162,8 @@ function EditReservation({
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
-          <Grid
-            container
-            p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
-          >
-            <Grid item xs={6}>
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
+            <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
@@ -180,7 +172,7 @@ function EditReservation({
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

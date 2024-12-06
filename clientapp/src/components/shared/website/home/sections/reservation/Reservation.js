@@ -58,7 +58,7 @@ function Reservation({
             sx={styles.editBox}
             xs={12}
           >
-            <Button variant="text" onClick={handleEditOpen}>
+            <Button variant="text" style={{padding:"0px"}} onClick={handleEditOpen}>
               <Typography sx={styles.editNote}>
                 {dictionary.reservationSection.title[lang]}
               </Typography>

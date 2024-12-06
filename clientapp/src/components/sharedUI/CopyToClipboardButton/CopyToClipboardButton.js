@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ContentCopy } from "@mui/icons-material";
-import { InputAdornment, Snackbar, TextField } from "@mui/material";
+import { InputAdornment, Snackbar, TextField } from "@basetoolkit/ui";
 
 const styles = {
   cursorPointer: {

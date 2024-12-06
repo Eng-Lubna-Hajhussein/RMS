@@ -3,11 +3,9 @@ import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import menuIcon from "assets/image/menu-icon.svg";
 import { App_Second_Color } from "appHelper/appColor";
-import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-import { findSystemOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@basetoolkit/ui";
 import Box001 from "components/sharedUI/Box001/Box001";
 import { dictionary } from "appHelper/appDictionary";
 import { ctrlDashboard } from "./controller/CtrlDashboard";
@@ -27,12 +25,15 @@ const styles = {
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: { lg: "14px", xs: "14px" },
+    lg: { fontSize: "14px" },
+    xs: { fontSize: "14px" },
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: { lg: "25px", xs: "14px" },
+    lg: { fontSize: "25px" },
+    xs: { fontSize: "14px" },
+
     fontWeight: "800 !important",
   },
   icon: {
@@ -45,19 +46,20 @@ const styles = {
   },
   container: {
     height: "fit-content",
-    paddingY: { lg: "50px", xs: "10px" },
-    // borderRadius: "20px",
-    // padding:{lg: "20px",xs:"10px"},
+    lg: {paddingY:"50px  !important"}, xs: {paddingY:"10px !important" },
+
   },
   systemName: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: { lg: "30px", xs: "20px" },
+    lg: { fontSize: "30px" },
+    xs: { fontSize: "20px" },
   },
   systemAddress: {
     fontWeight: "700",
-    fontSize: { lg: "15px", xs: "10px" },
+    lg: { fontSize: "15px" },
+    xs: { fontSize: "10px" },
     textTransform: "capitalize",
   },
   fitContentHeight: {
@@ -203,24 +205,24 @@ function Dashboard() {
             item
             container
             justifyContent={"center"}
-            lg="10"
-            xs="12"
+            lg={10}
+            xs={12}
             px={2}
             sx={styles.container}
           >
-            <Grid item xs="12" pb={1} container justifyContent={"center"}>
+            <Grid item xs={12} pb={1} container justifyContent={"center"}>
               <Box
                 component={"img"}
                 sx={styles.logo}
                 src={appState?.systemInfo?.strLogoPath}
               />
             </Grid>
-            <Grid item xs="12" container justifyContent={"center"}>
+            <Grid item xs={12} container justifyContent={"center"}>
               <Typography component={"h3"} sx={styles.systemName}>
                 {appState?.systemInfo?.jsnSystemName[lang]}
               </Typography>
             </Grid>
-            <Grid item xs="12" pb={3} container justifyContent={"center"}>
+            <Grid item xs={12} pb={3} container justifyContent={"center"}>
               <Typography sx={styles.systemAddress}>
                 {appState?.systemInfo?.jsnSystemAddress?.jsnCity[lang] +
                   ", " +
@@ -229,10 +231,10 @@ function Dashboard() {
             </Grid>
             <Grid
               item
-              xs="12"
+              xs={12}
               sx={{
                 ...styles.fitContentHeight,
-                paddingY: { lg: "50px", xs: "10px" },
+                lg:{py:"50px !important"},xs:{py:"10px !important"}
               }}
               container
               justifyContent={"center"}
@@ -240,7 +242,7 @@ function Dashboard() {
               {statistics.map(({ title, description, img }, index) => (
                 <Grid
                   item
-                  lg="6"
+                  lg={6}
                   xs={12}
                   key={index}
                   justifyContent={"center"}

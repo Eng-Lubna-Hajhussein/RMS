@@ -21,13 +21,8 @@ import { badgeClasses } from "@basetoolkit/ui/classes";
 const styles = {
   lowerToolBar: {
     background: "#fff",
-
-    height: "100px",
-    minHeight: "100px",
     xs: { px: "5px !important" },
     lg: { px: "50px" },
-    "&": {
-    },
   },
   langBadge: {
     [`&.${badgeClasses.badge}`]: {

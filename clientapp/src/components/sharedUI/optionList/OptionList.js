@@ -1,8 +1,6 @@
 import * as React from "react";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Typography, Divider, MenuItem } from "@basetoolkit/ui";
 import StyledMenu from "../StyledMenu/StyledMenu";
 import { MoreVert } from "@mui/icons-material";
 
@@ -30,10 +28,14 @@ export default function OptionList({
   endIcon = <KeyboardArrowDownIcon />,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  React.useEffect(() => {
+    console.log(navList);
+  }, [navList]);
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -46,9 +48,9 @@ export default function OptionList({
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         disableElevation
-        onClick={(event)=>{
+        onClick={(event) => {
           handleClick(event);
-          if(onClick){
+          if (onClick) {
             onClick();
           }
         }}
@@ -59,11 +61,9 @@ export default function OptionList({
       {navList?.length && (
         <StyledMenu
           id="demo-customized-menu"
-          MenuListProps={{
-            "aria-labelledby": "demo-customized-button",
-          }}
+          area-label="demo-customized-button"
           anchorEl={anchorEl}
-          open={open}
+          open={Boolean(anchorEl)}
           onClose={handleClose}
         >
           {navList.map(({ nav, onClick }, index) => (

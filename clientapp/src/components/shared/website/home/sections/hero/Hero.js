@@ -26,7 +26,7 @@ function Hero({ lang, dir, lstHeroSlides, wsCategory, editable, onSaveHero }) {
       ),
       bgAnimation: slide?.strBgAnimationType,
       sxStyle: {
-        lg: { height: "600px" },
+        lg: { height: "580px" },
         xs: { height: "900px" },
       },
     }));

@@ -19,11 +19,10 @@ const styles = {
   upperToolbar: {
     backgroundColor: "#ffd40d",
     boxShadow: "none",
-    "&": {
-      minHeight: "50px",
-      paddingLeft: "50px",
-      paddingRight: "50px",
-    },
+    height: "50px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
+
     display:"flex",
     xs:{
       display:"none"
@@ -85,7 +84,7 @@ function UpperToolbar({
           sx={styles.editBox}
           xs={12}
         >
-          <Button variant="text" onClick={handleEditOpen}>
+          <Button variant="text" style={{padding:"0px"}} onClick={handleEditOpen}>
             <Typography sx={styles.editNote}>
               {dictionary.upperHeaderSection.title[lang]}
             </Typography>
@@ -195,7 +194,7 @@ function UpperToolbar({
                         alignContent={"center"}
                       >
                         <Grid item px={1} sx={styles.fitContentHeight}>
-                          <Avatar src={userImg} height="50px" width="50px" />
+                          <Avatar src={userImg?userImg:"none"} height="35px" width="35px" />
                         </Grid>
                         <Grid item>{userName[lang]}</Grid>
                       </Grid>

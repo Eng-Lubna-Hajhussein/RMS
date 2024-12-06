@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@basetoolkit/ui";
 import ReviewCard from "components/sharedUI/reviewCard/ReviewCard";
 import Carousel from "components/sharedUI/carousel/Carousel";
 import { useMemo } from "react";
@@ -6,18 +6,18 @@ import { useMemo } from "react";
 const styles = {
   container: {
     height: "fit-content",
-    marginY: { lg: "100px", xs: "20px" },
-    paddingX: { lg: "60px", xs: "10px" },
+    lg:{my:"100px",px:"60px"},
+    xs:{my:"20px",px:"10px"}
   },
   title: {
     textTransform: "uppercase",
     color: "#f3274c",
-    fontSize: { lg: "25px", xs: "15px" },
+     lg: {fontSize:"25px"}, xs: {fontSize:"15px"} ,
     fontWeight: "800",
   },
   subtitle: {
     color: "#000",
-    fontSize: { lg: "50px", xs: "20px" },
+    lg: {fontSize:"40px"}, xs: {fontSize:"20px"} ,
     fontWeight: "800",
     textTransform: "capitalize",
   },
@@ -25,7 +25,7 @@ const styles = {
     position: "relative",
     height: "fit-content",
     minHeight: "600px",
-    display: { lg: "flex", xs: "none" },
+    lg: {display:"flex !important"}, xs: {display:"none !important"} 
   },
   img1: {
     position: "absolute",
@@ -59,7 +59,7 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
   const slides = useMemo(() => {
     return lstSystemReviews.map((item) => ({
       slideContent: <ReviewCard lang={lang} dir={dir} review={item} />,
-      sxStyle: { height: { lg: "fit-content", xs: "fit-content" } },
+      sxStyle: { height: "fit-content" },
     }));
   }, [lstSystemReviews]);
   const images = [
@@ -71,8 +71,8 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
     <Grid
       container
       sx={styles.container}
-      alignContent={"flex-start"}
-      alignItems={"flex-start"}
+      alignContent={"start"}
+      alignItems={"start"}
     >
       <Grid item container lg={6} xs={12}>
         <Grid item xs={12}>
@@ -85,7 +85,7 @@ function Testimonial({ lang, dir, lstSystemReviews, jsnTestimonialSection }) {
             {jsnTestimonialSection?.jsnSubtitle[lang]}
           </Typography>
         </Grid>
-        <Grid item container pt={3} lg={10} xs={12} >
+        <Grid item container pt={1} lg={11} xs={12} >
           <Carousel
             slides={slides}
             activeSlides={1}

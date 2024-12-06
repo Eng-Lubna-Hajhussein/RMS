@@ -83,7 +83,7 @@ function Owner({
           sx={styles.editBox}
           xs={12}
         >
-          <Button variant="text" onClick={handleEditOpen}>
+          <Button variant="text" style={{padding:"0px"}} onClick={handleEditOpen}>
             <Typography sx={styles.editNote}>
               {dictionary.ownerSection.title[lang]}
             </Typography>

@@ -6,9 +6,7 @@ import {
   DialogContent,
   DialogActions,
   Grid,
-  Typography,
-  Fab,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { AppContext } from "contextapi/context/AppContext";
@@ -131,8 +129,6 @@ function UploadLogo({ open, handleClose, lang, dir }) {
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}
@@ -140,7 +136,7 @@ function UploadLogo({ open, handleClose, lang, dir }) {
             justifyItems={"flex-end"}
             justifyContent={"end"}
           >
-            <Grid item lg="4" xs="5">
+            <Grid item lg={4} xs={5}>
               <AnimButton0001
                 label={"save"}
                 color={App_Primary_Color}
@@ -149,7 +145,7 @@ function UploadLogo({ open, handleClose, lang, dir }) {
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

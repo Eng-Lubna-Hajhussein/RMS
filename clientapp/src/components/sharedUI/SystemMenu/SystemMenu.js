@@ -1,5 +1,15 @@
 import React, { useMemo, useState } from "react";
-import { Badge, Box, Grid, Paper, Typography } from "@basetoolkit/ui";
+import {
+  Badge,
+  Box,
+  Grid,
+  IconButton,
+  MenuItem,
+  Paper,
+  Select,
+  SvgIcon,
+  Typography,
+} from "@basetoolkit/ui";
 import "./SystemMenu.css";
 import { objAppActions, tabsOptions } from "appHelper/appVariables";
 import { Add, MoreVert } from "@mui/icons-material";
@@ -10,7 +20,7 @@ import AddItem from "./AddItem/AddItem";
 import EditItem from "./EditItem/EditItem";
 import shoppingIcon from "assets/image/shopping.svg";
 import { Link, useParams } from "react-router-dom";
-import { badgeClasses } from "@basetoolkit/ui/classes";
+import { badgeClasses, selectClasses } from "@basetoolkit/ui/classes";
 
 const styles = {
   addDish: {
@@ -37,7 +47,7 @@ const styles = {
   menuPaper: {
     minHeight: "500px",
     height: "500px",
-    background: "#f3fbfb",
+    background: "#f3fbfb !important",
     width: "100%",
     borderRadius: "20px",
     paddingY: "50px",
@@ -67,7 +77,7 @@ const styles = {
     fontFamily: "sans-serif",
     textTransform: "capitalize",
     lg: { fontSize: "16px !important" },
-    xs: { fontSize: "10px" },
+    xs: { fontSize: "9px" },
   },
   dishDescription: {
     fontWeight: "400 !important",
@@ -263,10 +273,18 @@ export default function RestaurantMenu({
 
   return (
     <React.Fragment>
-      <Grid container className="menu" justifyContent={"center"}>
+      <Grid container item xs={12} className="menu" justifyContent={"center"}>
         <Grid item container xs={12} justifyContent={"center"}>
           {objTabs?.tabs?.map((tab, index) => (
-            <Grid item container lg={2} xs={4} sx={styles.tab} px={2}>
+            <Grid
+              item
+              container
+              key={index}
+              lg={2}
+              xs={4}
+              sx={styles.tab}
+              px={2}
+            >
               <Grid
                 container
                 item
@@ -276,7 +294,7 @@ export default function RestaurantMenu({
                 alignContent={"center"}
                 sx={{
                   xs: { height: "90px !important" },
-                  lg: { height: "fit-content !important" },
+                  lg: { height: "fit-content !important", minHeight: "170px" },
                 }}
                 className={
                   `${tab?.bigID}` === `${objTabs?.activeTab?.bigID}`
@@ -284,43 +302,21 @@ export default function RestaurantMenu({
                     : "nav-link nav"
                 }
               >
-                {adminEditMode && (
-                  <Grid
-                    item
-                    lg={1}
-                    xs="3"
-                    container
-                    alignContent={"start"}
-                    justifyContent={"start"}
-                  >
-                    <OptionList
-                      nav={""}
-                      onClick={() => {}}
-                      navList={actionTabNavList.map((nav) => ({
-                        ...nav,
-                        onClick: () => {
-                          if (objAppActions["Delete"] === nav.bigNavID) {
-                            funDeleteTab(tab);
-                          }
-                        },
-                      }))}
-                      endIcon={<MoreVert />}
-                      lang={lang}
-                    />
-                  </Grid>
-                )}
                 <Grid
                   item
-                  lg={!adminEditMode ? 12 : 11}
+                  lg={!adminEditMode ? 12 : 10}
                   xs={!adminEditMode ? 12 : 9}
                   container
+                  justifyContent="center"
                 >
                   <Grid
                     item
                     lg={12}
                     className="icon-container"
                     container
-                    justifyContent={"end"}
+                    justifyContent={"start"}
+                    mb={0}
+                    pb={0}
                   >
                     <Box
                       component={"img"}
@@ -344,12 +340,46 @@ export default function RestaurantMenu({
                     />
                   </Grid>
 
-                  <Grid item lg={12} container justifyContent={"center"}>
+                  <Grid
+                    item
+                    lg={12}
+                    container
+                    mt={0}
+                    pt={0}
+                    alignContent="center"
+                    justifyContent={"center"}
+                  >
                     <Typography sx={styles.tabName} className="title">
                       {tab.jsnName[lang]}
                     </Typography>
                   </Grid>
                 </Grid>
+                {adminEditMode &&
+                  `${tab?.bigID}` !== `${objTabs?.activeTab?.bigID}` && (
+                    <Grid
+                      item
+                      lg={1}
+                      xs={3}
+                      container
+                      alignContent={"start"}
+                      justifyContent={"end"}
+                    >
+                      <OptionList
+                        nav={""}
+                        onClick={() => {}}
+                        navList={actionTabNavList.map((nav) => ({
+                          ...nav,
+                          onClick: () => {
+                            if (objAppActions["Delete"] === nav.bigNavID) {
+                              funDeleteTab(tab);
+                            }
+                          },
+                        }))}
+                        endIcon={<MoreVert />}
+                        lang={lang}
+                      />
+                    </Grid>
+                  )}
               </Grid>
             </Grid>
           ))}
@@ -478,56 +508,20 @@ export default function RestaurantMenu({
                         (item, index, tabsContent) => (
                           <Grid
                             item
+                            key={index}
                             xs={12}
                             container
                             alignItems={"start"}
                             sx={{ height: "fit-content" }}
                             alignContent={"start"}
                           >
-                            {adminEditMode && (
-                              <Grid
-                                item
-                                xs={1}
-                                container
-                                justifyContent={"start"}
-                                alignItems={"center"}
-                                alignSelf={"start"}
-                                sx={{ lg: { py: "20px" }, xs: { py: "15px" } }}
-                              >
-                                <OptionList
-                                  nav={""}
-                                  onClick={() => {
-                                    setObjTabs({
-                                      ...objTabs,
-                                      categoryOnAction: item,
-                                    });
-                                  }}
-                                  navList={actionItemNavList.map((nav) => ({
-                                    ...nav,
-                                    onClick: () => {
-                                      if (
-                                        objAppActions["Delete"] === nav.bigNavID
-                                      ) {
-                                        funDeleteItem(item);
-                                      }
-                                      if (
-                                        objAppActions["Edit"] === nav.bigNavID
-                                      ) {
-                                        setEditItemOpen(true);
-                                      }
-                                    },
-                                  }))}
-                                  endIcon={<MoreVert />}
-                                  lang={lang}
-                                />
-                              </Grid>
-                            )}
                             <Grid
                               container
                               item
                               xs={adminEditMode ? 11 : 12}
                               justify={"start"}
                               alignItems={"center"}
+                              px={0}
                               alignSelf={"start"}
                               py={2}
                               sx={{
@@ -540,6 +534,7 @@ export default function RestaurantMenu({
                                 item
                                 xs={2}
                                 container
+                                px={0}
                                 alignContent={"center"}
                                 sx={{ height: "fit-content" }}
                               >
@@ -549,7 +544,7 @@ export default function RestaurantMenu({
                                   sx={styles.catImg}
                                 />
                               </Grid>
-                              <Grid item xs={adminEditMode ? 7 : 5} px={1}>
+                              <Grid item xs={adminEditMode ? 7 : 5} px={"4px"}>
                                 {customerEditMode && (
                                   <Link
                                     to={`/customer/product/${item.bigID}/${systemName}/${systemID}`}
@@ -622,6 +617,38 @@ export default function RestaurantMenu({
                                 </Typography>
                               </Grid>
                             </Grid>
+                            {adminEditMode && (
+                              <Grid
+                                item
+                                xs={1}
+                                container
+                                justifyContent={"start"}
+                                alignItems={"center"}
+                                alignContent="center"
+                                alignSelf={"start"}
+                                sx={{
+                                  lg: { py: "20px !important" },
+                                  xs: { py: "15px !important" },
+                                }}
+                              >
+                                <IconButton
+                                  size="small"
+                                  onClick={() => {
+                                    setObjTabs({
+                                      ...objTabs,
+                                      categoryOnAction: item,
+                                    });
+                                    setEditItemOpen(true);
+                                  }}
+                                >
+                                  <SvgIcon
+                                    icon="edit"
+                                    size="small"
+                                    variant="filled"
+                                  />
+                                </IconButton>
+                              </Grid>
+                            )}
                           </Grid>
                         )
                       )}
@@ -702,6 +729,7 @@ export default function RestaurantMenu({
           open={editItemOpen}
           handleClose={() => setEditItemOpen(false)}
           onSave={funEditItem}
+          onDelete={funDeleteItem}
           categoryOnAction={objTabs?.categoryOnAction}
           addWS={addWS}
           removeWS={removeWS}

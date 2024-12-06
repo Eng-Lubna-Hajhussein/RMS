@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Icon, Paper, Typography } from "@mui/material";
+import { Box, Grid, IconButton, SvgIcon, Typography } from "@basetoolkit/ui";
 import {
   FacebookSharp,
   Instagram,
@@ -20,6 +20,8 @@ const styles = {
     pointer: "cursor",
     marginTop: "-140px",
     zIndex: "222 !important",
+    position:"relative",
+
   },
   specialization: {
     color: "#f3274c",
@@ -40,9 +42,9 @@ const styles = {
     transition: ".3s ease-in-out",
     backgroundColor: "#f5f8fd !important",
     borderRadius: "50%",
-    height: "50px",
+    height: "40px",
     width: "50px",
-    ":hover": { backgroundColor: "#ffd40d !important" },
+    ":hover": { backgroundColor: "#ffd40d !important", borderRadius: "50%" },
   },
   imgContainer: {
     zIndex: "-1",
@@ -82,7 +84,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
   ];
 
   return (
-    <>
+    <Box position="relative">
       {editable && (
         <Grid
           item
@@ -90,25 +92,16 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
           px={2}
           sx={styles.optionListContainer}
           container
-          justifyContent={"flex-end"}
+          justifyContent={"end"}
         >
-          <OptionList
-            nav={""}
-            onClick={() => {}}
-            navList={actionNavList.map((nav) => ({
-              ...nav,
-              onClick: () => {
-                if (objAppActions["Delete"] === nav.bigNavID) {
-                  onDelete(item.bigID);
-                }
-                if (objAppActions["Edit"] === nav.bigNavID) {
-                  onEdit();
-                }
-              },
-            }))}
-            endIcon={<MoreVert />}
-            lang={lang}
-          />
+          <IconButton
+            size="small"
+            onClick={() => {
+              onEdit();
+            }}
+          >
+            <SvgIcon icon="edit" size="small" variant="filled" />
+          </IconButton>
         </Grid>
       )}
       <Grid item xs={12} sx={styles.imgContainer}>
@@ -165,7 +158,7 @@ function TeamCard({ item, lang, onDelete, onEdit, editable }) {
           </Grid>
         </Box>
       </Grid>
-    </>
+    </Box>
   );
 }
 

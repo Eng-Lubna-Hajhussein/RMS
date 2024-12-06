@@ -6,7 +6,7 @@ import {
   TextField,
   DialogActions,
   Grid,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
@@ -162,15 +162,13 @@ function EditUpperToolbar({
             </Grid>
           </Grid>
         </Grid>
-      </DialogContent>
-      <DialogActions sx={styles.dialogActions}>
         <Grid
           container
           p={2}
-          justifyItems={"flex-end"}
-          justifyContent={"flex-end"}
+          justifyItems={"end"}
+          justifyContent={"end"}
         >
-          <Grid item lg={2} xs="6">
+          <Grid item lg={2} xs={6}>
             <AnimButton0001
               label={dictionary.buttons.saveBtn[lang]}
               color={App_Primary_Color}
@@ -179,7 +177,7 @@ function EditUpperToolbar({
             />
           </Grid>
         </Grid>
-      </DialogActions>
+      </DialogContent>
     </Dialog>
   );
 }

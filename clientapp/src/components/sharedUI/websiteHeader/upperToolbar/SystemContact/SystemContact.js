@@ -15,6 +15,7 @@ const styles = {
   contactTypography: {
     fontSize: "14px",
     fontWeight: "800",
+    xs:{fontSize:"12px"},
     textTransform: "capitalize",
   },
 };
@@ -25,6 +26,8 @@ function SystemContact({ lang, contact, color = App_Primary_Color }) {
       container
       item
       xs="12"
+      px={0}
+      mx={0}
       alignContent={"center"}
       alignItems={"center"}
       spacing={1}

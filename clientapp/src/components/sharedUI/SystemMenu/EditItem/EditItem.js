@@ -12,8 +12,8 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
-} from "@mui/material";
-import { App_Primary_Color } from "appHelper/appColor";
+} from "@basetoolkit/ui";
+import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
@@ -76,6 +76,7 @@ function EditItem({
   lang,
   dir,
   onSave,
+  onDelete
 }) {
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
@@ -201,8 +202,8 @@ function EditItem({
               lg={6}
               xs={12}
               sx={{
-                paddingY: { xs: "10px", lg: "2px" },
-                paddingX: { xs: "0px", lg: "10px" },
+                lg:{py:"2px !important",px:"10px !important"},
+                xs:{py:"10px !important",px:"0px !important"}
               }}
               container
               justifyContent={"start"}
@@ -402,15 +403,21 @@ function EditItem({
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogAction}>
           <Grid
             container
             p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyItems={"end"}
+            justifyContent={"end"}
           >
+            <Grid item lg={2} xs={6}>
+              <AnimButton0001
+                label={dictionary.buttons.delete[lang]}
+                color={App_Second_Color}
+                fullWidth={true}
+                type="button"
+                onClick={()=>{onDelete(categoryOnAction);   handleClose();}}
+              />
+            </Grid>
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
@@ -418,9 +425,10 @@ function EditItem({
                 fullWidth={true}
                 type="submit"
               />
-            </Grid>
+              </Grid>
+              
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

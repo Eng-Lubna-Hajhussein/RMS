@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,18 +24,20 @@ import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: { lg: "50px", xs: "20px" },
+    lg: { my: "50px" },
+    xs: { my: "20px" },
   },
   itemContainer: {
     height: "fit-content",
     marginY: "5px",
     borderRadius: "20px",
-    padding: { lg: "20px", xs: "10px" },
-    marginBottom: { lg: "70px", xs: "40px" },
+    lg: { p: "20px !important", mb: "70px" },
+    xs: { p: "10px !important", mb: "40px" },
   },
   title: {
     textTransform: "capitalize",
-    fontSize: { lg: "28px", xs: "16px" },
+    lg: { fontSize: "28px" },
+    xs: { fontSize: "16px" },
     fontWeight: "800",
     color: App_Primary_Color,
     borderBottom: "3px solid #ffd40d",
@@ -207,19 +209,19 @@ function DeliveryAddress() {
     isUpdated.current = true;
   };
 
-  const onChangeCountry = (e) => {
-    setSelectedCountry(e.target.value);
+  const onChangeCountry = (selected) => {
+    setSelectedCountry(selected.value);
     setSelectedCity("none");
     setSelectedTown("none");
   };
 
-  const onChangeCity = (e) => {
-    setSelectedCity(e.target.value);
+  const onChangeCity = (selected) => {
+    setSelectedCity(selected.value);
     setSelectedTown("none");
   };
 
-  const onChangeTown = (e) => {
-    setSelectedTown(e.target.value);
+  const onChangeTown = (selected) => {
+    setSelectedTown(selected.value);
   };
 
   const onSave = () => {
@@ -287,23 +289,21 @@ function DeliveryAddress() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item xs="10" container>
+          <Grid item xs={10} container >
             <Grid
               item
-              xs="12"
-              lg="10"
+              xs={12}
+              lg={10}
               px={2}
               container
               justifyContent={"center"}
               sx={styles.itemContainer}
             >
-              <Grid container>
-                <Grid item container xs="12" justifyContent={"start"}>
+                <Grid item container xs={12} mx={0} px={0} justifyContent={"start"}>
                   <Typography sx={styles.title}>
                     {dictionary.systemDeliveryAddress.title[lang]} !
                   </Typography>
                 </Grid>
-              </Grid>
             </Grid>
             <Country
               onChange={onChangeCountry}
@@ -353,11 +353,12 @@ function DeliveryAddress() {
             )}
             <Grid
               item
-              xs="12"
+              xs={12}
               container
               justifyContent={"end"}
               sx={{
-                paddingY: { lg: "80px", xs: "20px" },
+                lg: { py: "80px !important" },
+                xs: { py: "20px !important" },
               }}
             >
               <AnimButton0001

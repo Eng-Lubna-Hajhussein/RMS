@@ -10,7 +10,7 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { useForm } from "react-hook-form";
@@ -27,15 +27,16 @@ const styles = {
   container: {
     background: "#f3fbfb",
     height: "fit-content",
-    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: { lg: "20px", xs: "5px" },
+    lg: { my: "50px", p: "20px !important" },
+    xs: { my: "20px", p: "5px !important" },
   },
   title: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: { lg: "30px", xs: "20px" },
+    lg: { fontSize: "30px" },
+    xs: { fontSize: "20px" },
   },
   inputLabel: {
     textTransform: "capitalize",
@@ -86,14 +87,14 @@ function Settings() {
   const [uploadLogoOpen, setUploadLogo] = useState(false);
   const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
 
-  const onChangeCountry = (event) => {
-    const index = event.target.value;
+  const onChangeCountry = (selected) => {
+    const index = selected.value;
     address.countryIndex = index;
     address.cityIndex = 0;
     setAddress({ ...address });
   };
-  const onChangeCity = (event) => {
-    const index = event.target.value;
+  const onChangeCity = (selected) => {
+    const index = selected.value;
     address.cityIndex = index;
     setAddress({ ...address });
   };
@@ -176,73 +177,74 @@ function Settings() {
             item
             container
             justifyContent={"center"}
-            lg="10"
-            xs="12"
+            lg={10}
+            xs={12}
             sx={styles.container}
           >
             <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-              <Grid item xs="12" p={2} container justifyContent={"center"}>
+              <Grid item xs={12} p={2} container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
                   {dictionary.systemSettings.settings[lang]}
                 </Typography>
               </Grid>
-              <Grid item container xs="12">
-                <Grid item xs="12" p={2}>
+              <Grid item container xs={12}>
+                <Grid item xs={12} p={2}>
                   <Title0001
                     title={dictionary.systemSettings.address[lang]}
                     dir={dir}
                   />
                 </Grid>
-                <Grid item xs="12" container>
-                  <Grid item lg="6" xs="12" p={2}>
-                    <FormControl fullWidth>
-                      <InputLabel sx={styles.inputLabel}>
-                        {dictionary.labels.country[lang]}
-                      </InputLabel>
-                      <Select
-                        defaultValue={address?.countryIndex}
-                        required
-                        label={dictionary.labels.country[lang]}
-                        onChange={onChangeCountry}
-                        sx={styles.select}
-                      >
-                        {COUNTRIES.map((country, index) => (
-                          <MenuItem value={index}>{country[lang]}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                <Grid item xs={12} container>
+                  <Grid item lg={6} xs={12} p={2}>
+                    <Select
+                      fullWidth
+                      defaultValue={{
+                        value: address?.countryIndex,
+                        label: COUNTRIES[address?.countryIndex][lang],
+                      }}
+                      required
+                      label={dictionary.labels.country[lang]}
+                      onChange={onChangeCountry}
+                      sx={styles.select}
+                    >
+                      {COUNTRIES.map((country, index) => (
+                        <MenuItem value={index}>{country[lang]}</MenuItem>
+                      ))}
+                    </Select>
                   </Grid>
-                  <Grid item lg="6" xs="12" p={2}>
-                    <FormControl fullWidth>
-                      <InputLabel sx={styles.inputLabel}>
-                        {dictionary.labels.city[lang]}
-                      </InputLabel>
-                      <Select
-                        value={address?.cityIndex}
-                        required
-                        onChange={onChangeCity}
-                        label={dictionary.labels.city[lang]}
-                        sx={styles.select}
-                      >
-                        {CITIES[COUNTRIES[address?.countryIndex]["eng"]].map(
-                          (city, index) => (
-                            <MenuItem value={index}>{city[lang]}</MenuItem>
-                          )
-                        )}
-                      </Select>
-                    </FormControl>
+                  <Grid item lg={6} xs={12} p={2}>
+                    <Select
+                      fullWidth
+                      value={{
+                        value: address?.cityIndex,
+                        label:
+                          CITIES[COUNTRIES[address?.countryIndex]["eng"]][
+                            address?.cityIndex
+                          ][lang],
+                      }}
+                      required
+                      onChange={onChangeCity}
+                      label={dictionary.labels.city[lang]}
+                      sx={styles.select}
+                    >
+                      {CITIES[COUNTRIES[address?.countryIndex]["eng"]].map(
+                        (city, index) => (
+                          <MenuItem value={index}>{city[lang]}</MenuItem>
+                        )
+                      )}
+                    </Select>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item container xs="12">
-                <Grid item xs="12" p={2}>
+              <Grid item container xs={12}>
+                <Grid item xs={12} p={2}>
                   <Title0001
                     title={dictionary.systemSettings.paymentInfo[lang]}
                     dir={dir}
                   />
                 </Grid>
-                <Grid item xs="12" container>
-                  <Grid item xs="12" p={2}>
+                <Grid item xs={12} container>
+                  <Grid item xs={12} p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
@@ -261,7 +263,7 @@ function Settings() {
                       }}
                     />
                   </Grid>
-                  <Grid item lg="6" xs="12" p={2}>
+                  <Grid item lg={6} xs={12} p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
@@ -278,7 +280,7 @@ function Settings() {
                       }}
                     />
                   </Grid>
-                  <Grid item lg="6" xs="12" p={2}>
+                  <Grid item lg={6} xs={12} p={2}>
                     <TextField
                       sx={styles.textfield}
                       variant="outlined"
@@ -297,14 +299,14 @@ function Settings() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item container xs="12">
-                <Grid item xs="12" p={2}>
+              <Grid item container xs={12}>
+                <Grid item xs={12} p={2}>
                   <Title0001
                     title={dictionary.systemSettings.location[lang]}
                     dir={dir}
                   />
                 </Grid>
-                <Grid item xs="12" container p={2}>
+                <Grid item xs={12} container p={2}>
                   <iframe
                     src={`https://maps.google.com/maps?q=${appState?.userInfo?.jsnLocation?.lat}, ${appState?.userInfo?.jsnLocation?.long}&z=15&output=embed`}
                     width="100%"
@@ -314,7 +316,7 @@ function Settings() {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs="12" container justifyContent={"end"} p={2}>
+              <Grid item xs={12} container justifyContent={"end"} p={2}>
                 <AnimButton0001
                   label={dictionary.buttons.saveChanges[lang]}
                   color={App_Second_Color}

@@ -24,23 +24,20 @@ import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { dictionary } from "appHelper/appDictionary";
-// import { ctrlTables } from "./controller/CtrlTables";
-// import EditTable from "./editTable/EditTable";
 
 const styles = {
-  container: {
-    marginY: { lg: "50px", xs: "20px" },
+  container: {lg: {my:"50px"}, xs: {my:"20px"} 
   },
   itemContainer: {
     background: "#f4fcfc",
     height: "fit-content",
-    marginBottom: { lg: "50px", xs: "20px" },
+    lg: {mb:"50px"}, xs: {mb:"20px"},
     borderRadius: "20px",
     padding: "20px",
   },
   title: {
     textTransform: "uppercase",
-    fontSize: { lg: "28px", xs: "16px" },
+    lg: {fontSize:"28px"}, xs: {fontSize:"16px"},
     fontWeight: "800",
     color: App_Primary_Color,
     borderBottom: "3px solid #ffd40d",
@@ -112,21 +109,22 @@ function AddTable({ handleSubmit, onSubmit, register, errors, trigger,lang,dir }
   return (
     <Grid
       item
-      xs="12"
+      container
+      xs={12}
       px={1}
       pb={10}
+      mb={2}
       justifyContent={"center"}
       sx={styles.itemContainer}
     >
-      <Grid container>
-        <Grid item xs="12" container p={2} justifyContent={"start"}>
+        <Grid item xs={12} container p={2} justifyContent={"start"}>
           <Typography sx={styles.title}>{dictionary.tables.addTable[lang]} !</Typography>
         </Grid>
-        <Grid item xs="12" container justifyContent={"start"}>
+        <Grid item xs={12} container justifyContent={"start"}>
           <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-            <Grid item xs="12" container>
-              <Grid item lg="6" xs="12" p={2}>
-                <TextField
+            <Grid item xs={12} container>
+              <Grid item lg={6} xs={12} p={2}>
+                <TextField 
                   sx={styles.textfield}
                   variant="outlined"
                   fullWidth
@@ -142,8 +140,8 @@ function AddTable({ handleSubmit, onSubmit, register, errors, trigger,lang,dir }
                   }}
                 />
               </Grid>
-              <Grid item lg="6" xs="12" p={2}>
-                <TextField
+              <Grid item lg={6} xs={12} p={2}>
+                <TextField 
                   sx={styles.textfield}
                   variant="outlined"
                   fullWidth
@@ -158,7 +156,7 @@ function AddTable({ handleSubmit, onSubmit, register, errors, trigger,lang,dir }
                   }}
                 />
               </Grid>
-              <Grid item xs="12" container justifyContent={"end"} p={2}>
+              <Grid item xs={12} container justifyContent={"end"} p={2}>
                 <AnimButton0001
                   label={dictionary.buttons.addTableBtn[lang]}
                   color={App_Primary_Color}
@@ -168,7 +166,6 @@ function AddTable({ handleSubmit, onSubmit, register, errors, trigger,lang,dir }
             </Grid>
           </form>
         </Grid>
-      </Grid>
     </Grid>
   );
 }

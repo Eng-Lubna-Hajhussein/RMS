@@ -6,7 +6,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@mui/material";
+  useMediaQueryMatch,
+  useTheme,
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 const styles = {
@@ -42,8 +44,8 @@ const styles = {
     textTransform: "capitalize",
   },
   box: {
-    height: { lg: "54px", xs: "45px" },
-    width: { lg: "54px", xs: "45px" },
+    lg: { height: "54px", width: "54px" },
+    xs: { height: "45px", width: "45px" },
     textAlign: "center",
     borderRadius: "50%",
     background: App_Second_Color,
@@ -65,36 +67,37 @@ function Town({
   addTownOpen,
   editTownOpen,
 }) {
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
-    <Grid item xs="12" container>
-      <Grid item lg="6" xs="12" px={1}>
-        <FormControl fullWidth>
-          <InputLabel sx={styles.inputLabel}>
-          {dictionary.labels.deliveryAddressTowns[lang]}
-          </InputLabel>
-          <Select
-            value={town}
-            required
-            label={dictionary.labels.deliveryAddressTowns[lang]}
-            onChange={onChange}
-            sx={styles.select}
-          >
-            <MenuItem value="none">{"none"}</MenuItem>
-            {regions.appRegionsID[country][city].map((townID) => (
-              <MenuItem value={townID}>
-                {regions?.regionName[townID][lang]}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+    <Grid item xs={12} container>
+      <Grid item lg={6} xs={12} px={1}>
+        <Select
+          value={{
+            value: town,
+            label: town !== "none" ? regions?.regionName[town][lang] : "none",
+          }}
+          required
+          fullWidth
+          label={dictionary.labels.deliveryAddressTowns[lang]}
+          onChange={onChange}
+          sx={styles.select}
+        >
+          <MenuItem value="none">{"none"}</MenuItem>
+          {regions.appRegionsID[country][city].map((townID) => (
+            <MenuItem value={townID}>
+              {regions?.regionName[townID][lang]}
+            </MenuItem>
+          ))}
+        </Select>
       </Grid>
-      <Grid item lg={3} display={{ lg: "flex", xs: "none" }} />
+      <Grid item lg={3} display={isExtraSmallAndDown ? "none" : "flex"} />
       <Grid
         item
-        lg="1"
-        xs="4"
+        lg={1}
+        xs={4}
         px={1}
-        sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+        py={isExtraSmallAndDown ? "10px" : 0}
         container
       >
         <Box sx={styles.box} onClick={addTownOpen}>
@@ -111,10 +114,10 @@ function Town({
       {!!town && town !== "none" && (
         <Grid
           item
-          lg="1"
-          xs="4"
+          lg={1}
+          xs={4}
           px={1}
-          sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+          py={isExtraSmallAndDown ? "10px" : 0}
           container
           justifyContent={"center"}
         >
@@ -133,10 +136,10 @@ function Town({
       {!!town && town !== "none" && (
         <Grid
           item
-          lg="1"
-          xs="4"
+          lg={1}
+          xs={4}
           px={1}
-          sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+          py={isExtraSmallAndDown?"10px":0}
           container
           justifyContent={"end"}
         >

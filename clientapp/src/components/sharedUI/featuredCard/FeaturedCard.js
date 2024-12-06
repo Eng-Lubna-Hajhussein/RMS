@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography } from "@basetoolkit/ui";
+import { Box, Grid, Typography, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import shoppingIcon from "assets/image/shopping.svg";
 
 const styles = {
@@ -89,10 +89,14 @@ const styles = {
 };
 
 function FeaturedCard({ item, lang }) {
+  const theme = useTheme();
+  const isLargeAndDown = useMediaQueryMatch(theme.breakpoints.down("lg"));
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
-    <Box px={2} sx={styles.cardPaper}>
+    <Box px={2}  sx={styles.cardPaper}>
       <Grid
         container
+        width={"100%"}
         sx={styles.fullHeight}
         alignItems={"center"}
         alignSelf={"center"}
@@ -133,7 +137,7 @@ function FeaturedCard({ item, lang }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Grid container px={5}>
+              <Grid container px={isExtraSmallAndDown?0:5}>
                 <Grid item xs={12}>
                   <Typography sx={styles.itemName}>
                     {item?.jsnName[lang]}

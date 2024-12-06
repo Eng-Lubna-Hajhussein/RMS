@@ -14,7 +14,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { bgAnimationTypes } from "appHelper/appVariables";
@@ -116,10 +116,10 @@ function EditHeroContent({
     slide[slide.onAnimationKey].strAnimationType = animationType;
     setSlide({ ...slide });
   };
-  const onChangeBgAnimation = (e) =>
+  const onChangeBgAnimation = (selected) =>
     setSlide({
       ...slide,
-      strBgAnimationType: e.target.value,
+      strBgAnimationType: selected?.value,
     });
   const onClickTextEditor = (onStyleKey, defaultStyle) => {
     setSlide({
@@ -213,13 +213,18 @@ function EditHeroContent({
                   container
                   justifyContent={"end"}
                 >
-                  <FormControl fullWidth>
-                    <InputLabel sx={styles.inputLabel}>
-                      {dictionary.labels.backgroundAnimation[lang]}
-                    </InputLabel>
+                  <FormControl sx={{ width: "100%" }}>
                     <Select
                       label={dictionary.labels.backgroundAnimation[lang]}
-                      value={slide?.strBgAnimationType || "none"}
+                      value={{
+                        value: slide?.strBgAnimationType
+                          ? slide?.strBgAnimationType
+                          : null,
+                        label: slide?.strBgAnimationType
+                          ? slide?.strBgAnimationType
+                          : "none",
+                      }}
+                      fullWidth
                       required
                       dir="ltr"
                       variant="outlined"
@@ -238,7 +243,7 @@ function EditHeroContent({
               </Grid>
               <Grid item xs={12} container p={1}>
                 <AnimationBG type={slide?.strBgAnimationType || "none"}>
-                  <Box
+                  <Box width={"100%"}
                     component={"img"}
                     src={slide.strImgPath}
                     sx={styles.bgBox}
@@ -397,17 +402,15 @@ function EditHeroContent({
                 />
               </Grid>
             </Grid>
+            
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyItems={"end"}
+            justifyContent={"end"}
           >
-            <Grid item lg={2} xs="6">
+            <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
@@ -416,7 +419,7 @@ function EditHeroContent({
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
         <TextEditor
           dir={dir}
           lang={lang}

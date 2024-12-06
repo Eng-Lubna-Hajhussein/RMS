@@ -2,7 +2,7 @@ import React from "react";
 import {
   Grid,
   Typography,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { Link } from "react-router-dom";
 import { ArrowForwardIos } from "@mui/icons-material";
 import { dictionary } from "appHelper/appDictionary";
@@ -27,17 +27,17 @@ function Menu({
     lg={2}
     xs={12}
     justify={"start"}
-    alignItems={"flex-start"}
-    alignSelf={"flex-start"}
+    alignItems={"start"}
+    alignSelf={"start"}
   >
     <Grid
       container
       justify={"start"}
-      alignItems={"flex-start"}
-      alignSelf={"flex-start"}
+      alignItems={"start"}
+      alignSelf={"start"}
     >
       <Grid item xs={12}>
-        <Grid container justify={"start"} alignItems={"flex-start"}>
+        <Grid container justify={"start"} alignItems={"start"}>
           <Grid item xs={12} justify={"start"}>
             <Typography sx={styles.navListTitle}>
               {dictionary.footer.menu[lang]}
@@ -46,13 +46,13 @@ function Menu({
           <Grid item xs={12} pt={2}>
             {menuList.map((nav) => (
               <Grid container py={1}>
-                <Grid item p-0 m-0 justify={"start"}>
+                <Grid item p={0} m={0} justify={"start"}>
                   <ArrowForwardIos
                     sx={{ color: "#555" }}
                     fontSize="small"
                   />
                 </Grid>
-                <Grid item p-0 m-0>
+                <Grid item p={0} m={0}>
                   <Link
                     style={{
                       color: "#555",

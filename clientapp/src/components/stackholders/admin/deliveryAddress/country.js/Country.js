@@ -6,7 +6,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@mui/material";
+  useMediaQueryMatch,
+  useTheme,
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 
@@ -43,8 +45,8 @@ const styles = {
     textTransform: "capitalize",
   },
   box: {
-    height: { lg: "54px", xs: "45px" },
-    width: { lg: "54px", xs: "45px" },
+    lg:{height:"54px",width:"54px"},
+    xs:{history:"45px",width:"45px"},
     textAlign: "center",
     borderRadius: "50%",
     background: App_Second_Color,
@@ -64,15 +66,14 @@ function Country({
   addCountryOpen,
   editCountryOpen,
 }) {
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
-    <Grid item xs="12" container>
-      <Grid item lg="6" xs="12" px={1}>
-        <FormControl fullWidth>
-          <InputLabel sx={styles.inputLabel}>
-            {dictionary.labels.deliveryAddressCountries[lang]}
-          </InputLabel>
+    <Grid item xs={12} container>
+      <Grid item lg={6} xs={12} px={1}>
           <Select
-            value={country}
+            fullWidth
+            value={{value:country,label:country==="none"?"none":regions?.regionName[country][lang]}}
             required
             label={dictionary.labels.deliveryAddressCountries[lang]}
             onChange={onChange}
@@ -85,15 +86,16 @@ function Country({
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
       </Grid>
-      <Grid item lg={3} display={{ lg: "flex", xs: "none" }} />
+      <Grid item lg={3} 
+      display={isExtraSmallAndDown?"none":"flex"}
+       />
       <Grid
         item
-        lg="1"
-        xs="4"
+        lg={1}
+        xs={4}
         px={1}
-        sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+        py={isExtraSmallAndDown?"10px":0}
         container
       >
         <Box sx={styles.box} onClick={addCountryOpen}>
@@ -110,10 +112,10 @@ function Country({
       {!!country && country !== "none" && (
         <Grid
           item
-          lg="1"
-          xs="4"
+          lg={1}
+          xs={4}
           px={1}
-          sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+          py={isExtraSmallAndDown?"10px":0}
           container
           justifyContent={"center"}
         >
@@ -132,10 +134,10 @@ function Country({
       {!!country && country !== "none" && (
         <Grid
           item
-          lg="1"
-          xs="4"
+          lg={1}
+          xs={4}
           px={1}
-          sx={{ paddingY: { lg: "0px", xs: "10px" } }}
+          py={isExtraSmallAndDown?"10px":0}
           container
           justifyContent={"end"}
         >

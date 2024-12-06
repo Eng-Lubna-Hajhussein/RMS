@@ -24,7 +24,7 @@ const StyledMenu = cssInjection((props) => (
     marginTop: theme.spacing(1),
     border: "none",
     borderTop: "10px #f3274c solid !important",
-    transform: "translatex(-40px)",
+    transform: "translatex(20px)",
     borderRadius: "25px",
     background: "#ffd40d !important",
     padding: "10px",

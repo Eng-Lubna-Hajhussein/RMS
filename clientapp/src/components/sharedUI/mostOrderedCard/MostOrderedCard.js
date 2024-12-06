@@ -12,6 +12,7 @@ const styles = {
     width: "100%",
     border: `6px solid #f3274c !important`,
     padding: "20px !important",
+    xs:{p:"10px 1px !important"}
   },
   title: {
     lg: { fontSize: "25px !important" },
@@ -44,7 +45,7 @@ const styles = {
     color: "#212529",
     fontWeight: "800 !important",
     lg: { fontSize: "12px !important" },
-    xs: { fontSize: "10px" },
+    xs: { fontSize: "8px" },
     fontFamily: "sans-serif",
     textTransform: "capitalize !important",
   },
@@ -57,14 +58,14 @@ const styles = {
   },
   crossBoxGrid: {
     lg: { mt: "-80px" },
-    xs: { mt: "-60px" },
+    xs: { mt: "-45px" },
   },
 };
 
 function MostOrderedCard({ item, lang, dir }) {
   return (
-    <Grid container item>
-      <Grid item xs={12} container px={2}>
+    <Grid container item xs={12}>
+      <Grid item xs={12} container px={0}>
         <Paper sx={styles.paper}>
           <Grid container item sx={styles.fullHeight} alignItems={"start"}>
             <Grid item xs={7} container>
@@ -115,8 +116,7 @@ function MostOrderedCard({ item, lang, dir }) {
               alignSelf={"center"}
             >
               <Grid item xs={12}>
-                <Grid container>
-                  <Grid item lg={12} container justifyContent={"center"} px={1}>
+                  <Grid item xs={12} container py={0} my={0} justifyContent={"center"} px={1}>
                     <Typography
                       sx={{
                         ...styles.price,
@@ -141,7 +141,7 @@ function MostOrderedCard({ item, lang, dir }) {
                     </Typography>
                   </Grid>
                   {item?.jsnCategoryInfo?.blnOnSale && (
-                    <Grid item lg={12} container justifyContent={"center"}>
+                    <Grid item lg={12} container py={0} my={0} justifyContent={"center"}>
                       <Typography
                         component={"caption"}
                         sx={{ ...styles.price }}
@@ -150,12 +150,11 @@ function MostOrderedCard({ item, lang, dir }) {
                       </Typography>
                     </Grid>
                   )}
-                  <Grid item lg={12} container justifyContent={"center"}>
+                  <Grid item lg={12} container py={0} my={0} justifyContent={"center"}>
                     <Typography sx={styles.perPerson}>
                       {dictionary.typography.perPerson[lang]}
                     </Typography>
                   </Grid>
-                </Grid>
               </Grid>
             </Grid>
           </Box>

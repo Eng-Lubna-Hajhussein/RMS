@@ -13,7 +13,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
@@ -113,24 +113,22 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs={12}>
               <Grid item xs={12} p={1} container>
-                <FormControl fullWidth>
-                  <InputLabel sx={styles.inputLabel}>
-                    {dictionary.menuSection.menuCategory[lang]}
-                  </InputLabel>
                   <Select
-                    value={option}
+                    value={{
+                      value: option,
+                      label: option,
+                    }}
                     required
-                    autoFocus
                     variant="outlined"
+                    fullWidth
                     label={dictionary.menuSection.menuCategory[lang]}
-                    onChange={(e) => setOption(e.target.value)}
+                    onChange={(selected) => setOption(selected.value)}
                     sx={styles.select}
                   >
                     {options.map((tab, index) => (
                       <MenuItem value={tab.key}>{tab.jsnName[lang]}</MenuItem>
                     ))}
                   </Select>
-                </FormControl>
               </Grid>
             </Grid>
           </Grid>
@@ -173,14 +171,11 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyItems={"end"}
+            justifyContent={"end"}
           >
             <Grid item lg={3} xs={6}>
               <AnimButton0001
@@ -191,7 +186,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

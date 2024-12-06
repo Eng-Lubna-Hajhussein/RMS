@@ -1,3 +1,4 @@
+import { useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import {
   Box,
@@ -6,7 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 const styles = {
@@ -42,8 +43,8 @@ const styles = {
     textTransform: "capitalize",
   },
   box: {
-    height: { lg: "54px", xs: "45px" },
-    width: { lg: "54px", xs: "45px" },
+    lg: { height: "54px", width: "54px" },
+    xs: { height: "45px", width: "45px" },
     textAlign: "center",
     borderRadius: "50%",
     background: App_Second_Color,
@@ -64,39 +65,40 @@ function City({
   addCityOpen,
   editCityOpen,
 }) {
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
-    <Grid item xs="12" container py={5}>
-      <Grid item lg="6" xs='12' px={1}>
-        <FormControl fullWidth>
-          <InputLabel sx={styles.inputLabel}>
-          {dictionary.labels.deliveryAddressCities[lang]}
-          </InputLabel>
-          <Select
-            value={city}
-            required
-            label={dictionary.labels.deliveryAddressCities[lang]}
-            onChange={onChange}
-            sx={styles.select}
-          >
-            <MenuItem value="none">{"none"}</MenuItem>
-            {Object.keys(regions.appRegionsID[country]).map(
-              (cityID) => (
-                <MenuItem value={cityID}>
-                  {regions.regionName[cityID][lang]}
-                </MenuItem>
-              )
-            )}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item lg={3} display={{lg:"flex",xs:"none"}} />
-      <Grid item lg="1" xs='4' px={1}
-       sx={{ paddingY: { lg: "0px", xs: "10px" } }}
-      container>
-        <Box
-          sx={styles.box}
-          onClick={addCityOpen}
+    <Grid item xs={12} container py={5}>
+      <Grid item lg={6} xs={12} px={1}>
+        <Select
+        fullWidth
+          value={{
+            value: city,
+            label: city !== "none" ? regions.regionName[city][lang] : "none",
+          }}
+          required
+          label={dictionary.labels.deliveryAddressCities[lang]}
+          onChange={onChange}
+          sx={styles.select}
         >
+          <MenuItem value="none">{"none"}</MenuItem>
+          {Object.keys(regions.appRegionsID[country]).map((cityID) => (
+            <MenuItem value={cityID}>
+              {regions.regionName[cityID][lang]}
+            </MenuItem>
+          ))}
+        </Select>
+      </Grid>
+      <Grid item lg={3} display={isExtraSmallAndDown ? "none" : "flex"} />
+      <Grid
+        item
+        lg={1}
+        xs={4}
+        px={1}
+        py={isExtraSmallAndDown ? "10px" : 0}
+        container
+      >
+        <Box sx={styles.box} onClick={addCityOpen}>
           <Grid
             container
             sx={styles.fullHeight}
@@ -108,12 +110,16 @@ function City({
         </Box>
       </Grid>
       {!!city && city !== "none" && (
-        <Grid item lg="1" xs='4' px={1}
-        sx={{ paddingY: { lg: "0px", xs: "10px" } }} container justifyContent={"center"}>
-          <Box
-            sx={styles.box}
-            onClick={editCityOpen}
-          >
+        <Grid
+          item
+          lg={1}
+          xs={4}
+          px={1}
+          py={isExtraSmallAndDown ? "10px" : 0}
+          container
+          justifyContent={"center"}
+        >
+          <Box sx={styles.box} onClick={editCityOpen}>
             <Grid
               container
               sx={styles.fullHeight}
@@ -126,8 +132,15 @@ function City({
         </Grid>
       )}
       {!!city && city !== "none" && (
-        <Grid item lg="1" xs='4' px={1}
-        sx={{ paddingY: { lg: "0px", xs: "10px" } }} container justifyContent={"end"}>
+        <Grid
+          item
+          lg={1}
+          xs={4}
+          px={1}
+          py={isExtraSmallAndDown ? "10px" : 0}
+          container
+          justifyContent={"end"}
+        >
           <Box sx={styles.box}>
             <Grid
               container

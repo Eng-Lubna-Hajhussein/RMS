@@ -7,7 +7,7 @@ import {
   TextField,
   DialogActions,
   Grid,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
@@ -38,12 +38,12 @@ const styles = {
     height: "180px",
     backgroundSize: "100% 100%",
   },
-  textField:{
-    textTransform:"capitalize"
+  textField: {
+    textTransform: "capitalize",
   },
-  dialogActions:{
-    py: "0"
-  }
+  dialogActions: {
+    py: "0",
+  },
 };
 
 function AddChef({ open, handleClose, lang, dir, onSave }) {
@@ -280,15 +280,7 @@ function AddChef({ open, handleClose, lang, dir, onSave }) {
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
-          <Grid
-            container
-            p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
-          >
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
@@ -298,7 +290,7 @@ function AddChef({ open, handleClose, lang, dir, onSave }) {
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Grid,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Grid, Typography, Box } from "@basetoolkit/ui";
 import bgImg from "assets/image/footer.png";
 import logo from "assets/image/logo-white.png";
 import { dictionary } from "appHelper/appDictionary";
@@ -16,7 +12,8 @@ const styles = {
     height: "12px",
   },
   container: {
-    height: { lg: "98vh", xs: "fit-content" },
+    lg: { height: "98vh" },
+    xs: { height: "fit-content" },
     background: "#f5f8fd",
     paddingTop: "100px",
   },
@@ -34,10 +31,10 @@ const styles = {
   },
   date: {
     color: "#fff",
-    fontSize: { lg: "16px", xs: "14px" },
     lineHeight: "30px !important",
     display: "inline !important",
-    fontWeight: { xs: "800" },
+    lg: { fontSize: "16px" },
+    xs: { fontSize: "14px",fontWeight:800 },
   },
   closedDateBtn: {
     fontSize: "16px",
@@ -46,10 +43,10 @@ const styles = {
     borderBottom: "1px solid #000",
   },
   regIn: {
-    fontSize: { lg: "16px !important", xs: "14px" },
+    lg: {fontSize:"16px !important"}, xs: {fontSize:"14px" },
     color: "#fff",
     fontWeight: "800 !important",
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
   nav: {
     color: "#fff",
@@ -61,7 +58,7 @@ const styles = {
     transition: ".3 ease-in-out",
   },
   copyRights: {
-    fontSize: { lg: "18px !important", xs: "12px" },
+    lg: {fontSize:"18px !important"}, xs: {fontSize:"12px" },
     fontWeight: "800 !important",
   },
   locationIframe: {
@@ -73,42 +70,41 @@ const styles = {
   },
 };
 
-function Info({
-    lang,dir,jsnSystemLocation,
-    websiteLogo
-}){
-    return <Grid
-    item
-    lg={4}
-    xs={12}
-    alignItems={"flex-start"}
-    alignSelf={"flex-start"}
-  >
-    <div style={styles.box}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Box component={"img"} sx={styles.logo} src={websiteLogo} />
+function Info({ lang, dir, jsnSystemLocation, websiteLogo }) {
+  return (
+    <Grid
+      item
+      lg={4}
+      xs={12}
+      alignItems={"start"}
+      alignSelf={"start"}
+    >
+      <div style={styles.box}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Box component={"img"} sx={styles.logo} src={websiteLogo} />
+          </Grid>
+          <Grid item xs={12} container>
+            <iframe
+              src={`https://maps.google.com/maps?q=${jsnSystemLocation?.lat}, ${jsnSystemLocation?.long}&z=5&output=embed`}
+              width="100%"
+              height="100"
+              frameborder="0"
+              style={styles.locationIframe}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography sx={styles.regIn}>
+              {dictionary.footer.registeredIn[lang]}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Box component={"img"} width={"150px"} src={logo} />
+          </Grid>
         </Grid>
-        <Grid item xs="12" container>
-          <iframe
-            src={`https://maps.google.com/maps?q=${jsnSystemLocation?.lat}, ${jsnSystemLocation?.long}&z=5&output=embed`}
-            width="100%"
-            height="100"
-            frameborder="0"
-            style={styles.locationIframe}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography sx={styles.regIn}>
-            {dictionary.footer.registeredIn[lang]}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Box component={"img"} width={"150px"} src={logo} />
-        </Grid>
-      </Grid>
-    </div>
-  </Grid>
+      </div>
+    </Grid>
+  );
 }
 
 export default Info;

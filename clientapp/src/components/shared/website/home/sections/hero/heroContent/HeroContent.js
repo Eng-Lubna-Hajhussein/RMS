@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Grid, Rating, Typography, Button } from "@basetoolkit/ui";
+import { Box, Grid, Rating, Typography, Button ,SvgIcon} from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
 import { App_Primary_Color } from "appHelper/appColor";
 import videoIcon from "assets/image/video.svg";
@@ -10,7 +10,7 @@ import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   container: {
-    lg:{height:"600px",px:"60px"},
+    lg:{height:"580px",px:"60px"},
     xs:{height:"900px",px:"15px"},
   },
   title: {
@@ -74,13 +74,13 @@ const styles = {
     lineHeight: "1.2",
     textTransform: "capitalize",
     lg:{fontSize:"18px"},
-    xs:{fontSize:"14px"}
+    xs:{fontSize:"12px"}
   },
   py20: {
     paddingY: "20px",
   },
   editBox: {
-    background: "#dad8d9",
+    color: "#dad8d9",
   },
   editNote: {
     color: "#000",
@@ -91,13 +91,13 @@ const styles = {
   description: {
     color: "#555",
     fontWeight: "400",
-    fontSize: "14px",
+    fontSize: "13px",
     lg:{height:"fit-content",overflowY:"hidden"},
     xs:{height:"40px !important",overflowY:"auto"}
   },
   videoBtn: {
     lg:{pt:"0px"},
-    xs:{pt:"30px"}
+    xs:{py:"30px !important"}
   },
 };
 
@@ -120,11 +120,10 @@ function HeroContent({
           item
           container
           justifyContent={"start"}
-          sx={styles.editBox}
           xs={12}
         >
-          <Button variant="text" onClick={handleEditOpen}>
-            <Typography sx={styles.editNote}>
+          <Button variant="text" startIcon={<SvgIcon icon="edit" />} color="#dad8d9" style={{padding:"0px"}} onClick={handleEditOpen}>
+            <Typography sx={styles.editNote} color="#dad8d9">
               {dictionary.heroSection.title[lang]}
             </Typography>
           </Button>
@@ -263,8 +262,8 @@ function HeroContent({
                           component={"img"}
                           src={content.wsCategory.jsnCategoryInfo.strImgPath}
                           sx={{
-                            lg:{height:"130px",width:"130px"},
-                            xs:{height:"100px",width:"100px"},
+                            lg:{height:"100px",width:"100px"},
+                            xs:{height:"80px",width:"80px"},
                           }}
                         />
                       </Grid>

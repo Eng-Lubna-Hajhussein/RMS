@@ -1,12 +1,12 @@
 import { Instagram } from "@mui/icons-material";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
 import bgImg from "assets/image/follow.jpg";
 
 const styles = {
   container: {
-    marginY: { lg: "100px", xs: "20px" },
-    paddingX: { lg: "60px", xs: "10px" },
+    lg: { my: "100px", px: "60px !important" },
+    xs: { my: "20px", px: "10px !important" },
     background: `url(${bgImg})`,
     backgroundSize: "100% 100%",
     height: "500px",
@@ -25,13 +25,15 @@ const styles = {
     color: "#fff",
   },
   title: {
-    fontSize: { lg: "40px", xs: "20px" },
+    lg: { fontSize: "40px" },
+    xs: { fontSize: "20px" },
     color: "#000",
     fontWeight: "800",
     textTransform: "capitalize",
   },
   subTitle: {
-    fontSize: { lg: "16px", xs: "12px" },
+    lg: { fontSize: "16px" },
+    xs: { fontSize: "12px" },
     color: "#555",
     fontWeight: "400",
     textTransform: "capitalize",

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Close,
-} from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
@@ -9,8 +7,8 @@ import {
   TextField,
   DialogActions,
   Grid,
-} from "@mui/material";
-import { App_Primary_Color } from "appHelper/appColor";
+} from "@basetoolkit/ui";
+import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
@@ -47,7 +45,7 @@ const styles = {
   },
 };
 
-function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
+function EditChef({ open, handleClose, chef, lang, dir, onSave ,onDelete}) {
   const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
@@ -290,15 +288,16 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
-          <Grid
-            container
-            p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
-          >
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
+          <Grid item lg={2} xs={6}>
+              <AnimButton0001
+                label={dictionary.buttons.delete[lang]}
+                color={App_Second_Color}
+                fullWidth={true}
+                type="button"
+                onClick={()=>{onDelete(chef.bigID);handleClose();}}
+              />
+            </Grid>
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
@@ -308,7 +307,7 @@ function EditChef({ open, handleClose, chef, lang, dir, onSave }) {
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

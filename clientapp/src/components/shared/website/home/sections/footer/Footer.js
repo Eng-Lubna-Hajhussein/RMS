@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Grid,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import bgImg from "assets/image/footer.png";
 import Info from "./info/Info";
 import About from "./about/About";
@@ -11,9 +11,9 @@ import Copyrights from "./copyright/Copyright";
 
 const styles = {
   container: {
-    height: { lg: "98vh", xs: "fit-content" },
+    lg: {height:"fit-content"}, xs: {height:"fit-content"},
     background: "#f5f8fd",
-    paddingTop: "100px",
+    paddingTop: "50px",
   },
   containerItem: {
     height: "100%",
@@ -55,7 +55,7 @@ export default function Footer({
         sx={styles.containerItem}
       >
         <Grid item container lg={10} xs={12}>
-          <Grid container item xs="12" px={2}>
+          <Grid container item xs={12} px={1}>
             <Info
             dir={dir}
             jsnSystemLocation={jsnSystemLocation}
@@ -79,7 +79,7 @@ export default function Footer({
             blnAdmin={blnAdmin}
             />
           </Grid>
-          <Grid container py={5}>
+          <Grid container item xs={12} py={1}>
             <Copyrights
             lang={lang}
             dir={dir}

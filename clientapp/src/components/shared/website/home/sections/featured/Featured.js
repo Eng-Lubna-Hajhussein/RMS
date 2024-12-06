@@ -9,7 +9,7 @@ const styles = {
     backgroundColor: "#f3fbfb",
     height: "fit-content",
     lg: { my: "100px", px: "60px", py: "50px" },
-    xs: { my: "20px", px: "100px", py: "20px" },
+    xs: { my: "20px", px: "10px", py: "20px" },
   },
   mainTitle: {
      lg: {fontSize:"50px !important"}, xs: {fontSize:"30px"} ,
@@ -40,22 +40,22 @@ export default function Featured({ lang, dir, lstFeatured }) {
   }, [lstFeatured, lang, dir]);
   return (
     <Grid
-      container
+      container  
       sx={styles.container}
       justifyContent={"center"}
       alignItems={"center"}
       alignSelf={"center"}
     >
-      <Grid item lg={12} mb={4} container justifyContent={"center"}>
-        <Grid item lg={12} container justifyContent={"center"}>
+      <Grid item xs={12} mb={4} container justifyContent={"center"}>
+        <Grid item xs={12} container justifyContent={"center"}>
           <Typography sx={styles.mainTitle}>
             {dictionary.featuredSection.title[lang]}
           </Typography>
         </Grid>
         <Grid item lg={3} xs={6} pt={0} sx={styles.line} />
       </Grid>
-      <Grid item lg={12} xs={12} alignSelf={"end"}>
-        <Grid container alignItems={"end"} alignSelf={"end"}>
+      <Grid item container lg={12} xs={12} alignSelf={"end"}>
+        <Grid container xs={12}  alignItems={"end"} alignSelf={"end"}>
           <Grid item xs={12} 
           display={isExtraSmallAndDown?"none":"flex"}
           >

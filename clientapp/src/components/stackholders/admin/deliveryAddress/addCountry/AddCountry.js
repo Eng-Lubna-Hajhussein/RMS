@@ -6,8 +6,7 @@ import {
   TextField,
   DialogActions,
   Grid,
-  Typography,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
@@ -67,7 +66,7 @@ function AddCountry({ open, handleClose, lang, dir, onSave }) {
           component: "form",
           onSubmit: handleSubmit,
         }}
-        maxWidth="md"
+        // maxWidth="md"
       >
         <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
@@ -76,11 +75,14 @@ function AddCountry({ open, handleClose, lang, dir, onSave }) {
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
-                <Title0001 title={dictionary.systemDeliveryAddress.addCountry[lang]} dir={dir} />
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
+                <Title0001
+                  title={dictionary.systemDeliveryAddress.addCountry[lang]}
+                  dir={dir}
+                />
               </Grid>
-              <Grid item lg="6" xs="12" p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   sx={styles.textField}
                   color="warning"
@@ -89,11 +91,11 @@ function AddCountry({ open, handleClose, lang, dir, onSave }) {
                   dir="ltr"
                   label={dictionary.labels.countryNameEng[lang]}
                   type="text"
-                  fullWidth
+                  // fullWidth
                   variant="outlined"
                 />
               </Grid>
-              <Grid item lg="6" xs="12" p={1}>
+              <Grid item container justifyContent="end" lg={6} xs={12} p={1}>
                 <TextField
                   sx={styles.textField}
                   color="warning"
@@ -102,21 +104,14 @@ function AddCountry({ open, handleClose, lang, dir, onSave }) {
                   label={dictionary.labels.countryNameArb[lang]}
                   type="text"
                   dir="rtl"
-                  fullWidth
+                  // fullWidth
                   variant="outlined"
                 />
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogContent}>
-          <Grid
-            container
-            p={2}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
-          >
-            <Grid item lg="3" xs="5">
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
+            <Grid item lg={3} xs={5}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
@@ -125,7 +120,7 @@ function AddCountry({ open, handleClose, lang, dir, onSave }) {
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

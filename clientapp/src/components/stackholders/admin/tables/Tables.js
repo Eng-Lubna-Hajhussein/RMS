@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   Grid,
   Typography,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import { useForm } from "react-hook-form";
@@ -20,8 +20,8 @@ import UploadLogo from "../uploadLogo/UploadLogo";
 import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
-  container: {
-    marginY: { lg: "50px", xs: "20px" },
+  container: {lg: {my:"50px"}, xs: {my:"20px"} 
+    
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -244,7 +244,7 @@ function Tables() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item lg="10" xs="12" px={2} container>
+          <Grid item lg={10} xs={12} px={2} container>
             <AddTable
             errors={errors}
             handleSubmit={handleSubmit}

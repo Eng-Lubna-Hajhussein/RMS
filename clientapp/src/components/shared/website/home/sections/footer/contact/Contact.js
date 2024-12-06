@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import SystemContact from "components/sharedUI/websiteHeader/upperToolbar/SystemContact/SystemContact";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
@@ -24,24 +24,24 @@ function Contact({ lang, dir, jsnSystemContact, blnAdmin }) {
       lg={4}
       xs={12}
       justify={"start"}
-      alignItems={"flex-start"}
-      alignSelf={"flex-start"}
+      alignItems={"start"}
+      alignSelf={"start"}
     >
       <Grid
         container
         justifyContent={"end"}
-        alignItems={"flex-start"}
-        alignSelf={"flex-start"}
+        alignItems={"start"}
+        alignSelf={"start"}
       >
         <Grid item xs={12}>
-          <Grid container justifyContent={"end"} alignItems={"flex-start"}>
+          <Grid container justifyContent={"end"} alignItems={"start"}>
             <Grid item xs={12} justify={"start"}>
               <Typography sx={styles.navListTitle}>
                 {dictionary.footer.contactUs[lang]}
               </Typography>
             </Grid>
-            <Grid item xs={12} pt={2}>
-              <Grid container item xs={12} pb={2} justifyContent={"start"}>
+            <Grid item xs={12} pt={2} px={0} mx={0}>
+              <Grid container item xs={12} pb={1} px={0} mx={0} justifyContent={"start"}>
                 <SystemContact
                   contact={{
                     type: "strEmail",
@@ -51,7 +51,7 @@ function Contact({ lang, dir, jsnSystemContact, blnAdmin }) {
                   lang={lang}
                 />
               </Grid>
-              <Grid container item xs={12} pb={2}>
+              <Grid container item xs={12} pb={1} px={0} mx={0}>
                 <SystemContact
                   contact={{
                     type: "strPhone",

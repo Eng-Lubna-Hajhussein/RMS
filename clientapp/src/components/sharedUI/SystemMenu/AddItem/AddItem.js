@@ -11,7 +11,8 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
-} from "@mui/material";
+  Box,
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
@@ -182,11 +183,29 @@ function AddItem({
                   container
                   justifyContent={"center"}
                   alignContent={"center"}
+                  height={"auto"}
                   sx={{
-                    background: `url(${img})`,
+                    position: "relative",
                     ...styles.dishImgContainerItem,
                   }}
                 >
+                  {img && (
+                    <Grid
+                      item
+                      container
+                      xs={12}
+                      position="absolute"
+                      bottom={"-70%"}
+                      justifyContent="center"
+                    >
+                      <Box
+                        component={"img"}
+                        height={150}
+                        width={200}
+                        src={img}
+                      />
+                    </Grid>
+                  )}
                   <UploadButton001 onChange={onImgChange} />
                 </Grid>
               </Grid>
@@ -195,10 +214,10 @@ function AddItem({
               item
               lg={6}
               xs={12}
-
-              sx={{paddingY:{xs:"10px",lg:"2px"},
-            paddingX:{xs:"0px",lg:"10px"}
-            }}
+              sx={{
+                lg: { py: "2px !important", px: "10px !important" },
+                xs: { py: "10px !important", px: "0px !important" },
+              }}
               container
               justifyContent={"start"}
               alignContent={"start"}
@@ -366,14 +385,12 @@ function AddItem({
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogAction}>
           <Grid
             container
             p={2}
             px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyItems={"end"}
+            justifyContent={"end"}
           >
             <Grid item lg={2} xs={6}>
               <AnimButton0001
@@ -384,7 +401,7 @@ function AddItem({
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

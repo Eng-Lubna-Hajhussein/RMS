@@ -6,7 +6,7 @@ import {
   TextField,
   DialogActions,
   Grid,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { objCategoriesType } from "appHelper/appVariables";
@@ -80,11 +80,14 @@ function EditCity({
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
-                <Title0001 title={dictionary.systemDeliveryAddress.editCity[lang]} dir={dir} />
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
+                <Title0001
+                  title={dictionary.systemDeliveryAddress.editCity[lang]}
+                  dir={dir}
+                />
               </Grid>
-              <Grid item lg="6" xs='12' p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -98,7 +101,7 @@ function EditCity({
                   variant="outlined"
                 />
               </Grid>
-              <Grid item lg="6" xs='12' p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -114,16 +117,8 @@ function EditCity({
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
-          <Grid
-            container
-            p={2}
-            // px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
-          >
-            <Grid item xs='5' lg="3">
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
+            <Grid item xs={5} lg={3}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
                 color={App_Primary_Color}
@@ -132,7 +127,7 @@ function EditCity({
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );
