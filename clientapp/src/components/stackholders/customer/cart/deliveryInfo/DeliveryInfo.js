@@ -1,6 +1,5 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography ,Paper} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { PersonPinCircle } from "@mui/icons-material";
 import { dictionary } from "appHelper/appDictionary";
@@ -12,8 +11,6 @@ const styles = {
   paper: {
     height: "fit-content",
     width: "100%",
-    background: App_Second_Color,
-    borderRadius: "20px",
     padding: "15px",
     boxShadow: "none",
   },
@@ -27,10 +24,9 @@ const styles = {
   },
   upgradeBtn: {
     background: "#000",
-    padding: "20px 40px",
-    borderRadius: "10px",
-    ":hover": {
-      background: App_Primary_Color,
+    padding: "18px 40px !important",
+    "&:hover": {
+      bgcolor:t=>t.palette.primary.main +" !important",
     },
   },
   upgradeBtnLabel: {
@@ -40,9 +36,9 @@ const styles = {
 
 function DeliveryInfo({ appState, lang, dir }) {
   return (
-    <Paper sx={styles.paper}>
+    <Paper sx={styles.paper} bgcolor="secondary" borderRadius={3}>
       <Grid container sx={styles.fullHeight} alignContent={"start"}>
-        <Grid item xs="12" p={1}>
+        <Grid item xs={12} p={1}>
           <iframe
             src={`https://maps.google.com/maps?q=${appState?.userInfo?.jsnLocation?.lat}, ${appState?.userInfo?.jsnLocation?.long}&z=15&output=embed`}
             width="100%"
@@ -51,7 +47,7 @@ function DeliveryInfo({ appState, lang, dir }) {
             style={styles.locationIframe}
           />
         </Grid>
-        <Grid item xs="12" container p={1}>
+        <Grid item xs={12} container p={1}>
           <Grid item>
             <PersonPinCircle />
           </Grid>
@@ -65,8 +61,8 @@ function DeliveryInfo({ appState, lang, dir }) {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item xs="12" p={1}>
-          <Button sx={styles.upgradeBtn} fullWidth>
+        <Grid item xs={12} p={1}>
+          <Button sx={styles.upgradeBtn} variant="contained" color="black" fullWidth>
             <Typography color={"#fff"} sx={styles.upgradeBtnLabel}>
               {dictionary.buttons.upgradeDelivery[lang]}
             </Typography>

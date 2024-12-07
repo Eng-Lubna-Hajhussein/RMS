@@ -7,7 +7,7 @@ import {
   DialogActions,
   Grid,
   Typography,
-} from "@mui/material";
+} from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { AppContext } from "contextapi/context/AppContext";
@@ -62,7 +62,6 @@ function Checkout({ open, handleClose, lang, dir }) {
           component: "form",
           onSubmit: handleSubmit,
         }}
-        maxWidth="md"
       >
         <DialogTitle sx={styles.dialogTitle}>
           <Grid container justifyContent={"end"}>
@@ -71,11 +70,11 @@ function Checkout({ open, handleClose, lang, dir }) {
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001 title={dictionary.shared.checkout[lang]} dir={dir} />
               </Grid>
-              <Grid item xs="12" p={1}>
+              <Grid item xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -90,7 +89,7 @@ function Checkout({ open, handleClose, lang, dir }) {
                   }
                 />
               </Grid>
-              <Grid item lg="6" xs="12" p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -104,7 +103,7 @@ function Checkout({ open, handleClose, lang, dir }) {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item lg="6" xs="12" p={1}>
+              <Grid item lg={6} xs={12} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -122,15 +121,13 @@ function Checkout({ open, handleClose, lang, dir }) {
               </Grid>
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions sx={styles.dialogActions}>
           <Grid
             container
             p={2}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyItems={"end"}
+            justifyContent={"end"}
           >
-            <Grid item lg="2" xs="5">
+            <Grid item lg={4} xs={8}>
               <AnimButton0001
                 label={dictionary.buttons.checkout[lang]
                 }
@@ -140,7 +137,7 @@ function Checkout({ open, handleClose, lang, dir }) {
               />
             </Grid>
           </Grid>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     </React.Fragment>
   );

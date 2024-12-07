@@ -1,40 +1,21 @@
-import { lstWebsiteNav } from "appHelper/appVariables";
-import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
-import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useMemo, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import React from "react";
 import {
-  Box,
   Button,
   Grid,
-  Icon,
-  TableFooter,
-  TablePagination,
-  TextField,
   Typography,
-} from "@mui/material";
+  Paper
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/optionList/OptionList";
-import { MoreVert, TimeToLeave } from "@mui/icons-material";
-import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import { TimeToLeave } from "@mui/icons-material";
 import DeliveryTimer from "./deliveryTimer/DeliveryTimer";
-import { useParams } from "react-router-dom";
-import { calculateZDirection } from "appHelper/appFunctions";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   paper: {
-    height: { lg: "300px", xs: "fit-content" },
     width: "100%",
-    background: App_Second_Color,
-    borderRadius: "20px",
-    padding: { lg: "50px", xs: "15px" },
     boxShadow: "none",
+    lg:{height:"300px",p:"50px"},
+    xs:{height:"fit-content",p:"15px"}
   },
   fullHeight: {
     height: "100%",
@@ -43,7 +24,7 @@ const styles = {
     height: "fit-content",
   },
   title: {
-    fontSize: { lg: "25px", xs: "20px" },
+    lg: {fontSize:"25px"}, xs: {fontSize:"20px"} ,
     fontWeight: "800",
     textTransform: "capitalize",
   },
@@ -51,8 +32,8 @@ const styles = {
     background: "#000",
     padding: "20px 40px",
     borderRadius: "10px",
-    ":hover": {
-      background: App_Primary_Color,
+    "&:hover": {
+      background:t=>t.palette.primary.main +" !important" ,
     },
   },
   deliveredBtnLabel: {
@@ -69,7 +50,7 @@ function DeliveryTime({
   dir,
 }) {
   return (
-    <Paper sx={styles.paper}>
+    <Paper sx={styles.paper} bgcolor="secondary" borderRadius={3} py={3}>
       <Grid container sx={styles.fullHeight} alignContent={"start"}>
         <Grid
           item
@@ -96,7 +77,9 @@ function DeliveryTime({
             <Button
               sx={styles.deliveredBtn}
               fullWidth
+              color="black"
               onClick={handleOrderDelivered}
+              variant="contained"
             >
               <Typography color={"#fff"} sx={styles.deliveredBtnLabel}>
                 {dictionary.buttons.delivered[lang]}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlReview } from "./controller/CtrlReview";
@@ -12,7 +12,8 @@ import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
 
 const styles = {
   container: {
-    marginY: { lg: "50px", xs: "20px" },
+    lg: { my: "50px" },
+    xs: { my: "20px" },
   },
 };
 
@@ -143,7 +144,7 @@ function Review() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item lg="10" xs="12" px={2} container>
+          <Grid item lg={10} xs={12} px={2} container>
             <CustomerReview
               dir={dir}
               handleAdd={handleAdd}

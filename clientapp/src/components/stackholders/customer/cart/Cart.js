@@ -1,7 +1,7 @@
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import Checkout from "./checkout/Checkout";
 import { useNavigate, useParams } from "react-router-dom";
 import Products from "./products/Products";
@@ -11,12 +11,8 @@ import { ctrlRouteCustomer } from "../controller/CtrlRouteCustomer";
 import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 
 const styles = {
-  container: {
-    marginY: { lg: "50px", xs: "20px" },
-  },
-  cartInfo: {
-    marginTop: { lg: "40px", xs: "10px" },
-  },
+  container: { lg: { my: "50px" }, xs: { my: "20px" } },
+  cartInfo: { lg: { mt: "40px" }, xs: { mt: "10px" } },
 };
 
 function Cart() {
@@ -27,6 +23,8 @@ function Cart() {
   const dir = appState.clientInfo.strDir;
   const [openCheckout, setOpenCheckout] = useState(false);
   const [uploadPictureOpen, setUploadPicture] = useState(false);
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
 
   const handleUploadPictureOpen = () => {
     setUploadPicture(true);
@@ -121,8 +119,8 @@ function Cart() {
         blnUserLogin={appState.clientInfo.blnUserLogin}
       />
       <Grid container justifyContent={"center"} sx={styles.container}>
-        <Grid item lg="10" xs="12" px={2} container>
-          <Grid item xs="12" px={1}>
+        <Grid item lg={10} xs={12} px={2} container>
+          <Grid item xs={12} px={1}>
             <Products
               orderedCategories={orderedCategories}
               onChangeQuantity={onChangeQuantity}
@@ -133,20 +131,23 @@ function Cart() {
               appState={appState}
             />
           </Grid>
-          <Grid
-            item
-            xs="12"
-            container
-            sx={styles.cartInfo}
-          >
-            <Grid item lg="4" xs="12"
-            sx={{paddingY:{lg:"0px",xs:"20px"}}}
-            px={1}>
+          <Grid item xs={12} container sx={styles.cartInfo}>
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              py={isExtraSmallAndDown?"20px":0}
+              px={1}
+            >
               <DeliveryInfo appState={appState} lang={lang} dir={dir} />
             </Grid>
-            <Grid item lg="8"
-            sx={{paddingY:{lg:"0px",xs:"20px"}}}
-            xs="12" px={1}>
+            <Grid
+              item
+              lg={8}
+              py={isExtraSmallAndDown?"20px":0}
+              xs={12}
+              px={1}
+            >
               <TotalInfo
                 dir={dir}
                 handleCheckoutOpen={handleCheckoutOpen}

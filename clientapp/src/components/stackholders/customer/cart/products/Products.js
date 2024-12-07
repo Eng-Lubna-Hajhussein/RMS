@@ -1,10 +1,5 @@
 import { objAppActions } from "appHelper/appVariables";
 import React, { useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import {
   Box,
   Button,
@@ -13,7 +8,15 @@ import {
   TablePagination,
   TextField,
   Typography,
-} from "@mui/material";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  TableContainer,
+} from "@basetoolkit/ui";
+import { textFieldClasses } from "@basetoolkit/ui/classes";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/optionList/OptionList";
 import { MoreVert } from "@mui/icons-material";
@@ -26,20 +29,21 @@ const styles = {
     marginLeft: "auto",
   },
   dishName: {
-    fontSize: { lg: "16px !important", xs: "10px" },
+    lg: { fontSize: "16px !important" },
+    xs: { fontSize: "10px" },
     fontWeight: "800 !important",
     color: "#000",
     fontFamily: "sans-serif",
   },
   dishDescription: {
-    fontSize: { lg: "18px !important", xs: "9px" },
     fontWeight: "400 !important",
     color: "#555",
     fontFamily: "Epilogue",
-    lineHeight: { lg: "30px !important", xs: "20px" },
+    lg: { fontSize: "18px !important", lineHeight: "30px !important" },
+    xs: { fontSize: "9px", lineHeight: "20px" },
   },
   columnTablecell: {
-    border: "1px solid #c4c4c4",
+    border: "1px solid #c4c4c4 !important",
     background: App_Primary_Color,
     color: "#fff",
     fontSize: "15px",
@@ -48,7 +52,7 @@ const styles = {
     paddingLeft: 5,
   },
   rowTablecell: {
-    border: "1px solid #c4c4c4",
+    border: "1px solid #c4c4c4 !important",
     paddingRight: 4,
     paddingLeft: 5,
   },
@@ -59,36 +63,35 @@ const styles = {
     height: "100%",
   },
   productInfoContainer: {
-    height: { lg: "100px", xs: "50px" },
     overflowY: "auto",
+    lg: { maxHeight: "120px" },
+    xs: { maxHeight: "50px" },
   },
   optionListContainer: {
-    height: { lg: "100px", xs: "50px" },
     overflowY: "auto",
+    lg: { height: "100px" },
+    xs: { height: "50px" },
   },
   productNum: {
-    width: { lg: "100px", xs: "60px" },
-
-    "& .MuiOutlinedInput-root": {
-      fontSize: { lg: "20px", xs: "10px" },
-      fontWeight: { lg: "800", xs: "600" },
-      "& fieldset": {
-        border: `3px solid ${App_Second_Color}`,
-        borderRadius: "10px",
-      },
-      "&:hover fieldset": {
-        border: `3px solid ${App_Second_Color}`,
-        borderRadius: "10px",
-      },
-      "&.Mui-focused fieldset": {
-        border: `3px solid ${App_Second_Color}`,
-        borderRadius: "10px",
-      },
+    lg: {
+      width: "100px !important",
+      fontSize: "20px !important",
+      fontWeight: 800,
+    },
+    xs: {
+      width: "60px !important",
+      fontSize: "10px  !important",
+      fontWeight: 800,
+    },
+    [`& .${textFieldClasses.wrapper}`]: {
+      border: (theme) => `3px solid ${theme.palette.secondary.main} !important`,
+      borderRadius: "10px !important",
     },
   },
   price: {
-    fontSize: { lg: "20px", xs: "10px" },
     fontWeight: "800",
+    lg: { fontSize: "20px" },
+    xs: { fontSize: "10px" },
   },
   actionsRow: {
     background: "#f4fcfc",
@@ -96,52 +99,33 @@ const styles = {
   },
   menuBtn: {
     background: App_Primary_Color,
-    padding: { lg: "20px 40px", xs: "15px 18px" },
+    lg: { p: "20px 40px !important" },
+    xs: { p: "15px 18px !important" },
     borderRadius: "10px",
-    ":hover": {
-      background: "#000",
+    "&:hover": {
+      background: "#000 !important",
     },
   },
   menuBtnLabel: {
     textTransform: "capitalize",
-    fontSize: { lg: "18px", xs: "12px" },
+    lg: { fontSize: "18px" },
+    xs: { fontSize: "12px" },
   },
   discardBtn: {
     background: "#000",
-    padding: { lg: "20px 40px", xs: "15px 18px" },
-    borderRadius: "10px",
-    ":hover": {
-      background: App_Primary_Color,
+    lg: { p: "20px 40px !important" },
+    xs: { p: "15px 18px !important" },
+    borderRadius: "10px !important",
+    "&:hover": {
+      background: App_Primary_Color + " !important",
     },
   },
   discardBtnLabel: {
     textTransform: "capitalize",
-    fontSize: { lg: "18px", xs: "12px" },
+    lg: { fontSize: "18px" },
+    xs: { fontSize: "12px" },
   },
-  tablePagination: {
-    border: "1px solid #c4c4c4",
-    ".MuiTablePagination-toolbar": {
-      backgroundColor: "#f4fcfc",
-    },
-    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-      fontWeight: "800",
-    },
-    ".MuiTablePagination-input": {
-      fontWeight: "bold",
-      background: "#fff",
-      borderRadius: "10px",
-      border: "1px solid #000",
-      fontSize: {
-        lg: "16px",
-        xs: "14px",
-      },
-      ".MuiTablePagination-actions": {
-        marginLeft: { xs: "5px", lg: "15px" },
-        marginRight: { xs: "5px", lg: "15px" },
-      },
-    },
-
-  },
+  tablePagination: {},
 };
 
 function Products({
@@ -164,34 +148,36 @@ function Products({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleChangeRowsPerPage = ({ value }) => {
+    setRowsPerPage(+value);
     setPage(0);
   };
+
   const actionItemNavList = [
     { bigNavID: objAppActions.Delete, nav: { eng: "delete", arb: "حذف" } },
   ];
   // const columns = ["Product", "Quantity", "Total"];
   const columns = [
-    {eng:"product",arb:"الطلب"},
-    {eng:"quantity",arb:"الكمية"},
-    {eng:"total",arb:"المجموع"}
-  ]
+    { eng: "product", arb: "الطلب" },
+    { eng: "quantity", arb: "الكمية" },
+    { eng: "total", arb: "المجموع" },
+  ];
   return (
-    <Grid item xs="12" container sx={styles.container}>
+    <Grid item xs={12} container sx={styles.container}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             {columns.map((column) => (
               <TableCell sx={styles.columnTablecell} align="center">
-                  <Typography
+                <Typography
                   sx={{
-                    fontSize: { lg: "20px", xs: "12px" },
-                    fontWeight: { lg: "800", xs: "800" },
                     textTransform: "capitalize",
+                    fontWeight: 800,
+                    lg: { fontSize: "20px" },
+                    xs: { fontSize: "12px" },
                   }}
                 >
-                {column[lang]}
+                  {column[lang]}
                 </Typography>
               </TableCell>
             ))}
@@ -210,10 +196,13 @@ function Products({
                 <TableCell
                   sx={{
                     ...styles.rowTablecell,
-                    minWidth: { xs: "350px", lg: "600px" },
-                    width: { xs: "350px", lg: "600px" },
+                    lg: {
+                      width: "600px",
+                      minWidth: "600px",
+                    },
+                    xs: { width: "350px", minWidth: "350px" },
                   }}
-                  align={dir==='ltr'?"left":'right'}
+                  align={dir === "ltr" ? "left" : "right"}
                   component="th"
                   scope="row"
                 >
@@ -224,11 +213,11 @@ function Products({
                   >
                     <Grid
                       item
-                      xs="1"
+                      xs={1}
                       container
                       justifyContent={"end"}
                       alignContent={"center"}
-                      alignSelf={"flex-start"}
+                      alignSelf={"start"}
                       sx={styles.optionListContainer}
                     >
                       <OptionList
@@ -245,30 +234,33 @@ function Products({
                         lang={appState.clientInfo.strLanguage}
                       />
                     </Grid>
-                    <Grid item xs="2">
+                    <Grid item xs={2}>
                       <Box
                         component={"img"}
                         src={item.jsnCategoryInfo.strImgPath}
-                        sx={{ height: { lg: "100px", xs: "50px" } }}
+                        sx={{
+                          lg: { height: "100px" },
+                          xs: { height: "50px" },
+                        }}
                         width="100%"
                       />
                     </Grid>
                     <Grid
                       item
-                      xs="9"
+                      xs={9}
                       px={2}
                       container
                       justify={"start"}
                       alignContent={"center"}
                       sx={styles.productInfoContainer}
-                      alignSelf={"flex-start"}
+                      alignSelf={"start"}
                     >
-                      <Grid item xs="12">
+                      <Grid item xs={12} p={0} m={0}>
                         <Typography sx={styles.dishName}>
                           {item.jsnName[lang]}
                         </Typography>
                       </Grid>
-                      <Grid item xs="12">
+                      <Grid item xs={12} p={0} m={0}>
                         <Typography sx={styles.dishDescription}>
                           {item.jsnCategoryInfo.jsnDescription[lang]}
                         </Typography>
@@ -284,7 +276,7 @@ function Products({
                 >
                   <TextField
                     type="number"
-                    InputProps={{ inputProps: { min: 1, max: 10 } }}
+                    inputProps={{ min: 1, max: 10 }}
                     defaultValue={item.intQuantity}
                     sx={styles.productNum}
                     onChange={(e) => {
@@ -310,15 +302,30 @@ function Products({
               </TableRow>
             ))}
           <TableRow sx={styles.actionsRow}>
-            <TableCell colSpan={2} align={dir==='ltr'?"left":'right'} component="th" scope="row">
-              <Button sx={styles.menuBtn}>
+            <TableCell
+              colSpan={2}
+              align={dir === "ltr" ? "left" : "right"}
+              component="th"
+              scope="row"
+            >
+              <Button sx={styles.menuBtn} variant="contained">
                 <Typography color={"#fff"} sx={styles.menuBtnLabel}>
-                 {dictionary.buttons.backToMenu[lang]}
+                  {dictionary.buttons.backToMenu[lang]}
                 </Typography>
               </Button>
             </TableCell>
-            <TableCell colSpan={3} align={dir==='ltr'?"right":'left'} component="th" scope="row">
-              <Button sx={styles.discardBtn} onClick={handleCartDiscard}>
+            <TableCell
+              colSpan={3}
+              align={dir === "ltr" ? "right" : "left"}
+              component="th"
+              scope="row"
+            >
+              <Button
+                sx={styles.discardBtn}
+                color="black"
+                variant="contained"
+                onClick={handleCartDiscard}
+              >
                 <Typography color={"#fff"} sx={styles.discardBtnLabel}>
                   {dictionary.buttons.discard[lang]}
                 </Typography>
@@ -326,62 +333,27 @@ function Products({
             </TableCell>
           </TableRow>
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[3, 5, 10, 25]}
-              count={orderedCategories.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              labelDisplayedRows={({ page }) => {
-                return  <Typography
-                dir={dir}
-                sx={{
-                  fontSize: {
-                    lg: "16px",
-                    xs: "14px",
-                  },
-                  fontWeight: "600",
-                  textTransform: "capitalize",
-                }}
-              >
-                {dictionary.tablePagination.page[lang]}: {page + 1}
-              </Typography>;
-              }}
-              backIconButtonProps={{
-                color: "#fff",
-              }}
-              nextIconButtonProps={{ color: "#fff" }}
-              showFirstButton={true}
-              showLastButton={true}
-              labelRowsPerPage={<Typography
-                dir={dir}
-                sx={{
-                  fontSize: {
-                    lg: "16px",
-                    xs: "14px",
-                  },
-                  fontWeight: "600",
-                  textTransform: "capitalize",
-                }}
-              >
-                {dictionary.tablePagination.rows[lang]}:
-              </Typography>}
-              sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
-                marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
-                marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
-              },}}
-            />
-          </TableRow>
-        </TableFooter>
       </Table>
+      <Grid item xs={12} container justifyContent="end">
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          count={orderedCategories.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          SelectProps={{
+            inputProps: {
+              "aria-label": "rows per page",
+            },
+          }}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          showFirstButton={true}
+          showLastButton={true}
+          sx={{
+            ...styles.tablePagination,
+          }}
+        />
+      </Grid>
     </Grid>
   );
 }

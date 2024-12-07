@@ -52,7 +52,7 @@ const styles = {
     height: "fit-content",
   },
   tableID: {
-    lg: { fontSize: "17px", fontWeight: 800 },
+    lg: { fontSize: "14px", fontWeight: 800 },
     xs: { fontSize: "12px", fontWeight: 600 },
   },
   seatsNum: {
@@ -176,7 +176,7 @@ function TablesInfo({
                           />
                         </Grid>
                       )}
-                      <Grid item xs={table.blnTableAvailable ? "11" : "12"}>
+                      <Grid item mx={"3px"} xs={table.blnTableAvailable ? 10 : 12}>
                         <Typography color={"#000"} sx={styles.tableID}>
                           #{table.bigTableID}
                         </Typography>

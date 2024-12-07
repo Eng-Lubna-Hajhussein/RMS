@@ -80,7 +80,6 @@ function LowerToolbar({
   const { onLangChange } = useLanguage();
   const { systemID, systemName } = useParams();
   const theme = useTheme();
-  const isLargeAndDown = useMediaQueryMatch(theme.breakpoints.down("lg"));
   const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
     <Toolbar sx={styles.lowerToolBar} width={"100%"} height={"100px"}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Rating, TextField, Typography } from "@mui/material";
+import { Grid, Rating, TextField, Typography } from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
@@ -8,22 +8,23 @@ const styles = {
   container: {
     background: "#f4fcfc",
     height: "fit-content",
-    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    paddingY: "20px",
-    paddingX: { lg: "20px", xs: "5px" },
+    lg: { my: "50px", px: "20px !important" },
+    lg: { my: "20px", px: "5px !important" },
   },
   title: {
     textTransform: "uppercase",
-    fontSize: { lg: "28px", xs: "16px" },
-    fontWeight: "800",
-    color: App_Primary_Color,
+    lg: { fontSize: "24px" },
+    xs: { fontSize: "16px" },
+    fontWeight: "bold",
+    color: "primary",
     borderBottom: "3px solid #ffd40d",
     width: "fit-content",
   },
   textfield: {
     background: "#fff",
     borderRadius: "5px",
+    textTransform:"capitalize"
   },
 };
 
@@ -40,26 +41,28 @@ function ProductReview({
   dir,
 }) {
   return (
-    <Grid item xs="12" p={0} m={0} container>
+    <Grid item xs={12} p={0} m={0} container>
       <Grid
         item
-        xs="12"
+        xs={12}
         px={1}
-        pb={10}
+        py={3}
         justifyContent={"center"}
         sx={styles.container}
       >
         <Grid container>
-          <Grid item xs="12" container px={2} justifyContent={"start"}>
-            <Typography sx={styles.title}>{dictionary.customerReview.title[lang]} !</Typography>
+          <Grid item xs={12} container px={2} justifyContent={"start"}>
+            <Typography sx={styles.title} >
+              {dictionary.customerReview.title[lang]} !
+            </Typography>
           </Grid>
-          <Grid item xs="12" container justifyContent={"start"}>
-            <Grid item xs="12" container pt={3}>
-              <Grid item lg="6" xs="12" pb={2} px={2}>
+          <Grid item xs={12} container justifyContent={"start"}>
+            <Grid item xs={12} container pt={3}>
+              <Grid item lg={6} xs={12} pb={2} px={2}>
                 <Rating value={intRating} onChange={onChangeRating} />
               </Grid>
-              <Grid item xs="12" container>
-                <Grid item lg="6" xs="12" p={2}>
+              <Grid item xs={12} container>
+                <Grid item lg={6} xs={12} p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -73,7 +76,7 @@ function ProductReview({
                     label={dictionary.labels.reviewEng[lang]}
                   />
                 </Grid>
-                <Grid item lg="6" xs="12" p={2}>
+                <Grid item lg={6} xs={12} p={2}>
                   <TextField
                     sx={styles.textfield}
                     variant="outlined"
@@ -81,6 +84,7 @@ function ProductReview({
                     type="text"
                     multiline
                     rows={4}
+                    
                     defaultValue={userReview?.jsnComment["arb"]}
                     dir="rtl"
                     inputRef={reviewTextArb}
@@ -88,9 +92,9 @@ function ProductReview({
                   />
                 </Grid>
               </Grid>
-              <Grid item xs="12" container justifyContent={"end"} px={2} pt={2}>
+              <Grid item xs={12} container justifyContent={"end"} px={2} pt={2}>
                 {!userReview && (
-                  <Grid item lg="4" xs="6">
+                  <Grid item lg={4} xs={6}>
                     <AnimButton0001
                       onClick={handleAdd}
                       label={dictionary.buttons.add[lang]}
@@ -100,7 +104,7 @@ function ProductReview({
                   </Grid>
                 )}
                 {userReview && (
-                  <Grid item lg="4" xs="6">
+                  <Grid item lg={4} xs={6}>
                     <AnimButton0001
                       onClick={handleDelete}
                       label={dictionary.buttons.delete[lang]}
@@ -110,7 +114,7 @@ function ProductReview({
                   </Grid>
                 )}
                 {userReview && (
-                  <Grid item lg="4" xs="6">
+                  <Grid item lg={4} xs={6}>
                     <AnimButton0001
                       onClick={handleEdit}
                       label={dictionary.buttons.edit[lang]}

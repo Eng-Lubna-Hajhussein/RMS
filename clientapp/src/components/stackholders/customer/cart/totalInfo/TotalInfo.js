@@ -1,6 +1,5 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Paper } from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
@@ -9,79 +8,80 @@ const styles = {
   paper: {
     height: "fit-content",
     boxShadow: "none",
-    border: `4px solid ${App_Second_Color}`,
-    borderRadius: "20px",
-    padding: { lg: "45px", xs: "15px" },
+    border: `4px solid ${App_Second_Color} !important`,
+    lg: { p: "45px" },
+    xs: { p: "15px" },
   },
   fullHeight: {
     height: "100%",
   },
   cartTotals: {
-    fontSize: { lg: "25px", xs: "20px" },
+    lg: { fontSize: "25px" },
+    xs: { fontSize: "20px" },
     fontWeight: "800",
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
   subPaper: {
-    height: { lg: "250px", xs: "200px" },
+    lg: { height: "250px" },
+    xs: { height: "200px" },
     boxShadow: "none",
-    border: `4px solid #e4e4e4`,
-    borderRadius: "20px",
+    border: `4px solid #e4e4e4 !important`,
   },
   container: {
-    paddingX: { lg: "50px", xs: "10px" },
+    lg: { paddingX: "20px" },
+    xs: { paddingX: "10px" },
   },
   font: {
-    fontSize: { lg: "15px", xs: "14px" },
+    lg: { fontSize: "15px" },
+    xs: { fontSize: "14px" },
     fontWeight: "800",
-    // textTransform:"capitalize"
   },
   totalPaper: {
-    height: { lg: "80px", xs: "60px" },
     width: "100%",
     boxShadow: "none",
-    background: "#f4fcfc",
-    borderRadius: "20px",
-    paddingX: { lg: "20px", xs: "10px" },
+    lg: { paddingX: "20px",height:"80px" },
+    xs: { paddingX: "10px",height:"60px" },
   },
   fitContentHeight: {
     height: "fit-content",
   },
   totalContainer: {
     height: "100%",
-    paddingX: { lg: "20px", xs: "10px" },
+    lg: { paddingX: "20px" },
+    xs: { paddingX: "10px" },
   },
 };
 
 function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
   return (
-    <Paper sx={styles.paper}>
+    <Paper sx={styles.paper} borderRadius={3}>
       <Grid container sx={styles.fullHeight} alignContent={"start"}>
-        <Grid item xs="12" p={1} pb={2}>
+        <Grid item xs={12} p={1} pb={2}>
           <Typography sx={styles.cartTotals}>
             {dictionary.cart.title[lang]}
           </Typography>
         </Grid>
-        <Grid item xs="12">
-          <Paper sx={styles.subPaper}>
+        <Grid item xs={12}>
+          <Paper sx={styles.subPaper} borderRadius={3}>
             <Grid container sx={styles.fullHeight} alignContent={"center"}>
-              <Grid container item xs="12" sx={styles.container}>
-                <Grid item xs="12" py={1} container>
-                  <Grid item xs="6" container justifyContent={"start"}>
+              <Grid container item xs={12} sx={styles.container}>
+                <Grid item xs={12} py={1} container>
+                  <Grid item xs={6} container justifyContent={"start"}>
                     <Typography sx={styles.font}>
                       {dictionary.cart.subtotal[lang]}:
                     </Typography>
                   </Grid>
-                  <Grid item xs="6" container justifyContent={"flex-end"}>
+                  <Grid item xs={6} container justifyContent={"end"}>
                     <Typography sx={styles.font}>${totalPrice}</Typography>
                   </Grid>
                 </Grid>
-                <Grid item xs="12" py={1} container>
-                  <Grid item xs="6" container justifyContent={"start"}>
+                <Grid item xs={12} py={1} container>
+                  <Grid item xs={6} container justifyContent={"start"}>
                     <Typography sx={styles.font}>
                       {dictionary.cart.shipping[lang]}:
                     </Typography>
                   </Grid>
-                  <Grid item xs="6" container justifyContent={"flex-end"}>
+                  <Grid item xs={6} container justifyContent={"end"}>
                     <Typography sx={styles.font}>
                       {dictionary.cart.free[lang]}
                     </Typography>
@@ -90,24 +90,24 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
               </Grid>
               <Grid
                 item
-                xs="12"
+                xs={12}
                 p={2}
                 sx={styles.fitContentHeight}
                 container
                 alignContent={"center"}
               >
-                <Paper sx={styles.totalPaper}>
+                <Paper sx={styles.totalPaper} bgcolor={"#f4fcfc"} borderRadius={3}>
                   <Grid
                     container
                     sx={styles.totalContainer}
                     alignContent={"center"}
                   >
-                    <Grid item xs="6" container justifyContent={"start"}>
+                    <Grid item xs={6} container justifyContent={"start"}>
                       <Typography sx={styles.font}>
                         {dictionary.cart.total[lang]}:
                       </Typography>
                     </Grid>
-                    <Grid item xs="6" container justifyContent={"flex-end"}>
+                    <Grid item xs={6} container justifyContent={"end"}>
                       <Typography sx={styles.font}>${totalPrice}</Typography>
                     </Grid>
                   </Grid>
@@ -116,7 +116,7 @@ function TotalInfo({ handleCheckoutOpen, totalPrice, lang, dir }) {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs="12" p={1} pt={3} container justifyContent={"end"}>
+        <Grid item xs={12} p={1} pt={3} container justifyContent={"end"}>
           <AnimButton0001
             label={dictionary.buttons.proceedToCheckout[lang]}
             color={App_Primary_Color}

@@ -1,7 +1,7 @@
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { useNavigate, useParams } from "react-router-dom";
 import { findUsers } from "appHelper/fetchapi/tblUser/tblUser";
@@ -13,9 +13,7 @@ import UploadLogo from "../uploadLogo/UploadLogo";
 import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
-  container: {
-    marginY: { lg: "50px", xs: "20px" },
-  },
+  container: { lg: { my: "50px" }, xs: { my: "20px" } },
   itemContainer: {
     background: "#f4fcfc",
     height: "140px",
@@ -84,21 +82,6 @@ const styles = {
     textTransform: "capitalize",
     fontWeight: "700",
   },
-  tablePagination: {
-    ".MuiTablePagination-toolbar": {
-      backgroundColor: "#f4fcfc",
-      textAlign: "center",
-    },
-    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-      fontWeight: "800",
-    },
-    ".MuiTablePagination-input": {
-      fontWeight: "bold",
-      background: "#fff",
-      borderRadius: "10px",
-      border: "1px solid #000",
-    },
-  },
 };
 
 function Users() {
@@ -157,8 +140,6 @@ function Users() {
     systemName: systemName,
   });
 
-
-
   const instalData = async () => {
     setIsLoading(true);
     const systemUsers = await findUsers(appState.systemInfo.bigSystemID);
@@ -204,7 +185,7 @@ function Users() {
       {isLoading && <Typography>loading</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item lg="10" xs="12" px={2} container>
+          <Grid item lg={10} xs={12} px={2} container>
             <UsersInfo
               dir={dir}
               handleUserDetails={handleUserDetails}
