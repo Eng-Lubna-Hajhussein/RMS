@@ -1,40 +1,19 @@
-import {
-  AddAPhoto,
-  AnimationOutlined,
-  Close,
-  Favorite,
-  FavoriteBorder,
-  StyleOutlined,
-  Upload,
-} from "@mui/icons-material";
+import { AddAPhoto, Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
-  TextField,
   DialogActions,
   Grid,
-  Typography,
-  Box,
-  Fab,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
   Avatar,
-} from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import { generateRandomID } from "appHelper/appFunctions";
-import { objCategoriesType } from "appHelper/appVariables";
+  Button,
+} from "@basetoolkit/ui";
+import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
+import VisuallyHiddenInput from "components/sharedUI/VisuallyHiddenInput/VisuallyHiddenInput";
 import { AppContext } from "contextapi/context/AppContext";
 import useUpload from "hooks/useUpload/useUpload";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ctrlUploadPicture } from "./controller/CtrlUploadPicture";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
 import { dictionary } from "appHelper/appDictionary";
@@ -43,7 +22,7 @@ function UploadPicture({ open, handleClose }) {
   const { appState, appDispatch } = useContext(AppContext);
   const lang = appState.clientInfo.strLanguage;
   const dir = appState.clientInfo.strDir;
-  const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
+  const { data, setRequestFiles, setUserData } = useUpload();
 
   const onImgChange = (e) => {
     setRequestFiles([...e.target.files]);
@@ -93,7 +72,10 @@ function UploadPicture({ open, handleClose }) {
           >
             <Grid item xs={12} container justifyContent={"center"}>
               <Grid item xs={12} py={2}>
-                 <Title0001 title={dictionary.shared.profilePicture[lang]} dir={dir} />
+                <Title0001
+                  title={dictionary.shared.profilePicture[lang]}
+                  dir={dir}
+                />
               </Grid>
               <Grid
                 item
@@ -116,31 +98,26 @@ function UploadPicture({ open, handleClose }) {
                   justifyContent={"center"}
                   sx={{ position: "absolute", top: "40%", bottom: "60%" }}
                 >
-                  <label htmlFor="upload-photo">
-                    <input
-                      style={{ display: "none" }}
-                      id="upload-photo"
-                      name="upload-photo"
-                      type="file"
-                      onChange={onImgChange}
-                    />
-
-                    <Fab
-                      size="large"
-                      component="span"
-                      aria-label="add"
-                      variant="extended"
-                      sx={{
-                        boxShadow: "none",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      <AddAPhoto />
-                    </Fab>
-                  </label>
+                  <Button
+                    size="large"
+                    component="label"
+                    aria-label="add"
+                    variant="contained"
+                    role={undefined}
+                    tabIndex={-1}
+                    sx={{
+                      boxShadow: "none",
+                      borderRadius: "50% !important",
+                      p: "15px !important",
+                    }}
+                    type="button"
+                  >
+                    <AddAPhoto />
+                    <VisuallyHiddenInput type="file" onChange={onImgChange} />
+                  </Button>
                 </Grid>
                 <Grid item xs={12} container justifyContent={"center"}>
-                  <Avatar src={img} sx={{ height: "200px", width: "200px" }} />
+                  <Avatar src={img} height={200} width={200} />
                 </Grid>
               </Grid>
             </Grid>
@@ -150,9 +127,9 @@ function UploadPicture({ open, handleClose }) {
           <Grid
             container
             p={2}
-            // px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            justifyItems={"end"}
+            justifyContent={"end"}
+            width={"100%"}
           >
             <Grid item lg={3} xs={5}>
               <AnimButton0001

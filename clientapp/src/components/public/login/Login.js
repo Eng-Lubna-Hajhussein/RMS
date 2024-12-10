@@ -3,8 +3,8 @@ import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { Demo_jsnSystemInfo, lstWebsiteNav } from "appHelper/appVariables";
 import { AppContext } from "contextapi/context/AppContext";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import { useForm } from "react-hook-form";
-import { Grid, TextField, Typography, Box } from "@mui/material";
+import { useForm, Controller } from "@basetoolkit/ui/form";
+import { Grid, TextField, Typography, Box } from "@basetoolkit/ui";
 import { App_Second_Color } from "appHelper/appColor";
 import { ctrlLogin } from "./controller/CtrlLogin";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,15 +15,16 @@ const styles = {
   itemContainer: {
     background: "#f3fbfb",
     height: "fit-content",
-    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: { lg: "30px", xs: "15px" },
+    lg: { my: "50px", p: "30px !important" },
+    lg: { my: "20px", p: "15px !important" },
   },
   title: {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: { lg: "30px", xs: "25px" },
+    lg: { fontSize: "30px" },
+    xs: { fontSize: "25px" },
   },
   textfield: {
     background: "#fff",
@@ -34,7 +35,8 @@ const styles = {
     height: "30px",
   },
   titleContainer: {
-    paddingBottom: { lg: "20px", xs: "10px" },
+    lg: { pb: "20px" },
+    xs: { pb: "10px" },
   },
 };
 
@@ -61,12 +63,11 @@ function Login() {
       });
     }
   }, []);
+
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-    reset,
-    trigger,
   } = useForm();
 
   const onSubmit = (formData) => {
@@ -110,8 +111,8 @@ function Login() {
             item
             container
             justifyContent={"center"}
-            lg="5"
-            xs="12"
+            lg={5}
+            xs={12}
             sx={styles.itemContainer}
             alignContent={"center"}
             alignItems={"center"}
@@ -123,8 +124,8 @@ function Login() {
                 height: "100%",
               }}
             >
-              <Grid container item xs="12">
-                <Grid item xs="12" container justifyContent={"center"}>
+              <Grid container item xs={12}>
+                <Grid item xs={12} container justifyContent={"center"}>
                   <Box
                     component={"img"}
                     sx={styles.logo}
@@ -133,7 +134,7 @@ function Login() {
                 </Grid>
                 <Grid
                   item
-                  xs="12"
+                  xs={12}
                   sx={styles.titleContainer}
                   container
                   justifyContent={"center"}
@@ -142,47 +143,65 @@ function Login() {
                     {dictionary.login.title[lang]}
                   </Typography>
                 </Grid>
-                <Grid item xs="12" container>
-                  <Grid item xs="12" p={2}>
-                    <TextField
-                      sx={styles.textfield}
-                      variant="outlined"
-                      fullWidth
-                      type="email"
-                      label={dictionary.labels.emailAddress[lang]}
-                      dir="ltr"
-                      className={`form-control ${errors.email && "invalid"}`}
-                      {...register("email", {
-                        required: "Email is Required",
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Invalid email address",
-                        },
-                      })}
-                      onKeyUp={() => {
-                        trigger("email");
-                      }}
-                    />
+                <Grid item xs={12} container>
+                  <Grid item xs={12} p={2}>
+                   <Controller
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        sx={styles.textfield}
+                        {...field}
+                        helperText={errors["email"]?.message || ""}
+                        error={errors["email"]?.message}
+                        required
+                        fullWidth
+                        type="email"
+                        dir="ltr"
+                      />
+                    );
+                  }}
+                  rules={{
+                    required: { value: true, message: "Email is Required" },
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address",
+                    },
+                  }}
+                  label={dictionary.labels.emailAddress[lang]}
+                  name="email"
+                  control={control}
+                  variant="outlined"
+                  color="secondary"
+                />
                   </Grid>
-                  <Grid item xs="12" p={2}>
-                    <TextField
-                      sx={styles.textfield}
-                      variant="outlined"
-                      fullWidth
-                      dir="ltr"
-                      type="password"
-                      label={dictionary.labels.password[lang]}
-                      className={`form-control ${errors.password && "invalid"}`}
-                      {...register("password", {
-                        required: "Password is Required",
-                      })}
-                      onKeyUp={() => {
-                        trigger("password");
-                      }}
-                    />
+                  <Grid item xs={12} p={2}>
+                  <Controller
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        sx={styles.textfield}
+                        {...field}
+                        helperText={errors["password"]?.message || ""}
+                        error={errors["password"]?.message}
+                        required
+                        fullWidth
+                        type="password"
+                        dir="ltr"
+                      />
+                    );
+                  }}
+                  rules={{
+                    required: { value: true, message: "Password is Required" },
+                  }}
+                  label={dictionary.labels.password[lang]}
+                  name="password"
+                  control={control}
+                  variant="outlined"
+                  color="secondary"
+                />
                   </Grid>
                 </Grid>
-                <Grid item xs="12" container px={2} justifyContent={"end"}>
+                <Grid item xs={12} container px={2} justifyContent={"end"}>
                   <AnimButton0001
                     label={dictionary.buttons.login[lang]}
                     color={App_Second_Color}

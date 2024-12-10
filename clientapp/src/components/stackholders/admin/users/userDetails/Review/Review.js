@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import { Box, Grid, Rating, Typography } from "@mui/material";
+import { Box, Grid, Rating, Typography } from "@basetoolkit/ui";
 import noReviewImg from "assets/image/no-review.png";
 import { AppContext } from "contextapi/context/AppContext";
 import moment from "moment";

@@ -3,17 +3,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "contextapi/context/AppContext";
 import {
   Divider,
-  FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
   Typography,
   Box,
-} from "@mui/material";
-import { useForm } from "react-hook-form";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+  useTheme,
+} from "@basetoolkit/ui";
+import { useForm, Controller } from "@basetoolkit/ui/form";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { ctrlSignUp } from "./controller/CtrlSignUp";
 import useMapLocation from "hooks/useMapLocation/useMapLocation";
@@ -26,9 +24,9 @@ const styles = {
   container: {
     background: "#f3fbfb",
     height: "fit-content",
-    marginY: { lg: "50px", xs: "20px" },
     borderRadius: "20px",
-    padding: { lg: "30px", xs: "15px" },
+    lg: { my: "50px", p: "30px !important" },
+    xs: { my: "20px", p: "15px !important" },
   },
   logo: {
     width: "150px",
@@ -38,12 +36,17 @@ const styles = {
     color: "#000",
     textTransform: "capitalize",
     fontWeight: "800",
-    fontSize: { lg: "30px", xs: "20px" },
+    lg: { fontSize: "30px" },
+    xs: { fontSize: "20px" },
   },
   regUsing: {
     color: "#000",
     fontWeight: "800",
-    fontSize: { lg: "17px", xs: "13px" },
+    textTransform: "capitalize",
+    textDecoration: "underline",
+    cursor: "pointer",
+    lg: { fontSize: "17px" },
+    xs: { fontSize: "13px" },
   },
   inputLabel: {
     textTransform: "capitalize",
@@ -61,9 +64,10 @@ const styles = {
 };
 
 function SignupUser() {
+  const theme = useTheme();
   const { appState, appDispatch } = useContext(AppContext);
   const { mapLocation } = useMapLocation();
-  const { systemID,systemName } = useParams();
+  const { systemID, systemName } = useParams();
   const dir = appState.clientInfo.strDir;
   const [isLoading, setIsLoading] = useState(false);
   const [systems, setSystems] = useState([]);
@@ -76,17 +80,29 @@ function SignupUser() {
     townID: null,
   };
   const [address, setAddress] = useState(addressInitial);
-  const onChangeSystem = (event) => {
-    const systemID = event.target.value;
+  const onChangeSystem = (selected) => {
+    const systemID = selected.value;
     const systemIndex = systems.findIndex(
       ({ bigSystemID }) => bigSystemID === systemID
     );
     if (systemIndex !== -1) {
+      const system = systems[systemIndex];
       setRegSystem(systems[systemIndex]);
+      const countryID = Object.keys(system?.deliveryAddress?.appRegionsID)[0];
+      const cityID =
+        countryID &&
+        Object.keys(system?.deliveryAddress?.appRegionsID[countryID])[0];
+      const townID =
+        cityID && system?.deliveryAddress?.appRegionsID[countryID][cityID][0];
+      setAddress({
+        countryID,
+        cityID,
+        townID,
+      });
     }
   };
-  const onChangeCountry = (event) => {
-    const countryID = event.target.value;
+  const onChangeCountry = (selected) => {
+    const countryID = selected.value;
     address.countryID = countryID;
     address.cityID = countryID
       ? Object.keys(
@@ -99,8 +115,8 @@ function SignupUser() {
         : null;
     setAddress({ ...address });
   };
-  const onChangeCity = (event) => {
-    const cityID = event.target.value;
+  const onChangeCity = (selected) => {
+    const cityID = selected.value;
     address.cityID = cityID;
     address.townID =
       address.countryID && address.cityID
@@ -110,8 +126,8 @@ function SignupUser() {
         : null;
     setAddress({ ...address });
   };
-  const onChangeTown = (event) => {
-    const townID = event.target.value;
+  const onChangeTown = (selected) => {
+    const townID = selected.value;
     address.townID = townID;
     setAddress({ ...address });
   };
@@ -135,11 +151,9 @@ function SignupUser() {
   }, []);
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-    reset,
-    trigger,
   } = useForm();
 
   const onSubmit = (formData) => {
@@ -188,12 +202,12 @@ function SignupUser() {
             item
             container
             justifyContent={"center"}
-            lg="8"
-            xs="12"
+            lg={8}
+            xs={12}
             sx={styles.container}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid item xs="12" container justifyContent={"center"}>
+              <Grid item xs={12} container justifyContent={"center"}>
                 <Box
                   component={"img"}
                   sx={styles.logo}
@@ -204,43 +218,41 @@ function SignupUser() {
                   }
                 />
               </Grid>
-              <Grid item xs="12" container justifyContent={"center"}>
+              <Grid item xs={12} container justifyContent={"center"}>
                 <Typography component={"h3"} sx={styles.title}>
                   {dictionary.signup.userRegistration[lang]}
                 </Typography>
               </Grid>
               {!systemID && (
-                <Grid item xs="12" container>
-                  <Grid item xs="12" p={2}>
+                <Grid item xs={12} container>
+                  <Grid item xs={12} p={2}>
                     <Title0001
-                      color={App_Primary_Color}
+                      color={theme.palette.primary.main}
                       title={dictionary.signup.registeredRestaurants[lang]}
                       dir={dir}
                     />
                   </Grid>
                   {regSystem && (
-                    <Grid item xs="12" container>
-                      <Grid item xs="12" p={2}>
-                        <FormControl fullWidth>
-                          <InputLabel sx={styles.inputLabel}>
-                            {dictionary.labels.restaurant[lang]}
-                          </InputLabel>
-                          <Select
-                            value={regSystem?.bigSystemID}
-                            defaultValue={regSystem?.bigSystemID}
-                            required
-                            onChange={onChangeSystem}
-                            sx={styles.select}
-                          >
-                            {systems?.map((system, index) => (
-                              <MenuItem value={system.bigSystemID}>
-                                {system?.jsnSystemName[lang]}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
+                    <Grid item xs={12} container>
+                      <Grid item xs={12} p={2}>
+                        <Select
+                          defaultValue={{
+                            value: regSystem?.bigSystemID,
+                            label: regSystem?.jsnSystemName[lang],
+                          }}
+                          required
+                          onChange={onChangeSystem}
+                          sx={styles.select}
+                          fullWidth
+                        >
+                          {systems?.map((system, index) => (
+                            <MenuItem value={system.bigSystemID}>
+                              {system?.jsnSystemName[lang]}
+                            </MenuItem>
+                          ))}
+                        </Select>
                       </Grid>
-                      <Grid item xs="12" p={2}>
+                      <Grid item xs={12} p={1}>
                         <Typography px={1} sx={styles.regUsing}>
                           {dictionary.signup.registerUsing[lang] + " "}
                           <Link to={"/" + regSystem?.strSystemPathURL}>
@@ -251,192 +263,238 @@ function SignupUser() {
                       </Grid>
                     </Grid>
                   )}
-                  <Grid item xs="12" p={2}>
+                  <Grid item xs={12} p={2}>
                     <Divider />
                   </Grid>
                 </Grid>
               )}
-              <Grid item xs="12" container>
-                <Grid item xs="12" p={2}>
+              <Grid item xs={12} container>
+                <Grid item xs={12} p={2}>
                   <Title0001
-                    color={App_Primary_Color}
+                    color={theme.palette.primary.main}
                     title={dictionary.signup.userInfo[lang]}
                     dir={dir}
                   />
                 </Grid>
-                <Grid item xs="12" container>
-                  <Grid item lg="6" xs="12" p={2}>
-                    <TextField
-                      sx={styles.textfield}
-                      variant="outlined"
-                      fullWidth
-                      type="text"
-                      dir="ltr"
-                      label={dictionary.labels.nameEng[lang]}
-                      className={`form-control ${errors.nameEng && "invalid"}`}
-                      {...register("nameEng", {
-                        required: "Name is Required",
-                      })}
-                      onKeyUp={() => {
-                        trigger("nameEng");
+                <Grid item xs={12} container>
+                  <Grid item lg={6} xs={12} p={2}>
+                    <Controller
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            helperText={errors["nameEng"]?.message || ""}
+                            error={errors["nameEng"]?.message}
+                            required
+                            sx={styles.textfield}
+                            fullWidth
+                            type="text"
+                            dir="ltr"
+                          />
+                        );
                       }}
+                      rules={{
+                        required: { value: true, message: "Name is Required" },
+                      }}
+                      label={dictionary.labels.nameEng[lang]}
+                      name="nameEng"
+                      control={control}
+                      color="secondary"
+                      variant="outlined"
                     />
                   </Grid>
-                  <Grid item lg="6" xs="12" p={2}>
-                    <TextField
-                      sx={styles.textfield}
-                      variant="outlined"
-                      fullWidth
-                      type="text"
-                      label={dictionary.labels.nameArb[lang]}
-                      className={`form-control ${errors.nameArb && "invalid"}`}
-                      {...register("nameArb", {
-                        required: "Name is Required",
-                      })}
-                      onKeyUp={() => {
-                        trigger("nameArb");
+                  <Grid item lg={6} xs={12} p={2}>
+                    <Controller
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            helperText={errors["nameArb"]?.message || ""}
+                            error={errors["nameArb"]?.message}
+                            required
+                            sx={styles.textfield}
+                            fullWidth
+                            type="text"
+                            dir="ltr"
+                          />
+                        );
                       }}
+                      rules={{
+                        required: { value: true, message: "Name is Required" },
+                      }}
+                      label={dictionary.labels.nameArb[lang]}
+                      name="nameArb"
+                      control={control}
+                      color="secondary"
+                      variant="outlined"
                     />
                   </Grid>
                   {address.countryID && (
-                    <Grid item lg="4" xs="12" p={2}>
-                      <FormControl fullWidth>
-                        <InputLabel sx={styles.inputLabel}>
-                          {dictionary.labels.country[lang]}
-                        </InputLabel>
-                        <Select
-                          value={address.countryID}
-                          required
-                          label={dictionary.labels.country[lang]}
-                          onChange={onChangeCountry}
-                          sx={styles.select}
-                        >
-                          {Object.keys(
-                            regSystem?.deliveryAddress?.appRegionsID || {}
-                          ).map((countryID) => (
-                            <MenuItem value={countryID}>
-                              {
-                                regSystem?.deliveryAddress?.regionName[
-                                  countryID
-                                ][lang]
-                              }
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                    <Grid item lg={4} xs={12} p={2}>
+                      <Select
+                        fullWidth
+                        value={{
+                          value: address.countryID,
+                          label:
+                            regSystem?.deliveryAddress?.regionName[
+                              address.countryID
+                            ][lang],
+                        }}
+                        required
+                        label={dictionary.labels.country[lang]}
+                        onChange={onChangeCountry}
+                        sx={styles.select}
+                      >
+                        {Object.keys(
+                          regSystem?.deliveryAddress?.appRegionsID || {}
+                        ).map((countryID) => (
+                          <MenuItem value={countryID}>
+                            {
+                              regSystem?.deliveryAddress?.regionName[countryID][
+                                lang
+                              ]
+                            }
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </Grid>
                   )}
                   {address.cityID && (
-                    <Grid item lg="4" xs="12" p={2}>
-                      <FormControl fullWidth>
-                        <InputLabel sx={styles.inputLabel}>
-                          {dictionary.labels.city[lang]}
-                        </InputLabel>
-                        <Select
-                          value={address.cityID}
-                          required
-                          label={dictionary.labels.city[lang]}
-                          onChange={onChangeCity}
-                          sx={styles.select}
-                        >
-                          {Object.keys(
-                            regSystem?.deliveryAddress?.appRegionsID[
-                              address?.countryID
-                            ] || {}
-                          ).map((cityID) => (
-                            <MenuItem value={cityID}>
-                              {
-                                regSystem?.deliveryAddress?.regionName[cityID][
-                                  lang
-                                ]
-                              }
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                    <Grid item lg={4} xs={12} p={2}>
+                      <Select
+                        fullWidth
+                        value={{
+                          value: address.cityID,
+                          label:
+                            regSystem?.deliveryAddress?.regionName[
+                              address.cityID
+                            ][lang],
+                        }}
+                        required
+                        label={dictionary.labels.city[lang]}
+                        onChange={onChangeCity}
+                        sx={styles.select}
+                      >
+                        {Object.keys(
+                          regSystem?.deliveryAddress?.appRegionsID[
+                            address?.countryID
+                          ] || {}
+                        ).map((cityID) => (
+                          <MenuItem value={cityID}>
+                            {
+                              regSystem?.deliveryAddress?.regionName[cityID][
+                                lang
+                              ]
+                            }
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </Grid>
                   )}
                   {address.townID && (
-                    <Grid item lg="4" xs="12" p={2}>
-                      <FormControl fullWidth>
-                        <InputLabel sx={styles.inputLabel}>
-                          {dictionary.labels.town[lang]}
-                        </InputLabel>
-                        <Select
-                          value={address.townID}
-                          required
-                          label={dictionary.labels.town[lang]}
-                          onChange={onChangeTown}
-                          sx={styles.select}
-                        >
-                          {regSystem?.deliveryAddress?.appRegionsID[
-                            address?.countryID
-                          ][address?.cityID].map((townID) => (
-                            <MenuItem value={townID}>
-                              {
-                                regSystem?.deliveryAddress?.regionName[townID][
-                                  lang
-                                ]
-                              }
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                    <Grid item lg={4} xs={12} p={2}>
+                      <Select
+                        fullWidth
+                        value={{
+                          value: address.townID,
+                          label:
+                            regSystem?.deliveryAddress?.regionName[
+                              address.townID
+                            ][lang],
+                        }}
+                        required
+                        label={dictionary.labels.town[lang]}
+                        onChange={onChangeTown}
+                        sx={styles.select}
+                      >
+                        {(regSystem?.deliveryAddress?.appRegionsID[
+                          address?.countryID
+                        ][address?.cityID]).map((townID) => (
+                          <MenuItem value={townID}>
+                            {
+                              regSystem?.deliveryAddress?.regionName[townID][
+                                lang
+                              ]
+                            }
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </Grid>
                   )}
                 </Grid>
               </Grid>
-              <Grid item xs="12" container>
-                <Grid item xs="12" p={2}>
+              <Grid item xs={12} container>
+                <Grid item xs={12} p={2}>
                   <Title0001
-                    color={App_Primary_Color}
+                    color={theme.palette.primary.main}
                     title={dictionary.signup.registrationInfo[lang]}
                     dir={dir}
                   />
                 </Grid>
-                <Grid item lg="6" xs="12" p={2}>
-                  <TextField
-                    sx={styles.textfield}
-                    variant="outlined"
-                    fullWidth
-                    type="email"
-                    dir="ltr"
-                    label={dictionary.labels.emailAddress[lang]}
-                    className={`form-control ${errors.email && "invalid"}`}
-                    {...register("email", {
-                      required: "Email is Required",
+                <Grid item lg={6} xs={12} p={2}>
+                  <Controller
+                    render={({ field }) => {
+                      return (
+                        <TextField
+                          sx={styles.textfield}
+                          {...field}
+                          helperText={errors["email"]?.message || ""}
+                          error={errors["email"]?.message}
+                          required
+                          fullWidth
+                          type="email"
+                          dir="ltr"
+                        />
+                      );
+                    }}
+                    rules={{
+                      required: { value: true, message: "Email is Required" },
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: "Invalid email address",
                       },
-                    })}
-                    onKeyUp={() => {
-                      trigger("email");
                     }}
+                    label={dictionary.labels.emailAddress[lang]}
+                    name="email"
+                    control={control}
+                    variant="outlined"
+                    color="secondary"
                   />
                 </Grid>
-                <Grid item lg="6" xs="12" p={2}>
-                  <TextField
-                    sx={styles.textfield}
-                    variant="outlined"
-                    fullWidth
-                    type="password"
-                    label={dictionary.labels.password[lang]}
-                    dir="ltr"
-                    className={`form-control ${errors.password && "invalid"}`}
-                    {...register("password", {
-                      required: "Password is Required",
-                    })}
-                    onKeyUp={() => {
-                      trigger("password");
+                <Grid item lg={6} xs={12} p={2}>
+                  <Controller
+                    render={({ field }) => {
+                      return (
+                        <TextField
+                          sx={styles.textfield}
+                          {...field}
+                          helperText={errors["password"]?.message || ""}
+                          error={errors["password"]?.message}
+                          required
+                          fullWidth
+                          type="password"
+                          dir="ltr"
+                        />
+                      );
                     }}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "Password is Required",
+                      },
+                    }}
+                    label={dictionary.labels.password[lang]}
+                    name="password"
+                    control={control}
+                    variant="outlined"
+                    color="secondary"
                   />
                 </Grid>
               </Grid>
-              <Grid item xs="12" container justifyContent={"end"} p={2}>
+              <Grid item xs={12} container justifyContent={"end"} p={2}>
                 <AnimButton0001
                   label={dictionary.buttons.register[lang]}
-                  color={App_Second_Color}
+                  color={theme.palette.secondary.main}
                   type="submit"
                 />
               </Grid>

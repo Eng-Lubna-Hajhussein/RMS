@@ -10,18 +10,11 @@ import {
   Box,
   Grid,
   Divider,
+  SvgIcon,
+  IconButton,
 } from "@basetoolkit/ui";
-import {
-  ExpandLess,
-  ExpandMore,
-  Close,
-  HowToRegOutlined,
-} from "@mui/icons-material";
-import { lstWebsiteNav } from "appHelper/appVariables";
 import { dictionary } from "appHelper/appDictionary";
-import logoIcon from "assets/image/logo.png";
-import { Link, useParams } from "react-router-dom";
-import NavList from "components/sharedUI/navList/NavList";
+import { Link } from "react-router-dom";
 import SystemContact from "../upperToolbar/SystemContact/SystemContact";
 import SystemSocial from "../upperToolbar/SystemSocial/SystemSocial";
 
@@ -38,8 +31,6 @@ const styles = {
   list: {
     width: "100vw",
     paddingY: "20px",
-    
-    
   },
   listItemText: {
     textTransform: "capitalize",
@@ -61,19 +52,11 @@ function DrawerNav({
   navList,
   setOpenDrawer,
   lang,
-  editable,
   jsnSystemContact,
-  onSaveUpperHeader,
-  userImg,
   dir,
-  userName,
-  blnUserLogin,
-  userNavList,
-  systemPath,
   websiteLogo,
 }) {
   const [nestedListOpen, setNestedListOpen] = useState(false);
-  const { systemID, systemName } = useParams();
 
   return (
     <Drawer
@@ -84,24 +67,23 @@ function DrawerNav({
       onClose={() => setOpenDrawer(false)}
     >
       <List
-        
         component="nav"
         subheader={
           <ListSubheader component="div" sx={styles.listSubheader}>
-            <Grid container>
+            <Grid container item xs={12}>
               <Grid item xs={8}>
                 <Box component={"img"} sx={styles.logo} src={websiteLogo} />
               </Grid>
               <Grid item xs={4} container justifyContent={"end"}>
-                <Close fontSize="large" onClick={() => setOpenDrawer(false)} />
+                <IconButton onClick={() => setOpenDrawer(false)}>
+                  <SvgIcon icon="close" size="large" color="black" />
+                </IconButton>
               </Grid>
             </Grid>
           </ListSubheader>
         }
-        sx={{...styles.list,
-          ".css-mg8nvi-MuiButtonBase-root-MuiListItem-root":{
-            textAlign:dir==='ltr'?'left':'right'
-          }
+        sx={{
+          ...styles.list,
         }}
       >
         {navList.map(({ bigNavID, path, nav, navList }, index) => (
@@ -130,7 +112,6 @@ function DrawerNav({
                   }}
                 >
                   <ListItemText
-                    
                     primary={
                       <Typography sx={styles.listItemText}>
                         {nav[lang]}
@@ -138,9 +119,9 @@ function DrawerNav({
                     }
                   />
                   {nestedListOpen === bigNavID ? (
-                    <ExpandLess />
+                    <SvgIcon icon="expand_less" color="black" />
                   ) : (
-                    <ExpandMore />
+                    <SvgIcon icon="expand_more" color="black" />
                   )}
                 </ListItem>
                 <Collapse
@@ -151,15 +132,19 @@ function DrawerNav({
                   {navList?.map(({ nav, path }, index) => (
                     <Link to={path}>
                       <List component="div" key={index} disablePadding>
-                      <ListItem button>
-                        <ListItemText
-                          primary={
-                            <Typography px={2} dir="rtl" sx={styles.collapseItemText}>
-                              {nav[lang]}
-                            </Typography>
-                          }
-                        />
-                      </ListItem>
+                        <ListItem button>
+                          <ListItemText
+                            primary={
+                              <Typography
+                                px={2}
+                                dir="rtl"
+                                sx={styles.collapseItemText}
+                              >
+                                {nav[lang]}
+                              </Typography>
+                            }
+                          />
+                        </ListItem>
                       </List>
                     </Link>
                   ))}

@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import { Grid, TableFooter, TablePagination, Typography } from "@mui/material";
+import {
+  Grid,
+  TableFooter,
+  TablePagination,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
@@ -16,52 +21,30 @@ const styles = {
     marginLeft: "auto",
   },
   columnTablecell: {
-    border: "1px solid #c4c4c4",
-    background: App_Primary_Color,
+    border: "1px solid #c4c4c4 !important",
+    bgcolor: "primary",
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
-    minWidth: { xs: "150px", lg: "160px" },
-    width: { xs: "150px", lg: "160px" },
+    lg: { minWidth: "160px", width: "160px" },
+    xs: { minWidth: "150px", width: "150px" },
   },
   rowTablecell: {
-    border: "1px solid #c4c4c4",
+    border: "1px solid #c4c4c4 !important",
   },
   tableID: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+    lg: { fontSize: "17px", fontWeight: 800 },
+    xs: { fontSize: "12px", fontWeight: 600 },
   },
   seatsNum: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+    lg: { fontSize: "17px", fontWeight: 800 },
+    xs: { fontSize: "12px", fontWeight: 600 },
   },
   price: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+    lg: { fontSize: "17px", fontWeight: 800 },
+    xs: { fontSize: "12px", fontWeight: 600 },
   },
-  tablePagination: {
-    border: "1px solid #c4c4c4",
-    ".MuiTablePagination-toolbar": {
-      backgroundColor: "#f4fcfc",
-    },
-    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-      fontWeight: "800",
-    },
-    ".MuiTablePagination-input": {
-      fontWeight: "bold",
-      background: "#fff",
-      borderRadius: "10px",
-      border: "1px solid #000",
-      fontSize: {
-        lg: "16px",
-        xs: "14px",
-      },
-      ".MuiTablePagination-actions": {
-        marginLeft: { xs: "5px", lg: "15px" },
-        marginRight: { xs: "5px", lg: "15px" },
-      },
-    },
-  },
+  tablePagination: {},
 };
 
 function AvailableTables({ tables, handleReverseTable, lang, dir }) {
@@ -74,19 +57,19 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleChangeRowsPerPage = ({ value }) => {
+    setRowsPerPage(+value);
     setPage(0);
   };
   // const columns = ["Table ID", "Seats Number", "Price Per Hour", "Actions"];
   const columns = [
-    {eng:"Table ID",arb:"معرف الطاولة"},
-    {eng:"Seats Number",arb:"عدد المقاعد"},
-    {eng:"Price Per Hour",arb:"السعر لكل ساعة"},
-    {eng:"Actions",arb:"الاجراءات"},
+    { eng: "Table ID", arb: "معرف الطاولة" },
+    { eng: "Seats Number", arb: "عدد المقاعد" },
+    { eng: "Price Per Hour", arb: "السعر لكل ساعة" },
+    { eng: "Actions", arb: "الاجراءات" },
   ];
   return (
-    <Grid item xs="12" container sx={styles.container} px={1}>
+    <Grid item xs={12} container sx={styles.container} px={1}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -94,9 +77,10 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
               <TableCell sx={styles.columnTablecell} align="center">
                 <Typography
                   sx={{
-                    fontSize: { lg: "15px", xs: "12px" },
-                    fontWeight: { lg: "800", xs: "800" },
-                    textTransform:"capitalize"
+                    textTransform: "capitalize",
+                    fontWeight: 800,
+                    lg: { fontSize: "15px" },
+                    xs: { fontSize: "12px" },
                   }}
                 >
                   {column[lang]}
@@ -161,68 +145,27 @@ function AvailableTables({ tables, handleReverseTable, lang, dir }) {
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[3, 5, 10, 25]}
-              count={tables.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              labelDisplayedRows={({ page }) => {
-                return (
-                  <Typography
-                  dir={dir}
-                  sx={{
-                    fontSize: {
-                      lg: "16px",
-                      xs: "14px",
-                    },
-                    fontWeight: "600",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {dictionary.tablePagination.page[lang]}: {page + 1}
-                </Typography>
-                );
-              }}
-              backIconButtonProps={{
-                color: "#fff",
-              }}
-              nextIconButtonProps={{ color: "#fff" }}
-              showFirstButton={true}
-              showLastButton={true}
-              labelRowsPerPage={
-                <Typography
-                  dir={dir}
-                  sx={{
-                    fontSize: {
-                      lg: "16px",
-                      xs: "14px",
-                    },
-                    fontWeight: "600",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {dictionary.tablePagination.rows[lang]}:
-                </Typography>
-              }
-              sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
-                marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
-                marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
-              },
-
-            }}
-            />
-          </TableRow>
-        </TableFooter>
       </Table>
+      <Grid item xs={12} container justifyContent="end">
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          count={tables.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          SelectProps={{
+            inputProps: {
+              "aria-label": "rows per page",
+            },
+          }}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          showFirstButton={true}
+          showLastButton={true}
+          sx={{
+            ...styles.tablePagination,
+          }}
+        />
+      </Grid>
     </Grid>
   );
 }

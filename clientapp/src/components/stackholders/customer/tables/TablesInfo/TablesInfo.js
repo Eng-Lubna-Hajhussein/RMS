@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import {
   Button,
   Chip,
@@ -11,7 +6,12 @@ import {
   TableFooter,
   TablePagination,
   Typography,
-} from "@mui/material";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@basetoolkit/ui";
 import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { Visibility } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
@@ -24,16 +24,15 @@ const styles = {
     marginLeft: "auto",
   },
   columnTablecell: {
-    border: "1px solid #c4c4c4",
+    border: "1px solid #c4c4c4 !important",
     background: App_Primary_Color,
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
-    minWidth: { xs: "150px" },
-    width: { xs: "150px" },
+    xs: { minWidth: "150px", width: "150px" },
   },
   rowTablecell: {
-    border: "1px solid #c4c4c4",
+    border: "1px solid #c4c4c4 !important",
   },
   fitContentHeight: {
     height: "fit-content",
@@ -42,50 +41,29 @@ const styles = {
     height: "100%",
   },
   tableID: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+    lg: { fontSize: "17px", fontWeight: 800 },
+    xs: { fontSize: "12px", fontWeight: 600 },
   },
   seatsNum: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+    lg: { fontSize: "17px", fontWeight: 800 },
+    xs: { fontSize: "12px", fontWeight: 600 },
   },
   price: {
-    fontSize: { lg: "17px", xs: "12px" },
-    fontWeight: { lg: "800", xs: "600" },
+    lg: { fontSize: "17px", fontWeight: 800 },
+    xs: { fontSize: "12px", fontWeight: 600 },
   },
   status: {
     color: "#fff",
     textTransform: "capitalize",
-    fontWeight: "700",
-    fontSize: { lg: "17px", xs: "12px" },
+    fontWeight: 700,
+    lg: { fontSize: "17px" },
+    xs: { fontSize: "12px" },
   },
   viewBtnLabel: {
     fontSize: "15px",
     textTransform: "uppercase",
   },
-  tablePagination: {
-    border: "1px solid #c4c4c4",
-    ".MuiTablePagination-toolbar": {
-      backgroundColor: "#f4fcfc",
-    },
-    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-      fontWeight: "800",
-    },
-    ".MuiTablePagination-input": {
-      fontWeight: "bold",
-      background: "#fff",
-      borderRadius: "10px",
-      border: "1px solid #000",
-      fontSize: {
-        lg: "16px",
-        xs: "14px",
-      },
-      ".MuiTablePagination-actions": {
-        marginLeft: { xs: "5px", lg: "15px" },
-        marginRight: { xs: "5px", lg: "15px" },
-      },
-    },
-  },
+  tablePagination: {},
 };
 
 function TablesInfo({ tables, handleCancelTable, lang, dir }) {
@@ -98,37 +76,32 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleChangeRowsPerPage = ({ value }) => {
+    setRowsPerPage(+value);
     setPage(0);
   };
+
   const columns = [
-    {eng:"Table ID",arb:"معرف الطاولة"},
-    {eng:"Seats Number",arb:"عدد المقاعد"},
-    {eng:"Price Per Hour",arb:"السعر لكل ساعة"},
-    {eng:"Status",arb:"الحالة"},
-    {eng:"Reservation Info",arb:"معلومات الحجز"},
-    {eng:"Actions",arb:"الاجراءات"},
+    { eng: "Table ID", arb: "معرف الطاولة" },
+    { eng: "Seats Number", arb: "عدد المقاعد" },
+    { eng: "Price Per Hour", arb: "السعر لكل ساعة" },
+    { eng: "Status", arb: "الحالة" },
+    { eng: "Reservation Info", arb: "معلومات الحجز" },
+    { eng: "Actions", arb: "الاجراءات" },
   ];
   return (
     <Grid item xs="12" container sx={styles.container}>
-      <Table
-        aria-label="simple table"
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-      >
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             {columns.map((column) => (
               <TableCell sx={styles.columnTablecell} align="center">
                 <Typography
                   sx={{
-                    fontSize: { lg: "15px", xs: "12px" },
-                    fontWeight: { lg: "800", xs: "800" },
-                    textTransform:"capitalize"
+                    textTransform: "capitalize",
+                    fontWeight: 800,
+                    lg: { fontSize: "15px" },
+                    xs: { fontSize: "12px" },
                   }}
                 >
                   {column[lang]}
@@ -155,7 +128,7 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
                   alignItems={"center"}
                   sx={styles.fitContentHeight}
                 >
-                  <Grid item xs={"12"}>
+                  <Grid item xs={12}>
                     <Typography color={"#000"} sx={styles.tableID}>
                       #{table?.bigTableID}
                     </Typography>
@@ -193,8 +166,10 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
                   color={table.blnTableAvailable ? "success" : "error"}
                   label={
                     <Typography sx={styles.status}>
-                    {table.blnTableAvailable ? dictionary.tables.available[lang] : dictionary.tables.reserved[lang]}
-                  </Typography>
+                      {table.blnTableAvailable
+                        ? dictionary.tables.available[lang]
+                        : dictionary.tables.reserved[lang]}
+                    </Typography>
                   }
                 />
               </TableCell>
@@ -236,69 +211,27 @@ function TablesInfo({ tables, handleCancelTable, lang, dir }) {
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              count={tables.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              labelDisplayedRows={({ page }) => {
-                return (
-                  <Typography
-                  dir={dir}
-                  sx={{
-                    fontSize: {
-                      lg: "16px",
-                      xs: "14px",
-                    },
-                    fontWeight: "600",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {dictionary.tablePagination.page[lang]}: {page + 1}
-                </Typography>
-                );
-              }}
-              backIconButtonProps={{
-                color: "#fff",
-              }}
-              nextIconButtonProps={{ color: "#fff" }}
-              showFirstButton={true}
-              showLastButton={true}
-              labelRowsPerPage={
-                <Typography
-                  dir={dir}
-                  sx={{
-                    fontSize: {
-                      lg: "16px",
-                      xs: "14px",
-                    },
-                    fontWeight: "600",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {dictionary.tablePagination.rows[lang]}:
-                </Typography>
-              
-              }
-              sx={{...styles.tablePagination,    ".css-16c50h-MuiInputBase-root-MuiTablePagination-select": {
-                marginRight: { xs: "5px", lg: dir==="rtl"? "5px":"15px" },
-                marginLeft: { xs: "5px", lg:dir==="rtl"? "15px":"5px" },
-              },
-
-            }}
-            />
-          </TableRow>
-        </TableFooter>
       </Table>
+      <Grid item xs={12} container justifyContent="end">
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          count={tables.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          SelectProps={{
+            inputProps: {
+              "aria-label": "rows per page",
+            },
+          }}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          showFirstButton={true}
+          showLastButton={true}
+          sx={{
+            ...styles.tablePagination,
+          }}
+        />
+      </Grid>
     </Grid>
   );
 }

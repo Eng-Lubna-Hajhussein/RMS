@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import Checkout from "./checkout/Checkout";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlReserveTable } from "./controller/ctrlReserveTable";
@@ -12,7 +12,8 @@ import UploadPicture from "components/shared/uploadPicture/UploadPicture";
 
 const styles = {
   container: {
-    marginY: { lg: "50px", xs: "20px" },
+    lg: { my: "50px" },
+    xs: { my: "20px" },
   },
 };
 
@@ -57,8 +58,8 @@ function ReserveTable() {
     setOpenCheckout(true);
   };
 
-  const onChangeReservationHours = (e) => {
-    setReservationHours(e.target.value);
+  const onChangeReservationHours = (selected) => {
+    setReservationHours(selected.value);
   };
 
   const userNavList = ctrlRouteCustomer.generateUserNavList({
@@ -91,7 +92,7 @@ function ReserveTable() {
       {isLoading && <Typography>loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item lg="10" xs="12" px={2} container>
+          <Grid item lg={10} xs={12} px={2} container>
             <Reservation
               dir={dir}
               endDate={endDate}
@@ -122,7 +123,7 @@ function ReserveTable() {
         setTables={setTables}
         tables={tables}
       />
-       <UploadPicture
+      <UploadPicture
         open={uploadPictureOpen}
         handleClose={() => setUploadPicture(false)}
       />

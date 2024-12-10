@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { Box, Grid, Rating, Typography, Button ,SvgIcon} from "@basetoolkit/ui";
+import {
+  Box,
+  Grid,
+  Rating,
+  Typography,
+  Button,
+  SvgIcon,
+  useTheme,
+} from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
-import { App_Primary_Color } from "appHelper/appColor";
 import videoIcon from "assets/image/video.svg";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import AnimButton0002 from "components/sharedUI/AnimButton0002/AnimButton0002";
@@ -10,15 +17,15 @@ import AnimationBox from "components/sharedUI/AnimationBox/AnimationBox";
 
 const styles = {
   container: {
-    lg:{height:"580px",px:"60px"},
-    xs:{height:"900px",px:"15px"},
+    lg: { height: "580px", px: "60px" },
+    xs: { height: "900px", px: "15px" },
   },
   title: {
     color: "#fff",
     textTransform: "capitalize",
     lineHeight: "1.2",
-    lg:{width:"60%",fontSize:"50px !important"},
-    xs:{fontSize:"30px !important"},
+    lg: { width: "60%", fontSize: "50px !important" },
+    xs: { fontSize: "30px !important" },
     fontWeight: "700",
     fontFamily: "Fredoka",
   },
@@ -26,8 +33,8 @@ const styles = {
     color: "#fff",
     textTransform: "capitalize",
     lineHeight: "34px",
-    lg:{width:"60%",fontSize:"20.5px !important"},
-    xs:{fontSize:"15px !important"},
+    lg: { width: "60%", fontSize: "20.5px !important" },
+    xs: { fontSize: "15px !important" },
     fontWeight: "500",
     fontFamily: "sans-serif",
   },
@@ -37,8 +44,8 @@ const styles = {
     backgroundColor: "#000000d4",
     width: "100%",
     position: "relative",
-    lg:{p:"20px 30px"},
-    xs:{p:"15px 10px"}
+    lg: { p: "20px 30px" },
+    xs: { p: "15px 10px" },
   },
   boxCaption: {
     lineHeight: "14px",
@@ -59,22 +66,22 @@ const styles = {
     fontFamily: "sans-serif",
     display: "inline-block",
     textAlign: "left",
-    lg:{fontSize:"28px"},
-    xs:{fontSize:"20px"}
+    lg: { fontSize: "28px" },
+    xs: { fontSize: "20px" },
   },
   dollarSign: {
     color: "#f3274c",
     display: "inline-block",
-    lg:{fontSize:"28px"},
-    xs:{fontSize:"20px"}
+    lg: { fontSize: "28px" },
+    xs: { fontSize: "20px" },
   },
   boxSubtitle: {
     color: "#fff",
     fontWeight: "700",
     lineHeight: "1.2",
     textTransform: "capitalize",
-    lg:{fontSize:"18px"},
-    xs:{fontSize:"12px"}
+    lg: { fontSize: "18px" },
+    xs: { fontSize: "12px" },
   },
   py20: {
     paddingY: "20px",
@@ -92,12 +99,12 @@ const styles = {
     color: "#555",
     fontWeight: "400",
     fontSize: "13px",
-    lg:{height:"fit-content",overflowY:"hidden"},
-    xs:{height:"40px !important",overflowY:"auto"}
+    lg: { height: "fit-content", overflowY: "hidden" },
+    xs: { height: "40px !important", overflowY: "auto" },
   },
   videoBtn: {
-    lg:{pt:"0px"},
-    xs:{py:"30px !important"}
+    lg: { pt: "0px" },
+    xs: { py: "30px !important" },
   },
 };
 
@@ -109,6 +116,7 @@ function HeroContent({
   onSaveHero,
   dir,
 }) {
+  const theme = useTheme();
   const [openEdit, setOpenEdit] = useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
@@ -116,13 +124,14 @@ function HeroContent({
   return (
     <React.Fragment>
       {editable && (
-        <Grid
-          item
-          container
-          justifyContent={"start"}
-          xs={12}
-        >
-          <Button variant="text" startIcon={<SvgIcon icon="edit" />} color="#dad8d9" style={{padding:"0px"}} onClick={handleEditOpen}>
+        <Grid item container justifyContent={"start"} xs={12}>
+          <Button
+            variant="text"
+            startIcon={<SvgIcon icon="edit" />}
+            color="#dad8d9"
+            style={{ padding: "0px" }}
+            onClick={handleEditOpen}
+          >
             <Typography sx={styles.editNote} color="#dad8d9">
               {dictionary.heroSection.title[lang]}
             </Typography>
@@ -180,7 +189,7 @@ function HeroContent({
               <Grid item lg={4} xs={12}>
                 <AnimButton0001
                   label={dictionary.buttons.seeOurMenuBtn[lang]}
-                  color={App_Primary_Color}
+                  color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid item lg={4} xs={12} sx={styles.videoBtn}>
@@ -198,8 +207,8 @@ function HeroContent({
               lg={4}
               xs={12}
               sx={{
-                lg:{py:"0px"},
-                xs:{py:"40px"}
+                lg: { py: "0px" },
+                xs: { py: "40px" },
               }}
             >
               <Grid container justify={"end"}>
@@ -222,8 +231,15 @@ function HeroContent({
                     >
                       <Grid item xs={8} container justify={"start"}>
                         <Grid item xs={12} justify={"start"}>
-                          <Typography dir='ltr' sx={styles.boxTitle}>
-                            <Typography dir='ltr' component={"span"} display="inline" sx={styles.dollarSign}>$</Typography>
+                          <Typography dir="ltr" sx={styles.boxTitle}>
+                            <Typography
+                              dir="ltr"
+                              component={"span"}
+                              display="inline"
+                              sx={styles.dollarSign}
+                            >
+                              $
+                            </Typography>
                             {content.wsCategory.jsnCategoryInfo.strPrice}
                           </Typography>
                         </Grid>
@@ -262,8 +278,8 @@ function HeroContent({
                           component={"img"}
                           src={content.wsCategory.jsnCategoryInfo.strImgPath}
                           sx={{
-                            lg:{height:"100px",width:"100px"},
-                            xs:{height:"80px",width:"80px"},
+                            lg: { height: "100px", width: "100px" },
+                            xs: { height: "80px", width: "80px" },
                           }}
                         />
                       </Grid>

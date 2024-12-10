@@ -7,12 +7,11 @@ const styles = {
     backgroundSize: "100% 100%",
     backgroundRepeat: "no-repeat",
     borderRadius: "30px !important",
-    lg: { minHeight: "250px !important",height: "auto" },
-    xs: { minHeight: "120px" },
+    lg: { minHeight: "250px !important", height: "auto" },
+    xs: { minHeight: "120px", p: "10px 1px !important" },
     width: "100%",
     border: `6px solid #f3274c !important`,
     padding: "20px !important",
-    xs:{p:"10px 1px !important"}
   },
   title: {
     lg: { fontSize: "25px !important" },
@@ -116,45 +115,64 @@ function MostOrderedCard({ item, lang, dir }) {
               alignSelf={"center"}
             >
               <Grid item xs={12}>
-                  <Grid item xs={12} container py={0} my={0} justifyContent={"center"} px={1}>
-                    <Typography
-                      sx={{
-                        ...styles.price,
-                        color: item?.jsnCategoryInfo?.blnOnSale
-                          ? "#555"
-                          : "#f3274c",
-                        textDecoration:
-                          item?.jsnCategoryInfo?.blnOnSale && "line-through",
-                        lg: {
-                          fontSize: item?.jsnCategoryInfo?.blnOnSale
-                            ? "15px"
-                            : "25px",
-                        },
-                        xs: {
-                          fontSize: item?.jsnCategoryInfo?.blnOnSale
-                            ? "12px"
-                            : "15px",
-                        },
-                      }}
-                    >
-                      ${item.jsnCategoryInfo.strPrice}
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  py={0}
+                  my={0}
+                  justifyContent={"center"}
+                  px={1}
+                >
+                  <Typography
+                    sx={{
+                      ...styles.price,
+                      color: item?.jsnCategoryInfo?.blnOnSale
+                        ? "#555"
+                        : "#f3274c",
+                      textDecoration:
+                        item?.jsnCategoryInfo?.blnOnSale && "line-through",
+                      lg: {
+                        fontSize: item?.jsnCategoryInfo?.blnOnSale
+                          ? "15px"
+                          : "25px",
+                      },
+                      xs: {
+                        fontSize: item?.jsnCategoryInfo?.blnOnSale
+                          ? "12px"
+                          : "15px",
+                      },
+                    }}
+                  >
+                    ${item.jsnCategoryInfo.strPrice}
+                  </Typography>
+                </Grid>
+                {item?.jsnCategoryInfo?.blnOnSale && (
+                  <Grid
+                    item
+                    lg={12}
+                    container
+                    py={0}
+                    my={0}
+                    justifyContent={"center"}
+                  >
+                    <Typography component={"caption"} sx={{ ...styles.price }}>
+                      ${item.jsnCategoryInfo.strSalePrice}
                     </Typography>
                   </Grid>
-                  {item?.jsnCategoryInfo?.blnOnSale && (
-                    <Grid item lg={12} container py={0} my={0} justifyContent={"center"}>
-                      <Typography
-                        component={"caption"}
-                        sx={{ ...styles.price }}
-                      >
-                        ${item.jsnCategoryInfo.strSalePrice}
-                      </Typography>
-                    </Grid>
-                  )}
-                  <Grid item lg={12} container py={0} my={0} justifyContent={"center"}>
-                    <Typography sx={styles.perPerson}>
-                      {dictionary.typography.perPerson[lang]}
-                    </Typography>
-                  </Grid>
+                )}
+                <Grid
+                  item
+                  lg={12}
+                  container
+                  py={0}
+                  my={0}
+                  justifyContent={"center"}
+                >
+                  <Typography sx={styles.perPerson}>
+                    {dictionary.typography.perPerson[lang]}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Box>

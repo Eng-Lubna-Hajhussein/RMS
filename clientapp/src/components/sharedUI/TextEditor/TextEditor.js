@@ -5,9 +5,9 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
+  SvgIcon,
   Typography,
-} from "@mui/material";
-import { Close } from "@mui/icons-material";
+} from "@basetoolkit/ui";
 import { fontList } from "appHelper/appVariables";
 
 const styles = {
@@ -24,9 +24,6 @@ const styles = {
   },
   boldBtn: {
     cursor: "pointer",
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
   },
   viewBox: {
     height: "250px",
@@ -78,10 +75,10 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
   }, [active]);
 
   return (
-    <Dialog open={open} onClose={handleClose} fullScreen maxWidth="sm">
+    <Dialog open={open} onClose={handleClose} maxWidth="md">
       <DialogTitle sx={styles.dialogTitle}>
-        <Grid container justifyContent={"end"}>
-          <Close sx={styles.closeIcon} onClick={handleClose} />
+        <Grid container justifyContent={"end"} p={1}>
+          <SvgIcon icon="close" sx={styles.closeIcon} onClick={handleClose} />
         </Grid>
       </DialogTitle>
       <DialogContent sx={styles.dialogContent}>
@@ -98,6 +95,7 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
                   });
                 }}
                 class="option-button format"
+                type="button"
               >
                 <i
                   id="bold"
@@ -108,40 +106,57 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
                   class="fa-solid fa-bold"
                 ></i>
               </button>
-              <button id="italic" class="option-button format">
+              <button type="button" id="italic" class="option-button format">
                 <i class="fa-solid fa-italic"></i>
               </button>
-              <button id="underline" class="option-button format">
+              <button type="button" id="underline" class="option-button format">
                 <i class="fa-solid fa-underline"></i>
               </button>
-              <button id="strikethrough" class="option-button format">
+              <button
+                type="button"
+                id="strikethrough"
+                class="option-button format"
+              >
                 <i class="fa-solid fa-strikethrough"></i>
               </button>
-              <button id="superscript" class="option-button script">
+              <button
+                type="button"
+                id="superscript"
+                class="option-button script"
+              >
                 <i class="fa-solid fa-superscript"></i>
               </button>
-              <button id="subscript" class="option-button script">
+              <button type="button" id="subscript" class="option-button script">
                 <i class="fa-solid fa-subscript"></i>
               </button>
 
               {/* <!-- List --> */}
-              <button id="insertOrderedList" class="option-button">
+              <button
+                type="button"
+                id="insertOrderedList"
+                class="option-button"
+              >
                 <i class="fa-solid fa-list-ol"></i>
               </button>
-              <button id="insertUnorderedList" class="option-button">
+              <button
+                type="button"
+                id="insertUnorderedList"
+                class="option-button"
+              >
                 <i class="fa-solid fa-list"></i>
               </button>
 
               {/* <!-- Undo/Redo --> */}
-              <button id="undo" class="option-button">
+              <button type="button" id="undo" class="option-button">
                 <i class="fa-solid fa-rotate-left"></i>
               </button>
-              <button id="redo" class="option-button">
+              <button type="button" id="redo" class="option-button">
                 <i class="fa-solid fa-rotate-right"></i>
               </button>
 
               {/* <!-- Link --> */}
               <button
+                type="button"
                 id="createLink"
                 onClick={(e) => {
                   let userLink = prompt("Enter a URL");
@@ -155,13 +170,14 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
               >
                 <i class="fa-solid fa-link"></i>
               </button>
-              <button id="unlink" class="option-button">
+              <button type="button" id="unlink" class="option-button">
                 <i class="fa-solid fa-unlink"></i>
               </button>
 
               {/* <!-- Alignment --> */}
 
               <button
+                type="button"
                 id="justifyLeft"
                 class="option-button align"
                 onClick={(e) => {
@@ -192,19 +208,31 @@ const TextEditor = ({ objText, onChange, open, handleClose, lang, dir }) => {
               >
                 <i class="fa-solid fa-align-left"></i>
               </button>
-              <button id="justifyCenter" class="option-button align">
+              <button
+                type="button"
+                id="justifyCenter"
+                class="option-button align"
+              >
                 <i class="fa-solid fa-align-center"></i>
               </button>
-              <button id="justifyRight" class="option-button align">
+              <button
+                type="button"
+                id="justifyRight"
+                class="option-button align"
+              >
                 <i class="fa-solid fa-align-right"></i>
               </button>
-              <button id="justifyFull" class="option-button align">
+              <button
+                type="button"
+                id="justifyFull"
+                class="option-button align"
+              >
                 <i class="fa-solid fa-align-justify"></i>
               </button>
-              <button id="indent" class="option-button spacing">
+              <button type="button" id="indent" class="option-button spacing">
                 <i class="fa-solid fa-indent"></i>
               </button>
-              <button id="outdent" class="option-button spacing">
+              <button type="button" id="outdent" class="option-button spacing">
                 <i class="fa-solid fa-outdent"></i>
               </button>
 

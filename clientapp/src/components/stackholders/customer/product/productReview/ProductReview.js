@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Rating, TextField, Typography } from "@basetoolkit/ui";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { Grid, Rating, TextField, Typography, useTheme } from "@basetoolkit/ui";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { dictionary } from "appHelper/appDictionary";
 
@@ -24,7 +23,7 @@ const styles = {
   textfield: {
     background: "#fff",
     borderRadius: "5px",
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
 };
 
@@ -40,6 +39,7 @@ function ProductReview({
   lang,
   dir,
 }) {
+  const theme = useTheme();
   return (
     <Grid item xs={12} p={0} m={0} container>
       <Grid
@@ -52,7 +52,7 @@ function ProductReview({
       >
         <Grid container>
           <Grid item xs={12} container px={2} justifyContent={"start"}>
-            <Typography sx={styles.title} >
+            <Typography sx={styles.title}>
               {dictionary.customerReview.title[lang]} !
             </Typography>
           </Grid>
@@ -84,7 +84,6 @@ function ProductReview({
                     type="text"
                     multiline
                     rows={4}
-                    
                     defaultValue={userReview?.jsnComment["arb"]}
                     dir="rtl"
                     inputRef={reviewTextArb}
@@ -99,7 +98,7 @@ function ProductReview({
                       onClick={handleAdd}
                       label={dictionary.buttons.add[lang]}
                       fullWidth={true}
-                      color={App_Primary_Color}
+                      color={theme.palette.primary.main}
                     />
                   </Grid>
                 )}
@@ -109,7 +108,7 @@ function ProductReview({
                       onClick={handleDelete}
                       label={dictionary.buttons.delete[lang]}
                       fullWidth={true}
-                      color={App_Second_Color}
+                      color={theme.palette.secondary.main}
                     />
                   </Grid>
                 )}
@@ -119,7 +118,7 @@ function ProductReview({
                       onClick={handleEdit}
                       label={dictionary.buttons.edit[lang]}
                       fullWidth={true}
-                      color={App_Primary_Color}
+                      color={theme.palette.primary.main}
                     />
                   </Grid>
                 )}

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { ContentCopy } from "@mui/icons-material";
-import { InputAdornment, Snackbar, TextField } from "@basetoolkit/ui";
+import { InputAdornment, Snackbar, SvgIcon, TextField } from "@basetoolkit/ui";
 
 const styles = {
   cursorPointer: {
@@ -28,7 +27,12 @@ const CopyToClipboardButton = ({ label, value }) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="start">
-              <ContentCopy sx={styles.cursorPointer} onClick={handleClick} />
+              <SvgIcon
+                icon="content_copy"
+                color="black"
+                sx={styles.cursorPointer}
+                onClick={handleClick}
+              />
             </InputAdornment>
           ),
         }}

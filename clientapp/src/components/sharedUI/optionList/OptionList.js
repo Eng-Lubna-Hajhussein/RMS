@@ -1,8 +1,12 @@
 import * as React from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { IconButton, Typography, Divider, MenuItem } from "@basetoolkit/ui";
+import {
+  IconButton,
+  Typography,
+  Divider,
+  MenuItem,
+  SvgIcon,
+} from "@basetoolkit/ui";
 import StyledMenu from "../StyledMenu/StyledMenu";
-import { MoreVert } from "@mui/icons-material";
 
 const styles = {
   nav: {
@@ -25,7 +29,7 @@ export default function OptionList({
   navList,
   lang,
   onClick,
-  endIcon = <KeyboardArrowDownIcon />,
+  endIcon = <SvgIcon icon="keyboard_arrow_down" color="black" />,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -56,7 +60,7 @@ export default function OptionList({
         }}
         endIcon={navList?.length && endIcon}
       >
-        <MoreVert />
+        <SvgIcon icon="more_vert" />
       </IconButton>
       {navList?.length && (
         <StyledMenu
@@ -81,7 +85,7 @@ export default function OptionList({
                   {nav[lang]}
                 </Typography>
               </MenuItem>
-              {index !== navList.length - 1 && <Divider />}
+              {index !== navList.length - 1 && <Divider style={{background:"black"}} />}
             </div>
           ))}
         </StyledMenu>

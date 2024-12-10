@@ -1,40 +1,17 @@
-import { Chat, Close, Send } from "@mui/icons-material";
-import "./Chatbot.css";
-import { useEffect, useRef, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import { useRef, useState } from "react";
+import { Button, Grid, SvgIcon, Typography } from "@basetoolkit/ui";
 import { getBotMsg } from "appHelper/appFunctions";
+import "./Chatbot.css";
 
 function Chatbot() {
-  const firstRender = useRef(true);
   const chatCircle = useRef();
   const chatBox = useRef();
   const userInput = useRef();
-  // const msg = useRef();
   const [chat, setChat] = useState([]);
-  // const [userMsg, setUserMsg] = useState({ msg: "", type: "", isBot: false });
-  // const [botMsg, setBotMsg] = useState({
-  //   question: "",
-  //   keywords: [],
-  //   options: ["hi", "hello", "what is up"],
-  //   isBot: true,
-  // });
-
-  // useEffect(() => {
-  //   if (firstRender.current) {
-  //     firstRender.current = false;
-  //     return;
-  //   }
-  // setBotMsg({ ...getBotMsg(userMsg), isBot: true });
-  // setChat([...chat, { ...userMsg }, { ...botMsg }]);
-  // }, [userMsg]);
-
-  useEffect(() => {
-    console.log({ chat });
-  }, [chat]);
 
   return (
     <>
-      <div >
+      <div>
         <div
           id="chat-circle"
           class="btn btn-raised"
@@ -45,7 +22,7 @@ function Chatbot() {
           }}
         >
           <div id="chat-overlay"></div>
-          <Chat />
+          <SvgIcon icon="chat" variant="filled" color="white" />
         </div>
         <div class="chat-box" ref={chatBox}>
           <div class="chat-box-header">
@@ -57,7 +34,7 @@ function Chatbot() {
                 chatCircle.current.style.display = "grid";
               }}
             >
-              <Close />
+              <SvgIcon icon="close" color="white" />
             </span>
           </div>
           <div class="chat-box-body">
@@ -72,7 +49,7 @@ function Chatbot() {
                     {message?.isBot && (
                       <Grid
                         item
-                        xs="12"
+                        xs={12}
                         p={1}
                         container
                         justifyContent={message?.isBot ? "right" : "left"}
@@ -85,7 +62,7 @@ function Chatbot() {
                     {message?.isBot && (
                       <Grid
                         item
-                        xs="12"
+                        xs={12}
                         container
                         justifyContent={message?.isBot ? "right" : "left"}
                       >
@@ -128,7 +105,7 @@ function Chatbot() {
                     {!message?.isBot && (
                       <Grid
                         item
-                        xs="12"
+                        xs={12}
                         container
                         justifyContent={message?.isBot ? "right" : "left"}
                       >
@@ -143,15 +120,11 @@ function Chatbot() {
             </div>
           </div>
           <div class="chat-input">
-            <input
-              type="text"
-              id="chat-input"
-              ref={userInput}
-            />
+            <input type="text" id="chat-input" ref={userInput} />
             <button
               class="chat-submit"
               id="chat-submit"
-              style={{cursor:"pointer"}}
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 const userMsg = {
                   msg: userInput.current.value,
@@ -160,10 +133,10 @@ function Chatbot() {
                 };
                 const botMsg = { ...getBotMsg(userMsg), isBot: true };
                 setChat([...chat, { ...userMsg }, { ...botMsg }]);
-                userInput.current.value="";
+                userInput.current.value = "";
               }}
             >
-              <Send />
+              <SvgIcon icon="send" variant="filled" color="secondary" />
             </button>
           </div>
         </div>

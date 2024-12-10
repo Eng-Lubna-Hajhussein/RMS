@@ -93,7 +93,8 @@ function Product() {
     });
   };
 
-  const onChangeRating = (e) => setIntRating(e.target.value);
+  const onChangeRating = (newValue) => setIntRating(newValue);
+  
   const handleEdit = () => {
     const review = {
       bigUserID: appState.userInfo.bigUserID,

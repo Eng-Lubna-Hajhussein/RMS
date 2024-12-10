@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Close, Upload } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Grid,
   Typography,
   InputLabel,
   Checkbox,
   FormGroup,
   FormControlLabel,
+  SvgIcon,
+  useTheme,
 } from "@basetoolkit/ui";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import useUpload from "hooks/useUpload/useUpload";
@@ -76,10 +75,10 @@ function EditItem({
   lang,
   dir,
   onSave,
-  onDelete
+  onDelete,
 }) {
-  const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
-
+  const theme = useTheme();
+  const { data, setRequestFiles, setUserData } = useUpload();
   const onImgChange = (e) => {
     setRequestFiles([...e.target.files]);
     setUserData({ intTotalFiles: [...e.target.files].length });
@@ -152,8 +151,8 @@ function EditItem({
         maxWidth="md"
       >
         <DialogTitle sx={styles.dialogTitle}>
-          <Grid container justifyContent={"end"}>
-            <Close sx={styles.closeIcon} onClick={handleClose} />
+          <Grid container justifyContent={"end"} p={1}>
+            <SvgIcon icon="close" sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
@@ -202,8 +201,8 @@ function EditItem({
               lg={6}
               xs={12}
               sx={{
-                lg:{py:"2px !important",px:"10px !important"},
-                xs:{py:"10px !important",px:"0px !important"}
+                lg: { py: "2px !important", px: "10px !important" },
+                xs: { py: "10px !important", px: "0px !important" },
               }}
               container
               justifyContent={"start"}
@@ -403,30 +402,27 @@ function EditItem({
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            p={2}
-            justifyItems={"end"}
-            justifyContent={"end"}
-          >
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.delete[lang]}
-                color={App_Second_Color}
+                color={theme.palette.secondary.main}
                 fullWidth={true}
                 type="button"
-                onClick={()=>{onDelete(categoryOnAction);   handleClose();}}
+                onClick={() => {
+                  onDelete(categoryOnAction);
+                  handleClose();
+                }}
               />
             </Grid>
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
-                color={App_Primary_Color}
+                color={theme.palette.primary.main}
                 fullWidth={true}
                 type="submit"
               />
-              </Grid>
-              
+            </Grid>
           </Grid>
         </DialogContent>
       </Dialog>

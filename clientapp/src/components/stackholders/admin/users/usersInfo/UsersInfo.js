@@ -4,7 +4,6 @@ import {
   Avatar,
   Chip,
   Grid,
-  TableFooter,
   TablePagination,
   Typography,
   Table,
@@ -15,7 +14,6 @@ import {
   Paper,
   TableContainer,
 } from "@basetoolkit/ui";
-import { App_Primary_Color } from "appHelper/appColor";
 import { Link } from "react-router-dom";
 import { dictionary } from "appHelper/appDictionary";
 
@@ -36,7 +34,7 @@ const styles = {
     textTransform: "uppercase",
     fontSize: "28px",
     fontWeight: "800",
-    color: App_Primary_Color,
+    color: "primary",
     borderBottom: "3px solid #ffd40d",
     width: "fit-content",
   },
@@ -50,16 +48,15 @@ const styles = {
     width: "100%",
   },
   columnTablecell: {
-    border: "1px solid #c4c4c4",
-    background: App_Primary_Color,
+    border: "1px solid #c4c4c4 !important",
+    bgcolor: "primary",
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
-    minWidth: { xs: "150px" },
-    width: { xs: "150px" },
+    xs: { width: "150px", minWidth: "150px" },
   },
   rowTablecell: {
-    border: "1px solid #c4c4c4",
+    border: "1px solid #c4c4c4 !important",
   },
   tableContainer: {
     marginBottom: "50px",
@@ -126,8 +123,7 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
   ];
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer>
+
         <Grid item xs="12" sx={styles.container} px={1}>
           <Table
             aria-label="simple table"
@@ -182,7 +178,7 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
                     >
                       <Grid item px={1} sx={styles.fitContentHeight}>
                         <Avatar
-                          src={user?.strImgPath||"broken"}
+                          src={user?.strImgPath || "broken"}
                           height="50px"
                           width="50px"
                         />
@@ -307,8 +303,6 @@ function UsersInfo({ users, handleUserDetails, appState, lang, dir }) {
             />
           </Grid>
         </Grid>
-      </TableContainer>
-    </Paper>
   );
 }
 

@@ -2,7 +2,7 @@ import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import menuIcon from "assets/image/menu-icon.svg";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlProfile } from "./controller/CtrlProfile";
@@ -15,7 +15,8 @@ import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
   container: {
-    marginY: { lg: "50px", xs: "20px" },
+    lg: { my: "50px" },
+    xs: { my: "20px" },
   },
 };
 
@@ -127,8 +128,8 @@ function Profile() {
             item
             container
             justifyContent={"center"}
-            lg="10"
-            xs="12"
+            lg={10}
+            xs={12}
             px={2}
             sx={styles.container}
           >

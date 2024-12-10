@@ -1,12 +1,12 @@
-import { Typography,Button } from "@basetoolkit/ui";
+import { Typography, Button } from "@basetoolkit/ui";
 import "./AnimButton0001.css";
 
 const styles = {
   inner: {
     fontWeight: "800",
     width: "100%",
-    lg:{p:"18px 20px !important",fontSize:"16px !important"},
-    xs:{p:"12px 15px !important" ,fontSize:"14px !important"}
+    lg: { p: "18px 20px !important", fontSize: "16px !important" },
+    xs: { p: "12px 15px !important", fontSize: "14px !important" },
   },
 };
 
@@ -32,8 +32,8 @@ function AnimButton0001({
           backgroundColor: color,
           "&:before": {
             borderColor: color,
-            lg:{height:"78px"},
-            xs:{height:"67px"}
+            lg: { height: "78px" },
+            xs: { height: "67px" },
           },
         }}
       >

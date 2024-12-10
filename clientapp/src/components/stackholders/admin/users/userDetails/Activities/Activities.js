@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "contextapi/context/AppContext";
 import menuIcon from "assets/image/menu-icon.svg";
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import { findUserTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,12 +20,14 @@ const style = {
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: { lg: "14px", xs: "10px" },
+    lg: { fontSize: "14px" },
+    xs: { fontSize: "10px" },
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: { lg: "25px", xs: "14px" },
+    lg: { fontSize: "25px" },
+    xs: { fontSize: "14px" },
     fontWeight: "800 !important",
   },
   icon: {
@@ -111,7 +113,7 @@ function Activities({ user, lang }) {
       img: menuIcon,
     },
     {
-      title:  dictionary.users.lastReservationDate[lang],
+      title: dictionary.users.lastReservationDate[lang],
       description: lastReservation,
       img: menuIcon,
     },
@@ -121,7 +123,7 @@ function Activities({ user, lang }) {
       img: menuIcon,
     },
     {
-      title:  dictionary.users.totalReservations[lang],
+      title: dictionary.users.totalReservations[lang],
       description: tables?.length,
       img: menuIcon,
     },

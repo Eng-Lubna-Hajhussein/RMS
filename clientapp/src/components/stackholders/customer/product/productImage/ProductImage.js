@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Grid, Typography } from "@basetoolkit/ui";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 
 const styles = {
   saleBox: {
@@ -19,7 +18,7 @@ const styles = {
     lg: { height: "430px" },
     xs: { height: "fit-content" },
     width: "100%",
-    border: `4px solid ${App_Second_Color}`,
+    border:theme=> `4px solid ${theme.palette.secondary.main}`,
     borderRadius: "20px",
   },
   fullHeight: {
@@ -28,7 +27,7 @@ const styles = {
   img: {
     lg: { height: "300px", width: "250px", p: "50px 30px" },
     xs: { height: "160px", width: "150px", p: "10px" },
-    background: App_Primary_Color,
+    bgcolor: "primary",
     borderRadius: "20px",
     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;",
   },

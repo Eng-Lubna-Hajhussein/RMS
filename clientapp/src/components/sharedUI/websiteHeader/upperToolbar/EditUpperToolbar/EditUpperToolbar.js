@@ -1,11 +1,10 @@
-import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Grid,
+  SvgIcon,
 } from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
@@ -69,8 +68,12 @@ function EditUpperToolbar({
       maxWidth="md"
     >
       <DialogTitle sx={styles.dialogTitle}>
-        <Grid container justifyContent={"end"}>
-          <Close sx={styles.closeIcon} onClick={handleEditClose} />
+        <Grid container justifyContent={"end"} p={1}>
+          <SvgIcon
+            icon="close"
+            sx={styles.closeIcon}
+            onClick={handleEditClose}
+          />
         </Grid>
       </DialogTitle>
       <DialogContent sx={styles.dialogContent}>
@@ -162,12 +165,7 @@ function EditUpperToolbar({
             </Grid>
           </Grid>
         </Grid>
-        <Grid
-          container
-          p={2}
-          justifyItems={"end"}
-          justifyContent={"end"}
-        >
+        <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
           <Grid item lg={2} xs={6}>
             <AnimButton0001
               label={dictionary.buttons.saveBtn[lang]}

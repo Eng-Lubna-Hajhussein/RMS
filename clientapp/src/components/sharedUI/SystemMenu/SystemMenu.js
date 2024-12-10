@@ -4,23 +4,19 @@ import {
   Box,
   Grid,
   IconButton,
-  MenuItem,
   Paper,
-  Select,
   SvgIcon,
   Typography,
 } from "@basetoolkit/ui";
 import "./SystemMenu.css";
 import { objAppActions, tabsOptions } from "appHelper/appVariables";
-import { Add, MoreVert } from "@mui/icons-material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import AddTab from "./AddTab/AddTab";
 import OptionList from "../optionList/OptionList";
 import AddItem from "./AddItem/AddItem";
 import EditItem from "./EditItem/EditItem";
 import shoppingIcon from "assets/image/shopping.svg";
 import { Link, useParams } from "react-router-dom";
-import { badgeClasses, selectClasses } from "@basetoolkit/ui/classes";
+import { badgeClasses } from "@basetoolkit/ui/classes";
 
 const styles = {
   addDish: {
@@ -55,7 +51,7 @@ const styles = {
   },
   shoppingBadge: {
     [`&.${badgeClasses.badge}`]: {
-      background: App_Primary_Color,
+      background: (theme) => theme.palette.primary.main,
       color: "#fff",
       fontWeight: "800",
     },
@@ -143,7 +139,7 @@ const styles = {
     width: "54px",
     textAlign: "center",
     borderRadius: "50%",
-    background: App_Second_Color,
+    background: (theme) => theme.palette.secondary.main,
     cursor: "pointer",
   },
   tab: {
@@ -375,7 +371,7 @@ export default function RestaurantMenu({
                             }
                           },
                         }))}
-                        endIcon={<MoreVert />}
+                        endIcon={<SvgIcon icon="more_vert" />}
                         lang={lang}
                       />
                     </Grid>
@@ -401,7 +397,7 @@ export default function RestaurantMenu({
                 sx={styles.addTabIcon}
                 onClick={() => setAddTabOpen(true)}
               >
-                <Add sx={styles.addIcon} />
+                <SvgIcon icon="add" sx={styles.addIcon} />
               </Grid>
             </Grid>
           )}
@@ -499,7 +495,7 @@ export default function RestaurantMenu({
                               justifyContent={"center"}
                               alignContent={"center"}
                             >
-                              <Add fontSize="medium" />
+                              <SvgIcon icon="add" />
                             </Grid>
                           </Box>
                         </Grid>

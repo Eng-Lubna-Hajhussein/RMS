@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { AnimationOutlined, Close, StyleOutlined } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Grid,
   Typography,
   Box,
   Button,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
+  useTheme,
+  SvgIcon,
 } from "@basetoolkit/ui";
-import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { bgAnimationTypes } from "appHelper/appVariables";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
@@ -53,7 +52,6 @@ const styles = {
     backgroundSize: "100% 100%",
     height: "280px",
     borderRadius: "20px",
-    width: { lg: "820px !important", xs: "100%" },
   },
   btnLabel: {
     color: "#fff",
@@ -81,7 +79,8 @@ function EditHeroContent({
   dir,
   onSave,
 }) {
-  const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
+  const theme = useTheme();
+  const { data, setRequestFiles, setUserData } = useUpload();
   const [slide, setSlide] = useState({ ...content });
   const [openTextEditor, setOpenTextEditor] = useState(false);
   const [openAnimationEditor, setOpenAnimationEditor] = useState(false);
@@ -172,12 +171,19 @@ function EditHeroContent({
         PaperProps={{
           component: "form",
           onSubmit: handleSubmit,
+          sx: {
+            position: "relative",
+          },
         }}
         maxWidth="md"
       >
         <DialogTitle sx={styles.dialogTitle}>
-          <Grid container justifyContent={"end"}>
-            <Close sx={styles.closeIcon} onClick={handleEditClose} />
+          <Grid container justifyContent={"end"} p={1}>
+            <SvgIcon
+              icon="close"
+              sx={styles.closeIcon}
+              onClick={handleEditClose}
+            />
           </Grid>
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
@@ -190,18 +196,12 @@ function EditHeroContent({
                 />
               </Grid>
               <Grid item xs={12} container>
-                <Grid
-                  item
-                  xs={12}
-                  lg={6}
-                  p={1}
-                  container
-                  justifyContent={"start"}
-                >
+                <Grid item xs={12} lg={6} p={1} justifyContent={"start"}>
                   <UploadButton001
                     onChange={onImgChange}
                     label={dictionary.buttons.changeSlideImg[lang]}
                     fullWidth={true}
+                    style={{ height: "60px" }}
                     variant={"square"}
                   />
                 </Grid>
@@ -241,9 +241,10 @@ function EditHeroContent({
                   </FormControl>
                 </Grid>
               </Grid>
-              <Grid item xs={12} container p={1}>
+              <Grid item xs={12} container width={"100%"} p={1}>
                 <AnimationBG type={slide?.strBgAnimationType || "none"}>
-                  <Box width={"100%"}
+                  <Box
+                    width={"100%"}
                     component={"img"}
                     src={slide.strImgPath}
                     sx={styles.bgBox}
@@ -265,10 +266,13 @@ function EditHeroContent({
                     fullWidth
                     sx={styles.btn}
                     variant="contained"
-                    startIcon={<StyleOutlined />}
+                    startIcon={
+                      <SvgIcon icon="style" variant="outlined" color="white" />
+                    }
                     onClick={() =>
                       onClickTextEditor("jsnTitle", titleDefaultStyle)
                     }
+                    type="button"
                   >
                     <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textEditor[lang]}
@@ -281,10 +285,17 @@ function EditHeroContent({
                     fullWidth
                     sx={styles.btn}
                     variant="contained"
-                    startIcon={<AnimationOutlined />}
+                    startIcon={
+                      <SvgIcon
+                        icon="animation"
+                        variant="outlined"
+                        color="white"
+                      />
+                    }
                     onClick={() =>
                       onClickAnimationEditor("jsnTitle", titleDefaultStyle)
                     }
+                    type="button"
                   >
                     <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textAnimation[lang]}
@@ -339,10 +350,13 @@ function EditHeroContent({
                     fullWidth
                     sx={styles.btn}
                     variant="contained"
-                    startIcon={<StyleOutlined />}
+                    startIcon={
+                      <SvgIcon icon="style" variant="outlined" color="white" />
+                    }
                     onClick={() =>
                       onClickTextEditor("jsnSubtitle", subtitleDefaultStyle)
                     }
+                    type="button"
                   >
                     <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textEditor[lang]}
@@ -355,13 +369,20 @@ function EditHeroContent({
                     fullWidth
                     sx={styles.btn}
                     variant="contained"
-                    startIcon={<AnimationOutlined />}
+                    startIcon={
+                      <SvgIcon
+                        icon="animation"
+                        variant="outlined"
+                        color="white"
+                      />
+                    }
                     onClick={() =>
                       onClickAnimationEditor(
                         "jsnSubtitle",
                         subtitleDefaultStyle
                       )
                     }
+                    type="button"
                   >
                     <Typography px={1} sx={styles.btnLabel}>
                       {dictionary.buttons.textAnimation[lang]}
@@ -402,18 +423,12 @@ function EditHeroContent({
                 />
               </Grid>
             </Grid>
-            
           </Grid>
-          <Grid
-            container
-            p={2}
-            justifyItems={"end"}
-            justifyContent={"end"}
-          >
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
-                color={App_Primary_Color}
+                color={theme.palette.primary.main}
                 fullWidth={true}
                 type="submit"
               />

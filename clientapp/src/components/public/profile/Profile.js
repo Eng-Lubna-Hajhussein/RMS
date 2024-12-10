@@ -2,12 +2,12 @@ import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import menuIcon from "assets/image/menu-icon.svg";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { ctrlProfile } from "./controller/CtrlProfile";
 import { ctrlRouteCustomer } from "components/stackholders/customer/controller/CtrlRouteCustomer";
-import { Demo_jsnSystemInfo, lstWebsiteNav, objRoleID } from "appHelper/appVariables";
+import { lstWebsiteNav, objRoleID } from "appHelper/appVariables";
 import Activities from "./activities/Activities";
 import PersonalInfo from "./personalInfo/PersonalInfo";
 import Location from "./location/Location";
@@ -132,18 +132,6 @@ function Profile() {
       img: menuIcon,
     },
   ];
-
-  // const userNavList = ctrlRouteCustomer.generateUserNavList({
-  //   appState: appState,
-  //   appDispatch: appDispatch,
-  //   handleUploadPictureOpen: handleUploadPictureOpen,
-  //   systemID: systemID,
-  //   systemName: systemName,
-  // });
-  // const navList = ctrlRouteCustomer.generateWebsiteNavList({
-  //   systemID: systemID,
-  //   systemName: systemName,
-  // });
   const [isLoading, setIsLoading] = useState(false);
   return (
     <React.Fragment>
@@ -167,7 +155,7 @@ function Profile() {
             item
             container
             justifyContent={"center"}
-            xs="10"
+            xs={10}
             sx={styles.container}
           >
             <PersonalInfo userInfo={userInfo} lang={lang} />

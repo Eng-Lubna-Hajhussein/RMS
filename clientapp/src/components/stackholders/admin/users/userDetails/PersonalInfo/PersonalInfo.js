@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, useMediaQueryMatch, useTheme } from "@basetoolkit/ui";
 import { dictionary } from "appHelper/appDictionary";
 import CopyToClipboardButton from "components/sharedUI/CopyToClipboardButton/CopyToClipboardButton";
 import moment from "moment";
@@ -11,19 +11,21 @@ const styles = {
   },
 };
 
-function PersonalInfo({ user, lang,dir }) {
+function PersonalInfo({ user, lang, dir }) {
   const { systemName, systemID } = useParams();
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
   return (
     <Grid container>
-      <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
+      <Grid item xs="12" py={1} px={isExtraSmallAndDown ? 0 : "30px"}>
         <CopyToClipboardButton
           label={dictionary.labels.userProfileLink[lang]}
           value={`http:/localhost:3000/profile/${user.bigUserID}/${systemName}/${systemID}`}
         />
       </Grid>
-      <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
+      <Grid item xs="12" py={1} px={isExtraSmallAndDown ? 0 : "30px"}>
         <TextField
-          aria-readonly
+          readOnly
           fullWidth
           value={user.jsnFullName[lang]}
           sx={styles.username}
@@ -34,18 +36,18 @@ function PersonalInfo({ user, lang,dir }) {
           }}
         />
       </Grid>
-      <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
+      <Grid item xs="12" py={1} px={isExtraSmallAndDown ? 0 : "30px"}>
         <TextField
-          aria-readonly
+          readOnly
           fullWidth
           value={user.strEmail}
           label={dictionary.labels.userEmail[lang]}
           variant="outlined"
         />
       </Grid>
-      <Grid item xs="12" py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
+      <Grid item xs="12" py={1} px={isExtraSmallAndDown ? 0 : "30px"}>
         <TextField
-          aria-readonly
+          readOnly
           fullWidth
           value={
             user.jsnAddress.jsnCity[lang] +
@@ -55,13 +57,13 @@ function PersonalInfo({ user, lang,dir }) {
           label={dictionary.labels.userAddress[lang]}
           variant="outlined"
           inputProps={{
-            style: { textTransform: "capitalize",direction:dir },
+            style: { textTransform: "capitalize", direction: dir },
           }}
         />
       </Grid>
-      <Grid item lg="6" xs='12' py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
+      <Grid item lg="6" xs="12" py={1} px={isExtraSmallAndDown ? 0 : "30px"}>
         <TextField
-          aria-readonly
+          readOnly
           fullWidth
           value={moment(new Date(user.dtmCreatedDate)).format("YYYY-MM-DD")}
           label={dictionary.labels.joinedDate[lang]}
@@ -72,9 +74,9 @@ function PersonalInfo({ user, lang,dir }) {
           type="date"
         />
       </Grid>
-      <Grid item lg="6" xs='12' py={1}  sx={{paddingX:{lg:"30px",xs:"0px"}}}>
+      <Grid item lg="6" xs="12" py={1} px={isExtraSmallAndDown ? 0 : "30px"}>
         <TextField
-          aria-readonly
+          readOnly
           fullWidth
           value={moment(new Date(user.dtmUpdatedDate)).format("YYYY-MM-DD")}
           label={dictionary.labels.lastUpdate[lang]}

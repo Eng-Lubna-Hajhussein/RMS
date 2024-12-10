@@ -1,26 +1,32 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@basetoolkit/ui";
 
 const styles = {
   box: {
     width: "100%",
     background: "#f4fcfc !important",
-    height: { lg: "100px", xs: "80px" },
+    lg: { height: "100px" },
+    xs: { height: "80px" },
     borderRadius: "20px",
     paddingX: "20px",
   },
   title: {
     textTransform: "capitalize",
     color: "#555",
-    fontSize: { lg: "14px", xs: "12px" },
+    lg: { fontSize: "14px" },
+    xs: { fontSize: "12px" },
   },
   description: {
     textTransform: "capitalize",
     color: "#000",
-    fontSize: { lg: "25px", xs: "15px" },
+    lg: { fontSize: "25px" },
+    xs: { fontSize: "15px" },
+
     fontWeight: "800 !important",
   },
   icon: {
-    padding: { lg: "18px", xs: "10px" },
+    lg: { p: "10px" },
+    xs: { p: "8px" },
+
     background: "#ffd40d",
     borderRadius: "10px",
   },

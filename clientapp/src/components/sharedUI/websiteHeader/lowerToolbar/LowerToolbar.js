@@ -15,7 +15,7 @@ import { dictionary } from "appHelper/appDictionary";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { App_Primary_Color } from "appHelper/appColor";
 import useLanguage from "hooks/useLanguage/useLanguage";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { badgeClasses } from "@basetoolkit/ui/classes";
 
 const styles = {

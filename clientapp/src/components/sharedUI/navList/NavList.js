@@ -1,6 +1,12 @@
 import * as React from "react";
-import { Button, MenuItem, Divider, Typography, Box } from "@basetoolkit/ui";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import {
+  Button,
+  MenuItem,
+  Divider,
+  Typography,
+  Box,
+  SvgIcon,
+} from "@basetoolkit/ui";
 import StyledMenu from "../StyledMenu/StyledMenu";
 import { Link } from "react-router-dom";
 
@@ -19,16 +25,16 @@ const styles = {
     fontSize: "15px",
     textTransform: "capitalize",
   },
-  divider:{
-    background:"black"
-  }
+  divider: {
+    background: "black",
+  },
 };
 
 export default function NavList({
   nav,
   navList,
   lang,
-  endIcon = <KeyboardArrowDownIcon />,
+  endIcon = <SvgIcon icon="keyboard_arrow_down" color="black" />,
   path,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -102,8 +108,7 @@ export default function NavList({
                 </Typography>
               </MenuItem>
               {index !== navList.length - 1 && (
-                <Divider style={styles.divider}
-                 />
+                <Divider style={styles.divider} />
               )}
             </Link>
           ))}

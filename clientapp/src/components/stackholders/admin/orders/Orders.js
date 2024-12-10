@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { findSystemOrders } from "appHelper/fetchapi/tblOrder/tblOrder";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,7 +13,8 @@ import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
   container: {
-    marginY: { lg: "50px", xs: "20px" },
+    lg: { my: "50px" },
+    xs: { my: "20px" },
   },
   itemContainer: {
     background: "#f4fcfc",
@@ -26,7 +27,7 @@ const styles = {
     textTransform: "uppercase",
     fontSize: "28px",
     fontWeight: "800",
-    color: App_Primary_Color,
+    color: "primary",
     borderBottom: "3px solid #ffd40d",
     width: "fit-content",
   },
@@ -45,7 +46,7 @@ const styles = {
   },
   columnTableCell: {
     border: "1px solid #c4c4c4",
-    background: App_Primary_Color,
+    bgcolor: "primary",
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
@@ -79,21 +80,7 @@ const styles = {
     fontSize: "15px",
     textTransform: "uppercase",
   },
-  tablePagination: {
-    ".MuiTablePagination-toolbar": {
-      backgroundColor: "#f4fcfc",
-      textAlign: "center",
-    },
-    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-      fontWeight: "800",
-    },
-    ".MuiTablePagination-input": {
-      fontWeight: "bold",
-      background: "#fff",
-      borderRadius: "10px",
-      border: "1px solid #000",
-    },
-  },
+  tablePagination: {},
   status: {
     color: "#fff",
     textTransform: "capitalize",
@@ -191,8 +178,8 @@ function Orders() {
       {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Grid container justifyContent={"center"} sx={styles.container}>
-          <Grid item lg="10" xs="12" px={2} container>
-            <Grid item xs="12" px={1} container>
+          <Grid item lg={10} xs={12} px={0} py={2} container>
+            <Grid item xs={12} px={0}>
               <OrdersTable orders={orders} lang={lang} dir={dir} />
             </Grid>
           </Grid>

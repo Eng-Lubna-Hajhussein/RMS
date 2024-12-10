@@ -1,10 +1,8 @@
-import { Close, Upload } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Grid,
   Typography,
   InputLabel,
@@ -12,8 +10,9 @@ import {
   FormGroup,
   FormControlLabel,
   Box,
+  SvgIcon,
+  useTheme,
 } from "@basetoolkit/ui";
-import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import { objCategoriesType } from "appHelper/appVariables";
@@ -80,8 +79,8 @@ function AddItem({
   dir,
   onSave,
 }) {
-  const { data, error, isPending, setRequestFiles, setUserData } = useUpload();
-
+  const { data, setRequestFiles, setUserData } = useUpload();
+  const theme = useTheme();
   const onImgChange = (e) => {
     setRequestFiles([...e.target.files]);
     setUserData({ intTotalFiles: [...e.target.files].length });
@@ -125,7 +124,6 @@ function AddItem({
         blnMostOrdered: !!onMostOrderedInput?.current?.checked,
       },
     };
-    console.log({ item });
     setImg(null);
     setOnSaleChecked(false);
     onSave(item);
@@ -147,8 +145,15 @@ function AddItem({
         maxWidth="md"
       >
         <DialogTitle sx={styles.dialogTitle}>
-          <Grid container justifyContent={"end"}>
-            <Close sx={styles.closeIcon} onClick={handleClose} />
+          <Grid container justifyContent={"end"} p={1}>
+            <SvgIcon
+              icon="close"
+              sx={styles.closeIcon}
+              onClick={() => {
+                setImg(null);
+                handleClose();
+              }}
+            />
           </Grid>
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
@@ -395,7 +400,7 @@ function AddItem({
             <Grid item lg={2} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
-                color={App_Primary_Color}
+                color={theme.palette.primary.main}
                 fullWidth={true}
                 type="submit"
               />

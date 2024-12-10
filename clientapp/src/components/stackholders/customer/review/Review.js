@@ -124,7 +124,9 @@ function Review() {
     });
   };
 
-  const handleRatingChange = (e) => setIntRating(e.target.value);
+  const handleRatingChange = (newValue) => {
+    setIntRating(newValue);
+  };
 
   return (
     <React.Fragment>

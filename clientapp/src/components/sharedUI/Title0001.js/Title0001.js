@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-function Title0001({ title, dir,color="#000" }) {
+function Title0001({ title, dir="ltr",color="#000" }) {
   return (
     <Typography
       sx={{

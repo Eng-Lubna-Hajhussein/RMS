@@ -93,7 +93,6 @@ function Home({
         wsCategory={wsCategory}
         onSaveHero={onSaveHero}
       />
-
       <Owner
         lang={lang}
         dir={dir}
@@ -140,7 +139,7 @@ function Home({
         deleteChef={deleteChef}
       />
 
-      {!!(systemInfo?.lstSystemReviews?.length) && (
+      {!!systemInfo?.lstSystemReviews?.length && (
         <Testimonial
           lang={lang}
           dir={dir}

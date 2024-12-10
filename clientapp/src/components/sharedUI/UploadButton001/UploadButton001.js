@@ -1,52 +1,33 @@
 import { Upload } from "@mui/icons-material";
-import { Fab, Typography } from "@mui/material";
-import { App_Second_Color } from "appHelper/appColor";
+import { Button } from "@basetoolkit/ui";
+import VisuallyHiddenInput from "../VisuallyHiddenInput/VisuallyHiddenInput";
 
-const styles = {
-  fab: {
-    background: App_Second_Color,
-    ":hover": { background: App_Second_Color },
-    width: "100%",
-    boxShadow: "none",
-    width: "100%",
-    height: "55px",
-  },
-  label: {
-    textTransform: "capitalize",
-    color: "#fff",
-    fontWeight: "800",
-    fontSize: { lg: "16px", xs: "13px" },
-  },
-};
-
-function UploadButton001({ onChange, label, fullWidth, variant }) {
+function UploadButton001({ onChange, label, fullWidth, variant,style }) {
   return (
-    <label htmlFor="upload-photo" style={{ width: fullWidth && "100%" }}>
-      <input
-        style={{ display: "none", width: fullWidth && "100%" }}
-        id="upload-photo"
-        name="upload-photo"
-        type="file"
-        onChange={onChange}
-      />
-      <Fab
-        size="large"
-        component="span"
-        aria-label="add"
-        variant="extended"
-        sx={{
-          borderRadius: variant === "square" ? "5px" : "50%",
-          ...styles.fab,
-        }}
-      >
-        <Upload />
-        {label && (
-          <Typography px={2} sx={styles.label}>
-            {label}
-          </Typography>
-        )}
-      </Fab>
-    </label>
+    <Button
+      size="large"
+      component="label"
+      aria-label="add"
+      variant="contained"
+      role={undefined}
+      tabIndex={-1}
+      color="secondary"
+      fullWidth={fullWidth}
+      {...(style&&{style:style})}
+      {...(variant !== "square" && {
+        sx: {
+          boxShadow: "none",
+          borderRadius: "50% !important",
+          p: "15px !important",
+        },
+      })}
+      type="button"
+      {...(variant==="square"&&{endIcon:<Upload />})}
+    >
+      {label && label}
+      {variant!=="square"&&<Upload />}
+      <VisuallyHiddenInput type="file" onChange={onChange} />
+    </Button>
   );
 }
 

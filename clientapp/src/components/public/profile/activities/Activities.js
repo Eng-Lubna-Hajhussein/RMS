@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid } from "@mui/material";
+import { Grid } from "@basetoolkit/ui";
 import Box001 from "components/sharedUI/Box001/Box001";
 
 const style = {
@@ -28,9 +28,9 @@ const style = {
   },
 };
 
-function Activities({activities}) {
+function Activities({ activities }) {
   return (
-    <Grid item xs="12" py={5} container justifyContent={"center"}>
+    <Grid item xs="12" py={3} container justifyContent={"center"}>
       {activities.map(({ title, description, img }, index) => (
         <Grid
           item

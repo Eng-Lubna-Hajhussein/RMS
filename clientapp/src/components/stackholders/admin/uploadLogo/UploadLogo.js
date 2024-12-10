@@ -7,7 +7,7 @@ import {
   DialogActions,
   Grid,
 } from "@basetoolkit/ui";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
+import { App_Primary_Color } from "appHelper/appColor";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { AppContext } from "contextapi/context/AppContext";
 import useUpload from "hooks/useUpload/useUpload";

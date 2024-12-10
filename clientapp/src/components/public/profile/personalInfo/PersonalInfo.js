@@ -1,7 +1,6 @@
 import React from "react";
-import { Avatar, Grid, Typography } from "@mui/material";
+import { Avatar, Grid, Typography, useTheme } from "@basetoolkit/ui";
 import { objIDRole } from "appHelper/appVariables";
-import { App_Primary_Color } from "appHelper/appColor";
 
 const styles = {
   avatar: {
@@ -27,13 +26,14 @@ const styles = {
 };
 
 function PersonalInfo({ userInfo,lang }) {
+  const theme = useTheme();
   return (
     <Grid item container xs="12">
       <Grid item xs="12" pb={1} container justifyContent={"center"}>
         <Avatar src={userInfo?.strImgPath} sx={styles.avatar} />
       </Grid>
       <Grid item xs="12" container justifyContent={"center"}>
-        <Typography component={"h3"} color={App_Primary_Color} sx={styles.role}>
+        <Typography component={"h3"} color={theme.palette.primary.main} sx={styles.role}>
           {objIDRole[userInfo?.bigUserRoleID]}
         </Typography>
       </Grid>

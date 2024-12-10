@@ -7,8 +7,8 @@ import {
   TextField,
   DialogActions,
   Grid,
-} from "@mui/material";
-import { App_Primary_Color } from "appHelper/appColor";
+  useTheme,
+} from "@basetoolkit/ui";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
 import { ctrlTables } from "../controller/CtrlTables";
 import Title0001 from "components/sharedUI/Title0001.js/Title0001";
@@ -39,6 +39,7 @@ function EditTable({
   lang,
   dir,
 }) {
+  const theme = useTheme();
   const handelSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -71,11 +72,11 @@ function EditTable({
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
           <Grid container py={1} justifyContent={"center"}>
-            <Grid item container xs="12">
-              <Grid item xs="12" p={1}>
+            <Grid item container xs={12}>
+              <Grid item xs={12} p={1}>
                 <Title0001 title={"Edit Table Info"} dir={dir} />
               </Grid>
-              <Grid item xs="12" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -87,7 +88,7 @@ function EditTable({
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs="6" p={1}>
+              <Grid item xs={6} p={1}>
                 <TextField
                   color="warning"
                   required
@@ -105,15 +106,14 @@ function EditTable({
         <DialogActions sx={styles.dialogActions}>
           <Grid
             container
-            p={2}
-            px={5}
-            justifyItems={"flex-end"}
-            justifyContent={"flex-end"}
+            width={"100%"}
+            justifyItems={"end"}
+            justifyContent={"end"}
           >
-            <Grid item xs="2">
+            <Grid item xs={4}>
               <AnimButton0001
                 label={"Save"}
-                color={App_Primary_Color}
+                color={theme.palette.primary.main}
                 fullWidth={true}
                 type="submit"
               />

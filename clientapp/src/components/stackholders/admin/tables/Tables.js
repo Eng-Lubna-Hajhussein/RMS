@@ -2,10 +2,7 @@ import { objAppActions } from "appHelper/appVariables";
 import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
 import { AppContext } from "contextapi/context/AppContext";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Grid,
-  Typography,
-} from "@basetoolkit/ui";
+import { Grid, Typography } from "@basetoolkit/ui";
 import { App_Primary_Color } from "appHelper/appColor";
 import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
 import { useForm } from "react-hook-form";
@@ -20,9 +17,7 @@ import UploadLogo from "../uploadLogo/UploadLogo";
 import SharedLink from "../sharedLink/SharedLink";
 
 const styles = {
-  container: {lg: {my:"50px"}, xs: {my:"20px"} 
-    
-  },
+  container: { lg: { my: "50px" }, xs: { my: "20px" } },
   itemContainer: {
     background: "#f4fcfc",
     height: "250px",
@@ -113,7 +108,7 @@ function Tables() {
   const [uploadLogoOpen, setUploadLogo] = useState(false);
   const [sharedLinkOpen, setSharedLinkOpen] = useState(false);
 
-  const handleFreeTable = (table,index) => {
+  const handleFreeTable = (table, index) => {
     ctrlTables.freeTable({
       bigTableID: table.bigTableID,
       index: index,
@@ -122,9 +117,9 @@ function Tables() {
       tables: tables,
       setTables: setTables,
     });
-  }
+  };
 
-  const handleDeleteTable = (table)=>{
+  const handleDeleteTable = (table) => {
     ctrlTables.deleteTable({
       bigTableID: table.bigTableID,
       isLoading: isLoading,
@@ -132,13 +127,12 @@ function Tables() {
       setTables: setTables,
       tables: tables,
     });
-  }
+  };
 
-  const handleEditTable = (table)=>{
+  const handleEditTable = (table) => {
     setTableOnAction(table);
     setOpenEditTable(true);
-  }
-
+  };
 
   useEffect(() => {
     if (!appState.clientInfo.blnUserLogin) {
@@ -246,22 +240,22 @@ function Tables() {
         <Grid container justifyContent={"center"} sx={styles.container}>
           <Grid item lg={10} xs={12} px={2} container>
             <AddTable
-            errors={errors}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            register={register}
-            trigger={trigger}
-            lang={lang}
-            dir={dir}
+              errors={errors}
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              register={register}
+              trigger={trigger}
+              lang={lang}
+              dir={dir}
             />
             <TablesInfo
-            appState={appState}
-            lang={lang}
-            dir={dir}
-            handleDeleteTable={handleDeleteTable}
-            handleEditTable={handleEditTable}
-            handleFreeTable={handleFreeTable}
-            tables={tables}
+              appState={appState}
+              lang={lang}
+              dir={dir}
+              handleDeleteTable={handleDeleteTable}
+              handleEditTable={handleEditTable}
+              handleFreeTable={handleFreeTable}
+              tables={tables}
             />
           </Grid>
         </Grid>
@@ -276,7 +270,7 @@ function Tables() {
         tables={tables}
         setTables={setTables}
       />
-       <UploadPicture
+      <UploadPicture
         open={uploadPictureOpen}
         handleClose={() => setUploadPicture(false)}
       />

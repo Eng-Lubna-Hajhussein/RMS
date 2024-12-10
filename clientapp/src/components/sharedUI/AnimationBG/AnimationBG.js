@@ -172,7 +172,7 @@ const styles = {
 
 const generateTypeJSX = (children, type) => {
   return (
-    <div className="backwrap gradient">
+    <div className="backwrap gradient" style={{width:"100%",overflow:"hidden"}}>
       <div className="back-shapes">
         {children}
         <span

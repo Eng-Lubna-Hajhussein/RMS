@@ -1,10 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { Grid } from "@mui/material";
+import { Grid, Box, Typography, Tabs, Tab } from "@basetoolkit/ui";
+import { tabClasses,svgIconClasses } from "@basetoolkit/ui/classes";
 
 const styles = {
   box: {
@@ -58,7 +55,7 @@ export default function Tabs001({ tabsContent, justifyContent }) {
   };
 
   return (
-    <Box sx={styles.box}>
+    <Box sx={styles.box} width={"100%"}>
       <Box>
         <Grid
           container
@@ -67,10 +64,17 @@ export default function Tabs001({ tabsContent, justifyContent }) {
           <Tabs
             indicatorColor="secondary"
             textColor="inherit"
-            variant="fullWidth"
+            variant="standard"
             aria-label="full width tabs example"
             value={value}
             onChange={handleChange}
+            sx={{
+              [`& .${tabClasses.selected}`]:{
+                [`& .${svgIconClasses.root}`]:{
+                  fill:"primary"
+                }
+              }
+            }}
           >
             {tabsContent.map(({ tabLabel }, index) => (
               <Tab

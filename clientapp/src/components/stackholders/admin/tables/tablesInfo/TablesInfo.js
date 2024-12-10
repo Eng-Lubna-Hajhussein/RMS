@@ -1,14 +1,10 @@
 import { objAppActions } from "appHelper/appVariables";
-import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
-import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Chip,
   Grid,
-  TableFooter,
   TablePagination,
-  TextField,
   Typography,
   Table,
   TableBody,
@@ -17,14 +13,11 @@ import {
   TableRow,
   Paper,
   TableContainer,
+  SvgIcon,
+  useTheme,
 } from "@basetoolkit/ui";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
 import OptionList from "components/sharedUI/optionList/OptionList";
-import { MoreVert, Visibility } from "@mui/icons-material";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
@@ -35,7 +28,7 @@ const styles = {
   },
   columnTablecell: {
     border: "1px solid #c4c4c4",
-    background: App_Primary_Color,
+    bgcolor: "primary",
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
@@ -45,9 +38,7 @@ const styles = {
   rowTablecell: {
     border: "1px solid #c4c4c4",
   },
-  tablePagination: {
-    // border: "1px solid #c4c4c4",
-  },
+  tablePagination: {},
   fitContentHeight: {
     height: "fit-content",
   },
@@ -85,6 +76,7 @@ function TablesInfo({
   handleDeleteTable,
   handleEditTable,
 }) {
+  const theme = useTheme();
   const actionItemNavList = [
     { bigNavID: objAppActions.Edit, nav: { eng: "edit", arb: "حذف" } },
 
@@ -171,12 +163,16 @@ function TablesInfo({
                                 }
                               },
                             }))}
-                            endIcon={<MoreVert />}
+                            endIcon={<SvgIcon icon="more_vert" />}
                             lang={appState.clientInfo.strLanguage}
                           />
                         </Grid>
                       )}
-                      <Grid item mx={"3px"} xs={table.blnTableAvailable ? 10 : 12}>
+                      <Grid
+                        item
+                        mx={"3px"}
+                        xs={table.blnTableAvailable ? 10 : 12}
+                      >
                         <Typography color={"#000"} sx={styles.tableID}>
                           #{table.bigTableID}
                         </Typography>
@@ -199,7 +195,7 @@ function TablesInfo({
                     component="th"
                     scope="row"
                   >
-                    <Typography color={App_Primary_Color} sx={styles.price}>
+                    <Typography color={"primary"} sx={styles.price}>
                       ${table.strTablePrice}
                     </Typography>
                   </TableCell>
@@ -228,7 +224,13 @@ function TablesInfo({
                     scope="row"
                   >
                     <Button
-                      endIcon={<Visibility />}
+                      endIcon={
+                        <SvgIcon
+                          icon="visibility"
+                          color="primary"
+                          variant="filled"
+                        />
+                      }
                       disabled={table.blnTableAvailable}
                     >
                       <Typography sx={styles.viewBtnLabel} px={1}>
@@ -248,7 +250,7 @@ function TablesInfo({
                   >
                     <AnimButton0001
                       label={dictionary.buttons.freeTable[lang]}
-                      color={App_Second_Color}
+                      color={theme.palette.secondary.main}
                       disabled={table.blnTableAvailable}
                       onClick={() => handleFreeTable(table, index)}
                     />
@@ -261,10 +263,6 @@ function TablesInfo({
                 </TableRow>
               )}
             </TableBody>
-            {/* <TableFooter>
-          <TableRow> */}
-            {/* </TableRow>
-        </TableFooter> */}
           </Table>
           <Grid item xs={12} container justifyContent="end">
             <TablePagination

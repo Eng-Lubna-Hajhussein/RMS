@@ -1,6 +1,7 @@
 import BtnProgressToTop from "components/sharedUI/btnProgressToTop/BtnProgressToTop";
 import Chatbot from "../../public/chatbot/Chatbot";
 import Home from "./home/Home";
+import React from "react";
 
 function Website({
   systemInfo,
@@ -36,49 +37,49 @@ function Website({
   systemPath,
   lang,
   dir,
-  jsnSystemLocation
+  jsnSystemLocation,
 }) {
   return (
-    <>
-    <Home
-      systemInfo={systemInfo}
-      categories={categories}
-      editable={editable}
-      systemPath={systemPath}
-      onSaveUpperHeader={onSaveUpperHeader}
-      onSaveHero={onSaveHero}
-      onSaveOwner={onSaveOwner}
-      onSaveAbout={onSaveAbout}
-      systemID={systemID}
-      websiteLogo={websiteLogo}
-      jsnSystemLocation={jsnSystemLocation}
-      navList={navList}
-      userCart={userCart}
-      addOrderProduct={addOrderProduct}
-      removeOrderProduct={removeOrderProduct}
-      addMenuCategory={addMenuCategory}
-      deleteMenuCategory={deleteMenuCategory}
-      editMenuCategory={editMenuCategory}
-      addChef={addChef}
-      editChef={editChef}
-      deleteChef={deleteChef}
-      addWS={addWS}
-      removeWS={removeWS}
-      adminEditMode={adminEditMode}
-      customerEditMode={customerEditMode}
-      ws={ws}
-      lang={lang}
-      onSaveReservation={onSaveReservation}
-      adminNavList={adminNavList}
-      userImg={userImg}
-      userName={userName}
-      blnUserLogin={blnUserLogin}
-      userNavList={userNavList}
-      dir={dir}
-    />
-    <Chatbot />
-    <BtnProgressToTop />
-    </>
+    <React.Fragment>
+      <Home
+        systemInfo={systemInfo}
+        categories={categories}
+        editable={editable}
+        systemPath={systemPath}
+        onSaveUpperHeader={onSaveUpperHeader}
+        onSaveHero={onSaveHero}
+        onSaveOwner={onSaveOwner}
+        onSaveAbout={onSaveAbout}
+        systemID={systemID}
+        websiteLogo={websiteLogo}
+        jsnSystemLocation={jsnSystemLocation}
+        navList={navList}
+        userCart={userCart}
+        addOrderProduct={addOrderProduct}
+        removeOrderProduct={removeOrderProduct}
+        addMenuCategory={addMenuCategory}
+        deleteMenuCategory={deleteMenuCategory}
+        editMenuCategory={editMenuCategory}
+        addChef={addChef}
+        editChef={editChef}
+        deleteChef={deleteChef}
+        addWS={addWS}
+        removeWS={removeWS}
+        adminEditMode={adminEditMode}
+        customerEditMode={customerEditMode}
+        ws={ws}
+        lang={lang}
+        onSaveReservation={onSaveReservation}
+        adminNavList={adminNavList}
+        userImg={userImg}
+        userName={userName}
+        blnUserLogin={blnUserLogin}
+        userNavList={userNavList}
+        dir={dir}
+      />
+      <Chatbot />
+      <BtnProgressToTop />
+    </React.Fragment>
   );
 }
 

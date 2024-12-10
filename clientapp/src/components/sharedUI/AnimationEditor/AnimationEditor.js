@@ -5,12 +5,10 @@ import {
   DialogTitle,
   Grid,
   Typography,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
-} from "@mui/material";
-import { Close } from "@mui/icons-material";
+  SvgIcon,
+} from "@basetoolkit/ui";
 import AnimationBox from "../AnimationBox/AnimationBox";
 import { animationEditorOptions } from "appHelper/appVariables";
 
@@ -46,38 +44,39 @@ const AnimationEditor = ({
   dir,
 }) => {
   return (
-    <Dialog open={open} onClose={handleClose} fullScreen maxWidth="sm">
+    <Dialog open={open} onClose={handleClose} maxWidth="md">
       <DialogTitle sx={styles.dialogTitle}>
-        <Grid container justifyContent={"end"}>
-          <Close sx={styles.closeIcon} onClick={handleClose} />
+        <Grid container justifyContent={"end"} p={1}>
+          <SvgIcon icon="close" sx={styles.closeIcon} onClick={handleClose} />
         </Grid>
       </DialogTitle>
       <DialogContent sx={styles.dialogContent}>
         <div className="animation-editor-container">
           <Grid container py={1} justifyContent={"center"}>
             <Grid container xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Background Animation</InputLabel>
-                <Select
-                  label="Background Animation"
-                  value={
-                    objText[objText.onAnimationKey]?.strAnimationType || "none"
-                  }
-                  required
-                  autoFocus
-                  variant="outlined"
-                  onChange={(e) => {
-                    onChange(e.target.value);
-                  }}
-                  sx={styles.select}
-                >
-                  {animationEditorOptions.map((type, index) => (
-                    <MenuItem key={index} value={type.key}>
-                      {type.value}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <Select
+                fullWidth
+                label="Background Animation"
+                value={{
+                  value:
+                    objText[objText.onAnimationKey]?.strAnimationType || "none",
+                  label:
+                    objText[objText.onAnimationKey]?.strAnimationType || "none",
+                }}
+                required
+                autoFocus
+                variant="outlined"
+                onChange={(selected) => {
+                  onChange(selected.value);
+                }}
+                sx={styles.select}
+              >
+                {animationEditorOptions.map((type, index) => (
+                  <MenuItem key={index} value={type.key}>
+                    {type.value}
+                  </MenuItem>
+                ))}
+              </Select>
             </Grid>
             <Grid
               container

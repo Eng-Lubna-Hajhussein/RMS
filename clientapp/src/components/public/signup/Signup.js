@@ -5,7 +5,7 @@ import React, { useContext } from "react";
 import Tabs001 from "components/sharedUI/Tabs001/Tabs001";
 import SignupSystem from "./signupSystem/SignupSystem";
 import SignupUser from "./signupUser/SignupUser";
-import { Grid, Typography } from "@mui/material";
+import { Grid, SvgIcon, Typography } from "@basetoolkit/ui";
 import { AppRegistrationSharp, FoodBank } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { dictionary } from "appHelper/appDictionary";
@@ -17,9 +17,9 @@ function Signup() {
   const tabsContent = [
     {
       tabLabel: (
-        <Grid container justifyContent={"center"}>
+        <Grid container justifyContent={"center"} alignItems="center">
           <Grid item px={1}>
-            <FoodBank />
+            <SvgIcon icon="food_bank" variant="filled" color="text.secondary" />
           </Grid>
           <Grid item>
             <Typography sx={{ textTransform: "capitalize"}}>
@@ -32,9 +32,9 @@ function Signup() {
     },
     {
       tabLabel: (
-        <Grid container justifyContent={"center"}>
+        <Grid container justifyContent={"center"}  alignItems="center">
           <Grid item px={1}>
-            <AppRegistrationSharp />
+            <SvgIcon icon="app_registration" color="text.secondary" />
           </Grid>
           <Grid item>
             <Typography sx={{ textTransform: "capitalize" }}>

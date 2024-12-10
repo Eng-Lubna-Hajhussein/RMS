@@ -18,8 +18,9 @@ import {
   Avatar,
   Divider,
   Tooltip,
-} from "@mui/material";
-import { App_Second_Color } from "appHelper/appColor";
+  useTheme,
+  useMediaQueryMatch,
+} from "@basetoolkit/ui";
 import Tabs001 from "components/sharedUI/Tabs001/Tabs001";
 import React, { useState } from "react";
 import PersonalInfo from "./PersonalInfo/PersonalInfo";
@@ -73,7 +74,7 @@ const styles = {
     cursor: "pointer",
   },
   divider: {
-    borderColor: App_Second_Color,
+    borderColor: "secondary",
     borderWidth: "1px",
   },
 };
@@ -89,6 +90,8 @@ function UserDetails({
   onSave,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const theme = useTheme();
+  const isExtraSmallAndDown = useMediaQueryMatch(theme.breakpoints.down("xs"));
 
   const tabsContent = [
     {
@@ -161,19 +164,19 @@ function UserDetails({
             <Grid
               item
               xs="12"
-              sx={{ paddingX: { lg: "30px", xs: "0px" } }}
+              px={isExtraSmallAndDown?0:"30px"}
               container
               mx={0}
             >
               <Grid
                 container
                 item
-                xs="10"
+                xs={10}
                 sx={styles.fitContentHeight}
                 alignItems={"center"}
                 alignContent={"center"}
                 justifyContent={"start"}
-                py={2}
+                p={0} m={0}
               >
                 <Grid
                   item
@@ -195,7 +198,7 @@ function UserDetails({
                   <Grid
                     item
                     container
-                    xs="10"
+                    xs="10" m={0} p={0} 
                     alignContent={"center"}
                     alignItems={"center"}
                     sx={styles.fitContentHeight}
@@ -205,7 +208,7 @@ function UserDetails({
                         {user?.jsnFullName[lang]}
                       </Typography>
                     </Grid>
-                    <Grid item xs="12" container>
+                    <Grid item xs="12" container p={0} m={0}>
                       <Grid
                         item
                         pr={dir === "ltr" ? 2 : 0}
@@ -310,12 +313,12 @@ function UserDetails({
             <Grid
               item
               xs="12"
-              sx={{ paddingX: { lg: "30px", xs: "0px" } }}
+              px={isExtraSmallAndDown?0:"30px"}
               mx={0}
             >
               <Divider sx={styles.divider} />
             </Grid>
-            <Grid item xs="12" container>
+            <Grid item xs="12" container p={0} m={0}>
               <Tabs001
                 tabsContent={tabsContent}
                 tabsMode="filled"

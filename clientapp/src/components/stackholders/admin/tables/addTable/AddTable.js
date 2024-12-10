@@ -1,45 +1,24 @@
-import { objAppActions } from "appHelper/appVariables";
-import WebsiteHeader from "components/sharedUI/websiteHeader/WebsiteHeader";
-import { AppContext } from "contextapi/context/AppContext";
-import React, { useContext, useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import {
-  Button,
-  Chip,
-  Grid,
-  TableFooter,
-  TablePagination,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { App_Primary_Color, App_Second_Color } from "appHelper/appColor";
-import OptionList from "components/sharedUI/optionList/OptionList";
-import { MoreVert, Visibility } from "@mui/icons-material";
+import React from "react";
+import { Grid, TextField, Typography, useTheme } from "@basetoolkit/ui";
 import AnimButton0001 from "components/sharedUI/AnimButton0001/AnimButton0001";
-import { findTables } from "appHelper/fetchapi/tblReservation/tblReservation";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { dictionary } from "appHelper/appDictionary";
 
 const styles = {
-  container: {lg: {my:"50px"}, xs: {my:"20px"} 
-  },
+  container: { lg: { my: "50px" }, xs: { my: "20px" } },
   itemContainer: {
     background: "#f4fcfc",
     height: "fit-content",
-    lg: {mb:"50px"}, xs: {mb:"20px"},
+    lg: { mb: "10px" },
+    xs: { mb: "5px" },
     borderRadius: "20px",
     padding: "20px",
   },
   title: {
     textTransform: "uppercase",
-    lg: {fontSize:"28px"}, xs: {fontSize:"16px"},
+    lg: { fontSize: "28px" },
+    xs: { fontSize: "16px" },
     fontWeight: "800",
-    color: App_Primary_Color,
+    color: "primary",
     borderBottom: "3px solid #ffd40d",
     width: "fit-content",
   },
@@ -56,7 +35,7 @@ const styles = {
   },
   columnTablecell: {
     border: "1px solid #c4c4c4",
-    background: App_Primary_Color,
+    bgcolor: "primary",
     color: "#fff",
     fontSize: "15px",
     fontWeight: 800,
@@ -64,21 +43,7 @@ const styles = {
   rowTablecell: {
     border: "1px solid #c4c4c4",
   },
-  tablePagination: {
-    ".MuiTablePagination-toolbar": {
-      backgroundColor: "#f4fcfc",
-      textAlign: "center",
-    },
-    ".MuiTablePagination-selectLabel, .MuiTablePagination-input": {
-      fontWeight: "800",
-    },
-    ".MuiTablePagination-input": {
-      fontWeight: "bold",
-      background: "#fff",
-      borderRadius: "10px",
-      border: "1px solid #000",
-    },
-  },
+  tablePagination: {},
   fitContentHeight: {
     height: "fit-content",
   },
@@ -105,67 +70,75 @@ const styles = {
   },
 };
 
-function AddTable({ handleSubmit, onSubmit, register, errors, trigger,lang,dir }) {
+function AddTable({
+  handleSubmit,
+  onSubmit,
+  register,
+  errors,
+  trigger,
+  lang,
+  dir,
+}) {
+  const theme = useTheme();
   return (
     <Grid
       item
       container
       xs={12}
       px={1}
-      pb={10}
-      mb={2}
       justifyContent={"center"}
       sx={styles.itemContainer}
     >
-        <Grid item xs={12} container p={2} justifyContent={"start"}>
-          <Typography sx={styles.title}>{dictionary.tables.addTable[lang]} !</Typography>
-        </Grid>
-        <Grid item xs={12} container justifyContent={"start"}>
-          <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-            <Grid item xs={12} container>
-              <Grid item lg={6} xs={12} p={2}>
-                <TextField 
-                  sx={styles.textfield}
-                  variant="outlined"
-                  fullWidth
-                  type="number"
-                  
-                  label={dictionary.labels.seatsNumber[lang]}
-                  className={`form-control ${errors.seatsNum && "invalid"}`}
-                  {...register("seatsNum", {
-                    required: "Seats Number is Required",
-                  })}
-                  onKeyUp={() => {
-                    trigger("seatsNum");
-                  }}
-                />
-              </Grid>
-              <Grid item lg={6} xs={12} p={2}>
-                <TextField 
-                  sx={styles.textfield}
-                  variant="outlined"
-                  fullWidth
-                  type="text"
-                  label={dictionary.labels.pricePerHour[lang]}
-                  className={`form-control ${errors.pricePerHour && "invalid"}`}
-                  {...register("pricePerHour", {
-                    required: "Price Per Hour is Required",
-                  })}
-                  onKeyUp={() => {
-                    trigger("pricePerHour");
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} container justifyContent={"end"} p={2}>
-                <AnimButton0001
-                  label={dictionary.buttons.addTableBtn[lang]}
-                  color={App_Primary_Color}
-                  type="submit"
-                />
-              </Grid>
+      <Grid item xs={12} container p={2} justifyContent={"start"}>
+        <Typography sx={styles.title}>
+          {dictionary.tables.addTable[lang]} !
+        </Typography>
+      </Grid>
+      <Grid item xs={12} container justifyContent={"start"}>
+        <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+          <Grid item xs={12} container>
+            <Grid item lg={6} xs={12} p={2}>
+              <TextField
+                sx={styles.textfield}
+                variant="outlined"
+                fullWidth
+                type="number"
+                label={dictionary.labels.seatsNumber[lang]}
+                className={`form-control ${errors.seatsNum && "invalid"}`}
+                {...register("seatsNum", {
+                  required: "Seats Number is Required",
+                })}
+                onKeyUp={() => {
+                  trigger("seatsNum");
+                }}
+              />
             </Grid>
-          </form>
-        </Grid>
+            <Grid item lg={6} xs={12} p={2}>
+              <TextField
+                sx={styles.textfield}
+                variant="outlined"
+                fullWidth
+                type="text"
+                label={dictionary.labels.pricePerHour[lang]}
+                className={`form-control ${errors.pricePerHour && "invalid"}`}
+                {...register("pricePerHour", {
+                  required: "Price Per Hour is Required",
+                })}
+                onKeyUp={() => {
+                  trigger("pricePerHour");
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} container justifyContent={"end"} p={2}>
+              <AnimButton0001
+                label={dictionary.buttons.addTableBtn[lang]}
+                color={theme.palette.primary.main}
+                type="submit"
+              />
+            </Grid>
+          </Grid>
+        </form>
+      </Grid>
     </Grid>
   );
 }

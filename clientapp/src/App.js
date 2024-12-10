@@ -12,6 +12,9 @@ const theme = createTheme({
     primary:{
       main:"#f3274c"
     },
+    error:{
+      main:"red"
+    },
   },
 });
 

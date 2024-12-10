@@ -1,12 +1,13 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@basetoolkit/ui";
 
 const styles = {
   startIcon: {
-    height: { lg: "40px", xs: "20px" },
-    width: { lg: "40px", xs: "20px" },
+    lg: { height: "40px", width: "40px" },
+    xs: { height: "20px", width: "20px" },
   },
   label: {
-    fontSize: { lg: "16px", xs: "9px" },
+    lg: { fontSize: "16px" },
+    xs: { fontSize: "9px" },
     textTransform: "capitalize",
     color: "#fff",
     fontWeight: "800",

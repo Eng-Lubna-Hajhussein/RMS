@@ -1,20 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  Close,
-} from "@mui/icons-material";
-import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   Grid,
   Box,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
+  SvgIcon,
+  useTheme,
 } from "@basetoolkit/ui";
-import { App_Primary_Color } from "appHelper/appColor";
 import { dictionary } from "appHelper/appDictionary";
 import { generateRandomID } from "appHelper/appFunctions";
 import {
@@ -66,6 +61,7 @@ const styles = {
 };
 
 function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
+  const theme = useTheme();
   const options = useMemo(() => {
     return tabsOptions.filter((option) => !tabsKey.includes(`${option.key}`));
   }, [tabsKey]);
@@ -89,7 +85,7 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
     };
     onSave(tab);
     handleClose();
-  }
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -104,8 +100,8 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
         sx={styles.dialog}
       >
         <DialogTitle sx={styles.dialogTitle}>
-          <Grid container justifyContent={"end"}>
-            <Close sx={styles.closeIcon} onClick={handleClose} />
+          <Grid container justifyContent={"end"} p={1}>
+            <SvgIcon icon="close" sx={styles.closeIcon} onClick={handleClose} />
           </Grid>
         </DialogTitle>
         <DialogContent sx={styles.dialogContent}>
@@ -113,22 +109,22 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
           <Grid container py={1} justifyContent={"center"}>
             <Grid item container xs={12}>
               <Grid item xs={12} p={1} container>
-                  <Select
-                    value={{
-                      value: option,
-                      label: option,
-                    }}
-                    required
-                    variant="outlined"
-                    fullWidth
-                    label={dictionary.menuSection.menuCategory[lang]}
-                    onChange={(selected) => setOption(selected.value)}
-                    sx={styles.select}
-                  >
-                    {options.map((tab, index) => (
-                      <MenuItem value={tab.key}>{tab.jsnName[lang]}</MenuItem>
-                    ))}
-                  </Select>
+                <Select
+                  value={{
+                    value: option,
+                    label: option,
+                  }}
+                  required
+                  variant="outlined"
+                  fullWidth
+                  label={dictionary.menuSection.menuCategory[lang]}
+                  onChange={(selected) => setOption(selected.value)}
+                  sx={styles.select}
+                >
+                  {options.map((tab, index) => (
+                    <MenuItem value={tab.key}>{tab.jsnName[lang]}</MenuItem>
+                  ))}
+                </Select>
               </Grid>
             </Grid>
           </Grid>
@@ -171,16 +167,11 @@ function AddTab({ open, handleClose, tabsKey, systemID, lang, dir, onSave }) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            p={2}
-            justifyItems={"end"}
-            justifyContent={"end"}
-          >
+          <Grid container p={2} justifyItems={"end"} justifyContent={"end"}>
             <Grid item lg={3} xs={6}>
               <AnimButton0001
                 label={dictionary.buttons.saveBtn[lang]}
-                color={App_Primary_Color}
+                color={theme.palette.primary.main}
                 fullWidth={true}
                 type="submit"
               />
